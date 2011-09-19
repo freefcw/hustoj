@@ -1,0 +1,16 @@
+/* 
+    Document   : style.css
+    Created on : 2009-5-14, 2:12:48
+    Author     : freefcw
+    Description:
+        Purpose of the stylesheet follows.
+*/
+/* -- footer --- */
+
+#footer {
+	margin: auto;
+	text-align: center;
+}
+#footer ul li, #nav ul li{
+	display: inline;
+}
