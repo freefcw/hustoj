@@ -45,6 +45,8 @@ class Controller_User extends Controller_My {
 		// view
 		$body = View::factory('user/login');
 		$body->username = Cookie::get('uname', '');
+		$body->errors = array();
+		$body->post = array('username' => '');
 
 		$this->view->title = 'Welcome Back';
 

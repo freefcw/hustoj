@@ -5,7 +5,12 @@
     Description:
         Purpose of the stylesheet follows.
 */
-/* -- footer --- */
+/* --- main --- */
+body{
+	font: 14px/1.231 sans-serif 'Courier New';
+}
+
+/* --- footer --- */
 
 #footer {
 	margin: auto;

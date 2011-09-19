@@ -6,7 +6,7 @@
 <meta name="description" content="HUST ACM - 华中科技大学ACM组织"/>
 <meta name="robots" content="index,follow" />
 <title><?php echo $title; ?></title>
-<link rel="stylesheet" media="all" type="text/css" href="/static/style/style.css" />
+<?php echo HTML::style('static/style/style.css');?>
 <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <body>
@@ -30,5 +30,5 @@
 <li><?php echo html::anchor('help', 'Help');?></li>
 <li><?php echo html::anchor('term', 'Terms of Service');?></li>
 </ul>
-<div>Copyright © 2003-2011 <a href="http://acm.hust.edu.cn" >HUST ACMICPC TEAM</a>. All rights reserved.</div>
+<div>Copyright © 2003-2011 <?php echo html::anchor('http://acm.hust.edu.cn', 'HUST ACMICPC TEAM');?>. All rights reserved.</div>
 </div></body></html>
