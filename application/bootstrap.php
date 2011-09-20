@@ -127,7 +127,11 @@ Route::set('static', '<action>',
 		'controller' => 'index'
 	));
 
-Route::set('default', '(<controller>(/<action>(/<id>)))')
+Route::set('default', '(<controller>(/<action>(/<id>(/<overflow>))))',
+	array(
+		'id' => '[[:digit:]]{1,}',
+		'overflow' => '.*?'
+	))
 	->defaults(array(
 		'controller' => 'index',
 		'action'     => 'index',

@@ -14,7 +14,7 @@
 <ul>
 <li><?php echo html::anchor('/', 'Home'); ?></li>
 <li><?php echo html::anchor('/problem/list', 'Problems'); ?></li>
-<li><?php echo html::anchor('/problem/', 'Status'); ?></li>
+<li><?php echo html::anchor('/problem/status', 'Status'); ?></li>
 <li><?php echo html::anchor('/user/ranklist', 'Ranklist'); ?></li>
 <li><?php echo html::anchor('/contest', 'Contest'); ?></li>
 <li><?php echo html::anchor('/faqs', 'Faqs'); ?></li>

@@ -49,7 +49,10 @@ class Controller_Problem extends Controller_My {
 	
 	public function action_status()
 	{
+		$body = View::factory('problem/status');
+
 		$this->view->set('title', 'status');
+		$this->view->body = $body;
 	}
 
 } // End Welcome
