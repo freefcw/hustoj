@@ -119,7 +119,20 @@ Route::set('auth', '<action>',
 		'controller' => 'user'
 	));
 
-Route::set('static', '<action>',
+Route::set('ranklist', 'rank/user')
+	->defaults(array(
+		'controller' => 'user',
+		'action'	 => 'list'
+	));
+
+Route::set('user', 'user/<id>',
+	array('id' => '[[:word:]]+'))
+	->defaults(array(
+		'controller' => 'user',
+		'action' => 'profile'
+	));
+
+Route::set('page', '<action>',
 	array(
 		'action' => '(home|faqs|about|links|contact|status)'
 	))

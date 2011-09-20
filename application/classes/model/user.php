@@ -39,7 +39,7 @@ class Model_User extends Model_Database {
         $data = $cache->get($key);
         if ($data != null) return $data;
 
-        $query = DB::where('user_id', $user_id);
+        $query = DB::select()->where('user_id', '=', $user_id)->from('users');
         $result = $query->as_object()->execute();
 
         $ret = $result->current();
@@ -49,7 +49,7 @@ class Model_User extends Model_Database {
     }
 
 
-    public function get_ranklist($page_id, $per_page)
+    public function get_list($page_id, $per_page)
     {
         $key = 'user-rank' . $page_id;
         $cache = Cache::instance();
