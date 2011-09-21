@@ -98,8 +98,32 @@ class Model_Problem extends Model_Database {
             ->order_by('in_date', 'DESC');
 
         //TODO: fixit
-        $result = $this->db->get()->as_array();
+        $result = $query->as_object()->execute();
         $cache->set($key, $result, array('problem', 'page'));
         return $result;
-        }
     }
+
+    public function get_status($page_id = 1, $problem_id = null, $user_id = null, $lanaguage = null, $result = null)
+    {
+        // fixme: add more set
+        $key    = "status-{$page_id}--";
+        $cache  = Cache::instance();
+        $data   = $cache->get($key);
+        $query = DB::select('solution_id', 'problem_id', 'user_id', 'time', 'memory', 'language', 'result', 'code_length', 'in_date')
+                ->from('solution')
+                //->where()
+                ->offset(($page_id - 1) * 20)
+                ->limit(20)
+                ->order_by('solution_id', 'DESC');
+
+        $result = $query->as_object()->execute();
+
+        $ret = array();
+        foreach($result as $r){
+            $ret[] = $r;
+        }
+        
+        $cache->set($key, $ret, array('problem', 'page'));
+        return $ret;
+    }
+}

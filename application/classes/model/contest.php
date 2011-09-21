@@ -5,7 +5,7 @@
  * @author freefcw
  */
 
-class Contest_Model extends Model_Database {
+class Model_Contest extends Model_Database {
     /**
         * construct function
         */
@@ -21,7 +21,7 @@ class Contest_Model extends Model_Database {
         * @param int the page id
         * @return array  a list of contest
         */
-    public function getContestList($page)
+    public function get_list($page)
     {
         //use memcache
         $key = 'contest-'. $page;
@@ -29,14 +29,21 @@ class Contest_Model extends Model_Database {
         $data = $cache->get($key);
         if($data != null) return $data;
 
-        $this->db->from('contest')
-                        ->orderby('start_time', 'DESC')
-        ->offset(($page - 1) * 25)
-        ->limit(25);
+        $query = DB::select()
+                ->from('contest')
+                ->order_by('start_time', 'DESC')
+                ->offset(($page - 1) * 25)
+                ->limit(25);
 
-        $result = $this->db->get()->as_array();
-        $cache->set($key, $result, array('contest', 'list'));
-        return $result;
+        $result = $query->as_object()->execute();
+
+        $ret = array();
+        foreach($result as $r){
+            $ret[] = $r;
+        }
+        
+        $cache->set($key, $ret, array('contest', 'list'));
+        return $ret;
     }
     /**
 	 * fetch all the problems of contest

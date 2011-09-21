@@ -49,10 +49,31 @@ class Controller_Problem extends Controller_My {
 	
 	public function action_status()
 	{
-		$body = View::factory('problem/status');
+		// init
+		$page = $this->request->param('id', 1);
 
-		$this->view->set('title', 'status');
+		// db
+		$db = new Model_Problem();
+		$status = $db->get_status($page);
+		$total = $db->get_total();
+
+		// view
+		$body = View::factory('problem/status');
+		$body->list = $status;
+		$body->page = $page;
+		$body->total = $total;
+
+		$this->view->title = 'status';
 		$this->view->body = $body;
+	}
+
+	public function action_submit()
+	{
+		$body = View::factory('problem/submit');
+
+		$this->view->title = 'Submit';
+		$this->view->body = $body;
+		
 	}
 
 } // End Welcome
