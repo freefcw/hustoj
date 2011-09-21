@@ -19,6 +19,6 @@ Submissions: <?php echo $p->submit;?>  Solved: <?php echo $p->accepted;?>
 </dl>
 <ul>
 <li><?php echo html::anchor("/problem/submit/{$p->problem_id}", 'Submit');?></li>
-<li><?php echo html::anchor("/problem/status/{$p->problem_id}", 'Status');?></li>
+<li><?php echo html::anchor("/problem/summary/{$p->problem_id}", 'Summary');?></li>
 <li><?php echo html::anchor("/discuss/{$p->problem_id}", 'Discuss');?></li>
 </ul>

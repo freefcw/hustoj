@@ -76,4 +76,27 @@ class Controller_Problem extends Controller_My {
 		
 	}
 
+	public function action_summary()
+	{
+		// init
+		$pid = $this->request->param('id');
+		if ($pid === NULL) {
+			# TODO: redirect to back?
+		}
+
+		// db
+		$p = new Model_Problem();
+		$summary = $p->get_summary($pid);
+		$best_solution = $p->get_best_solution($pid);
+
+		// view
+
+		$body = View::factory('problem/summary');
+		$body->summary = $summary;
+		$body->solutions = $best_solution;
+
+		$this->view->title = "Summary of {$pid}";
+		$this->view->body = $body;
+	}
+
 } // End Welcome

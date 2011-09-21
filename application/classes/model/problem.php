@@ -126,4 +126,14 @@ class Model_Problem extends Model_Database {
         $cache->set($key, $ret, array('problem', 'page'));
         return $ret;
     }
+
+    public function get_summary($pid)
+    {
+        # TODO: add content
+    }
+
+    public function get_best_solution($pid)
+    {
+        # TODO: add content
+    }
 }
