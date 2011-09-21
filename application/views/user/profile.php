@@ -2,6 +2,8 @@
 <dl>
 <dt>nick:</dt>
 <dd><?php echo $u->nick;?></dd>
+<dt>school:</dt>
+<dd><?php echo $u->school;?></dd>
 <dt>submit:</dt>
 <dd><?php echo $u->submit;?></dd>
 <dt>solved:</dt>

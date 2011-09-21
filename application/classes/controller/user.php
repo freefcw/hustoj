@@ -10,13 +10,15 @@ class Controller_User extends Controller_My {
 
 		// db
 		$per_page = 50;
-		$u = new Model_User();
-		$users = $u->get_list($page, $per_page);
+		$db = new Model_User();
+		$users = $db->get_list($page, $per_page);
 
 		// views
 		$body = View::factory('user/list');
 		$body->users = $users;
-		$body->pages = $page - 1;
+		$body->page = $page;
+		$body->total = $db->get_total();
+		$body->total_page = ceil($db->get_total() / $per_page);
 		$body->per_page = $per_page;
 		
 		$this->view->title = "User List";

@@ -80,9 +80,11 @@ class Model_User extends Model_Database {
         */
     public function get_total()
     {
+        // TODO: more params
         $key = 'user-total';
         $cache = Cache::instance();
         $data = $cache->get($key);
+        
         if ($data != null) return $data;
         
         
