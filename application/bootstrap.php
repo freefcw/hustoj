@@ -119,7 +119,7 @@ Route::set('auth', '<action>',
 		'controller' => 'user'
 	));
 
-Route::set('ranklist', 'rank/user')
+Route::set('ranklist', 'rank/user(/<id>)')
 	->defaults(array(
 		'controller' => 'user',
 		'action'	 => 'list'
