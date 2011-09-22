@@ -72,7 +72,6 @@ class Model_Problem extends Model_Database {
         $sql = 'SELECT count(*) AS total FROM problem';
         $result = $this->_db->query(Database::SELECT, $sql, TRUE);
 
-
         $ret = $result->current()->total;
 
         $cache->set($key, $ret, array('problem','total'));
@@ -109,6 +108,9 @@ class Model_Problem extends Model_Database {
         $key    = "status-{$page_id}--";
         $cache  = Cache::instance();
         $data   = $cache->get($key);
+        if ($data != null){
+            return $data;
+        }
         $query = DB::select('solution_id', 'problem_id', 'user_id', 'time', 'memory', 'language', 'result', 'code_length', 'in_date')
                 ->from('solution')
                 //->where()
@@ -130,6 +132,40 @@ class Model_Problem extends Model_Database {
     public function get_summary($pid)
     {
         # TODO: add content
+        $key    = "summary-{$pid}";
+        $cache  = Cache::instance();
+        $data   = $cache->get($key);
+        if ($data != null){
+            return $data;
+        }
+
+        $data = array();
+        // get total solutions
+        $sql = "SELECT count(*) AS total FROM solution WHERE problem_id='{$pid}'";
+        $result = $this->_db->query(Database::SELECT, $sql, TRUE);
+        $data['total'] = $result->current()->total;
+
+        // get total user has submited
+        $sql = "SELECT count(DISTINCT user_id) AS total FROM solution WHERE problem_id='{$pid}'";
+        $result = $this->_db->query(Database::SELECT, $sql, TRUE);
+        $data['submit_user'] = $result->current()->total;
+
+        // get total user has ac
+        $sql = "SELECT count(DISTINCT user_id) AS total FROM solution WHERE problem_id='{$pid}'  AND result='4'";
+        $result = $this->_db->query(Database::SELECT, $sql, TRUE);
+        $data['ac_user'] = $result->current()->total;
+
+        // get all status
+        $sql = "SELECT result, count(*) as total FROM solution WHERE problem_id='{$pid}' AND result>=4 GROUP BY result ORDER BY result";
+        $result = $this->_db->query(Database::SELECT, $sql, TRUE);
+        $data['more'] = array();
+        foreach($result as $r)
+        {
+            $data['more'][$r->result]= $r->total;
+        }
+
+        $cache->set($key, $data, array('problem', 'summary', $pid));
+        return $data;
     }
 
     public function get_best_solution($pid)
