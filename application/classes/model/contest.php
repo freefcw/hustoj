@@ -6,13 +6,6 @@
  */
 
 class Model_Contest extends Model_Database {
-    /**
-        * construct function
-        */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
         * get contest list for a page
@@ -52,7 +45,7 @@ class Model_Contest extends Model_Database {
 	 * @param       int         $contest_id
 	 * @return      array       a list of problems in the contest
 	 */
-    public function getProblemList($contest_id)
+    public function get_contest_problems($contest_id)
     {
         //use memcache
         $key = 'contest-problems-'. $contest_id;
@@ -61,7 +54,7 @@ class Model_Contest extends Model_Database {
         if($data != null) return $data;
 
         $sql = "SELECT
-                    problem.problem_id, problem.title
+                    problem.problem_id AS pid, problem.title AS title
                 FROM
                     contest_problem
                 LEFT JOIN
@@ -70,12 +63,16 @@ class Model_Contest extends Model_Database {
                     contest_problem.contest_id = {$contest_id}
         ";
 
-        $res = $this->db->query($sql);
-        //var_dump($result);
-        $result = $res->as_array();
+        $result = $this->_db->query(Database::SELECT, $sql, TRUE);
 
-        $cache->set($key, $result, array('contest', 'problem'));
-        return $result;
+        $ret = array();
+        foreach($result as $r)
+        {
+            $ret[] = $r;
+        }
+
+        $cache->set($key, $ret, array('contest', 'problem'));
+        return $ret;
     }
 
     /**
@@ -84,7 +81,7 @@ class Model_Contest extends Model_Database {
 	 * @access	public
 	 * @return	int	the number of contest
 	 */
-    public function getTotal()
+    public function get_total()
     {
         //use memcache
         $key = 'contest-total';
@@ -92,11 +89,11 @@ class Model_Contest extends Model_Database {
         $data = $cache->get($key);
         if($data != null) return $data;
 
-        $res = $this->db->query('SELECT COUNT(*) as total FROM contest');
+        $result = $this->_db->query('SELECT COUNT(*) as total FROM contest');
 
-        $result = $res->current()->total;
-        $cache->set($key, $result, array('contest', 'total'));
-        return $result;
+        $ret = $result->current()->total;
+        $cache->set($key, $ret, array('contest', 'total'));
+        return $ret;
     }
 
     /**
@@ -105,7 +102,7 @@ class Model_Contest extends Model_Database {
      * @param <type> $contest_id
      * @@return
      */
-    public function getContestInfo($contest_id)
+    public function get_contest($contest_id)
     {
         //use memcache
         $key = 'contest-total';
@@ -113,10 +110,15 @@ class Model_Contest extends Model_Database {
         $data = $cache->get($key);
         if($data != null) return $data;
 
-        $res = $this->db->query("SELECT * FROM contest WHERE contest_id = {$contest_id}");
+        $query  = DB::select()
+                ->from('contest')
+                ->where('contest_id', '=', $contest_id);
+        
+        $result = $query->as_object()->execute();
 
-        $result = $res->current();
-        $cache->set($key, $result, array('contest', 'total'));
-        return $result;
+        $ret = $result->current();
+
+        $cache->set($key, $ret, array('contest', 'total'));
+        return $ret;
     }
 }
