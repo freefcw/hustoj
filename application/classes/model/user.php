@@ -91,7 +91,6 @@ class Model_User extends Model_Database {
         $sql = 'SELECT count(*) AS total FROM users';
         $result = $this->_db->query(Database::SELECT, $sql, TRUE);
 
-
         $ret = $result->current()->total;
 
         $cache->set($key, $ret, array('user','total'));

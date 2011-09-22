@@ -1,4 +1,4 @@
-<dl>
+<dl id="summary">
 <dt>Total Submissions</dt>
 <dd><?php echo $summary['total'];?><dd>
 <dt>Submitted Users</dt>

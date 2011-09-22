@@ -19,7 +19,7 @@
 <li><?php echo html::anchor('/contest', 'Contest'); ?></li>
 <li><?php echo html::anchor('/faqs', 'Faqs'); ?></li>
 </ul>
-<div>
+</div>
 <?php echo $body; ?>
 <div id="footer">
 <ul>

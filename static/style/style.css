@@ -16,6 +16,6 @@ body{
 	margin: auto;
 	text-align: center;
 }
-#footer ul li, #nav ul li{
+#footer ul li, #nav ul li, .inline-ul li{
 	display: inline;
 }
