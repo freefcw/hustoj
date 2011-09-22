@@ -1,6 +1,4 @@
 <h1> HUST OJ STATUS</h1>
-
-
 <?php if(function_exists('apc_cache_info')): ?>
 <?php $_apc_cache_info = apc_cache_info(); ?>
 <div style="text-align:center">
