@@ -1,6 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Contest extends Controller_My {
+
 	public function action_index()
 	{
 		// initial 
@@ -22,6 +23,7 @@ class Controller_Contest extends Controller_My {
 	{
 		// init
 		$cid = $this->request->param('id', 1);
+		$this->view->set_global('cid', $cid);
 
 		// db
 		$c = new Model_Contest();
@@ -34,6 +36,22 @@ class Controller_Contest extends Controller_My {
 		$body->problems = $problems;
 
 		$this->view->title = "Contest - {$contest->title}";
+		$this->view->body = $body;
+	}
+
+	public function action_statistics()
+	{
+		// init
+		$cid = $this->request->param('id', 1);
+		$this->view->set_global('cid', $cid);
+
+		// db
+		$c = new Model_Contest();
+		$stats = $c->get_stat();
+
+		// view
+		$body = View::factory('contest/stat');
+		$this->view->title = "Contest Statistics";
 		$this->view->body = $body;
 	}
 }

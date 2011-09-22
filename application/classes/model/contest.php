@@ -98,7 +98,6 @@ class Model_Contest extends Model_Database {
 
     /**
      *
-     *
      * @param <type> $contest_id
      * @@return
      */
@@ -121,4 +120,7 @@ class Model_Contest extends Model_Database {
         $cache->set($key, $ret, array('contest', 'total'));
         return $ret;
     }
+
+    public function get_statistics($cid)
+    {}
 }
