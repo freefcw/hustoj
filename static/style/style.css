@@ -6,8 +6,39 @@
         Purpose of the stylesheet follows.
 */
 /* --- main --- */
-body{
+body {
 	font: 14px/1.231 sans-serif 'Courier New';
+	text-align: center;
+}
+
+#main {
+	width: 768px;
+	text-align: left;
+	margin:auto;
+}
+
+/* --- body --- */
+#main h1 {
+	text-align: center;
+	margin: auto;
+}
+
+dl dt {
+	margin: 20px 0 10px;
+	font-size: 18px;
+}
+
+.fn-nav, .pagination {
+	text-align: center;
+	margin: auto;
+}
+
+.fn-nav a{
+	margin: 10px;
+}
+
+#problem-info {
+	text-align: center;
 }
 
 /* --- footer --- */
@@ -18,4 +49,5 @@ body{
 }
 #footer ul li, #nav ul li, .inline-ul li{
 	display: inline;
+	margin: auto;
 }

@@ -1,4 +1,8 @@
 <table>
+	<thead>
+		<tr><th>ID</th><th>Title</th><th>Status</th><th>Private</th></tr>
+	</thead>
+	<tbody>
 <?php foreach($list as $c):?>
 <tr>
 <td><?php echo $c->contest_id;?></td>
@@ -7,4 +11,5 @@
 <td><?php echo $c->private;?></td>
 </tr>
 <?php endforeach; ?>
+</tbody>
 </table>

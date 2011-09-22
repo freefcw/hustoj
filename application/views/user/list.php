@@ -1,4 +1,8 @@
 <table>
+	<thead>
+		<tr><th>Rank</th><th>User ID</th><th>Nick</th><th>Solved</th><th>Submit</th><th>Ratio</th></tr>
+	</thead>
+	<tbody>
 <?php $rank = ($page - 1) * $per_page; ?>
 <?php foreach($users as $u):?>
 <?php $rank = $rank + 1; ?>
@@ -16,9 +20,10 @@
 </td>
 </tr>
 <?php endforeach; ?>
+</tbody>
 </table>
+<div class="fn-nav">
 <?php echo html::anchor("/rank/user/{$page}", 'Reflesh Page');?>
-
 <?php echo html::anchor("/problem/status", 'First Page');?>
 <?php if ($page != 1): ?>
 	<?php echo html::anchor(sprintf('/rank/user/%s', $page-1), 'Prev Page');?>
@@ -26,5 +31,5 @@
 <?php if ($page != $total_page): ?>
 	<?php echo html::anchor(sprintf('/rank/user/%s', $page+1), 'Next Page');?>
 <?php endif; ?>
-
 <?php echo html::anchor(sprintf('/rank/user/%s', $total_page), 'Last Page');?>
+</div>

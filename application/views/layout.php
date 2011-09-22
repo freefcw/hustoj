@@ -10,6 +10,7 @@
 <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <body>
+<div id="main">
 <div id="nav">
 <ul>
 <li><?php echo html::anchor('/', 'Home'); ?></li>
@@ -20,7 +21,9 @@
 <li><?php echo html::anchor('/faqs', 'Faqs'); ?></li>
 </ul>
 </div>
+<div id="wrapper">
 <?php echo $body; ?>
+</div>
 <div id="footer">
 <ul>
 <li><?php echo html::anchor('about', 'About');?></li>
@@ -31,4 +34,6 @@
 <li><?php echo html::anchor('term', 'Terms of Service');?></li>
 </ul>
 <div>Copyright © 2003-2011 <?php echo html::anchor('http://acm.hust.edu.cn', 'HUST ACMICPC TEAM');?>. All rights reserved.</div>
-</div></body></html>
+</div>
+</div>
+</body></html>
