@@ -11,9 +11,9 @@ Submissions: <?php echo $p->submit;?>  Solved: <?php echo $p->accepted;?>
 <dt>Output</dt>
 <dd><?php echo $p->output;?></dd>
 <dt>Sample Input</dt>
-<dd><?php echo $p->sample_input;?></dd>
+<dd><pre><?php echo $p->sample_input;?></pre></dd>
 <dt>Sample Output</dt>
-<dd><?php echo $p->sample_output;?></dd>
+<dd><pre><?php echo $p->sample_output;?></pre></dd>
 <dt>Hint</dt>
 <dd><?php echo $p->hint; ?></dd>
 <dt>Source</dt>

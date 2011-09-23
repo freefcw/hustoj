@@ -12,8 +12,8 @@ body {
 }
 
 #main {
-	width: 768px;
-	text-align: left;
+	width: 960px;
+	text-align: center;
 	margin:auto;
 }
 
@@ -22,7 +22,9 @@ body {
 	text-align: center;
 	margin: auto;
 }
-
+dl {
+	text-align: left;
+}
 dl dt {
 	margin: 20px 0 10px;
 	font-size: 18px;
@@ -31,6 +33,10 @@ dl dt {
 .fn-nav, .pagination {
 	text-align: center;
 	margin: auto;
+	width: 800px;
+}
+.pagination a{
+	margin: 3px 5px;
 }
 
 .fn-nav a{
@@ -41,6 +47,27 @@ dl dt {
 	text-align: center;
 }
 
+table {
+	text-align: center;
+	margin: auto;
+}
+
+table tr{
+	text-align: left;
+}
+
+table tr th {
+	text-align: center;
+}
+
+/* ---  misc--- */
+#faqs {
+	text-align: left;
+}
+
+code {
+	white-space: pre;
+}
 /* --- footer --- */
 
 #footer {

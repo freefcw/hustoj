@@ -1,12 +1,12 @@
-<?php for($i = 1; $i <= $pages; $i++): ?>
 <span class="pagination">
+<?php for($i = 1; $i <= $pages; $i++): ?>
 <?php if($i == $page_id):?>
 <?php echo $i;?>
 <?php else: ?>
 <?php echo html::anchor("/problem/list/{$i}", $i);?>
 <?php endif;?>
-</span>
 <?php endfor;?>
+</span>
 
 <table>
 	<thead>
