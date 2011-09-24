@@ -118,6 +118,11 @@ Route::set('auth', '<action>',
 	->defaults(array(
 		'controller' => 'user'
 	));
+Route::set('search', '/problem/search')
+	->defaults(array(
+		'controller' => 'problem',
+		'action' => 'search'
+	));
 
 Route::set('ranklist', 'rank/user(/<id>)')
 	->defaults(array(

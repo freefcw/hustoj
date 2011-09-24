@@ -68,6 +68,10 @@ table tr th {
 code {
 	white-space: pre;
 }
+.search {
+	padding-left: 20px;
+	text-align: left;
+}
 /* --- footer --- */
 
 #footer {

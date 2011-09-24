@@ -172,4 +172,29 @@ class Model_Problem extends Model_Database {
     {
         # TODO: add content
     }
+    
+    public function find_problem($text, $area)
+	{
+		// TODO: add permission
+        $key    = "search-$text-$area";
+        $cache  = Cache::instance();
+        $data   = $cache->get($key);
+        if ($data != null){
+            return $data;
+        }
+		$query = DB::select('problem_id', 'title', 'submit', 'accepted', 'source')
+				->from('problem')
+				->where($area, 'like', "%{$text}%")
+				->order_by('problem_id');
+
+        $result = $query->as_object()->execute();
+
+        $ret = array();
+        foreach($result as $r){
+            $ret[] = $r;
+        }
+        
+        $cache->set($key, $ret, array('search', $text, $area));
+        return $ret;
+	}
 }

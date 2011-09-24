@@ -98,5 +98,30 @@ class Controller_Problem extends Controller_My {
 		$this->view->title = "Summary of {$pid}";
 		$this->view->body = $body;
 	}
+	
+	public function action_search()
+	{
+		// init
+		$text = $this->request->query('text');
+		$area = $this->request->query('area');
+		
+		if ($text === NULL) {
+			// TODO: add better handler
+			$this->action_list();
+		}
+		
+		// db
+		$db = new Model_Problem();
+		// TODO: add filter
+		$list = $db->find_problem($text, $area);
+		
+		// view
+		$body = View::factory('problem/search');
+		$body->search_text = $text;
+		$body->problemlist = $list;
+		
+		$this->view->title = "{$text} search result";
+		$this->view->body = $body;
+	}
 
 } // End Welcome
