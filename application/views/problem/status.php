@@ -31,13 +31,14 @@
 </tbody>
 </table>
 <div class="fn-nav">
-<?php echo html::anchor("/problem/status/{$page}", 'Reflesh Page');?>
-<?php echo html::anchor("/problem/status", 'First Page');?>
+<?php $append = "?pid={$pid}&uid={$uid}&language={$language}&result={$result}"?>
+<?php echo html::anchor("/problem/status/{$page}/{$append}", 'Reflesh Page');?>
+<?php echo html::anchor("/problem/status/{$append}", 'First Page');?>
 <?php if ($page != 1): ?>
-	<?php echo html::anchor(sprintf('/problem/status/%s', $page-1), 'Prev Page');?>
+	<?php echo html::anchor(sprintf("/problem/status/%s/{$append}", $page-1), 'Prev Page');?>
 <?php endif; ?>
 <?php if ($page != $total): ?>
-	<?php echo html::anchor(sprintf('/problem/status/%s', $page+1), 'Next Page');?>
+	<?php echo html::anchor(sprintf("/problem/status/%s/{$append}", $page+1), 'Next Page');?>
 <?php endif; ?>
-<?php echo html::anchor("/problem/status/{$total}", 'Last Page');?>
+<?php echo html::anchor("/problem/status/{$total}/{$append}", 'Last Page');?>
 </div>

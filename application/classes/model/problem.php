@@ -102,21 +102,36 @@ class Model_Problem extends Model_Database {
         return $result;
     }
 
-    public function get_status($page_id = 1, $problem_id = null, $user_id = null, $lanaguage = null, $result = null)
+    public function get_status($page_id = 1, $problem_id = '', $user_id = '', $language = -1, $result = -1)
     {
         // fixme: add more set
-        $key    = "status-{$page_id}--";
-        $cache  = Cache::instance();
-        $data   = $cache->get($key);
-        if ($data != null){
-            return $data;
-        }
         $query = DB::select('solution_id', 'problem_id', 'user_id', 'time', 'memory', 'language', 'result', 'code_length', 'in_date')
                 ->from('solution')
-                //->where()
                 ->offset(($page_id - 1) * 20)
                 ->limit(20)
                 ->order_by('solution_id', 'DESC');
+                
+        if (!(($problem_id == '') AND ($user_id == '') AND ($language == -1) AND ($result == -1)))
+	    {
+	        $query->where_open();
+	        if ($problem_id != '')
+		    {
+		    	$query->where('problem_id', '=', $problem_id);
+		    }
+		    if ($user_id != '')
+		    {
+		    	$query->where('user_id', '=', $user_id);
+		    }
+		    if ($language != -1)
+	        {
+	        	$query->where('language', '=', $language);
+	        }
+	        if ($result != -1)
+	        {
+	        	$query->where('result', '=', $result);
+	        }
+	        $query->where_close();
+    	}
 
         $result = $query->as_object()->execute();
 
@@ -124,8 +139,7 @@ class Model_Problem extends Model_Database {
         foreach($result as $r){
             $ret[] = $r;
         }
-        
-        $cache->set($key, $ret, array('problem', 'page'));
+
         return $ret;
     }
 
@@ -196,5 +210,47 @@ class Model_Problem extends Model_Database {
         
         $cache->set($key, $ret, array('search', $text, $area));
         return $ret;
+	}
+	
+	public function get_status_count($problem_id = '', $user_id = '', $language = -1, $result = -1)
+	{   
+        $sql = 'SELECT count(*) AS total FROM solution';
+        
+		$append = '';
+        if (!(($problem_id == '') AND ($user_id == '') AND ($language == -1) AND ($result == -1)))
+	    {
+			$append = ' WHERE (';
+			$flag = FALSE;
+	        if ($problem_id != '')
+		    {
+		    	$append = $append."'problem_id' = '{$problem_id}'";
+		    	$flag = TRUE;
+		    }
+		    if ($user_id != '')
+		    {
+		    	if ($flag) $append = $append. ' AND ';
+		    	$append = $append."'user_id' = '{$user_id}'";
+		    	$flag = TRUE;
+		    }
+		    if ($language != -1)
+	        {
+	        	if ($flag) $append = $append. ' AND ';
+	        	$append = $append."'language' = '{$language}'";
+	        	$flag = TRUE;
+	        }
+	        if ($result != -1)
+	        {
+	        	if ($flag) $append = $append. ' AND ';
+	        	$append = $append."'result' = '{$result}'";
+	        	$flag = TRUE;
+	        }
+	        $append = $append. ')';
+    	}
+    	$sql = $sql. $append;
+
+    	$result = $this->_db->query(Database::SELECT, $sql, TRUE);
+    	$ret = $result->current()->total;
+    	
+    	return $ret;
 	}
 }
