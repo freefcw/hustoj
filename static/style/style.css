@@ -48,6 +48,7 @@ dl dt {
 }
 
 table {
+	width: 900px;
 	text-align: center;
 	margin: auto;
 }
@@ -68,8 +69,11 @@ table tr th {
 code {
 	white-space: pre;
 }
+.filter label{
+	margin-left: 6px;
+}
 .search {
-	padding-left: 20px;
+	padding-left: 30px;
 	text-align: left;
 }
 /* --- footer --- */

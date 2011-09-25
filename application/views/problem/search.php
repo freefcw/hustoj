@@ -1,4 +1,4 @@
-<h1>Search Result of '<?php echo $search_text;?>' </h1>
+<h1>Search Result of '<?php echo $search_text;?>' in <?php echo $area?> </h1>
 <?php echo Form::open('/problem/search', array('method' => 'get', 'class'=>'search'));?>
 <?php echo Form::label('text', 'Search:');?>
 <?php echo Form::input('text');?>

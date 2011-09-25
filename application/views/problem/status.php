@@ -1,3 +1,15 @@
+<?php echo Form::open('/problem/status', array('method' => 'get', 'class'=>'filter'));?>
+<?php echo Form::label('pid', 'Problem ID:');?>
+<?php echo Form::input('pid');?>
+<?php echo Form::label('uid', 'User ID:');?>
+<?php echo Form::input('uid');?>
+<?php echo Form::label('language', 'Language:');?>
+<?php echo Form::select('language', array('-1' => 'All', '0'=>'C', '1'=>'C++', '2'=>'Pascal', '3'=>'Java', '4'=>'Ohters'), '-1'); ?>
+<?php echo Form::label('result', 'Result:');?>
+<?php echo Form::select('result', array("-1"=>"All", "4"=>"Accepted", "5"=>"Presentation Error", "6"=>"Wrong Answer",
+	"7"=>"Time Limit Exceed", "8"=>"Memory Limit Exceed", "9"=>"Output Limit Exceed", "10"=>"Runtime Error", "11"=>"Compile Error", "0"=>"Pending", "1"=>"Pending Rejudging", "2"=>"Compiling", "3"=>"Running &amp; Judging"), '-1'); ?>
+<?php echo Form::submit(NULL, 'Filter');?>
+<?php echo Form::close();?>
 <table>
 	<thead>
 		<tr><th>Run ID</th><th>User ID</th><th>Problem</th><th>Result</th><th>Time</th><th>Memory</th><th>Language</th><th>Code Length</th><th>Submit Time</th></tr>

@@ -9,7 +9,7 @@
 </span>
 <?php echo Form::open('/problem/search', array('method' => 'get', 'class'=>'search'));?>
 <?php echo Form::label('text', 'Search:');?>
-<?php echo Form::input('text');?>
+<?php echo Form::input('text');?> in
 <?php echo Form::select('area', array('title' => 'Title', 'source'=>'Source'), 'Title'); ?>
 <?php echo Form::submit(NULL, 'Search');?>
 <?php echo Form::close();?>

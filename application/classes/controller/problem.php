@@ -51,6 +51,29 @@ class Controller_Problem extends Controller_My {
 	{
 		// init
 		$page = $this->request->param('id', 1);
+		$pid = $this->request->query('pid');
+		$uid = $this->request->query('uid');
+		$language = $this->request->query('language');
+		$result = $this->request->query('result');
+		
+		// validation
+		$validation = Validation::factory(array(
+			'pid' => $pid,
+			'uid' => $uid,
+			'language' => $language,
+			'result' => $result
+			));
+		$validation->rule('pid', 'numeric')
+			->rule('uid', 'regex', array(':value', '/^\w+$/'))
+			->rule('language', 'numeric')
+			->rule('result', 'numeric');
+			
+		if($validation->check())
+		{
+			// TODO: add more handler
+		} else {
+			echo "error";
+		}
 
 		// db
 		$db = new Model_Problem();
@@ -79,15 +102,15 @@ class Controller_Problem extends Controller_My {
 	public function action_summary()
 	{
 		// init
-		$pid = $this->request->param('id');
-		if ($pid === NULL) {
+		$page_id = $this->request->param('id');
+		if ($page_id === NULL) {
 			# TODO: redirect to back?
 		}
 
 		// db
 		$p = new Model_Problem();
-		$summary = $p->get_summary($pid);
-		$best_solution = $p->get_best_solution($pid);
+		$summary = $p->get_summary($page_id);
+		$best_solution = $p->get_best_solution($page_id);
 
 		// view
 
@@ -95,7 +118,7 @@ class Controller_Problem extends Controller_My {
 		$body->summary = $summary;
 		$body->solutions = $best_solution;
 
-		$this->view->title = "Summary of {$pid}";
+		$this->view->title = "Summary of {$page_id}";
 		$this->view->body = $body;
 	}
 	
@@ -110,6 +133,8 @@ class Controller_Problem extends Controller_My {
 			$this->action_list();
 		}
 		
+		// TODO: validation
+		
 		// db
 		$db = new Model_Problem();
 		// TODO: add filter
@@ -117,6 +142,8 @@ class Controller_Problem extends Controller_My {
 		
 		// view
 		$body = View::factory('problem/search');
+		
+		$body->area = $area;
 		$body->search_text = $text;
 		$body->problemlist = $list;
 		
