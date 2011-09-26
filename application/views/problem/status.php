@@ -20,10 +20,10 @@
 <td><?php echo $i->solution_id;?></td>
 <td><?php echo html::anchor("/problem/show/{$i->problem_id}", $i->problem_id);?></td>
 <td><?php echo html::anchor("/user/{$i->user_id}", $i->user_id);?></td>
-<td><?php echo $i->result;?></td>
+<td><?php echo OJ::jresult($i->result);?></td>
 <td><?php echo $i->time;?>ms</td>
 <td><?php echo $i->memory;?>kb</td>
-<td><?php echo $i->language;?></td>
+<td><?php echo OJ::lang($i->language);?></td>
 <td><?php echo $i->code_length;?></td>
 <td><?php echo $i->in_date;?></td>
 </tr>
