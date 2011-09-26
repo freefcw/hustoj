@@ -12,7 +12,7 @@
 <?php echo Form::close();?>
 <table>
 	<thead>
-		<tr><th>Run ID</th><th>User ID</th><th>Problem</th><th>Result</th><th>Time</th><th>Memory</th><th>Language</th><th>Code Length</th><th>Submit Time</th></tr>
+		<tr><th>Run ID</th><th>Problem</th><th>User ID</th><th>Result</th><th>Time</th><th>Memory</th><th>Language</th><th>Code Length</th><th>Submit Time</th></tr>
 	</thead>
 	<tbody>
 <?php foreach($list as $i): ?>

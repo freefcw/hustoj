@@ -96,7 +96,7 @@ class Controller_Problem extends Controller_My {
 		$body->language = $language;
 		$body->result = $result;
 
-		$this->view->title = 'status';
+		$this->view->title = 'STATUS';
 		$this->view->body = $body;
 	}
 

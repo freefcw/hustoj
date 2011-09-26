@@ -12,7 +12,11 @@
 	<tbody>
 <?php foreach($problemlist as $p): ?>
 <tr><td class="pid"><?php echo $p->problem_id; ?></td>
-<td class="ptitle"><?php echo html::anchor("/problem/show/{$p->problem_id}", $p->title);?> <span> - <?php echo $p->source;?></span></td>
+<td class="ptitle"><?php echo html::anchor("/problem/show/{$p->problem_id}", $p->title);?>
+	<?php if ($p->source != ''): ?>
+		<span> - <?php echo $p->source;?></span>
+	<?php endif;?>
+	</td>
 <td><?php echo $p->accepted; ?>/<?php echo $p->submit; ?></td>
 </tr>
 <?php endforeach;?>
