@@ -25,7 +25,12 @@ class OJ {
 		 '1'=>'C++',
 		 '2'=>'Pascal',
 		 '3'=>'Java'
-		);
+	);
+	
+	public static $private = array(
+		'0' => 'Public',
+		'1' => 'Private'
+	);
 
 	public static function jresult($value)
 	{
@@ -36,5 +41,10 @@ class OJ {
 	{
 		if ($value > 3) return 'Others';
 		return OJ::$language[$value];
+	}
+	
+	public static function is_private($value)
+	{
+		return OJ::$private[$value];
 	}
 }
