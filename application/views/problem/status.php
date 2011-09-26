@@ -31,7 +31,34 @@
 </tbody>
 </table>
 <div class="fn-nav">
-<?php $append = "?pid={$pid}&uid={$uid}&language={$language}&result={$result}"?>
+<?php
+	$append = '';
+	$flag = TRUE;
+	if ($pid != '')
+	{
+		if ($flag) $append = '?';
+		$append = $append. "pid={$pid}";
+		$flag = FALSE;
+	}
+	if ($uid != '')
+	{
+		if ($flag) $append = '?';
+		$append = $append. "uid={$uid}";
+		$flag = FALSE;
+	}
+	if ($language != -1)
+	{
+		if ($flag) $append = '?';
+		$append = $append. "language={$language}";
+		$flag = FALSE;
+	}
+	if ($result != -1)
+	{
+		if ($flag) $append = '?';
+		$append = $append. "result={$result}";
+		$flag = FALSE;
+	}
+?>
 <?php echo html::anchor("/problem/status/{$page}/{$append}", 'Reflesh Page');?>
 <?php echo html::anchor("/problem/status/{$append}", 'First Page');?>
 <?php if ($page != 1): ?>

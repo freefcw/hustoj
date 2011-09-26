@@ -223,25 +223,25 @@ class Model_Problem extends Model_Database {
 			$flag = FALSE;
 	        if ($problem_id != '')
 		    {
-		    	$append = $append."'problem_id' = '{$problem_id}'";
+		    	$append = $append."`problem_id` = '{$problem_id}'";
 		    	$flag = TRUE;
 		    }
 		    if ($user_id != '')
 		    {
 		    	if ($flag) $append = $append. ' AND ';
-		    	$append = $append."'user_id' = '{$user_id}'";
+		    	$append = $append."`user_id` = '{$user_id}'";
 		    	$flag = TRUE;
 		    }
 		    if ($language != -1)
 	        {
 	        	if ($flag) $append = $append. ' AND ';
-	        	$append = $append."'language' = '{$language}'";
+	        	$append = $append."`language` = '{$language}'";
 	        	$flag = TRUE;
 	        }
 	        if ($result != -1)
 	        {
 	        	if ($flag) $append = $append. ' AND ';
-	        	$append = $append."'result' = '{$result}'";
+	        	$append = $append."`result` = '{$result}'";
 	        	$flag = TRUE;
 	        }
 	        $append = $append. ')';
