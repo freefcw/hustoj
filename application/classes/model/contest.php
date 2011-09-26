@@ -24,7 +24,7 @@ class Model_Contest extends Model_Database {
 
         $query = DB::select()
                 ->from('contest')
-                ->order_by('start_time', 'DESC')
+                ->order_by('contest_id', 'DESC')
                 ->offset(($page - 1) * 25)
                 ->limit(25);
 
