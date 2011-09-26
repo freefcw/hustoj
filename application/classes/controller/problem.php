@@ -102,7 +102,10 @@ class Controller_Problem extends Controller_My {
 
 	public function action_submit()
 	{
+		$pid = $this->request->param('id', '');
+		
 		$body = View::factory('problem/submit');
+		$body->pid = $pid;
 
 		$this->view->title = 'Submit';
 		$this->view->body = $body;

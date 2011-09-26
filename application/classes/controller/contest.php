@@ -34,6 +34,7 @@ class Controller_Contest extends Controller_My {
 		$body = View::factory('contest/show');
 		$body->contest = $contest;
 		$body->problems = $problems;
+		$body->title = "Contest - {$contest->title}";
 
 		$this->view->title = "Contest - {$contest->title}";
 		$this->view->body = $body;
