@@ -7,6 +7,13 @@ class Controller_My extends Controller {
 	public function before()
 	{
 		$this->view = View::factory('layout');
+		
+		# TODO: add user control
+		#Session::instance()->get('login')
+		# TODO: add admin control
+		$this->view->username = "";
+		#$session = new Session();
+		#if ($session.get())
 	}
 
 	public function after()

@@ -1,5 +1,5 @@
 <h1>About <?php echo $u->user_id ?></h1>
-<dl>
+<dl id="user-info">
 <dt>nick:</dt>
 <dd><?php echo $u->nick;?></dd>
 <dt>school:</dt>
