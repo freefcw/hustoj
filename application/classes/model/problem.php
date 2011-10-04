@@ -172,19 +172,39 @@ class Model_Problem extends Model_Database {
         // get all status
         $sql = "SELECT result, count(*) as total FROM solution WHERE problem_id='{$pid}' AND result>=4 GROUP BY result ORDER BY result";
         $result = $this->_db->query(Database::SELECT, $sql, TRUE);
-        $data['more'] = array();
-        foreach($result as $r)
-        {
-            $data['more'][$r->result]= $r->total;
-        }
+
+        $ret = $result->current()->total;
+
+        $cache->set($key, $ret, array('problem','total'));
 
         $cache->set($key, $data, array('problem', 'summary', $pid));
         return $data;
     }
 
-    public function get_best_solution($pid)
+    public function get_best_solution($pid, $start = 0, $limit = 20)
     {
         # TODO: add content
+		$key	= "search-$pid-best";
+		$cache	= Cache::instance();
+		$data	= $cache->get($key);
+		if ($data != null) {
+			return $data;
+		}
+		$sql 	= "SELECT solution_id, count(*) att, user_id, language, min(10000000000000000000 + time *100000000000 + memory *100000 + code_length) score, in_date
+					FROM solution
+					WHERE result = 4
+					GROUP BY user_id
+					ORDER BY score, in_date
+					LIMIT $start, $limit";
+		$result = $this->_db->query(Database::SELECT, $sql, TRUE);
+
+		$ret = array();
+		foreach($result as $i)
+		{
+			$ret[] = $i
+		}
+
+        $cache->set($key, $ret, array('problem','solution'));
     }
     
     public function find_problem($text, $area)

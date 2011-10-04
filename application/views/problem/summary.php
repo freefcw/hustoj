@@ -9,3 +9,15 @@
 <dt><?php echo $key;?></dt><dd><?php echo $value;?></dd>
 <?php endforeach;?>
 </dl>
+<table>
+	<thead>
+		<tr>
+			<th>Rank</th><th>RunID</th><th>Memory</th><th>Time</th><th>Language</th><th>Code Length</th><th>Time</th>
+		</tr>
+	<tbody>
+		<?php $rank = 0;?>
+		<?php foreach($jstatus as $s): ?>
+		<?php $rank = $rank + 1; ?>
+		<tr>
+			<td><?php echo $rank; ?>
+			<td><?php echo $s->runid;?>
