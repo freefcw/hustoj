@@ -1,6 +1,4 @@
-<php <!--
-	TODO add random function ?
--->#echo html::anchor('/problem/ramdom', 'Random'); ?>
+<?php echo html::anchor('/problem/ramdom', 'Random'); ?>
 <span class="pagination">
 <?php for($i = 1; $i <= $pages; $i++): ?>
 <?php if($i == $page_id):?>

@@ -201,7 +201,7 @@ class Model_Problem extends Model_Database {
 		$ret = array();
 		foreach($result as $i)
 		{
-			$ret[] = $i
+			$ret[] = $i;
 		}
 
         $cache->set($key, $ret, array('problem','solution'));
