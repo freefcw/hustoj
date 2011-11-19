@@ -1,4 +1,4 @@
-<table>
+<table class="zebra-striped">
 	<thead>
 		<tr><th>Rank</th><th>User ID</th><th>Nick</th><th>Solved</th><th>Submit</th><th>Ratio</th></tr>
 	</thead>
@@ -22,9 +22,9 @@
 <?php endforeach; ?>
 </tbody>
 </table>
-<div class="fn-nav">
-<?php echo html::anchor("/rank/user/{$page}", 'Reflesh Page');?>
-<?php echo html::anchor("/problem/status", 'First Page');?>
+<div class="pagination" style="width: 500px;margin-left: auto;margin-right: auto;">
+<?php echo html::anchor("/rank/user/{$page}", 'Reflesh');?>
+<?php echo html::anchor("/rank/user", 'First Page');?>
 <?php if ($page != 1): ?>
 	<?php echo html::anchor(sprintf('/rank/user/%s', $page-1), 'Prev Page');?>
 <?php endif; ?>

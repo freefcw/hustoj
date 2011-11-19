@@ -1,4 +1,4 @@
-<table>
+<table class="zebra-striped">
 	<thead>
 		<tr><th>ID</th><th>Title</th><th>Status</th><th>Private</th></tr>
 	</thead>

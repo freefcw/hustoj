@@ -7,12 +7,12 @@
 <meta name="robots" content="index,follow" />
 <title><?php echo $title; ?></title>
 <?php echo HTML::style('static/style/style.css');?>
+<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
 <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <body>
-<div id="main">
-<div id="nav">
-<ul>
+<div class="container">
+<ul class="tabs" style="width: 80%; float: left">
 <li><?php echo html::anchor('/', 'Home'); ?></li>
 <li><?php echo html::anchor('/problem/list', 'Problems'); ?></li>
 <li><?php echo html::anchor('/problem/status', 'Status'); ?></li>
@@ -20,12 +20,15 @@
 <li><?php echo html::anchor('/contest', 'Contest'); ?></li>
 <li><?php echo html::anchor('/faqs', 'Faqs'); ?></li>
 </ul>
-</div>
+<ul class="tabs userinfo" style="width: 20%;float: left;">
+    <li><a href="#">freefcw</a></li>
+</ul>
 <div id="wrapper">
+<h1>HUST Online Judge</h1>
 <?php echo $body; ?>
 </div>
 <div id="footer">
-<ul>
+<ul class="pills" style="width: 480px; margin-left: auto;margin-right: auto;">
 <li><?php echo html::anchor('about', 'About');?></li>
 <li><?php echo html::anchor('links', 'Links');?></li>
 <li><?php echo html::anchor('status', 'Status');?></li>
@@ -33,7 +36,7 @@
 <li><?php echo html::anchor('help', 'Help');?></li>
 <li><?php echo html::anchor('term', 'Terms of Service');?></li>
 </ul>
-<div>Copyright © 2003-2011 <?php echo html::anchor('http://acm.hust.edu.cn', 'HUST ACMICPC TEAM');?>. All rights reserved.</div>
+<div style="width: 400px; margin-left: auto;margin-right: auto;">Copyright © 2003-2011 <?php echo html::anchor('http://acm.hust.edu.cn', 'HUST ACMICPC TEAM');?>. All rights reserved.</div>
 </div>
 </div>
 </body></html>

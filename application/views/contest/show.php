@@ -7,7 +7,7 @@ End at <?php echo $contest->end_time;?>
 <br/>
 Current Time is <?php echo date('Y-m-d H:i:s');?>
 <br/>Status: <?php echo OJ::is_private($contest->private);?>
-<table>
+<table class="zebra-striped">
 	<thead>
 		<tr><th>ID</th><th>Title</th></tr>
 	</thead>
