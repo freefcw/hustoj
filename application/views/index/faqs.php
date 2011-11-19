@@ -1,4 +1,4 @@
-<h1>HUST Online Judge FAQ</h1>
+<h1>FAQ</h1>
 <hr>
 <ol id="faqs">
 	<li>

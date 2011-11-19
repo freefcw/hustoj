@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="container">
-<ul class="tabs" style="width: 80%; float: left">
+<ul class="tabs" style="width: 75%;float: left">
 <li><?php echo html::anchor('/', 'Home'); ?></li>
 <li><?php echo html::anchor('/problem/list', 'Problems'); ?></li>
 <li><?php echo html::anchor('/problem/status', 'Status'); ?></li>
@@ -20,8 +20,10 @@
 <li><?php echo html::anchor('/contest', 'Contest'); ?></li>
 <li><?php echo html::anchor('/faqs', 'Faqs'); ?></li>
 </ul>
-<ul class="tabs userinfo" style="width: 20%;float: left;">
-    <li><a href="#">freefcw</a></li>
+<ul class="tabs userinfo" style="width: 25%;float: right;">
+    <li><a href="#">My Profile</a></li>
+    <li><a href="#">Setting</a></li>
+    <li><a href="#">More</a></li>
 </ul>
 <div id="wrapper">
 <h1>HUST Online Judge</h1>
