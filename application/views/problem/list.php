@@ -9,7 +9,7 @@
 </ul></div>
 <?php echo Form::open('/problem/search', array('method' => 'get', 'class'=>'search'));?>
 <?php echo Form::label('text', 'Find ', array("class" => ""));?>&nbsp;
-<?php echo Form::input('text');?>&nbsp;in&nbsp;<?php echo Form::select('area', array('title' => 'Title', 'source'=>'Source'), 'Title'); ?>
+<?php echo Form::input('text');?>&nbsp;in&nbsp;<?php echo Form::select('area', array('title' => 'Title', 'source'=>'Source'), 'Title', array('class' => 'span2')); ?>
  <?php echo Form::submit(NULL, 'Search', array('class'=>'btn'));?> <?php echo html::anchor('/problem/ramdom', 'Random a problem?', array('class'=>'btn primary')); ?>
 <?php echo Form::close();?>
 <table class="zebra-striped">

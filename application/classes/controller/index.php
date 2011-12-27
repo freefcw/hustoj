@@ -27,8 +27,12 @@ class Controller_Index extends Controller_My {
 
 	public function action_status()
 	{
-
-		
+		//TODO: add visible
+		//TODO: 1. add total problems
+		//TODO: 2. add total users
+		//TODO: 3. add total submission status, total, tle, ac, re, etc.
+		//TODO: 4. server status, system load, network...
+		//TODO:
 		$this->view->title = "HUST OJ STATUS";
 
 		$body = View::factory('index/status');
