@@ -5,3 +5,7 @@
     Description:
         Purpose of the stylesheet follows.
 */
+.contest-nav{
+    width: 60%;
+    margin: 18px auto !important;
+}
