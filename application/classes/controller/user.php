@@ -4,7 +4,6 @@ class Controller_User extends Controller_My {
 
 	public function action_list()
 	{
-		
 		// initial
 		$page = $this->request->param('id', 1);
 
@@ -47,7 +46,7 @@ class Controller_User extends Controller_My {
 
 	public function action_modify()
 	{
-		if ($uid == NULL) $this->action_login();
+
 	}
 
 	public function action_register()
@@ -56,15 +55,44 @@ class Controller_User extends Controller_My {
 		$this->view->body = $body;
 	}
 
+    public function action_signin()
+    {
+        // if not POST, then redirect to login page
+        if ($this->request->method() == 'GET') {
+            $this->request->redirect('/login');
+        }
+
+        $request = $this->request;
+        $username = $request->post('username');
+        $password = $request->post('pwd');
+
+        $loginok = Auth::instance()->login($username, $password, true);
+
+        if ($loginok) {
+            $request->redirect('/home');
+        } else {
+            $body = View::factory('user/login');
+
+            $body->error = "username or password error";
+
+            $body->post = array('username' => $username);
+            $this->view->title = 'Sign In';
+
+            $this->view->body = $body;
+        }
+    }
+
 	public function action_login()
 	{
-		// view
-		$body = View::factory('user/login');
-		$body->username = Cookie::get('uname', '');
-		$body->errors = array();
-		$body->post = array('username' => '');
+        if ($this->view->current_user != null) {
+            $this->request->redirect('/home');
+        }
+        // view
+      	$body = View::factory('user/login');
 
-		$this->view->title = 'Welcome Back';
+		$body->post = array('username' => Cookie::get('username', ''));
+
+		$this->view->title = 'Welcome';
 
 		$this->view->body = $body;
 	}
@@ -76,7 +104,11 @@ class Controller_User extends Controller_My {
 	{
 		$session = Session::instance();
 		$session->delete('loginok');
+        Auth::instance()->logout();
 
+        $this->request->redirect('/home');
+
+        //TODO: show a logout page
 		$body = View('user/logout');
 		$body->msg = 'Logout Ok';
 
