@@ -26,7 +26,7 @@
 <?php endforeach;?>
 </tbody>
 </table>
-<div class="pagination" style="width: 400px;margin-left: auto;margin-right: auto">
+<div class="pagination" style="width: 480px;margin-left: auto;margin-right: auto">
     <ul>
 <?php
 	$append = '';
