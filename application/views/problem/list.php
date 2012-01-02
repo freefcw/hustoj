@@ -1,4 +1,4 @@
-<div class="pagination" style="width: 200px;margin-left: auto;margin-right: auto;"><ul>
+<div class="pagination problem-pagination"><ul>
 <?php for($i = 1; $i <= $pages; $i++): ?>
 <?php if($i == $page_id):?>
 <li class="active"><?php echo html::anchor("/problem/list/{$i}", $i, array('class' => 'active'));?></li>
@@ -7,10 +7,10 @@
 <?php endif;?>
 <?php endfor;?>
 </ul></div>
-<?php echo Form::open('/problem/search', array('method' => 'get', 'class'=>'search'));?>
+<?php echo Form::open('/problem/search', array('method' => 'get', 'class'=>'search sform'));?>
 <?php echo Form::label('text', 'Find ', array("class" => ""));?>&nbsp;
-<?php echo Form::input('text');?>&nbsp;in&nbsp;<?php echo Form::select('area', array('title' => 'Title', 'source'=>'Source'), 'Title', array('class' => 'span2')); ?>
- <?php echo Form::submit(NULL, 'Search', array('class'=>'btn'));?> <?php echo html::anchor('/problem/ramdom', 'Random a problem?', array('class'=>'btn primary')); ?>
+<?php echo Form::input('text', '', array('class' => 'span2'));?>&nbsp;in&nbsp;<?php echo Form::select('area', array('title' => 'Title', 'source'=>'Source'), 'Title', array('class' => 'search-cat')); ?>
+ <?php echo Form::submit(NULL, 'Search', array('class'=>'btn'));?> <?php echo html::anchor('/problem/ramdom', 'Random', array('class'=>'btn primary')); ?>
 <?php echo Form::close();?>
 <table class="zebra-striped">
 	<thead>

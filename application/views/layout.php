@@ -31,7 +31,7 @@
     <li><a href="/logout">More</a></li>
 </ul>
 <div id="wrapper">
-<h1>HUST Online Judge</h1>
+<div class="banner"><h1>HUST Online Judge</h1></div>
 <?php echo $body; ?>
 </div>
 <div id="footer">

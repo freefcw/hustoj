@@ -9,3 +9,16 @@
     width: 60%;
     margin: 18px auto !important;
 }
+.problem-pagination{
+    width: 200px;
+    float: left;
+}
+
+.sform{
+    width: 500px;
+    float: right;
+    margin-top: 20px;
+}
+.search-cat{
+    width: 60px;
+}
