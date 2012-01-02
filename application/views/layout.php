@@ -35,7 +35,7 @@
 <?php echo $body; ?>
 </div>
 <div id="footer">
-<ul class="pills" style="width: 480px; margin-left: auto;margin-right: auto;">
+<ul>
 <li><?php echo html::anchor('about', 'About');?></li>
 <li><?php echo html::anchor('links', 'Links');?></li>
 <li><?php echo html::anchor('status', 'Status');?></li>
@@ -43,7 +43,7 @@
 <li><?php echo html::anchor('help', 'Help');?></li>
 <li><?php echo html::anchor('term', 'Terms of Service');?></li>
 </ul>
-<div style="width: 400px; margin-left: auto;margin-right: auto;">Copyright © 2003-2011 <?php echo html::anchor('http://acm.hust.edu.cn', 'HUST ACMICPC TEAM');?>. All rights reserved.</div>
+<p id="copyright">Copyright © 2003-2011 <?php echo html::anchor('http://acm.hust.edu.cn', 'HUST ACMICPC TEAM');?>. All rights reserved.</p>
 </div>
 </div>
 </body></html>
