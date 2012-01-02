@@ -20,10 +20,15 @@
 <li><?php echo html::anchor('/contest', 'Contest'); ?></li>
 <li><?php echo html::anchor('/faqs', 'Faqs'); ?></li>
 </ul>
+    <?php if ($current_user == null): ?>
+<ul class="tabs userinfo" style="width: 14%;float: right;padding-left: 11%">
+    <li><a href="/login">Login</a></li>
+    <?php else: ?>
 <ul class="tabs userinfo" style="width: 25%;float: right;">
-    <li><a href="#">My Profile</a></li>
-    <li><a href="#">Setting</a></li>
-    <li><a href="#">More</a></li>
+    <li><a href="/profile">My Profile</a></li>
+    <li><a href="/setting">Setting</a></li>
+    <?php endif;?>
+    <li><a href="/logout">More</a></li>
 </ul>
 <div id="wrapper">
 <h1>HUST Online Judge</h1>

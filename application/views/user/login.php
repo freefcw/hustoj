@@ -1,15 +1,11 @@
-<?php echo Form::open('/user/login'); ?>
-<?php if ($errors): ?>
+<?php if (isset($error)): ?>
 <p class="message">Some errors were encountered, please check the details you entered.</p>
-<ul class="errors">
-<?php foreach ($errors as $message): ?>
-    <li><?php echo $message ?></li>
-<?php endforeach ?>
+<?php echo $error; ?>
 <?php endif ?>
-<dl>
-<dt><?php echo Form::label('username', 'Username');?></dt>
-<dd><?php echo Form::input('username', $post['username']) ?></dd>
-<dt><?php echo Form::label('password', 'Password');?></dt>
-<dd><?php echo Form::password('password') ?></dd>
-<?php echo Form::submit(NULL, 'Login'); ?>
-<?php echo Form::close(); ?>
+<form action="/signin" method="post" class="login">
+    <fieldset style="width: 220px;">
+    <label><span>Username or Email</span><input name="username" type="text" value="<?php echo $post['username']; ?>"/></label>
+    <label><span>Password</span><input type="password" name="pwd"/></label>
+    </fieldset>
+    <input value="Login" type="submit" class="btn">
+</form>
