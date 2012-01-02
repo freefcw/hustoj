@@ -66,7 +66,7 @@ class Controller_Index extends Controller_My {
 		$this->view->body = $body;
 	}
 
-		public function action_help()
+	public function action_help()
 	{
 		$this->view->title = 'FAQS';
 
