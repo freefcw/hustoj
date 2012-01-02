@@ -1,7 +1,7 @@
 <h1 class="page-title"><?php echo $p->problem_id;?> -- <?php echo $p->title; ?></h1>
 <div class="content-info">
-Time Limit: <span class="label warning"><?php echo $p->time_limit;?>S</span>  Memory Limit: <span class="label important"><?php echo $p->memory_limit;?>MB</span><br />
-Submissions: <?php echo $p->submit;?>  Solved: <?php echo $p->accepted;?>
+<p>Time Limit: <span class="label warning"><?php echo $p->time_limit;?>S</span>  Memory Limit: <span class="label important"><?php echo $p->memory_limit;?>MB</span><br /></p>
+<p>Submissions: <?php echo $p->submit;?>  Solved: <?php echo $p->accepted;?></p>
 </div>
 <dl id="detail">
 <dt>Desctiption</dt>

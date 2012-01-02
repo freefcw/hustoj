@@ -74,4 +74,12 @@ class Controller_Index extends Controller_My {
 		$this->view->body = $body;
 	}
 
+    public function action_terms()
+    {
+        $this->view->title = 'TERMS';
+
+        $body = View::factory('index/help');
+        $this->view->body = $body;
+    }
+
 } // End Index

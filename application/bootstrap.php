@@ -139,7 +139,7 @@ Route::set('user', 'user/<id>',
 
 Route::set('page', '<action>',
 	array(
-		'action' => '(home|faqs|about|links|contact|status|help)'
+		'action' => '(home|faqs|about|links|contact|status|help|terms)'
 	))
 	->defaults(array(
 		'controller' => 'index'

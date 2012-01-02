@@ -7,6 +7,11 @@
 */
 
 /* navigation  */
+.userinfo  ul.dropdown-menu{
+    min-width: 72px !important;
+    width: 72px !important;
+}
+
 .problem-pagination{
     width: 200px;
     float: left;
@@ -33,12 +38,12 @@
     margin: 10px 0 !important;
 }
 .content-info{
-    font-size: 16px;
+    /*font-size: 16px;*/
     text-align: center;
     margin-bottom: 10px;
 }
-.contest-info label{
-    font-family: serif;
+div.content-info p{
+    margin-bottom: 3px !important;
 }
 
 #detail dt{
