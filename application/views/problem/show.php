@@ -1,6 +1,6 @@
-<h1><?php echo $p->problem_id;?>-- <?php echo $p->title; ?></h1>
-<div id="problem-info">
-Time Limit: <?php echo $p->time_limit;?>S Memory Limit: <?php echo $p->memory_limit;?>MB<br />
+<h1 class="page-title"><?php echo $p->problem_id;?> -- <?php echo $p->title; ?></h1>
+<div class="content-info">
+Time Limit: <span class="label warning"><?php echo $p->time_limit;?>S</span>  Memory Limit: <span class="label important"><?php echo $p->memory_limit;?>MB</span><br />
 Submissions: <?php echo $p->submit;?>  Solved: <?php echo $p->accepted;?>
 </div>
 <dl id="detail">
@@ -19,8 +19,8 @@ Submissions: <?php echo $p->submit;?>  Solved: <?php echo $p->accepted;?>
 <dt>Source</dt>
 <dd><?php echo $p->source; ?></dd>
 </dl>
-<div class="fn-nav">
-<?php echo html::anchor("/problem/submit/{$p->problem_id}", 'Submit');?>
-<?php echo html::anchor("/problem/summary/{$p->problem_id}", 'Summary');?>
-<?php echo html::anchor("/discuss/problem/{$p->problem_id}", 'Discuss');?>
-</div>
+<ul id="fn-nav" class="pills">
+<li><?php echo html::anchor("/problem/submit/{$p->problem_id}", 'Submit');?></li>
+<li><?php echo html::anchor("/problem/summary/{$p->problem_id}", 'Summary');?></li>
+<li><?php echo html::anchor("/discuss/problem/{$p->problem_id}", 'Discuss');?></li>
+</ul>
