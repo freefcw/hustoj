@@ -53,7 +53,16 @@ class Controller_Contest extends Controller_My {
         }
 
         $db = new Model_Contest();
-        $c = $db->get_standing($cid);
+        $standing = $db->get_standing($cid);
+        $p_count = count($db->get_contest_problems($cid));
+
+        $body = View::factory('contest/standing');
+        $body->standing = $standing;
+        $body->p_count = $p_count;
+
+        $this->view->set_global('cid', $cid);
+        $this->view->title = 'Standing';
+        $this->view->body = $body;
     }
 
 	public function action_statistics()

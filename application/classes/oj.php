@@ -47,4 +47,18 @@ class OJ {
 	{
 		return OJ::$private[$value];
 	}
+
+    public static function contest_pid($pid)
+    {
+        return chr(64 + $pid);
+    }
+
+    public static function contest_time($time)
+    {
+        $sec = $time % 60;
+        $time = $time / 60;
+        $minute = $time % 60;
+        $hour = $time / 60;
+        return sprintf("%02d:%02d:%02d", $hour, $minute, $sec);
+    }
 }
