@@ -11,7 +11,9 @@
     min-width: 72px !important;
     width: 72px !important;
 }
-
+.userinfo{
+    float: right;
+}
 .problem-pagination{
     width: 200px;
     float: left;
@@ -28,7 +30,7 @@
 
 .contest-nav{
     width: 60%;
-    margin: 0px auto !important;
+    margin: 0 auto !important;
 }
 
 /* content */

@@ -17,27 +17,27 @@
 </head>
 <body>
 <div class="container">
-<ul class="tabs" style="width: 74%;float: left">
+<ul class="tabs" style="width: 72%;float: left">
 <li><?php echo html::anchor('/', 'Home'); ?></li>
 <li><?php echo html::anchor('/problem/list', 'Problems'); ?></li>
 <li><?php echo html::anchor('/problem/status', 'Status'); ?></li>
 <li><?php echo html::anchor('/rank/user', 'Rank'); ?></li>
 <li><?php echo html::anchor('/contest', 'Contest'); ?></li>
 <li><?php echo html::anchor('/faqs', 'Faqs'); ?></li>
-<li><?php echo html::anchor('#', 'Discus'); ?></li>
+<li><?php echo html::anchor('#', 'Discuss'); ?></li>
 </ul>
     <?php if ($current_user == null): ?>
-<ul class="tabs userinfo" style="width: 14%;float: right;padding-left: 11%">
+<ul class="tabs userinfo" style="width: 14%;padding-left: 14%">
     <li><a href="/login">Login</a></li>
     <?php else: ?>
-<ul class="tabs userinfo" style="width: 26%;float: right;">
-    <li><a href="/profile">My Profile</a></li>
-    <li><a href="/setting">Setting</a></li>
+<ul class="tabs userinfo" style="width: 28%;">
+    <li><a href="/user/<?php echo $current_user;?>" title="<?php echo $current_user;?>">My Profile</a></li>
+    <li><a href="#">Message</a></li>
     <?php endif;?>
     <li class="dropdown" data-dropdown="dropdown">
     <a href="#" class="dropdown-toggle">More</a>
     <ul class="dropdown-menu">
-      <li><a href="#fat">test</a></li>
+      <li><a href="/setting">Setting</a></li>
       <li><a href="/logout">Logout</a></li>
     </ul>
     </li>
