@@ -38,6 +38,22 @@ class Model_Contest extends Model_Database {
         $cache->set($key, $ret);
         return $ret;
     }
+
+    /**
+     * @param $cid
+     * @return bool
+     *
+     * is contest opened
+     */
+    public function is_contest_open($cid)
+    {
+        $contest = $this->get_contest($cid);
+
+        $now = time();
+
+        if (strtotime($contest->start_time) > $now) return false;
+        return true;
+    }
     /**
 	 * fetch all the problems of contest
 	 *

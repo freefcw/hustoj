@@ -53,6 +53,10 @@ class Controller_Contest extends Controller_My {
         }
 
         $db = new Model_Contest();
+        if ( !$db->is_contest_open($cid))
+        {
+            $error = 'Contest Not Open';
+        }
         $standing = $db->get_standing($cid);
         $p_count = count($db->get_contest_problems($cid));
 
