@@ -17,7 +17,23 @@ class Controller_Account extends Controller_My{
     }
 
     public function action_setting()
-    {}
+   	{
+           $uid = Auth::instance()->get_user();
+           if ($uid == null)
+           {
+               $this->request->redirect('/home');
+           }
+
+           $u = New Model_User();
+           $user = $u->get_user_by_name($uid);
+
+           $body = View::factory('user/edit');
+           $body->userinfo = $user;
+
+           $this->view->title = "Update Imformation";
+           $this->view->body = $body;
+   	}
+
 
     public function action_new()
     {

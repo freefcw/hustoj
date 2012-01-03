@@ -14,6 +14,25 @@
 .userinfo{
     float: right;
 }
+
+.edit-userinfo form dl{
+    width: 600px;
+}
+
+.edit-userinfo{
+    width: 350px;
+    margin: auto;
+    text-align: center;
+}
+
+.edit-userinfo label{
+    width: 300px;
+}
+
+.edit-userinfo label span{
+    margin-right: 10px;
+}
+
 .problem-pagination{
     width: 600px;/* will ok in pagination less than 15, if larger than 15, make li a padding less, or other ui*/
     float: left;

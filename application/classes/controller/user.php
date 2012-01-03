@@ -40,13 +40,6 @@ class Controller_User extends Controller_My {
 
 		$this->view->title = "About {$uid}";
 		$this->view->body = $body;
-
-
-	}
-
-	public function action_modify()
-	{
-
 	}
 
 	public function action_register()

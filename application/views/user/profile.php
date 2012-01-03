@@ -1,5 +1,6 @@
-<h1>About <?php echo $u->user_id ?></h1>
-<dl id="user-info">
+<div class="user-profile">
+<h3 class="page-title">About <?php echo $u->user_id ?></h3>
+<dl id="basic-info">
 <dt>nick:</dt>
 <dd><?php echo $u->nick;?></dd>
 <dt>school:</dt>
@@ -15,3 +16,4 @@
 <dt>reg time:</dt>
 <dd><?php echo $u->reg_time;?></dd>
 </dl>
+</div>
