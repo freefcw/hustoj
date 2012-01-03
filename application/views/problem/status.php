@@ -17,8 +17,8 @@
 <td><?php echo html::anchor("/problem/show/{$i->problem_id}", $i->problem_id);?></td>
 <td><?php echo html::anchor("/user/{$i->user_id}", $i->user_id);?></td>
 <td><?php echo OJ::jresult($i->result);?></td>
-<td><?php echo $i->time;?>ms</td>
-<td><?php echo $i->memory;?>kb</td>
+<td><?php if($i->result == 4) echo $i->time, 'ms'; else echo '-----'?></td>
+<td><?php if($i->result == 4) echo $i->memory, 'kb'; else echo '-----'?></td>
 <td><?php echo OJ::lang($i->language);?></td>
 <td><?php echo $i->code_length;?></td>
 <td><?php echo $i->in_date;?></td>
@@ -31,30 +31,36 @@
 <?php
 	$append = '';
 	$flag = TRUE;
-	if ($pid != '')
+    if (!is_null($pid))
 	{
 		if ($flag) $append = '?';
 		$append = $append. "pid={$pid}";
 		$flag = FALSE;
 	}
-	if ($uid != '')
+	if (!is_null($uid))
 	{
 		if ($flag) $append = '?';
 		$append = $append. "uid={$uid}";
 		$flag = FALSE;
 	}
-	if ($language != -1)
+	if (!is_null($language))
 	{
 		if ($flag) $append = '?';
 		$append = $append. "language={$language}";
 		$flag = FALSE;
 	}
-	if ($result != -1)
+	if (!is_null($result))
 	{
 		if ($flag) $append = '?';
 		$append = $append. "result={$result}";
 		$flag = FALSE;
 	}
+    if (!is_null($cid))
+    {
+        if ($flag) $append = '?';
+        $append = $append. "cid={$cid}";
+        $flag = FALSE;
+    }
 ?>
 <li><?php echo html::anchor("/problem/status/{$page}/{$append}", 'Reflesh Page');?></li>
 <li><?php echo html::anchor("/problem/status/{$append}", 'First Page');?></li>

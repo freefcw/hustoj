@@ -123,4 +123,9 @@ class Model_Contest extends Model_Database {
 
     public function get_statistics($cid)
     {}
+
+    public function get_standing($cid)
+    {
+
+    }
 }

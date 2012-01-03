@@ -144,7 +144,13 @@ Route::set('page', '<action>',
 	->defaults(array(
 		'controller' => 'index'
 	));
-
+Route::set('contest-problem', 'contest/<cid>/problem/<pid>',
+    array('cid' => '\d+',
+        'pid' => '\d+'
+    ))->defaults(array(
+        'controller'    => 'contest',
+        'action'        => 'problem',
+    ));
 Route::set('default', '(<controller>(/<action>(/<id>(/<overflow>))))',
 	array(
 		'id' => '[[:digit:]]{1,}',
