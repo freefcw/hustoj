@@ -27,8 +27,9 @@
 <li><?php echo html::anchor('#', 'Discuss'); ?></li>
 </ul>
     <?php if ($current_user == null): ?>
-<ul class="tabs userinfo" style="width: 14%;padding-left: 14%">
+<ul class="tabs userinfo" style="width: 24%;padding-left: 4%">
     <li><a href="/login">Login</a></li>
+    <li><a href="/account/regiser">Register</a></li>
     <?php else: ?>
 <ul class="tabs userinfo" style="width: 28%;">
     <li><a href="/user/<?php echo $current_user;?>" title="<?php echo $current_user;?>">My Profile</a></li>
@@ -37,8 +38,10 @@
     <li class="dropdown" data-dropdown="dropdown">
     <a href="#" class="dropdown-toggle">More</a>
     <ul class="dropdown-menu">
-      <li><a href="/setting">Setting</a></li>
+      <li><a href="/account/setting">Setting</a></li>
+<?php if ($current_user != null): ?>
       <li><a href="/logout">Logout</a></li>
+<?php endif; ?>
     </ul>
     </li>
 </ul>

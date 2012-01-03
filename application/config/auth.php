@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Created by JetBrains PhpStorm.
  * User: freefcw
  * Date: 12-1-2

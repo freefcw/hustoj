@@ -1,10 +1,8 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
  * User: freefcw
  * Date: 12-1-2
  * Time: 下午5:54
- * To change this template use File | Settings | File Templates.
  */
 
 return array(

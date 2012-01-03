@@ -67,6 +67,29 @@ div.content-info p{
     margin: 0 auto 18px;
 }
 
+
+/* login */
+.login{
+    text-align: center;
+    margin-bottom: 100px;
+}
+.login fieldset{
+    width: 220px;
+    padding-top: 3px;
+    margin: 0 auto 10px;
+}
+.login label{
+    text-align: left;
+}
+.login span{
+    display: block;
+    margin: 0.5em auto 0.7em;
+}
+.login a{
+    position: relative;
+    right: -25px;
+}
+
 /*  footer  */
 #footer ul{
     margin: 0;
