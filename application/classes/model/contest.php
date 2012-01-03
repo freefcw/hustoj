@@ -136,7 +136,35 @@ class Model_Contest extends Model_Database {
     }
 
     public function get_statistics($cid)
-    {}
+    {
+        $key = "contest-stat-{$cid}";
+        $cache = Cache::instance();
+        $data = $cache->get($key, null);
+        if(!is_null($data))
+        {
+           return $data;
+        }
+
+        $sql = "SELECT result, num, language FROM solution WHERE contest_id = {$cid}";
+
+        $result = $this->_db->query(Database::SELECT, $sql, true);
+
+        $data = array();
+        $lang = array();
+        foreach($result as $ret)
+        {
+            if (!array_key_exists($ret->num, $data)) $data[$ret->num] = array();
+            if (!array_key_exists($ret->result, $data[$ret->num])) $data[$ret->num][$ret->result] = 0;
+
+            if (!array_key_exists($ret->num, $lang)) $lang[$ret->num] = array();
+            if (!array_key_exists($ret->language, $lang[$ret->num])) $lang[$ret->num][$ret->language] = 0;
+
+            $data[$ret->num][$ret->result]++;
+            $lang[$ret->num][$ret->language]++;
+        }
+
+        return array('result'=>$data, 'language'=>$lang);
+    }
 
     public function get_contest_solutions($cid)
     {
@@ -165,7 +193,6 @@ class Model_Contest extends Model_Database {
             if(array_key_exists($s->user_id, $data))
             {
                 $team = $data[$s->user_id];
-                $team->set_start_time($start_time);
                 $team->add($s->cpid, strtotime($s->in_date) - $start_time, $s->result);
             } else {
                 $team = new Model_Team();

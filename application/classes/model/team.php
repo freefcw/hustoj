@@ -11,9 +11,8 @@ class Model_Team
     public $time = 0;
     public $p_wa_count;
     public $p_ac_sec;
-    public $start_time;
 
-    function __construct()
+    public function __construct()
     {
         $this->solved = 0;
         $this->p_wa_count = array();
@@ -22,11 +21,7 @@ class Model_Team
         $this->time = 0;
     }
 
-    function set_start_time($time)
-    {
-        $this->start_time = $time;
-    }
-    function add($pid, $sec, $result)
+    public function add($pid, $sec, $result)
     {
         if (!array_key_exists($pid, $this->p_ac_sec))
         {

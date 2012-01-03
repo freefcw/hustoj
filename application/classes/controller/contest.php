@@ -69,19 +69,28 @@ class Controller_Contest extends Controller_My {
         $this->view->body = $body;
     }
 
-	public function action_statistics()
+	public function action_statics()
 	{
 		// init
-		$cid = $this->request->param('id', 1);
+		$cid = $this->request->param('id', null);
+        if ($cid === null)
+        {
+            $this->request->redirect('/home');
+        }
 		$this->view->set_global('cid', $cid);
 
 		// db
 		$c = new Model_Contest();
-		$stats = $c->get_stat();
+		$stats = $c->get_statistics($cid);
 
 		// view
 		$body = View::factory('contest/stat');
+        $body->result = $stats['result'];
+        $body->language = $stats['language'];
+        $body->problem_count = count($c->get_contest_problems($cid));
+
 		$this->view->title = "Contest Statistics";
+        $this->view->set_global('cid', $cid);
 		$this->view->body = $body;
 	}
 
