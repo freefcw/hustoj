@@ -102,7 +102,7 @@ class Model_Problem extends Model_Database {
         return $result;
     }
 
-    public function get_status($page_id = 1, $problem_id = '', $user_id = '', $language = -1, $result = -1)
+    public function get_status($page_id = 1, $problem_id = null, $user_id = null, $cid = null, $language = null, $result = null)
     {
         // fixme: add more set
         $query = DB::select('solution_id', 'problem_id', 'user_id', 'time', 'memory', 'language', 'result', 'code_length', 'in_date')
@@ -110,26 +110,30 @@ class Model_Problem extends Model_Database {
                 ->offset(($page_id - 1) * 20)
                 ->limit(20)
                 ->order_by('solution_id', 'DESC');
-                
-        if (!(($problem_id == '') AND ($user_id == '') AND ($language == -1) AND ($result == -1)))
+
+        if (!is_null($problem_id) AND !is_null($user_id) AND !is_null($user_id) AND !is_null($cid) AND !is_null($language) AND !is_null($result))
 	    {
 	        $query->where_open();
-	        if ($problem_id != '')
+	        if (! is_null($problem_id))
 		    {
 		    	$query->where('problem_id', '=', $problem_id);
 		    }
-		    if ($user_id != '')
+		    if (! is_null($user_id))
 		    {
 		    	$query->where('user_id', '=', $user_id);
 		    }
-		    if ($language != -1)
+		    if (!is_null($language))
 	        {
 	        	$query->where('language', '=', $language);
 	        }
-	        if ($result != -1)
+	        if (!is_null($result))
 	        {
 	        	$query->where('result', '=', $result);
 	        }
+            if (! is_null($cid))
+            {
+                $query->where('contest_id', '=', $cid);
+            }
 	        $query->where_close();
     	}
 

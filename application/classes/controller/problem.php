@@ -51,14 +51,11 @@ class Controller_Problem extends Controller_My {
 	{
 		// init
 		$page = $this->request->param('id', 1);
-		$pid = $this->request->query('pid');
-		$uid = $this->request->query('uid');
-		$language = $this->request->query('language');
-		$result = $this->request->query('result');
-		if ($pid == null) $pid = '';
-		if ($uid == null) $uid = '';
-		if ($language == null) $language = -1;
-		if ($result == null) $result = -1;
+		$pid = $this->request->query('pid', null);
+		$uid = $this->request->query('uid', null);
+        $cid = $this->request->query('cid', null);
+		$language = $this->request->query('language', null);
+		$result = $this->request->query('result', null);
 		
 		$per_page = 20;
 		
@@ -72,7 +69,8 @@ class Controller_Problem extends Controller_My {
 		$validation->rule('pid', 'numeric')
 			->rule('uid', 'regex', array(':value', '/^\w+$/'))
 			->rule('language', 'numeric')
-			->rule('result', 'numeric');
+			->rule('result', 'numeric')
+            ->rule('cid', 'numeric');
 			
 		if($validation->check())
 		{
@@ -83,8 +81,8 @@ class Controller_Problem extends Controller_My {
 
 		// db
 		$db = new Model_Problem();
-		$status = $db->get_status($page, $pid, $uid, $language, $result);
-		$total = $db->get_status_count($pid, $uid, $language, $result);
+		$status = $db->get_status($page, $pid, $uid, $cid, $language, $result);
+		$total = $db->get_status_count($pid, $uid, $cid, $language, $result);
 
 		// view
 		$body = View::factory('problem/status');
@@ -93,6 +91,7 @@ class Controller_Problem extends Controller_My {
 		$body->total = ceil($total / $per_page);
 		$body->pid = $pid;
 		$body->uid = $uid;
+        $body->cid = $cid;
 		$body->language = $language;
 		$body->result = $result;
 
