@@ -1,6 +1,5 @@
 <?php
 /*
- * Created by JetBrains PhpStorm.
  * User: freefcw
  * Date: 12-1-2
  * Time: 下午4:38

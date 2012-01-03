@@ -67,6 +67,32 @@ div.content-info p{
     margin: 0 auto 18px;
 }
 
+.submit{
+    width: 600px;
+    margin: 10px auto 50px;
+    text-align: center;
+}
+
+.submit fieldset{
+    width: 70%;
+    text-align: center;
+    margin: auto;
+}
+.submit fieldset label{
+    position: relative;
+    right: 10px;
+}
+.submit fieldset input{
+    display: block;
+    margin-bottom: 5px;
+}
+.submit textarea{
+    margin: 18px auto 18px;
+    display: block;
+    width: 100%;
+    height: 400px;
+}
+
 
 /* login */
 .login{
