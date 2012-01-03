@@ -173,10 +173,7 @@ class Model_Problem extends Model_Database {
         $sql = "SELECT result, count(*) as total FROM solution WHERE problem_id='{$pid}' AND result>=4 GROUP BY result ORDER BY result";
         $result = $this->_db->query(Database::SELECT, $sql, TRUE);
 
-        $ret = $result->current()->total;
-
-        $cache->set($key, $ret, array('problem','total'));
-
+        $data['more'] = $result->as_array();
         $cache->set($key, $data, array('problem', 'summary', $pid));
         return $data;
     }
@@ -190,7 +187,7 @@ class Model_Problem extends Model_Database {
 		if ($data != null) {
 			return $data;
 		}
-		$sql 	= "SELECT solution_id, count(*) att, user_id, language, min(10000000000000000000 + time *100000000000 + memory *100000 + code_length) score, in_date
+		$sql 	= "SELECT solution_id, count(*) att, user_id, language, memory, time, min(10000000000000000000 + time *100000000000 + memory *100000 + code_length) score, in_date
 					FROM solution
 					WHERE result = 4
 					GROUP BY user_id
@@ -205,6 +202,8 @@ class Model_Problem extends Model_Database {
 		}
 
         $cache->set($key, $ret, array('problem','solution'));
+
+        return $ret;
     }
     
     public function find_problem($text, $area)

@@ -116,7 +116,43 @@ div.content-info p{
     right: -25px;
 }
 
+/* summary */
+
+#summary dl{
+    font-size: 14px;
+    margin-top: 30px;
+    margin-left: 14px;
+    padding-right: 10px;
+    width: 200px;
+    float: left;
+}
+
+#summary dl dt{
+    outline: 1px #87ceeb dotted;
+    margin: 3px 0;
+    width: 150px;
+    height: 1.7em;
+    float: left;
+}
+
+#summary dl dd{
+    margin: 3px 5px;
+    outline: 1px #87ceeb dotted;
+    width: 40px;
+    height: 1.7em;
+    float: right;
+}
+
+table.best-solution{
+    width: 700px;
+}
+
 /*  footer  */
+
+#footer{
+    margin-top: 50px;
+}
+
 #footer ul{
     margin: 0;
     text-align: center;
