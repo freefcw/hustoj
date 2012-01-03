@@ -15,14 +15,16 @@
     float: right;
 }
 .problem-pagination{
-    width: 200px;
+    width: 600px;/* will ok in pagination less than 15, if larger than 15, make li a padding less, or other ui*/
     float: left;
 }
-
 .sform{
-    width: 500px;
+    width: 320px;
     float: right;
     margin-top: 20px;
+}
+.sform label{
+    width: 30px;
 }
 .search-cat{
     width: 60px;
