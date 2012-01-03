@@ -7,7 +7,7 @@
 <dt>Solved User</dt>
 <dd><?php echo $summary['ac_user'];?></dd>
 <?php foreach($summary['more'] as $st):?>
-<dt><?php print OJ::$result[$st->result];?></dt>
+<dt><?php print OJ::$status[$st->result];?></dt>
 <dd><?php print $st->total;?></dd>
 <?php endforeach;?>
 </dl>

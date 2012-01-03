@@ -5,7 +5,7 @@ class OJ {
 	/**
 	 * @var  array  preferred order of attributes
 	 */
-	public static $result = array(
+	public static $status = array(
 		"4"=>"Accepted",
 		"5"=>"Presentation Error",
 		"6"=>"Wrong Answer",
@@ -19,6 +19,17 @@ class OJ {
 		"2"=>"Compiling",
 		"3"=>"Running &amp; Judging"
 	);
+
+    public static $result = array(
+        "4"=>"AC",
+        "5"=>"PE",
+        "6"=>"WA",
+        "7"=>"TLE",
+        "8"=>"MLE",
+        "9"=>"OLE",
+        "10"=>"RE",
+        "11"=>"CE",
+    );
 	
 	public static $language = array(
 		 '0'=>'C',
@@ -34,7 +45,7 @@ class OJ {
 
 	public static function jresult($value)
 	{
-		return OJ::$result[$value];
+		return OJ::$status[$value];
 	}
 	
 	public static function lang($value)
