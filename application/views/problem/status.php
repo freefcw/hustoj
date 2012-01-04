@@ -20,7 +20,7 @@
 <td><?php if($i->result == 4) echo $i->time, 'ms'; else echo '-----'?></td>
 <td><?php if($i->result == 4) echo $i->memory, 'kb'; else echo '-----'?></td>
 <td><?php echo OJ::lang($i->language);?></td>
-<td><?php echo $i->code_length;?></td>
+<td><?php echo $i->code_length;?>B</td>
 <td><?php echo $i->in_date;?></td>
 </tr>
 <?php endforeach;?>
