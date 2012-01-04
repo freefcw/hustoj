@@ -55,7 +55,9 @@
 }
 
 /* content */
-
+.news{
+    margin: 30px 10px;
+}
 .page-title{
     text-align: center;
     margin: 10px 0 !important;
@@ -74,11 +76,18 @@ div.content-info p{
     font-size: 18px;
 }
 
-#detail dd{
+#detail dd, .welcome, .thanks, .about{
     margin: 1em 20px 1em;
     font-size: 1.465em;
     font-family: "minion-pro-1", "minion-pro-2", "Palatino", Georgia, "Times New Roman", serif;
     line-height: 1.7em;
+}
+.welcome p{
+    font-size: 16px;
+}
+
+.thanks ul li{
+    height: 1.7em;
 }
 
 #fn-nav{

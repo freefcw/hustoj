@@ -6,7 +6,15 @@ class Controller_Index extends Controller_My {
 	{
 		$this->view->title = 'Home';
 
+        $cache = Cache::instance();
+        $rss = $cache->get('bitbucket-rss', null);
+        if ($rss === null) {
+            $data = file_get_contents('https://bitbucket.org/freefcw/hustoj/rss');
+            $rss = Feed::parse($data);
+            $cache->set('bitbucket-rss', $rss, 300);
+        }
 		$body = View::factory('index');
+        $body->rss = $rss;
 
 		$this->view->body = $body;
 
