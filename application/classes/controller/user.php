@@ -48,42 +48,30 @@ class Controller_User extends Controller_My {
 		$this->view->body = $body;
 	}
 
-    public function action_signin()
-    {
-        // if not POST, then redirect to login page
-        if ($this->request->method() == 'GET') {
-            $this->request->redirect('/login');
-        }
-
-        $request = $this->request;
-        $username = $request->post('username');
-        $password = $request->post('pwd');
-
-        $loginok = Auth::instance()->login($username, $password, true);
-
-        if ($loginok) {
-            $request->redirect('/home');
-        } else {
-            $body = View::factory('user/login');
-
-            $body->error = "username or password error";
-
-            $body->post = array('username' => $username);
-            $this->view->title = 'Sign In';
-
-            $this->view->body = $body;
-        }
-    }
-
 	public function action_login()
 	{
-        if ($this->view->current_user != null) {
-            $this->request->redirect('/home');
+        $request = $this->request;
+        if (Auth::instance()->get_user() != null) {
+            $request->redirect('/home');
+        }
+        if ($this->request->method() == 'POST') {
+            $username = $request->post('username');
+            $password = $request->post('pwd');
+            $loginok = Auth::instance()->login($username, $password, true);
+
+            if ($loginok)
+            {
+                $request->redirect('/home');
+            }
+
+            $error = 'Username or password error, please try again.';
         }
         // view
       	$body = View::factory('user/login');
+        if (isset($error))
+            $body->error = $error;
 
-		$body->post = array('username' => Cookie::get('username', ''));
+		$body->username = $request->post('username');
 
 		$this->view->title = 'Welcome';
 

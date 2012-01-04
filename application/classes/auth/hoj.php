@@ -9,31 +9,38 @@ class Auth_Hoj extends Kohana_Auth
 {
     protected function _login($username, $password, $remember)
     {
-        if (is_string($password))
-        {
-            // Create a hashed password
-            $password = $this->hash($password);
-        }
+        if (is_string($password)) $password = $this->hash($password);
 
-        //TODO: here make test!
-        if (true)
+        $user = new Model_User();
+        if ($user->auth_user($username, $password))
         {
             // Complete the login
             return $this->complete_login($username);
         }
 
-        // Login failed
         return FALSE;
     }
 
     public function password($username)
     {
-        // Return the password for the username
+        $user = new Model_User();
+        return $user->get_password($username);
     }
-//
+
+    public function hash($pwd)
+    {
+        return md5($pwd);
+    }
+
     public function check_password($password)
     {
-        // Check to see if the logged in user has the given password
+        $username = $this->get_user();
+
+        if ($username == null) {
+           return false;
+        }
+
+        return ($password == $this->password($username));
     }
 //
 //    public function logged_in($role = NULL)

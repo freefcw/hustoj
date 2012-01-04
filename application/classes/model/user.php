@@ -12,9 +12,31 @@ class Model_User extends Model_Database {
         //will load database library into $this->db, you can leave it out if you don't need it
     }
     
-    public function getUserName()
+    public function auth_user($username, $password)
     {
-        
+        $sql = 'SELECT * FROM users WHERE user_id = :username AND password = :password';
+        $query = DB::query(Database::SELECT, $sql);
+        $query->parameters(array(
+            ':username' => $username,
+            ':password' => $password
+        ));
+
+        $result = $query->execute();
+        if ($result->count() == 0 ) return false;
+        return true;
+    }
+
+    public function get_password($username)
+    {
+        $sql = 'SELECT password FROM users WHERE user_id = :username';
+        $query = DB::query(Database::SELECT, $sql);
+        $query->parameters(array(
+            ':username' => $username
+        ));
+
+        $result = $query->execute($is_object=TRUE);
+        if ($result->count() == 0) return null;
+        return $result->current()->password;
     }
     /**
          *
@@ -23,7 +45,7 @@ class Model_User extends Model_Database {
          */
     public function changepassword($user_id, $new_password)
     {
-        $this->db->where('user_id', $user_id);
+        $this->_db->where('user_id', $user_id);
         $this->db->update('users', array('password' => $new_password));
     }
     /**
