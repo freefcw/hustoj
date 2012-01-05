@@ -12,9 +12,9 @@ class Model_User extends Model_Database {
         //will load database library into $this->db, you can leave it out if you don't need it
     }
     
-    public function auth_user($username, $password)
+    public function auth($username, $password)
     {
-        $sql = 'SELECT * FROM users WHERE user_id = :username AND password = :password';
+        $sql = 'SELECT * FROM users WHERE (user_id = :username) AND (password = :password)';
         $query = DB::query(Database::SELECT, $sql);
         $query->parameters(array(
             ':username' => $username,
@@ -22,6 +22,7 @@ class Model_User extends Model_Database {
         ));
 
         $result = $query->execute();
+
         if ($result->count() == 0 ) return false;
         return true;
     }
@@ -34,7 +35,7 @@ class Model_User extends Model_Database {
             ':username' => $username
         ));
 
-        $result = $query->execute($is_object=TRUE);
+        $result = $query->execute(null, TRUE);
         if ($result->count() == 0) return null;
         return $result->current()->password;
     }
@@ -54,7 +55,7 @@ class Model_User extends Model_Database {
          * @param <type> $user_id
          * @return <mixed> user imformation
          */
-    public function get_user_by_name($user_id)
+    public function get_info_by_name($user_id)
     {
         $key = 'user-' . $user_id;
         $cache = Cache::instance();
@@ -62,11 +63,12 @@ class Model_User extends Model_Database {
         if ($data != null) return $data;
 
         $query = DB::select()->where('user_id', '=', $user_id)->from('users');
-        $result = $query->as_object()->execute();
+        //$result = $query->as_object()->execute();
+        $result = $query->execute();
 
         $ret = $result->current();
 
-        $cache->set($key, $ret, 'user');
+        $cache->set($key, $ret, 60);
         return $ret;
     }
 
@@ -118,5 +120,21 @@ class Model_User extends Model_Database {
         $cache->set($key, $ret, array('user','total'));
         return $ret;
     }
- 
+
+    public function update_information($user)
+    {
+        $result = DB::update('users')
+            ->set(array(
+            'password'=> Auth::instance()->hash($user['password']),
+            'school'=> $user['school'],
+            'email'=> $user['email'],
+            'nick'=> $user['nick']))
+            ->where('user_id', '=', $user['user_id'])
+            ->execute(null, true);
+
+        return $result;
+    }
+
+    public function add_user($user)
+    {}
 }
