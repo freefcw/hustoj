@@ -17,21 +17,46 @@ class Controller_Account extends Controller_My{
     }
 
     public function action_setting()
-   	{
-           $uid = Auth::instance()->get_user();
-           if ($uid == null)
-           {
-               $this->request->redirect('/home');
-           }
+    {
+        $request = $this->request;
+        // need login
+        $uid = Auth::instance()->get_user();
+        if ($uid == null) $request->redirect('/home');
 
-           $u = New Model_User();
-           $user = $u->get_user_by_name($uid);
+        if ($request->method() == 'GET')
+        {
+            $u = new Model_User();
+            $user = $u->get_info_by_name($uid);
+        } else {
+            // if POST then update user info
+            $user = $request->post();
+            $user['user_id'] = $uid;
 
-           $body = View::factory('user/edit');
-           $body->userinfo = $user;
+            $u = New Model_User();
+            // check user password
+            if (Auth::instance()->check_password($user['password']))
+            {
+                // if change password
+                if ( strlen($user['newpassword']) > 0
+                    AND ($user['newpassword'] === $user['confirm']))
+                {
+                    $user['password'] = $user['newpassword'];
+                }
+                //TODO: Validation user input, see action_new
+                $ret = $u->update_information($user);
+                $tip = 'Update Success';
+            } else {
+                $error = 'Password Wrong';
+            }
+        }
 
-           $this->view->title = "Update Imformation";
-           $this->view->body = $body;
+        $body = View::factory('user/edit');
+        $body->userinfo = $user;
+        $body->error = isset($error)? $error: null;
+        $body->tip = isset($tip)? $tip: null;
+
+        $this->view->title = "Update Imformation";
+        $this->view->body = $body;
    	}
 
 

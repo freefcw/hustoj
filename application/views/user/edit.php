@@ -1,14 +1,20 @@
 <div class="edit-userinfo">
     <h3 class="page-title">Update Imformation</h3>
+    <?php if (isset($error) AND ($error != null)): ?>
+    <div class="alert-message error err-notice"><p><?php echo $error; ?></p></div>
+    <?php endif ?>
+    <?php if (isset($tip) AND ($tip != null)): ?>
+        <div class="alert-message success err-notice"><p><?php echo $tip; ?></p></div>
+        <?php endif ?>
     <form action="/account/setting" method="POST">
         <fieldset>
-            <label><span>User ID:</span><input type="text" disabled="disabled" value="<?php print $userinfo->user_id;?>"/></label>
-            <label><span>Nick Name:</span><input name="nick" type="text" value="<?php print $userinfo->nick;?>"/></label>
+            <label><span>User ID:</span><input type="text" disabled="disabled" value="<?php print $userinfo['user_id'];?>"/></label>
+            <label><span>Nick Name:</span><input name="nick" type="text" value="<?php print $userinfo['nick'];?>"/></label>
             <label><span>Current Password:</span><input data-content="You need input password" data-original-title="Notice" class="pop" id="password" name="password" type="password" value=""/></label>
             <label><span>New Password:</span><input id="newpwd" name="newpassword" type="password" value=""/></label>
             <label><span>Confirm Password:</span><input id="repwd" data-content="confirm password" data-original-title="Notice" class="pop" name="confirm" type="password" value=""/></label>
-            <label><span>School:</span><input name="school" type="text" value="<?php print $userinfo->school;?>"/></label>
-            <label><span>Email:</span><input name="email" type="text" value="<?php print $userinfo->email;?>"/></label>
+            <label><span>School:</span><input name="school" type="text" value="<?php print $userinfo['school'];?>"/></label>
+            <label><span>Email:</span><input name="email" type="text" value="<?php print $userinfo['email'];?>"/></label>
         </fieldset>
         <input type="submit" value="Update" class="btn" id='submit'/>
     </form>

@@ -31,7 +31,7 @@ class Controller_User extends Controller_My {
 		
 		//db
 		$u = New Model_User();
-		$user = $u->get_user_by_name($uid);
+		$user = $u->get_info_by_name($uid);
 
 		//view
 
@@ -45,6 +45,8 @@ class Controller_User extends Controller_My {
 	public function action_register()
 	{
 		$body = View::factory('user/register');
+
+        $this->view->title = 'User Register';
 		$this->view->body = $body;
 	}
 
