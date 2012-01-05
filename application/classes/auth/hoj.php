@@ -12,7 +12,7 @@ class Auth_Hoj extends Kohana_Auth
         if (is_string($password)) $password = $this->hash($password);
 
         $user = new Model_User();
-        if ($user->auth_user($username, $password))
+        if ($user->auth($username, $password))
         {
             // Complete the login
             return $this->complete_login($username);
@@ -36,11 +36,9 @@ class Auth_Hoj extends Kohana_Auth
     {
         $username = $this->get_user();
 
-        if ($username == null) {
-           return false;
-        }
+        if ($username == null) return false;
 
-        return ($password == $this->password($username));
+        return ($this->hash($password) == $this->password($username));
     }
 //
 //    public function logged_in($role = NULL)
