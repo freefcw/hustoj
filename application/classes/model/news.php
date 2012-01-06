@@ -44,7 +44,7 @@ class News_Model extends Model_Database {
                 ->orderby('n_date', 'DESC');
 
         $result = $this->db->get()->as_array();
-        $cache->set($key, $result, array('news', 'page'));
+        $cache->set($key, $result, 60);
         return $result;
     }
 }

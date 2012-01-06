@@ -22,7 +22,7 @@ class Model_Problem extends Model_Database {
         $result = $query->as_object()->execute();
 
         $ret = $result->current();
-        $cache->set($key, $ret, array('problem'));
+        $cache->set($key, $ret, 60);
 
         return $ret;
     }
@@ -53,7 +53,7 @@ class Model_Problem extends Model_Database {
         foreach($result as $r){
             $ret[] = $r;
         }
-        $cache->set($key, $ret, array('problem', 'page'));
+        $cache->set($key, $ret, 60);
         return $ret;
     }
     /**
@@ -74,7 +74,7 @@ class Model_Problem extends Model_Database {
 
         $ret = $result->current()->total;
 
-        $cache->set($key, $ret, array('problem','total'));
+        $cache->set($key, $ret, 60);
         return $ret;
     }
 
@@ -98,7 +98,7 @@ class Model_Problem extends Model_Database {
 
         //TODO: fixit
         $result = $query->as_object()->execute();
-        $cache->set($key, $result, array('problem', 'page'));
+        $cache->set($key, $result, 60);
         return $result;
     }
 
@@ -178,7 +178,7 @@ class Model_Problem extends Model_Database {
         $result = $this->_db->query(Database::SELECT, $sql, TRUE);
 
         $data['more'] = $result->as_array();
-        $cache->set($key, $data, array('problem', 'summary', $pid));
+        $cache->set($key, $data, 60);
         return $data;
     }
 
@@ -205,7 +205,7 @@ class Model_Problem extends Model_Database {
 			$ret[] = $i;
 		}
 
-        $cache->set($key, $ret, array('problem','solution'));
+        $cache->set($key, $ret, 60);
 
         return $ret;
     }
@@ -231,7 +231,7 @@ class Model_Problem extends Model_Database {
             $ret[] = $r;
         }
         
-        $cache->set($key, $ret, array('search', $text, $area));
+        $cache->set($key, $ret, 60);
         return $ret;
 	}
 	

@@ -9,8 +9,12 @@ class Controller_Index extends Controller_My {
         $cache = Cache::instance();
         $rss = $cache->get('bitbucket-rss', null);
         if ($rss === null) {
-            $data = file_get_contents('https://bitbucket.org/freefcw/hustoj/rss');
-            $rss = Feed::parse($data);
+            //$data = file_get_contents('https://bitbucket.org/freefcw/hustoj/rss');
+            //$rss = Feed::parse($data);
+            $rss = array(
+                array('title'=> '1000', 'link'=>'/problem/show/1000'),
+                array('title'=> '1001', 'link'=>'/problem/show/1001')
+            );
             $cache->set('bitbucket-rss', $rss, 300);
         }
 		$body = View::factory('index');

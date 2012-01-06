@@ -93,7 +93,7 @@ class Model_User extends Model_Database {
             $ret[] = $r;
         }
 
-        $cache->set($key, $ret, array('user', 'rank'));
+        $cache->set($key, $ret, 60);
         return $ret;
     }
 
@@ -117,7 +117,7 @@ class Model_User extends Model_Database {
 
         $ret = $result->current()->total;
 
-        $cache->set($key, $ret, array('user','total'));
+        $cache->set($key, $ret, 60);
         return $ret;
     }
 
