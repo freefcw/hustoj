@@ -116,7 +116,7 @@ div.content-info p{
     position: relative;
     right: 10px;
 }
-.submit fieldset input{
+.submit fieldset input, .submit fieldset select{
     display: block;
     margin-bottom: 5px;
 }

@@ -101,14 +101,53 @@ class Controller_Problem extends Controller_My {
 
 	public function action_submit()
 	{
-		$pid = $this->request->param('id', '');
-		
-		$body = View::factory('problem/submit');
-		$body->pid = $pid;
+        $request = $this->request;
+		$pid = $request->param('id', '');
 
-		$this->view->title = 'Submit';
-		$this->view->body = $body;
-		
+        if ($request->method() == 'GET')
+        {
+            $body = View::factory('problem/submit');
+            $body->pid = $pid;
+
+            $this->view->title = 'Submit';
+            $this->view->body = $body;
+            return ;
+        }
+
+        if ($request->method() == 'POST')
+        {
+            $post = $request->post();
+
+            if (Auth::instance()->get_user() == null)
+            {
+                $error = 'You Should Login To Submit !';
+                //TODO: validation
+                if (!Auth::instance()->login($post['user_id'], $post['password']))
+                {
+                    $error = 'User_id or Password Wrong';
+                }
+
+                $body = View::factory('problem/submit');
+                $body->error = $error;
+                $body->pid = $pid;
+
+                $this->view->title = 'Submit';
+                $this->view->body = $body;
+            } else {
+                //TODO:check permission, the user can submit? if not admin, may cause leak or cracked
+                // 1. not admin
+                // 2. time failed
+                // 3. not invite people
+                //TODO: validation
+                $db = new Model_Problem();
+                $post['user_id'] = Auth::instance()->get_user();
+                $post['ip'] = Request::$client_ip;
+                $ret = $db->new_solution($post);
+
+                $this->view->title = 'hahha';
+                $this->view->body = '';
+            }
+        }
 	}
 
 	public function action_summary()

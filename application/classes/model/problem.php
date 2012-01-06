@@ -276,4 +276,23 @@ class Model_Problem extends Model_Database {
     	
     	return $ret;
 	}
+
+    public function new_solution($post)
+    {
+        //TODO:if (isset($post['contest_id']))
+        $sql = DB::insert('solution', array('problem_id', 'user_id', 'in_date', 'language', 'ip', 'code_length'))
+            ->values(array($post['pid'], $post['user_id'], DB::expr('NOW()'), $post['language'], $post['ip'], strlen($post['source'])));
+
+        list($insert_id, $affect_rows) = $sql->execute();
+
+        //$sql = DB::query(Database::SELECT, "SELECT LAST_INSERT_ID() as last_insert_id FROM test");
+        //$sql = DB::select(array(DB::expr('LAST_INSERT_ID()', 'last_insert_id')))->from('test');
+
+        //TODO: combine source code to solution?
+        $sql = DB::insert('source_code', array('solution_id', 'source'))
+            ->values(array($insert_id, $post['source']));
+
+        $ret = $sql->execute();
+
+    }
 }
