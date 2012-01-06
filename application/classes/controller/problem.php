@@ -108,6 +108,13 @@ class Controller_Problem extends Controller_My {
         {
             $body = View::factory('problem/submit');
             $body->pid = $pid;
+            $cid = $request->query('cid', null);
+            $cpid = $request->query('pid', null);
+            if ($cid !== null)
+            {
+                $body->cid = $cid;
+                $body->cpid = $cpid;
+            }
 
             $this->view->title = 'Submit';
             $this->view->body = $body;
@@ -139,6 +146,7 @@ class Controller_Problem extends Controller_My {
                 // 2. time failed
                 // 3. not invite people
                 //TODO: validation
+                //TODO: add contest problem
                 $db = new Model_Problem();
                 $post['user_id'] = Auth::instance()->get_user();
                 $post['ip'] = Request::$client_ip;

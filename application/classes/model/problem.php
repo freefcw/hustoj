@@ -27,6 +27,26 @@ class Model_Problem extends Model_Database {
         return $ret;
     }
 
+    public function get_contest_problem($cid, $pid)
+    {
+        $sql = "SELECT
+                    problem.problem_id AS problem_id, problem.title AS title, contest_problem.num AS num, time_limit, memory_limit, submit,
+                    accepted, description, input, output, sample_input, sample_output, hint, source
+                FROM
+                    contest_problem
+                LEFT JOIN
+                    problem ON problem.problem_id = contest_problem.problem_id
+                WHERE
+                    contest_problem.contest_id = {$cid}
+                    AND
+                    contest_problem.num = {$pid}
+        ";
+
+        $result = $this->_db->query(Database::SELECT, $sql, TRUE);
+
+        return $result->current();
+    }
+
     public function get_page($page_id, $per_page)
     {
         $key = 'problem-page-'. $page_id;
