@@ -36,7 +36,8 @@ class Controller_Contest extends Controller_My {
 
 		// view
 		$body = View::factory('contest/show');
-		$body->contest = $contest;
+		$body->cid = $cid;
+        $body->contest = $contest;
 		$body->problems = $problems;
 		$body->title = "Contest - {$contest->title}";
 
@@ -117,13 +118,16 @@ class Controller_Contest extends Controller_My {
                 $error = 'Contest is not Open';
             } else {
                 $mp = new Model_Problem();
-                $problem = $mp->get_problem($pid);
+                $problem = $mp->get_contest_problem($cid, $pid);
             }
         }
 
         $this->view->title = $problem->title;
         $body = View::factory('problem/show');
         $body->p = $problem;
+        $this->view->set_global('cid', $cid);
+        $this->view->set_global('pid', $pid);
+
         $this->view->body = $body;
     }
 }

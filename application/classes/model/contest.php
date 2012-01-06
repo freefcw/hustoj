@@ -70,7 +70,7 @@ class Model_Contest extends Model_Database {
         if($data != null) return $data;
 
         $sql = "SELECT
-                    problem.problem_id AS pid, problem.title AS title
+                    problem.problem_id AS pid, problem.title AS title, contest_problem.num AS num
                 FROM
                     contest_problem
                 LEFT JOIN

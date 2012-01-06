@@ -11,7 +11,7 @@ From <span class="label success"><?php echo $contest->start_time;?></span> To <s
 <?php foreach($problems as $p): ?>
 <tr>
 <td><?php echo $p->pid;?></td>
-<td><?php echo html::anchor("/contest/{$cid}/problem/{$p->pid}", $p->title);?></td>
+<td><?php echo html::anchor("/contest/{$cid}/problem/{$p->num}", $p->title);?></td>
 </tr>
 <?php endforeach;?>
 </tbody>
