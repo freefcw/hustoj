@@ -144,8 +144,7 @@ class Controller_Problem extends Controller_My {
                 $post['ip'] = Request::$client_ip;
                 $ret = $db->new_solution($post);
 
-                $this->view->title = 'hahha';
-                $this->view->body = '';
+                $request->redirect('/status');
             }
         }
 	}

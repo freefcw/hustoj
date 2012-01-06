@@ -279,9 +279,28 @@ class Model_Problem extends Model_Database {
 
     public function new_solution($post)
     {
-        //TODO:if (isset($post['contest_id']))
-        $sql = DB::insert('solution', array('problem_id', 'user_id', 'in_date', 'language', 'ip', 'code_length'))
-            ->values(array($post['pid'], $post['user_id'], DB::expr('NOW()'), $post['language'], $post['ip'], strlen($post['source'])));
+        $sql = DB::select('problem_id')
+                        ->from('contest_problem')
+                        ->where('contest_id', '=', 1000)
+                        ->and_where('num', '=', 0);
+
+        if (isset($post['contest_id']))
+        {
+            //todo: fix get pid from contest
+            $sql = DB::select('problem_id')
+                ->from('contest_problem')
+                ->where('contest_id', '=', $post['contest_id'])
+                ->and_where('num', '=', $post['num']);
+
+            $ret = $sql->execute()->current();
+            $post['problem_id'] = $ret['problem_id'];
+
+            $sql = DB::insert('solution', array('problem_id', 'user_id', 'in_date', 'language', 'ip', 'code_length', 'contest_id', 'num'))
+                ->values(array($post['pid'], $post['user_id'], DB::expr('NOW()'), $post['language'], $post['ip'], strlen($post['source']), $post['cid'], $post['num']));
+        } else {
+            $sql = DB::insert('solution', array('problem_id', 'user_id', 'in_date', 'language', 'ip', 'code_length'))
+                            ->values(array($post['pid'], $post['user_id'], DB::expr('NOW()'), $post['language'], $post['ip'], strlen($post['source'])));
+        }
 
         list($insert_id, $affect_rows) = $sql->execute();
 
