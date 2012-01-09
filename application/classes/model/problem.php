@@ -5,24 +5,13 @@
  * @author freefcw
  */
 
-class Model_Problem extends Model_Database {
+class Model_Problem extends Model_Mongo {
 
     public function get_problem($pid)
     {
-        $key = 'problem-'. $pid;
-        $cache = Cache::instance();
-        $data = $cache->get($key);
-        if($data != null) return $data;
-        
-        //fetch data
-        $query = DB::select()
-            ->from('problem')
-            ->where('problem_id', '=', $pid);
-        
-        $result = $query->as_object()->execute();
+        $collection = $this->db->selectCollection('problem');
 
-        $ret = $result->current();
-        $cache->set($key, $ret, 60);
+        $ret = $collection->findOne(array('problem_id' => intval($pid)));
 
         return $ret;
     }
@@ -47,34 +36,18 @@ class Model_Problem extends Model_Database {
         return $result->current();
     }
 
-    public function get_page($page_id, $per_page)
+    public function get_page($page_id, $per_page = 50)
     {
-        $key = 'problem-page-'. $page_id;
-        $cache = Cache::instance();
-        $data = $cache->get($key);
-        if($data != null) return $data;
+        $collection = $this->db->selectCollection('problem');
+        $start = ($page_id - 1) * $per_page + 1000;
 
-        //fetch data
-        /*$sql = 'SELECT title from problem limit 100';
-        $result = $this->_db->query(Database::SELECT, $sql, TRUE);
-        foreach($result as $r) {
-            echo $r->title, '<br />';
-        }*/
+        $cursor =$collection->find(array('problem_id' => array('$gte' => $start)),
+            array('problem_id'=>1, 'title'=>1, 'accepted'=>1, 'submit'=>1))
+            ->sort(array('problem_id' => 1))->limit($per_page);
+        //foreach($cursor as $doc) var_dump($doc);
+        //var_dump(iterator_to_array($cursor));
 
-        $query = DB::select('problem_id', 'title', 'accepted', 'submit')
-            ->from('problem')
-            ->offset(($page_id - 1) * $per_page)
-            ->limit($per_page)
-            ->order_by('problem_id');
-
-        $result = $query->as_object()->execute();
-
-        $ret = array();
-        foreach($result as $r){
-            $ret[] = $r;
-        }
-        $cache->set($key, $ret, 60);
-        return $ret;
+        return iterator_to_array($cursor);
     }
     /**
     * return total problems
@@ -84,17 +57,10 @@ class Model_Problem extends Model_Database {
     */
     public function get_total()
     {
-        $key    = 'problem-total';
-        $cache  = Cache::instance();
-        $data   = $cache->get($key);
-        if ($data != null) return $data;
-        
-        $sql = 'SELECT count(*) AS total FROM problem';
-        $result = $this->_db->query(Database::SELECT, $sql, TRUE);
+        $collection = $this->db->selectCollection('problem');
 
-        $ret = $result->current()->total;
+        $ret = $collection->count(array('problem_id' => array('$exists' => true)));
 
-        $cache->set($key, $ret, 60);
         return $ret;
     }
 

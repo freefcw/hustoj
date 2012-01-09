@@ -19,7 +19,7 @@ class Controller_Problem extends Controller_My {
 		$body->problemlist = $problem->get_page($page_id, $per_page);
 		//TODO: add check permission of contest
 		$total = $problem->get_total();
-		if (!is_string($total)) var_dump($total);
+		//if (!is_string($total)) var_dump($total);
 		$body->pages = ceil(intval($total) / $per_page);
 
 		$title = 'Problem Set '.$page_id;
@@ -43,7 +43,7 @@ class Controller_Problem extends Controller_My {
 		$body = View::factory('problem/show');
 		$body->p = $problem->get_problem($pid);
 
-		$this->view->title = $body->p->title;
+		$this->view->title = $body->p['title'];
 		$this->view->body = $body;
 	}
 	
