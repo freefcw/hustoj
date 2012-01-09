@@ -14,4 +14,18 @@ class Model_Mongo {
         $this->db = $this->connection->db;
     }
 
+    /**
+     * @param $data
+     * @return array
+     *
+     * make a map array
+     */
+    public function i_need($data)
+    {
+        $nt = array();
+        foreach($data as $item) $nt[$item] = 1;
+
+        return $nt;
+    }
+
 }
