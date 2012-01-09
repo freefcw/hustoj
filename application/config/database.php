@@ -55,4 +55,13 @@ return array
         'caching'      => FALSE,
         'profiling'    => TRUE,
     ),
+    'mongodb' => array(
+        'type'          => 'mongodb',
+        'connection'    => array(
+            'dsn'       => 'mongodb://localhost',//mongodb://{$username}:{$password}@{$host}
+            'username'  => '',
+            'password'  => '',
+            'database'  => 'judge',
+        ),
+    ),
 );
