@@ -67,4 +67,18 @@ class Model_Problem extends Model_Mongo {
 
         return iterator_to_array($ret);
     }
+
+    public function find_problem($text, $area)
+    {
+        $collection = $this->db->selectCollection('problem');
+
+        // $erea can be title|content
+        $regexObject = new MongoRegex("/{$text}/i");
+        $condition = array($area => $regexObject);
+
+        $ret = $collection->find($condition)
+            ->sort(array('problem_id' => 1));
+
+        return iterator_to_array($ret);
+    }
 }

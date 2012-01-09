@@ -80,7 +80,7 @@ class Controller_Problem extends Controller_My {
 		}
 
 		// db
-		$db = new Model_Problem();
+		$db = new Model_Submisiion();
 		$status = $db->get_status($page, $pid, $uid, $cid, $language, $result);
 		$total = $db->get_status_count($pid, $uid, $cid, $language, $result);
 
@@ -166,7 +166,7 @@ class Controller_Problem extends Controller_My {
 		}
 
 		// db
-		$p = new Model_Problem();
+		$p = new Model_Submisiion();
 		$summary = $p->get_summary($page_id);
 		$best_solution = $p->get_best_solution($page_id);
 
