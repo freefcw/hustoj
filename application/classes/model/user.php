@@ -4,7 +4,7 @@
  *
  * @author freefcw
  */
-class Model_User extends Model_Database {
+class Model_User extends Model_Mongo {
     
     public function __construct()
     {
@@ -14,30 +14,30 @@ class Model_User extends Model_Database {
     
     public function auth($username, $password)
     {
-        $sql = 'SELECT * FROM users WHERE (user_id = :username) AND (password = :password)';
-        $query = DB::query(Database::SELECT, $sql);
-        $query->parameters(array(
-            ':username' => $username,
-            ':password' => $password
-        ));
+        $collection = $this->db->selectCollection('user');
 
-        $result = $query->execute();
+        $condition = array();
+        $condition['user_id'] = $username;
+        $condition['password'] = $password;
 
-        if ($result->count() == 0 ) return false;
+        $num = $collection->count($condition);
+
+        if ($num == 0 ) return false;
         return true;
     }
 
     public function get_password($username)
     {
-        $sql = 'SELECT password FROM users WHERE user_id = :username';
-        $query = DB::query(Database::SELECT, $sql);
-        $query->parameters(array(
-            ':username' => $username
-        ));
+        $collection = $this->db->selectCollection('user');
 
-        $result = $query->execute(null, TRUE);
-        if ($result->count() == 0) return null;
-        return $result->current()->password;
+        $need = array('password');
+
+        $condition = array();
+        $condition['user_id'] = $username;
+
+        $ret = $collection->findOne($condition, $this->i_need($need));
+
+        return $ret['password'];
     }
     /**
          *
@@ -46,8 +46,11 @@ class Model_User extends Model_Database {
          */
     public function changepassword($user_id, $new_password)
     {
-        $this->_db->where('user_id', $user_id);
-        $this->db->update('users', array('password' => $new_password));
+        $collection = $this->db->selectCollection('user');
+
+        $new_value = array('password'=>$new_password);
+
+        $collection->update(array('user_id'=>$user_id), array('$set'=>$new_value));
     }
     /**
          * 通过用户名返回用户信息
@@ -57,84 +60,87 @@ class Model_User extends Model_Database {
          */
     public function get_info_by_name($user_id)
     {
-        $key = 'user-' . $user_id;
-        $cache = Cache::instance();
-        $data = $cache->get($key);
-        if ($data != null) return $data;
+        $collection = $this->db->selectCollection('user');
 
-        $query = DB::select()->where('user_id', '=', $user_id)->from('users');
-        //$result = $query->as_object()->execute();
-        $result = $query->execute();
+        $ret = $collection->findOne(array('user_id'=>$user_id));
 
-        $ret = $result->current();
-
-        $cache->set($key, $ret, 60);
         return $ret;
     }
 
 
     public function get_list($page_id, $per_page)
     {
-        $key = 'user-rank' . $page_id;
-        $cache = Cache::instance();
-        $data = $cache->get($key);
-        if ($data != null) return $data;
-        
-        $query = DB::select('user_id', 'nick', 'solved', 'submit')
-                ->from('users')
-                ->offset(($page_id-1) * $per_page)
-                ->limit($per_page)
-                ->order_by('solved', 'DESC');
-               
-        $result = $query->as_object()->execute();
-        
-        $ret = array();
-        foreach($result as $r){
-            $ret[] = $r;
-        }
+        $collection = $this->db->selectCollection('user');
 
-        $cache->set($key, $ret, 60);
+        $need = array('user_id', 'nick', 'solved', 'submit');
+
+        $condition = array();
+
+        $ret = $collection->find($condition, $this->i_need($need))
+            ->sort(array('solved' => -1))
+            ->skip(($page_id-1) * $per_page)
+            ->limit($per_page);
+        //TODO: skip performance
+
+        return iterator_to_array($ret);
+    }
+
+    public function get_total()
+    {
+        $collection = $this->db->selectCollection('user');
+
+        // TODO: more params
+        $ret = $collection->count();
+
         return $ret;
     }
 
-    /**
-        *  所有的用户数
-        *
-        * @return <array> user
-        */
-    public function get_total()
+    public function exist_id($user_id)
     {
-        // TODO: more params
-        $key = 'user-total';
-        $cache = Cache::instance();
-        $data = $cache->get($key);
-        
-        if ($data != null) return $data;
-        
-        
-        $sql = 'SELECT count(*) AS total FROM users';
-        $result = $this->_db->query(Database::SELECT, $sql, TRUE);
+        $collection = $this->db->selectCollection('user');
 
-        $ret = $result->current()->total;
+        $condition = array('user_id'=>$user_id);
+        $ret = $collection->count($condition);
 
-        $cache->set($key, $ret, 60);
-        return $ret;
+        if($ret != 0) return true;
+        return false;
     }
 
     public function update_information($user)
     {
-        $result = DB::update('users')
-            ->set(array(
-            'password'=> Auth::instance()->hash($user['password']),
-            'school'=> $user['school'],
-            'email'=> $user['email'],
-            'nick'=> $user['nick']))
-            ->where('user_id', '=', $user['user_id'])
-            ->execute(null, true);
+        $collection = $this->db->selectCollection('user');
 
-        return $result;
+        $new_value = array(
+                    'password'=> Auth::instance()->hash($user['password']),
+                    'school'=> $user['school'],
+                    'email'=> $user['email'],
+                    'nick'=> $user['nick'],
+                );
+
+        $condition = array('user_id'=>$user['user_id']);
+        $ret = $collection->update($condition, array('$set'=>$new_value));
+
+        return $ret;
     }
 
     public function add_user($user)
-    {}
+    {
+        $now = new MongoDate(time());
+        $newuser = array(
+            'password' =>Auth::instance()->hash($user['password']),
+            'user_id' => $user['user_id'],
+            'school' => $user['school'],
+            'email' => $user['email'],
+            'nick' => $user['nick'],
+            'reg_time' => $now,
+            'solved' => 0,
+            'submit' => 0,
+            'access_time' => $now,
+            'ip' => Request::$client_ip
+        );
+        //FIXME: seems ip and access_time no use
+
+        $collection = $this->db->selectCollection('user');
+        $collection->save($newuser);
+    }
 }
