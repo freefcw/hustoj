@@ -5,10 +5,11 @@
 <?php echo Form::input('cid', $cid, array('type'=>'hidden')); ?>
 <?php echo Form::input('cpid', $cpid, array('type'=>'hidden'));?>
     <div style="margin: 20px auto 10px; font-size: 14px">
-<?php echo 'Prblem ', OJ::contest_pid($cpid), ' Of Contest ', $cid; ?>
+<?php echo 'Problem ', OJ::contest_pid($cpid), ' Of Contest ', $cid; ?>
     </div>
 <?php else: ?>
 <?php echo Form::label('pid', "Problem ID : ");?>
+<?php echo Form::input('pid', $pid); ?>
 <?php endif;?>
 <?php echo Form::label('pid', "Language : ");?>
 <?php echo Form::select('language', array('0'=>'C', '1'=>'C++', '2'=>'Pascal', '3'=>'Java'));?>
