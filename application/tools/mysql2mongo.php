@@ -126,7 +126,7 @@ function translate_solutions()
             'user_id' => $item['user_id'],
             'time' => intval($item['time']),
             'memory' => intval($item['memory']),
-            'in_date' => new MongoDate(strtotime($item['in_date'])),
+            'add_date' => new MongoDate(strtotime($item['in_date'])),
             'result' => intval($item['result']),
             'language' => intval($item['language']),
             'ip' => $item['ip'],
