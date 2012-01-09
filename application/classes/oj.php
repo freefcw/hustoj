@@ -72,4 +72,16 @@ class OJ {
         $hour = $time / 60;
         return sprintf("%02d:%02d:%02d", $hour, $minute, $sec);
     }
+
+    /**
+     * @static
+     * @param $mtime
+     * @return string
+     *
+     * make mongoDate human read
+     */
+    public static function mtime($mtime)
+    {
+        return date('Y-m-d h:i:s', $mtime->sec);
+    }
 }
