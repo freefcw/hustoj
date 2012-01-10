@@ -6,9 +6,9 @@
 <dd><?php echo $summary['submit_user'];?></dd>
 <dt>Solved User</dt>
 <dd><?php echo $summary['ac_user'];?></dd>
-<?php foreach($summary['more'] as $st):?>
-<dt><?php print OJ::$status[$st->result];?></dt>
-<dd><?php print $st->total;?></dd>
+<?php foreach($summary['more'] as $key=>$value):?>
+<dt><?php print OJ::$status[$key];?></dt>
+<dd><?php print $value;?></dd>
 <?php endforeach;?>
 </dl>
 <table class="best-solution">
@@ -23,12 +23,12 @@
 		<?php $rank = $rank + 1; ?>
 		<tr>
 			<td><?php print $rank; ?></td>
-			<td><?php print $s->solution_id;?>(<?php print $s->att;?>)</td>
-            <td><?php print $s->memory;?>KB</td>
-            <td><?php print $s->time;?>MS</td>
-            <td><a href="/user/<?php print $s->user_id;?>"><?php print $s->user_id;?></a></td>
-            <td><?php print OJ::lang($s->language);?></td>
-            <td><?php print $s->in_date;?></td>
+			<td><?php print $s['solution_id'];?></td>
+            <td><?php print $s['memory'];?>KB</td>
+            <td><?php print $s['time'];?>MS</td>
+            <td><a href="/user/<?php print $s['user_id'];?>"><?php print $s['user_id'];?></a></td>
+            <td><?php print OJ::lang($s['language']);?></td>
+            <td><?php print oj::mtime($s['add_date']);?></td>
         </tr>
         <?php endforeach; ?>
     </tbody>
