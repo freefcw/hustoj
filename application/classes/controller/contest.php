@@ -3,7 +3,10 @@
 class Controller_Contest extends Controller_My {
 
 	public function action_index()
-	{
+    {
+        $this->action_list();
+    }
+	public function action_list(){
 		// initial 
 		$page_id = $this->request->param('id', 1);
 
