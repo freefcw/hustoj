@@ -87,7 +87,7 @@ function translate_contest()
         if ($item['contest_id'] != $last_contest)
         {
             if ($last_contest != 0){
-                $ret = $newdb->update(array('contest_id'=>$item['contest_id']), array('$set' => array('plist' => $data)));
+                $ret = $newdb->update(array('contest_id'=> intval($item['contest_id'])), array('$set' => array('plist' => $data)));
 
             }
             $last_contest = $item['contest_id'];
@@ -95,7 +95,7 @@ function translate_contest()
         }
         // need update problem_id to _id
         $tmp = $db->problem->findOne(array('problem_id'=> intval($item['problem_id'])));
-        $data[intval($item['num'])] = array($tmp['_id'], $tmp['title']);
+        $data[intval($item['num'])] = array('p_id'=> $tmp['_id'], 'title'=>$tmp['title']);
     }
     $result->free();
 }

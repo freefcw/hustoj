@@ -51,7 +51,9 @@ class Controller_Problem extends Controller_My {
 	{
 		// init
 		$page = $this->request->param('id', 1);
+
 		$pid = $this->request->query('pid', null);
+
 		$uid = $this->request->query('uid', null);
         $cid = $this->request->query('cid', null);
 		$language = $this->request->query('language', null);
@@ -59,25 +61,25 @@ class Controller_Problem extends Controller_My {
 		
 		$per_page = 20;
 		
-		// validation
-		$validation = Validation::factory(array(
-			'pid' => $pid,
-			'uid' => $uid,
-			'language' => $language,
-			'result' => $result
-			));
-		$validation->rule('pid', 'numeric')
-			->rule('uid', 'regex', array(':value', '/^\w+$/'))
-			->rule('language', 'numeric')
-			->rule('result', 'numeric')
-            ->rule('cid', 'numeric');
-			
-		if($validation->check())
-		{
-			// TODO: add more handler
-		} else {
-			echo "error";
-		}
+//		// validation
+//		$validation = Validation::factory(array(
+//			'pid' => $pid,
+//			'uid' => $uid,
+//			'language' => $language,
+//			'result' => $result
+//			));
+//		$validation->rule('pid', 'numeric')
+//			->rule('uid', 'regex', array(':value', '/^\w+$/'))
+//			->rule('language', 'numeric')
+//			->rule('result', 'numeric')
+//            ->rule('cid', 'numeric');
+//
+//		if($validation->check())
+//		{
+//			// TODO: add more handler
+//		} else {
+//			echo "error";
+//		}
 
 		// db
 		$db = new Model_Submission();

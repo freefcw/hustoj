@@ -97,7 +97,7 @@ class OJ {
      */
     public static function contest_pid($pid)
     {
-        return chr(64 + $pid);
+        return chr(65 + $pid);
     }
 
     /**

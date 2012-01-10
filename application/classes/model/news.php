@@ -9,43 +9,17 @@ class News_Model extends Model_Database {
         parent::__construct();
     }
 
-    public function create($data)
+    public function get_total()
     {
-        
-    }
-    /**
-        *  delete a news
-        *
-        * @param <int> $news_id
-        * @return <boolean>
-        */
-    public function delete($news_id)
-    {
-        $this->db->delete($news_id);
-    }
-    /**
-        * get news
-        *
-        * @access public
-        * @return <array>
-        */
-    public function getNews($limit, $page = 0)
-    {
-        $key = "news-{$limit}-{$page}";
-        $cache = Cache::instance();
-        $data = $cache->get($key);
-        if($data != null) return $data;
 
-        $this->db->select('*')
-                ->from('news')
-                ->where('n_published', '1')
-                ->limit($limit)
-                ->offset($page)
-                ->orderby('n_date', 'DESC');
+    }
 
-        $result = $this->db->get()->as_array();
-        $cache->set($key, $result, 60);
-        return $result;
+    public function get_recent()
+    {}
+
+    public function get_item()
+    {
+
     }
 }
 ?>

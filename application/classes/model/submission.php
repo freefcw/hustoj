@@ -12,11 +12,11 @@ class Model_Submission extends Model_Mongo
         $collection = $this->db->selectCollection('solution');
 
         $condition = array();
-        if ($problem_id != -1) $condition['problem_id'] = intval($problem_id);
-        if ($user_id != '') $condition['user_id'] = $user_id;
-        if ($language != -1) $condition['language'] = intval($language);
-        if ($result != -1) $condition['result'] = intval($result);
-        if ($cid != null) $condition['cid'] = intval($cid);
+        if ($problem_id != -1 AND $problem_id !== null) $condition['problem_id'] = intval($problem_id);
+        if ($user_id !== null) $condition['user_id'] = $user_id;
+        if (($language != -1) AND ($language !== null)) $condition['language'] = intval($language);
+        if (($result != -1) AND ($language !== null)) $condition['result'] = intval($result);
+        if ($cid != null) $condition['contest_id'] = intval($cid);
 
         $need = array('solution_id', 'problem_id', 'user_id', 'time', 'memory', 'language', 'result', 'code_length', 'add_date');
 
