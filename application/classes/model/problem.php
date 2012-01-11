@@ -17,6 +17,16 @@ class Model_Problem extends Model_Mongo {
         return $ret;
     }
 
+    public function get_problem_by_id($id)
+    {
+        $collection = $this->db->selectCollection('problem');
+
+        $condition = array('_id' => $id);
+        $ret = $collection->findOne($condition);
+
+        return $ret;
+
+    }
 
     public function get_page($page_id, $per_page = 50)
     {

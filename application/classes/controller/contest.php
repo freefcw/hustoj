@@ -89,10 +89,10 @@ class Controller_Contest extends Controller_My {
 		$body = View::factory('contest/stat');
         $body->result = $stats['result'];
         $body->language = $stats['language'];
-        $contest = count($c->get_contest_problems($cid));
+        $body->set('problem_count', count($c->get_contest_problems($cid)));
 
 		$this->view->title = "Contest Statistics";
-        $this->view->set_global('cid', $cid);
+        $body->set_global('cid', $cid);
 		$this->view->body = $body;
 	}
 
@@ -113,17 +113,19 @@ class Controller_Contest extends Controller_My {
             $error = 'No Such Contest';
         } else {
             $now = time();
-            $begin = $contest['start_time'];
+            $begin = $contest['start_time']->sec;
             if($begin > $now)
             {
                 $error = 'Contest is not Open';
             } else {
                 $mp = new Model_Problem();
-                $problem = $mp->get_contest_problem($cid, $pid);
+                $plist = $contest['plist'];
+
+                $problem = $mp->get_problem_by_id($plist[intval($pid)]['p_id']);
             }
         }
 
-        $this->view->title = $problem->title;
+        $this->view->title = $problem['title'];
         $body = View::factory('problem/show');
         $body->p = $problem;
         $this->view->set_global('cid', $cid);
