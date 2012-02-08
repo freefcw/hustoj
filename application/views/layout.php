@@ -49,6 +49,9 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">More</a>
                 <ul class="dropdown-menu">
                   <li><a href="#">Message</a></li>
+                  <?php if (Auth::instance()->is_admin()):?>
+                  <li><a href="/admin">Admin Control</a></li>
+                  <?php endif;?>
                   <li class="divider"></li>
                   <li><a href="/logout">Logout</a></li>
                 <?php endif; ?>

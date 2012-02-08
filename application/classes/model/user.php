@@ -28,6 +28,9 @@ class Model_User extends Model_Mongo {
         if ($num == 0 ) return false;
         // if user login success, then log last access time
         $this->update_access_time($username);
+        $u = $collection->findOne($condition);
+        Session::instance()->set('privilege', $u['privilege']);
+
         return true;
     }
 

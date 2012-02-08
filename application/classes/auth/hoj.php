@@ -62,4 +62,12 @@ class Auth_Hoj extends Kohana_Auth
    		// Complete the login
    		return $this->complete_login($username);
    	}
+
+    public function is_admin()
+    {
+        if (Auth::instance()->get_user() === null) return false;
+        $privilege = Session::instance()->get('privilege');
+        if ($privilege == 'admin') return true;
+        return false;
+    }
 }

@@ -131,7 +131,11 @@ Route::set('ranklist', 'rank/user(/<id>)')
 		'controller' => 'user',
 		'action'	 => 'list'
 	));
-
+Route::set('admin', 'admin(/<action>)')
+    ->defaults(array(
+        'controller'    => 'admin',
+        'action'        => 'index'
+));
 Route::set('user', 'user/<id>',
 	array('id' => '[[:word:]]+'))
 	->defaults(array(
