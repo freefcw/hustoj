@@ -132,7 +132,7 @@ function translate_solutions()
             'ip' => $item['ip'],
             'contest_id' => intval($item['contest_id']),
             'num' => intval($item['num']),
-            'judgetime' => new MongoDate(strtotime($item['judgetime'])),
+            'judge_time' => new MongoDate(strtotime($item['judgetime'])),
             'code_length' => intval($item['code_length']),
             'source' => $item['source'],
         );
@@ -189,7 +189,7 @@ function translate_users()
             'submit' => intval($user['submit']),
             'solved' => intval($user['solved']),
             'ip' => $user['ip'],
-            'accesstime' => new MongoDate(strtotime($user['accesstime'])),
+            'access_time' => new MongoDate(strtotime($user['accesstime'])),
             'language' => intval($user['language']),
             'password' => $user['password'],
             'reg_time' => new MongoDate(strtotime($user['reg_time'])),
