@@ -42,14 +42,14 @@
                 <li><a href="/login">Login</a></li>
                 <li><a href="/account/register">Register</a></li>
                 <?php else: ?>
-                <li><a href="/user/<?php echo $current_user;?>" title="<?php echo $current_user;?>">My Profile</a></li>
-                <li><a href="#">Message</a></li>
+                <li><a href="/user/<?php echo $current_user;?>" title="<?php echo $current_user;?>"><?php echo $current_user;?></a></li>
+                <li><a href="/account/setting">Setting</a></li>
                 <li class="divider-vertical"></li>
                 <li class="dropdown" data-dropdown="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">More</a>
                 <ul class="dropdown-menu">
-                  <li><a href="/account/setting">Setting</a></li>
-                    <li class="divider"></li>
+                  <li><a href="#">Message</a></li>
+                  <li class="divider"></li>
                   <li><a href="/logout">Logout</a></li>
                 <?php endif; ?>
             </ul>
