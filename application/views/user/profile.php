@@ -12,7 +12,7 @@
 <dt>email:</dt>
 <dd><?php echo $u['email'];?></dd>
 <dt>last access time:</dt>
-<dd><?php echo OJ::mtime($u['accesstime']);?></dd>
+<dd><?php echo OJ::mtime($u['access_time']);?></dd>
 <dt>reg time:</dt>
 <dd><?php echo OJ::mtime($u['reg_time']);?></dd>
 </dl>

@@ -20,10 +20,24 @@ class Model_User extends Model_Mongo {
         $condition['user_id'] = $username;
         $condition['password'] = $password;
 
+
         $num = $collection->count($condition);
 
+
+        //TODO: new log about user login
+
         if ($num == 0 ) return false;
+        // if user login success, then log last access time
+        $this->update_access_time($username);
         return true;
+    }
+
+    private function update_access_time($username)
+    {
+        $new_value = array('access_time' => new MongoDate(time()));
+
+        $collection = $this->db->selectCollection('user');
+        $collection->update(array('user_id'=>$username), array('$set'=>$new_value));
     }
 
     public function get_password($username)
