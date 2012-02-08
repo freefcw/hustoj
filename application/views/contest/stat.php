@@ -1,4 +1,3 @@
-<h3 class="page-title">Contest Statistics</h3>
 <?php echo View::factory('contest/nav');?>
 
 <table style="width: 70%;margin-top: 30px;float: left;">

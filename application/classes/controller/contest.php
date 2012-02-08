@@ -6,6 +6,12 @@ class Controller_Contest extends Controller_My {
     {
         $this->action_list();
     }
+
+    public function set_contest_info($contest)
+    {
+        $this->view->set_global('contest', $contest);
+        $this->view->set_global('title', "Contest - {$contest['title']}");
+    }
 	public function action_list(){
 		// initial 
 		$page_id = $this->request->param('id', 1);
@@ -32,15 +38,15 @@ class Controller_Contest extends Controller_My {
         }
 		$this->view->set_global('cid', $cid);
 
-		// db
-		$c = new Model_Contest();
-		$contest = $c->get_contest($cid);
+        $c = new Model_Contest();
+        $contest = $c->get_contest($cid);
+
+        $this->set_contest_info($contest);
 
 		// view
 		$body = View::factory('contest/show');
 		$body->cid = $cid;
-        $body->contest = $contest;
-		$body->title = "Contest - {$contest['title']}";
+
 
 		$this->view->title = "Contest - {$contest['title']}";
 		$this->view->body = $body;
@@ -49,7 +55,7 @@ class Controller_Contest extends Controller_My {
     public function action_standing()
     {
         $cid = $this->request->param('id', null);
-        if (is_null($cid))
+        if ($cid === null)
         {
             $this->request->redirect('/home');
         }
@@ -59,6 +65,7 @@ class Controller_Contest extends Controller_My {
         {
             $error = 'Contest Not Open';
         }
+        $this->set_contest_info($db->get_contest($cid));
         $standing = $db->get_standing($cid);
         $p_count = count($db->get_contest_problems($cid));
 
@@ -83,7 +90,10 @@ class Controller_Contest extends Controller_My {
 
 		// db
 		$c = new Model_Contest();
+
 		$stats = $c->get_statistics($cid);
+
+        $this->set_contest_info($c->get_contest($cid));
 
 		// view
 		$body = View::factory('contest/stat');

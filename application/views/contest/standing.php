@@ -1,4 +1,3 @@
-<h3 class="page-title">Contest Standing</h3>
 <?php echo View::factory('contest/nav');?>
 <table style="margin-top: 20px">
     <thead>
