@@ -20,12 +20,15 @@
 <dt>Source</dt>
 <dd><?php echo $p['source']; ?></dd>
 </dl>
-<ul id="fn-nav" class="pills">
-<?php if(isset($cid)):?>
-<li><?php echo html::anchor("/problem/submit/?cid={$cid}&pid={$pid}", 'Submit');?></li>
-<?php else:?>
-<li><?php echo html::anchor("/problem/submit/{$p['problem_id']}", 'Submit');?></li>
-<? endif; ?>
+
+<?php
+    if(isset($cid))
+        $submit_url = "/problem/submit/?cid={$cid}&pid={$pid}";
+    else
+        $submit_url = "/problem/submit/{$p['problem_id']}";
+?>
+<ul id="fn-nav" class="nav nav-pills">
+<li><?php echo html::anchor($submit_url, 'Submit');?></li>
 <li><?php echo html::anchor("/problem/summary/{$p['problem_id']}", 'Summary');?></li>
 <li><?php echo html::anchor("/discuss/problem/{$p['problem_id']}", 'Discuss');?></li>
 </ul>

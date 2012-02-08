@@ -8,8 +8,8 @@
 <title><?php echo $title; ?></title>
 <?php echo HTML::style('static/style/style.css');?>
 <?php echo HTML::script(' https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'); ?>
-<?php echo HTML::script('http://twitter.github.com/bootstrap/1.4.0/bootstrap-dropdown.js'); ?>
-<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+<?php echo HTML::script('js/bootstrap.min.js'); ?>
+<link rel="stylesheet" href="/css/bootstrap.css">
 <link rel="shortcut icon" href="favicon.ico" />
 <script type="text/javascript">
     $('.userinfo').dropdown();
@@ -17,32 +17,49 @@
 </head>
 <body>
 <div class="container">
-<ul class="tabs" style="width: 72%;float: left">
-<li><?php echo html::anchor('/', 'Home'); ?></li>
-<li><?php echo html::anchor('/problem/list', 'Problems'); ?></li>
-<li><?php echo html::anchor('/problem/status', 'Status'); ?></li>
-<li><?php echo html::anchor('/rank/user', 'Rank'); ?></li>
-<li><?php echo html::anchor('/contest', 'Contest'); ?></li>
-<li><?php echo html::anchor('/faqs', 'Faqs'); ?></li>
-<li><?php echo html::anchor('#', 'Discuss'); ?></li>
-</ul>
-    <?php if ($current_user == null): ?>
-<ul class="tabs userinfo" style="width: 16%;padding-left: 12%">
-    <li><a href="/login">Login</a></li>
-    <li><a href="/account/register">Register</a></li>
-    <?php else: ?>
-<ul class="tabs userinfo" style="width: 28%;">
-    <li><a href="/user/<?php echo $current_user;?>" title="<?php echo $current_user;?>">My Profile</a></li>
-    <li><a href="#">Message</a></li>
-    <li class="dropdown" data-dropdown="dropdown">
-    <a href="#" class="dropdown-toggle">More</a>
-    <ul class="dropdown-menu">
-      <li><a href="/account/setting">Setting</a></li>
-      <li><a href="/logout">Logout</a></li>
-<?php endif; ?>
-    </ul>
-    </li>
-</ul>
+<div class="navbar">
+    <div class="navbar-inner">
+      <div class="container" style="width: auto;">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="/">HUSTACM</a>
+        <div class="nav-collapse">
+          <ul class="nav">
+            <li><!--class="active"--><a href="/">Home</a></li>
+            <li><a href="/problem/list">Problems</a></li>
+            <li><a href="/problem/status">Status</a></li>
+            <li><a href="/rank/user">Rank</a></li>
+            <li><a href="/contest">Contest</a></li>
+            <li><a href="/faqs">Faqs</a></li>
+            <li><a href="#">Discuss</a></li>
+          </ul>
+
+            <ul class="nav pull-right" >
+                <?php if ($current_user == null): ?>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/account/register">Register</a></li>
+                <?php else: ?>
+                <li><a href="/user/<?php echo $current_user;?>" title="<?php echo $current_user;?>">My Profile</a></li>
+                <li><a href="#">Message</a></li>
+                <li class="divider-vertical"></li>
+                <li class="dropdown" data-dropdown="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">More</a>
+                <ul class="dropdown-menu">
+                  <li><a href="/account/setting">Setting</a></li>
+                    <li class="divider"></li>
+                  <li><a href="/logout">Logout</a></li>
+                <?php endif; ?>
+            </ul>
+            </li>
+        </ul>
+        </div><!-- /.nav-collapse -->
+      </div>
+    </div><!-- /navbar-inner -->
+  </div>
+
 <div id="wrapper">
 <div class="banner"><h1>HUST Online Judge</h1></div>
 <?php echo $body; ?>

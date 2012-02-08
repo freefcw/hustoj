@@ -118,6 +118,7 @@ class Controller_Contest extends Controller_My {
 
         $db = new Model_Contest();
         $contest = $db->get_contest($cid);
+        $this->set_contest_info($contest);
         if ($contest == null)
         {
             $error = 'No Such Contest';

@@ -1,5 +1,5 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
-//TODO: add config in environment variable
+
 return array
 (
     'default' => array

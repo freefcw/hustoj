@@ -8,11 +8,10 @@
 <?php endfor;?>
 </ul></div>
 <?php echo Form::open('/problem/search', array('method' => 'get', 'class'=>'search sform'));?>
-<?php echo Form::label('text', 'Find ', array("class" => ""));?>&nbsp;
-<?php echo Form::input('text', '', array('class' => 'span2'));?>&nbsp;in&nbsp;<?php echo Form::select('area', array('title' => 'Title', 'source'=>'Source'), 'Title', array('class' => 'search-cat')); ?>
- <?php echo Form::submit(NULL, 'Go', array('class'=>'btn', 'title'=>'Random a problem'));?> <?php echo html::anchor('/problem/ramdom', 'R', array('class'=>'btn primary')); ?>
+<?php echo Form::input('text', '', array('class' => 'span2', 'placeholder' => 'Search'));?>&nbsp;in&nbsp;<?php echo Form::select('area', array('title' => 'Title', 'source'=>'Source'), 'Title', array('class' => 'search-cat')); ?>
+ <?php echo Form::submit(NULL, 'Go', array('class'=>'btn', 'title'=>'Random a problem'));?> <?php echo html::anchor('/problem/ramdom', 'R', array('class'=>'btn btn-primary')); ?>
 <?php echo Form::close();?>
-<table class="zebra-striped">
+<table class="table table-striped">
 	<thead>
 		<tr><th style="width: 5%">ID</th><th style="width: 80%">TITLE</th><th style="width: 10%">Ratio(AC/Submit)</th></tr>
 	</thead>

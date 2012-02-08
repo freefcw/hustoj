@@ -5,7 +5,10 @@
     Description:
         Purpose of the stylesheet follows.
 */
-
+/* header */
+.banner{
+    height: 50px;
+}
 /* navigation  */
 .userinfo  ul.dropdown-menu{
     min-width: 72px !important;
@@ -31,6 +34,9 @@
 
 .edit-userinfo label span{
     margin-right: 10px;
+    float: left;
+    text-align: right;
+    width: 150px;
 }
 
 .problem-pagination{
@@ -113,12 +119,19 @@ div.content-info p{
     margin: auto;
 }
 .submit fieldset label{
-    position: relative;
-    right: 10px;
+    padding-top: 3px;
+    width: 150px;
+    float: left;
+    text-align: right;
+    margin-right: 10px;
+    /*position: relative;*/
+    /*right: 10px;*/
 }
 .submit fieldset input, .submit fieldset select{
-    display: block;
-    margin-bottom: 5px;
+    width: 200px;
+    float: left;
+    /*display: block;*/
+    /*margin-bottom: 5px;*/
 }
 .submit textarea{
     margin: 18px auto 18px;

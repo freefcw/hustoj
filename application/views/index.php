@@ -1,5 +1,5 @@
 <div class="row index">
-    <div class="span4 news">
+    <div class="span2 news">
         <h4>Recent News</h4>
         <ol>
         <?php foreach($rss as $item):?>
@@ -7,7 +7,7 @@
         <?php endforeach;?>
         </ol>
     </div>
-    <div class="span10 welcome">
+    <div class="span8 welcome">
 <h3>Welcome to HUSTOJ</h3>
 <p>for the new user, please see the tutorials</p>
 <p>If you interested in Online Judge, please go the bitbucket</p>

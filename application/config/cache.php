@@ -1,7 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-//TODO: add config in environment variable
-
 return array
 (
 	'memcache' => array(

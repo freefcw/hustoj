@@ -1,4 +1,4 @@
-<table class="zebra-striped">
+<table class="table table-striped">
 	<thead>
 		<tr><th>Rank</th><th>User ID</th><th>Nick</th><th>Solved</th><th>Submit</th><th>Ratio</th></tr>
 	</thead>

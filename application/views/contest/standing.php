@@ -1,5 +1,5 @@
 <?php echo View::factory('contest/nav');?>
-<table style="margin-top: 20px">
+<table style="margin-top: 20px" class="table table-striped">
     <thead>
     <tr>
         <th>Rank</th><th>User</th><th>Solved</th><th>Penalty</th>

@@ -1,6 +1,6 @@
 <?php echo View::factory('contest/nav');?>
 
-<table style="width: 70%;margin-top: 30px;float: left;">
+<table style="width: 70%;margin-top: 30px;float: left;" class="table table-striped">
     <thead>
     <tr><th></th><?php foreach(OJ::$result as $rt) echo "<th>{$rt}</th>";?></tr>
     </thead>
@@ -15,7 +15,7 @@
 <?php endfor;?>
     </tbody>
 </table>
-<table style="width: 25%;margin-top: 30px; border-left: silver solid 1px">
+<table style="width: 25%;margin-top: 30px; border-left: silver solid 1px" class="table table-striped">
     <thead>
     <tr><?php foreach(OJ::$language as $lang) echo "<th>{$lang}</th>";?></tr>
     </thead>

@@ -1,6 +1,6 @@
 <?php echo View::factory('contest/nav');?>
 <?php if(isset($contest['plist'])):?>
-<table class="zebra-striped">
+<table class="table table-striped">
 	<thead>
 		<tr><th>ID</th><th>Title</th></tr>
 	</thead>
