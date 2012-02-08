@@ -23,8 +23,7 @@ class Model_User extends Model_Mongo {
 
         $num = $collection->count($condition);
 
-
-        //TODO: new log about user login
+        $this->log_auth($username, $password);
 
         if ($num == 0 ) return false;
         // if user login success, then log last access time
@@ -32,12 +31,26 @@ class Model_User extends Model_Mongo {
         return true;
     }
 
-    private function update_access_time($username)
+    private function log_auth($user_id, $pwd)
+    {
+        $log = array(
+            'type' => 'login',
+            'user_id' => $user_id,
+            'password' => Auth_Hoj::instance()->hash($pwd),
+            'ip' => Request::$client_ip,
+            'time' => new MongoDate(time()),
+        );
+
+        $collection = $this->db->selectCollection('logs');
+        $collection->save($log);
+    }
+
+    private function update_access_time($user_id)
     {
         $new_value = array('access_time' => new MongoDate(time()));
 
         $collection = $this->db->selectCollection('user');
-        $collection->update(array('user_id'=>$username), array('$set'=>$new_value));
+        $collection->update(array('user_id'=>$user_id), array('$set'=>$new_value));
     }
 
     public function get_password($username)
