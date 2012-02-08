@@ -18,25 +18,9 @@
     float: right;
 }
 
-.edit-userinfo form dl{
-    width: 600px;
-}
-
 .edit-userinfo{
     width: 450px;
     margin: auto;
-    text-align: center;
-}
-
-.edit-userinfo label{
-    width: 400px;
-}
-
-.edit-userinfo label span{
-    margin-right: 10px;
-    float: left;
-    text-align: right;
-    width: 150px;
 }
 
 .problem-pagination{
@@ -110,36 +94,18 @@ div.content-info p{
 .submit{
     width: 600px;
     margin: 10px auto 50px;
-    text-align: center;
 }
 
 .submit fieldset{
     width: 70%;
-    text-align: center;
     margin: auto;
 }
-.submit fieldset label{
-    padding-top: 3px;
-    width: 150px;
-    float: left;
-    text-align: right;
-    margin-right: 10px;
-    /*position: relative;*/
-    /*right: 10px;*/
-}
-.submit fieldset input, .submit fieldset select{
-    width: 200px;
-    float: left;
-    /*display: block;*/
-    /*margin-bottom: 5px;*/
-}
+
 .submit textarea{
-    margin: 18px auto 18px;
     display: block;
-    width: 100%;
+    width: 590px;
     height: 400px;
 }
-
 
 /* login */
 .login{

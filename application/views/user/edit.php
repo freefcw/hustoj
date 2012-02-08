@@ -6,20 +6,42 @@
     <?php if (isset($tip) AND ($tip != null)): ?>
         <div class="alert-message success err-notice"><p><?php echo $tip; ?></p></div>
         <?php endif ?>
-    <form action="/account/setting" method="POST">
+    <form action="/account/setting" method="POST" class="form-horizontal">
         <fieldset>
-            <label><span>User ID:</span><input type="text" disabled="disabled" value="<?php print $userinfo['user_id'];?>"/></label>
-            <label><span>Nick Name:</span><input name="nick" type="text" value="<?php print $userinfo['nick'];?>"/></label>
-            <label><span>Current Password:</span><input data-content="You need input password" data-original-title="Notice" class="pop" id="password" name="password" type="password" value=""/></label>
-            <label><span>New Password:</span><input id="newpwd" name="newpassword" type="password" value=""/></label>
-            <label><span>Confirm Password:</span><input id="repwd" data-content="confirm password" data-original-title="Notice" class="pop" name="confirm" type="password" value=""/></label>
-            <label><span>School:</span><input name="school" type="text" value="<?php print $userinfo['school'];?>"/></label>
-            <label><span>Email:</span><input name="email" type="text" value="<?php print $userinfo['email'];?>"/></label>
+            <div class="control-group">
+            <label class="control-label">User ID:</label>
+                <div class="controls"><input type="text" disabled="disabled" value="<?php print $userinfo['user_id'];?>"/></div>
+            </div>
+            <div class="control-group">
+            <label>Nick Name:</label>
+                <div class="controls"><input name="nick" type="text" value="<?php print $userinfo['nick'];?>"/></div>
+            </div>
+            <div class="control-group">
+            <label>Current Password:</label>
+                <div class="controls"><input data-content="You need input password" data-original-title="Notice" class="pop" id="password" name="password" type="password" value=""/></div>
+            </div>
+            <div class="control-group">
+            <label>New Password:</label>
+                <div class="controls"><input id="newpwd" name="newpassword" type="password" value=""/></div>
+            </div>
+            <div class="control-group">
+            <label>Confirm Password:</label>
+                <div class="controls"><input id="repwd" data-content="confirm password" data-original-title="Notice" class="pop" name="confirm" type="password" value=""/></div>
+            </div>
+            <div class="control-group">
+            <label>School:</label>
+                <div class="controls"><input name="school" type="text" value="<?php print $userinfo['school'];?>"/></div>
+            </div>
+            <div class="control-group">
+            <label>Email:</label>
+                <div class="controls"><input name="email" type="text" value="<?php print $userinfo['email'];?>"/></div>
+            </div>
         </fieldset>
-        <input type="submit" value="Update" class="btn" id='submit'/>
+        <div class="form-actions">
+        <input type="submit" value="Save Changes" class="btn-primary" id='submit'/>
+        <button type="reset" class="btn">Cancel</button>
+        </div>
     </form>
-    <script type="text/javascript" src="http://twitter.github.com/bootstrap/1.4.0/bootstrap-twipsy.js" ></script>
-    <script type="text/javascript" src="http://twitter.github.com/bootstrap/1.4.0/bootstrap-popover.js" ></script>
     <script type="text/javascript">
         $(function(){
            $("input.pop").popover({
