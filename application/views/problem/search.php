@@ -1,11 +1,13 @@
 <h1>Search Result of '<?php echo $search_text;?>' in <?php echo $area?> </h1>
-<?php echo Form::open('/problem/search', array('method' => 'get', 'class'=>'search'));?>
-<?php echo Form::label('text', 'Search:');?>
-<?php echo Form::input('text');?>
-<?php echo Form::select('area', array('title' => 'Title', 'source'=>'Source'), 'Title'); ?>
-<?php echo Form::submit(NULL, 'Search');?>
-<?php echo Form::close();?>
-<table>
+
+<div class="span9">
+      <form class="well form-search" action="/problem/search" method="GET">
+        Find <input type="text" name="text" class="input-medium"> IN
+        <select name="area" class="input-small"><option value='title'>Title</option><option value="source">Source</option></select>
+        <button type="submit" class="btn">Go</button>
+      </form>
+</div>
+<table class="table table-striped">
 	<thead>
 		<tr><th>ID</th><th>TITLE</th><th>Ratio(AC/Submit)</th></tr>
 	</thead>

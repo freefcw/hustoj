@@ -60,11 +60,9 @@
         $flag = FALSE;
     }
 ?>
-<ul class="pager">
+<ul class="pager" style="margin-left: 15%; margin-right: 15%">
 <?php if ($page == 1) $page = 2; ?>
-<li class="previous">
-	<?php echo html::anchor(sprintf("/problem/status/%s/{$append}", $page-1), '&larr; Newer');?>
+<li class="previous"><?php echo html::anchor(sprintf("/problem/status/%s/{$append}", $page-1), '&larr; Newer');?></li>
 <?php if ($page == $total) $page = $total - 1; ?>
-<li class="next">
-	<?php echo html::anchor(sprintf("/problem/status/%s/{$append}", $page+1), 'Older &rarr;');?>
-</li>
+<li class="next"><?php echo html::anchor(sprintf("/problem/status/%s/{$append}", $page+1), 'Older &rarr;');?></li>
+</ul>

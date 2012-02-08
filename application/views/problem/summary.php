@@ -11,7 +11,7 @@
 <dd><?php print $value;?></dd>
 <?php endforeach;?>
 </dl>
-<table class="best-solution">
+<table class="best-solution table table-striped">
 	<thead>
 		<tr>
 			<th>Rank</th><th>RunID</th><th>Momery</th><th>Time</th><th>User</th><th>Language</th><th>Submit Time</th>

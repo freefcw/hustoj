@@ -1,39 +1,39 @@
 <div class="edit-userinfo">
     <h3 class="page-title">Update Imformation</h3>
     <?php if (isset($error) AND ($error != null)): ?>
-    <div class="alert-message error err-notice"><p><?php echo $error; ?></p></div>
+    <div class="alert-error alert"><p><?php echo $error; ?></p></div>
     <?php endif ?>
     <?php if (isset($tip) AND ($tip != null)): ?>
-        <div class="alert-message success err-notice"><p><?php echo $tip; ?></p></div>
+        <div class="alert-success alert"><p><?php echo $tip; ?></p></div>
         <?php endif ?>
     <form action="/account/setting" method="POST" class="form-horizontal">
         <fieldset>
             <div class="control-group">
-            <label class="control-label">User ID:</label>
+            <label class="control-label">User ID</label>
                 <div class="controls"><input type="text" disabled="disabled" value="<?php print $userinfo['user_id'];?>"/></div>
             </div>
             <div class="control-group">
-            <label>Nick Name:</label>
+            <label>Nick Name</label>
                 <div class="controls"><input name="nick" type="text" value="<?php print $userinfo['nick'];?>"/></div>
             </div>
             <div class="control-group">
-            <label>Current Password:</label>
+            <label>Current Password</label>
                 <div class="controls"><input data-content="You need input password" data-original-title="Notice" class="pop" id="password" name="password" type="password" value=""/></div>
             </div>
             <div class="control-group">
-            <label>New Password:</label>
+            <label>New Password</label>
                 <div class="controls"><input id="newpwd" name="newpassword" type="password" value=""/></div>
             </div>
             <div class="control-group">
-            <label>Confirm Password:</label>
+            <label>Confirm Password</label>
                 <div class="controls"><input id="repwd" data-content="confirm password" data-original-title="Notice" class="pop" name="confirm" type="password" value=""/></div>
             </div>
             <div class="control-group">
-            <label>School:</label>
+            <label>School</label>
                 <div class="controls"><input name="school" type="text" value="<?php print $userinfo['school'];?>"/></div>
             </div>
             <div class="control-group">
-            <label>Email:</label>
+            <label>Email</label>
                 <div class="controls"><input name="email" type="text" value="<?php print $userinfo['email'];?>"/></div>
             </div>
         </fieldset>

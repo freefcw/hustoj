@@ -2,10 +2,20 @@
 <div class="alert-message error err-notice"><p><?php echo $error; ?></p></div>
 <?php endif ?>
 <h3 class="page-title">User Login</h3>
-<form action="/login" method="post" class="login">
+<form action="/login" method="post" class="form-horizontal span6" style="margin-left: 25%">
     <fieldset>
-    <label><span>Username<!-- or Email --></span><input name="username" type="text" value="<?php echo $username ?>"/></label>
-    <label><span>Password</span><input type="password" name="pwd"/></label>
+        <div class="control-group">
+    <label>Username<!-- or Email --></label>
+            <div class="controls">
+            <input name="username" type="text" value="<?php echo $username ?>"/></div>
+        </div>
+        <div class="control-group">
+    <label>Password</label>
+            <div class="controls"><input type="password" name="pwd"/></div>
+        </div>
     </fieldset>
-    <input value="Login" type="submit" class="btn"> <a href="/lostpassword">Forget Password?</a>
+    <div class="form-actions">
+    <input value="Login" type="submit" class="btn btn-primary"> <a href="/lostpassword">Forget Password?</a>
+    </div>
 </form>
+<br style="clear: both;">

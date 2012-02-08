@@ -22,14 +22,15 @@
 <?php endforeach; ?>
 </tbody>
 </table>
-<div class="pagination" style="width: 500px;margin-left: auto;margin-right: auto;">
-<?php echo html::anchor("/rank/user/{$page}", 'Reflesh');?>
-<?php echo html::anchor("/rank/user", 'First Page');?>
+<!--<div class="pagination" style="width: 500px;margin-left: auto;margin-right: auto;">-->
+<ul class="pager">
+<li><?php echo html::anchor("/rank/user/{$page}", 'Reflesh');?></li>
+<li><?php echo html::anchor("/rank/user", 'First');?></li>
 <?php if ($page != 1): ?>
-	<?php echo html::anchor(sprintf('/rank/user/%s', $page-1), 'Prev Page');?>
+	<li><?php echo html::anchor(sprintf('/rank/user/%s', $page-1), 'Previous');?></li>
 <?php endif; ?>
 <?php if ($page != $total_page): ?>
-	<?php echo html::anchor(sprintf('/rank/user/%s', $page+1), 'Next Page');?>
+	<li><?php echo html::anchor(sprintf('/rank/user/%s', $page+1), 'Next');?></li>
 <?php endif; ?>
-<?php echo html::anchor(sprintf('/rank/user/%s', $total_page), 'Last Page');?>
-</div>
+<?php echo html::anchor(sprintf('/rank/user/%s', $total_page), 'Last');?>
+</ul>

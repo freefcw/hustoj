@@ -6,17 +6,27 @@
  */
 class Model_Submission extends Model_Mongo
 {
+
+    private function is_search($var)
+    {
+        return ($var != -1 AND $var !== null AND $var !== '');
+    }
     public function get_status($page_id = 1, $problem_id = -1, $user_id = '', $cid = null, $language = -1, $result = -1)
     {
         //TODO: move to solutions
         $collection = $this->db->selectCollection('solution');
 
         $condition = array();
-        if ($problem_id != -1 AND $problem_id !== null) $condition['problem_id'] = intval($problem_id);
-        if ($user_id !== null) $condition['user_id'] = $user_id;
-        if (($language != -1) AND ($language !== null)) $condition['language'] = intval($language);
-        if (($result != -1) AND ($language !== null)) $condition['result'] = intval($result);
-        if ($cid != null) $condition['contest_id'] = intval($cid);
+        if ($this->is_search($problem_id))
+            $condition['problem_id'] = intval($problem_id);
+        if ($this->is_search($user_id))
+            $condition['user_id'] = $user_id;
+        if ($this->is_search($language))
+            $condition['language'] = intval($language);
+        if ($this->is_search($result))
+            $condition['result'] = intval($result);
+        if ($this->is_search($cid))
+            $condition['contest_id'] = intval($cid);
 
         $need = array('solution_id', 'problem_id', 'user_id', 'time', 'memory', 'language', 'result', 'code_length', 'add_date');
 
