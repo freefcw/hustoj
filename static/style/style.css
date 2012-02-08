@@ -10,14 +10,6 @@
     height: 50px;
 }
 /* navigation  */
-.userinfo  ul.dropdown-menu{
-    min-width: 72px !important;
-    width: 72px !important;
-}
-.userinfo{
-    float: right;
-}
-
 .edit-userinfo{
     width: 450px;
     margin: auto;
@@ -78,6 +70,10 @@ div.content-info p{
 }
 .welcome p{
     font-size: 16px;
+}
+
+.user-profile p{
+    font-size: 14px;
 }
 
 .thanks ul li{
