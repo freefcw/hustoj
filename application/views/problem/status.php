@@ -31,31 +31,46 @@
 	$flag = TRUE;
     if (!is_null($pid))
 	{
-		if ($flag) $append = '?';
+		if ($flag)
+            $append = '?';
+        else
+            $append = $append. '&';
 		$append = $append. "pid={$pid}";
 		$flag = FALSE;
 	}
 	if (!is_null($uid))
 	{
-		if ($flag) $append = '?';
+		if ($flag)
+            $append = '?';
+        else
+            $append = $append. '&';
 		$append = $append. "uid={$uid}";
 		$flag = FALSE;
 	}
 	if (!is_null($language))
 	{
-		if ($flag) $append = '?';
+		if ($flag)
+            $append = '?';
+        else
+            $append = $append. '&';
 		$append = $append. "language={$language}";
 		$flag = FALSE;
 	}
 	if (!is_null($result))
 	{
-		if ($flag) $append = '?';
+		if ($flag)
+            $append = '?';
+        else
+            $append = $append. '&';
 		$append = $append. "result={$result}";
 		$flag = FALSE;
 	}
     if (!is_null($cid))
     {
-        if ($flag) $append = '?';
+        if ($flag)
+            $append = '?';
+        else
+            $append = $append. '&';
         $append = $append. "cid={$cid}";
         $flag = FALSE;
     }

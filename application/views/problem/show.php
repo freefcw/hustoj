@@ -1,7 +1,7 @@
 <?php if(isset($cid)) echo View::factory('contest/nav'); ?>
 <h1 class="page-title"><?php if(isset($cid)) echo OJ::contest_pid($pid); else echo $p['problem_id']; ?> -- <?php echo $p['title']; ?></h1>
 <div class="content-info">
-<p>Time Limit: <span class="label warning"><?php echo $p['time_limit'];?>S</span>  Memory Limit: <span class="label important"><?php echo $p['memory_limit'];?>MB</span><br /></p>
+<p>Time Limit: <span class="label label-warning"><?php echo $p['time_limit'];?>S</span>  Memory Limit: <span class="label label-important"><?php echo $p['memory_limit'];?>MB</span><br /></p>
 <p>Submissions: <?php echo $p['submit'];?>  Solved: <?php echo $p['accepted'];?></p>
 </div>
 <dl id="detail">
