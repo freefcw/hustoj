@@ -17,23 +17,21 @@
 <div class="navbar">
     <div class="navbar-inner">
       <div class="container" style="width: auto;">
-        <a class="btn btn-navbar" data-toggle="collapse" data-target="nav-collapse">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
         <a class="brand" href="/">HUSTACM</a>
         <div class="nav-collapse">
-          <ul class="nav">
-            <li><!--class="active"--><a href="/">Home</a></li>
-            <li><a href="/problem/list">Problems</a></li>
-            <li><a href="/problem/status">Status</a></li>
-            <li><a href="/rank/user">Rank</a></li>
-            <li><a href="/contest">Contest</a></li>
-            <li><a href="/faqs">Faqs</a></li>
-            <li><a href="#">Discuss</a></li>
-          </ul>
-
+            <ul class="nav">
+              <li><!--class="active"--><a href="/admin">Home</a></li>
+              <li><a href="#/admin/problem/list">Problems</a></li>
+              <li><a href="#/admin/users">Users</a></li>
+              <li><a href="#/admin/contest">Contest</a></li>
+              <li><a href="#/admin/control">Configure</a></li>
+              <li><a href="#">Discuss</a></li>
+            </ul>
             <ul class="nav pull-right" >
                 <?php if ($current_user == null): ?>
                 <li><a href="/login">Login</a></li>
@@ -64,6 +62,6 @@
 <div class="banner"><h1>HUST Online Judge</h1></div>
 <?php echo $body; ?>
 </div>
-<?php echo View::factory('footer'); ?>
+    <?php echo View::factory('footer'); ?>
 </div>
 </body></html>
