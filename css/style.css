@@ -103,8 +103,19 @@ div.content-info p{
     height: 400px;
 }
 
-/* summary */
+/* faqs */
+#faqs dt.q{
+    font-size: larger;
+    margin-bottom: 1em;
+    padding-left: 9px;
+}
 
+#faqs dt span, #faqs dd .sp-a{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* summary */
 #summary dl{
     font-size: 14px;
     margin-top: 30px;

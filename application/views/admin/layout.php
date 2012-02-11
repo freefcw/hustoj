@@ -6,7 +6,7 @@
 <meta name="description" content="HUST ACM - 华中科技大学ACM组织"/>
 <meta name="robots" content="index,follow" />
 <title><?php echo $title; ?></title>
-<?php echo HTML::style('static/style/style.css');?>
+<?php echo HTML::style('css/style.css');?>
 <?php echo HTML::script(' https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'); ?>
 <?php echo HTML::script('js/bootstrap.min.js'); ?>
 <link rel="stylesheet" href="/css/bootstrap.css">
