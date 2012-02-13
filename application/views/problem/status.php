@@ -1,11 +1,22 @@
-<?php echo Form::open('/problem/status', array('method' => 'get', 'class' => 'inline-inputs', 'style' => 'width: 800px; margin-left: auto;margin-right: auto;'));?>
-<span>Problem ID: </span><?php echo Form::input('pid', '', array('class' => 'span2'));?>
-<span> User ID:</span><?php echo Form::input('uid', '', array('class' => 'span2'));?>
-<span> Language:</span><?php echo Form::select('language', array('-1' => 'All', '0'=>'C', '1'=>'C++', '2'=>'Pascal', '3'=>'Java', '4'=>'Ohters'), '-1', array('class' => 'span1')); ?>
-<span> Result:</span><?php echo Form::select('result', array("-1"=>"All", "4"=>"Accepted", "5"=>"Presentation Error", "6"=>"Wrong Answer",
-	"7"=>"Time Limit Exceed", "8"=>"Memory Limit Exceed", "9"=>"Output Limit Exceed", "10"=>"Runtime Error", "11"=>"Compile Error", "0"=>"Pending", "1"=>"Pending Rejudging", "2"=>"Compiling", "3"=>"Running &amp; Judging"), '-1', array('class' => 'span2')); ?>
-<?php echo Form::submit(NULL, 'Filter', array('class' => 'btn'));?>
-<?php echo Form::close();?>
+<form action="/problem/status" method="GET" class="inline-inputs" style="width: 800px; margin: 15px auto 5px;"
+<span>Problem ID: </span><input type="text" name="pid" class="span2">
+<span> User ID:</span><input type="text" name="uid" class="span2">
+<span> Language:</span>
+<select name="language" class="span1">
+<option value="-1" selected="selected">All</option>
+<?php foreach(OJ::$language as $key=>$lang):?>
+<option value="<?php echo $key; ?>"><?php echo OJ::lang($key);?></option>
+<?php endforeach;?>
+</select>
+<span> Result:</span>
+<select name="result" class="span2">
+<option value="-1" selected="selected">All</option>
+<?php foreach(OJ::$status as $key=>$lang):?>
+<option value="<?php echo $key; ?>"><?php echo OJ::jresult($key);?></option>
+<?php endforeach;?>
+</select>
+<input type="submit" value="Filter" class="btn">
+</form>
 <table class="table table-striped">
 	<thead>
 		<tr><th>Run ID</th><th>Problem</th><th>User ID</th><th>Result</th><th>Time</th><th>Memory</th><th>Language</th><th>Code Length</th><th>Submit Time</th></tr>
