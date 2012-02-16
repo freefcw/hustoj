@@ -1,19 +1,16 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Myadmin extends Controller {
+class Controller_Admin_My extends Controller {
 
 	protected $view;
 
 	public function before()
 	{
 		$this->view = View::factory('admin/layout');
-
         // default is null
 
         $this->view->current_user = Auth::instance()->get_user();
-
-		# TODO: add admin control
-
+        if (!Auth::instance()->is_admin()) $this->request->redirect('/');
 	}
 
 	public function after()

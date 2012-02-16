@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Admin extends Controller_Myadmin{
+class Controller_Admin_Index extends Controller_Admin_My{
 
     public function before()
     {
@@ -13,13 +13,4 @@ class Controller_Admin extends Controller_Myadmin{
         $this->view->title = 'Admin Control Panel';
         $this->view->body = 'hi, admin';
     }
-
-    public function action_problemlist()
-    {
-        $this->view->title = 'Problem List';
-        $this->view->body = 'this is problem list';
-    }
-
-    public function action_userlist()
-    {}
 }
