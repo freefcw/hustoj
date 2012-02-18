@@ -27,7 +27,7 @@
             <ul class="nav">
               <li><!--class="active"--><a href="/admin">Home</a></li>
               <li><a href="/admin/problem">Problems</a></li>
-              <li><a href="/admin/user ">Users</a></li>
+              <li><a href="/admin/user">Users</a></li>
               <li><a href="/admin/contest">Contest</a></li>
               <li><a href="/admin/setting">Configure</a></li>
               <li><a href="#">Discuss</a></li>

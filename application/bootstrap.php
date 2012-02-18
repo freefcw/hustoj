@@ -131,11 +131,6 @@ Route::set('ranklist', 'rank/user(/<id>)')
 		'controller' => 'user',
 		'action'	 => 'list'
 	));
-Route::set('admin', 'admin(/<action>)')
-    ->defaults(array(
-        'controller'    => 'admin',
-        'action'        => 'index'
-));
 Route::set('user', 'user/<id>',
 	array('id' => '[[:word:]]+'))
 	->defaults(array(
@@ -157,6 +152,30 @@ Route::set('contest-problem', 'contest/<cid>/problem/<pid>',
         'controller'    => 'contest',
         'action'        => 'problem',
     ));
+Route::set('adminindex', 'admin')
+	->defaults(array(
+		'controller' => 'admin_index',
+        'action'     => 'index'
+	)
+);
+Route::set('adminuser', 'admin/user(/<action>)')
+	->defaults(array(
+		'controller' => 'admin_user',
+        'action'     => 'index'
+	)
+);
+Route::set('adminproblem', 'admin/problem(/<action>)')
+	->defaults(array(
+		'controller' => 'admin_problem',
+        'action'     => 'index'
+	)
+);
+Route::set('admincontest', 'admin/contest(/<action>)')
+	->defaults(array(
+		'controller' => 'admin_contest',
+        'action'     => 'index'
+	)
+);
 Route::set('default', '(<controller>(/<action>(/<id>(/<overflow>))))',
 	array(
 		'id' => '[[:digit:]]{1,}',
