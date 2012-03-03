@@ -16,19 +16,20 @@ class Controller_Admin_Problem extends Controller_Admin_My {
     {
         if (isset($p_id))
         {
+            // come from action_new
             $pid = $p_id;
         } else {
             $pid = $this->request->param('id', null);
         }
-        if (($pid === null) or (! is_numeric($pid)) $this->error_page();
+
+        if (($pid === null) or (! is_numeric($pid))) $this->error_page();
 
         $m = new Model_Problem();
         $problem = $m->get_problem(intval($pid));
 
         // view begin
         $body = View::factory('admin/problem/edit');
-        $body->problem = $problem;
-
+        $body->bind('problem', $problem);
 
         $this->view->title = 'Edit '. $problem['id']. ' -- '. $problem['title'];
         $this->view->body = $body;
@@ -52,9 +53,8 @@ class Controller_Admin_Problem extends Controller_Admin_My {
         //
         // delete a problem
         $pid = $this->request->param('id', null);
-        if (($pid === null) or (! is_numeric($pid))
+        if (($pid === null) or (! is_numeric($pid)))
         {
-            // TODO:is here a admin? a wrong id
             $this->error_page();
         }
         $m = new Model_Problem();
@@ -80,7 +80,7 @@ class Controller_Admin_Problem extends Controller_Admin_My {
         $problem_list = $m->get_page($page);
 
         $body = View::factory('admin/problem/list');
-        $body->problem = $problem_list;
+        $body->bind('problem', $problem_list);
 
         // list problem
         $this->view->title = 'Problem List';

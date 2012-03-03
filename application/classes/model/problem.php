@@ -105,14 +105,14 @@ class Model_Problem extends Model_Mongo {
         return $ret;
     }
 
-    public function save($post, $is_contest)
+    public function save($post, $is_contest = false)
     {
         $collection = $this->db->selectCollection('problem');
 
         if (array_key_exists('problem_id', $post))
         {
             $condition = array('problem_id' => $post['problem_id']);
-            $ret = $collection->update($condition, {'$set': $data});
+            $ret = $collection->update($condition, array('$set' => $post));
         } else {
             // TODO: new problem  with a problem id;
             $ret = $collection->save($post);

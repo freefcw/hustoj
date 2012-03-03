@@ -13,6 +13,12 @@ class Controller_Admin_My extends Controller {
         if (!Auth::instance()->is_admin()) $this->request->redirect('/');
 	}
 
+    public function error_page()
+    {
+        $this->request->redirect('/');
+        // TODO: add more handle err
+    }
+
 	public function after()
 	{
 		$this->response->body($this->view);
