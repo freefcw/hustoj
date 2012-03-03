@@ -12,9 +12,9 @@ class Controller_Admin_Problem extends Controller_Admin_My {
         $this->action_list();
     }
 
-    public function action_edit($p_id)
+    public function action_edit($p_id = null)
     {
-        if (isset($p_id))
+        if ($p_id !== null)
         {
             // come from action_new
             $pid = $p_id;
@@ -31,7 +31,7 @@ class Controller_Admin_Problem extends Controller_Admin_My {
         $body = View::factory('admin/problem/edit');
         $body->bind('problem', $problem);
 
-        $this->view->title = 'Edit '. $problem['id']. ' -- '. $problem['title'];
+        $this->view->title = 'Edit '. $problem['problem_id']. ' -- '. $problem['title'];
         $this->view->body = $body;
     }
 
