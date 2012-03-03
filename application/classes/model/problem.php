@@ -42,6 +42,20 @@ class Model_Problem extends Model_Mongo {
 
         return iterator_to_array($cursor);
     }
+    public function get_page_for_admin($page_id, $per_page = 50)
+    {
+        $collection = $this->db->selectCollection('problem');
+        $start = ($page_id - 1) * $per_page + 1000;
+
+        $condition = array('problem_id' => array('$gte' => $start));
+        $need = array('problem_id', 'title', 'deleted', 'add_date');
+        $cursor =$collection->find($condition, $this->i_need($need))
+            ->sort(array('problem_id' => 1))->limit($per_page);
+        //foreach($cursor as $doc) var_dump($doc);
+        //var_dump(iterator_to_array($cursor));
+
+        return iterator_to_array($cursor);
+    }
     /**
     * return total problems
     *

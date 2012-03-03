@@ -74,10 +74,10 @@ class Controller_Admin_Problem extends Controller_Admin_My {
 
     public function action_list()
     {
-        $page = $this->request->param('id', 0);
+        $page = $this->request->param('id', 1);
 
         $m = new Model_Problem();
-        $problem_list = $m->get_page($page);
+        $problem_list = $m->get_page_for_admin($page);
 
         $body = View::factory('admin/problem/list');
         $body->bind('problem', $problem_list);
