@@ -158,19 +158,19 @@ Route::set('adminindex', 'admin')
         'action'     => 'index'
 	)
 );
-Route::set('adminuser', 'admin/user(/<action>)')
+Route::set('adminuser', 'admin/user(/<action>(/<id>))')
 	->defaults(array(
 		'controller' => 'admin_user',
         'action'     => 'index'
 	)
 );
-Route::set('adminproblem', 'admin/problem(/<action>)')
+Route::set('adminproblem', 'admin/problem(/<action>(/<id>))')
 	->defaults(array(
 		'controller' => 'admin_problem',
         'action'     => 'index'
 	)
 );
-Route::set('admincontest', 'admin/contest(/<action>)')
+Route::set('admincontest', 'admin/contest(/<action>(/<id>))')
 	->defaults(array(
 		'controller' => 'admin_contest',
         'action'     => 'index'
