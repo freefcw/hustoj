@@ -91,4 +91,33 @@ class Model_Problem extends Model_Mongo {
 
         return iterator_to_array($ret);
     }
+
+    public function delete($pid)
+    {
+        $collection = $this->db->selectCollection('problem');
+
+        // set delete as mark
+        $condition = array('problem_id' => $pid);
+        $area = array('$set' => array('delete' => true, 'problem_id' => 'null'));
+
+        $ret = $collection->update($condition, $area);
+
+        return $ret;
+    }
+
+    public function save($post, $is_contest)
+    {
+        $collection = $this->db->selectCollection('problem');
+
+        if (array_key_exists('problem_id', $post))
+        {
+            $condition = array('problem_id' => $post['problem_id']);
+            $ret = $collection->update($condition, {'$set': $data});
+        } else {
+            // TODO: new problem  with a problem id;
+            $ret = $collection->save($post);
+        }
+
+        return $ret;
+    }
 }
