@@ -6,7 +6,7 @@
 <?php foreach($list as $c):?>
 <tr>
 <td><?php echo $c['contest_id'];?></td>
-<td><em>[EDIT]</em><?php echo html::anchor("/contest/show/{$c['contest_id']}", $c['title']);?></td>
+<td><?php echo html::anchor("/contest/show/{$c['contest_id']}", $c['title']);?> <a href="/admin/contest/edit/<?php echo $c['contest_id'];?>" style="float:right;">[EDIT]</a></td>
 <td><?php echo OJ::mtime($c['end_time']);?></td>
 <td><?php echo OJ::is_private($c['private']);?></td>
 <td><?php echo OJ::mtime($c['end_time']);?></td>
