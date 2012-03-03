@@ -16,6 +16,12 @@ class Controller_My extends Controller {
 
 	}
 
+    public function error_page($msg = '')
+    {
+        $body = new View::factory('admin/index/err_page');
+        $this->view->body = $body;
+    }
+
 	public function after()
 	{
 		$this->response->body($this->view);
