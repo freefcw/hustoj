@@ -98,7 +98,7 @@ class Model_User extends Model_Mongo {
     }
 
 
-    public function get_list($page_id, $per_page)
+    public function get_list($page_id, $per_page = 50)
     {
         $collection = $this->db->selectCollection('user');
 
@@ -172,5 +172,20 @@ class Model_User extends Model_Mongo {
 
         $collection = $this->db->selectCollection('user');
         $collection->save($newuser);
+    }
+
+    /**
+     * disable somebody by user_id
+     *
+     * @param $uid
+     */
+    public function ban($uid)
+    {
+        $condition = array('user_id' => $uid);
+        $data= array('disable' => true);
+
+        $collection = $this->db->selectCollection('user');
+        $collection->update($condition, array('$set'=> $data));
+
     }
 }
