@@ -1,5 +1,5 @@
 <h2>Edit Problem <?php echo $problem['problem_id'];?></h2>
-<form class="form-horizontal">
+<form class="form-horizontal" method="POST" action="/admin/problem/edit">
 <fieldset>
 <legend>Basic Information</legend>
 <div class="control-group">
@@ -74,7 +74,7 @@
     </div>
     <div class="form-actions">
      <button class="btn btn-primary" type="submit">Save changes</button>
-     <button class="btn">Cancel</button>
+        <button class="btn" onclick="history.back()" type="reset">Cancel</button>
    </div>
 </fieldset>
 </form>

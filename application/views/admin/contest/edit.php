@@ -1,11 +1,11 @@
 <h2>Edit Contest <?php echo $contest['contest_id'];?></h2>
-<form class="form-horizontal" action="/admin/contest/edit">
+<form class="form-horizontal" method="POST" action="/admin/contest/edit/<?php echo $contest['contest_id']; ?>">
 <fieldset>
 <legend>Basic Information</legend>
 <div class="control-group">
 <label class="control-label" for="title">Title</label>
 <div class="controls">
-<input type="text" class="input-xlarge" name="title" id="title" value="<?php echo $contest['title'];?>">
+<input type="text" class="input-xxlarge" name="title" id="title" value="<?php echo $contest['title'];?>">
     <p></p>
     <label class="checkbox" for="private">
         <input type="checkbox" name='private' id="private" <?php if (array_key_exists('private', $contest) and $contest['private'] == true ): ?>checked="checked"<?php endif;?>>
@@ -42,7 +42,7 @@
     </ul>
 <div class="form-actions">
  <button class="btn btn-primary" type="submit">Save changes</button>
- <button class="btn">Cancel</button>
+ <button class="btn" onclick="history.back()" type="reset">Cancel</button>
 </div>
 </form>
 

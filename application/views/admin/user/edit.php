@@ -1,7 +1,7 @@
 <h2>Edit User</h2>
 <div class="row">
     <div class="span8">
-      <form class="form-horizontal" action="/admin/contest/edit">
+      <form class="form-horizontal" action="/admin/contest/edit" method="POST">
         <fieldset>
           <legend>Basic Information</legend>
           <div class="control-group">
@@ -61,7 +61,7 @@
             </div>
           <div class="form-actions">
             <button class="btn btn-primary" type="submit">Save changes</button>
-            <button class="btn">Cancel</button>
+              <button class="btn" onclick="history.back()" type="reset">Cancel</button>
           </div>
         </fieldset>
       </form>
