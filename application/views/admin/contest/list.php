@@ -7,9 +7,8 @@
 <tr>
 <td><?php echo $c['contest_id'];?></td>
 <td><?php echo html::anchor("/contest/show/{$c['contest_id']}", $c['title']);?> <a href="/admin/contest/edit/<?php echo $c['contest_id'];?>" style="float:right;">[EDIT]</a></td>
-<td><?php echo OJ::mtime($c['end_time']);?></td>
-<td><?php echo OJ::is_private($c['private']);?></td>
-<td><?php echo OJ::mtime($c['end_time']);?></td>
+<td><?php echo OJ::mtime($c['end_time']);?> -- <?php echo OJ::mtime($c['end_time']);?></td>
+<td><a href="/admin/contest/changeprivate/<?php echo OJ::is_private($c['private']);?>"><?php echo OJ::is_private($c['private']);?></a></td>
 </tr>
 <?php endforeach; ?>
 </tbody>

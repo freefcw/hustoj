@@ -1,14 +1,11 @@
 <table class="table table-striped">
 	<thead>
-		<tr><th>Rank</th><th>User ID</th><th>Nick</th><th>Solved</th><th>Submit</th><th>Ratio</th></tr>
+		<tr><th>User ID</th><th>Nick</th><th>Solved</th><th>Submit</th><th>Ratio</th></tr>
 	</thead>
 	<tbody>
-<?php //$rank = ($page - 1) * $per_page; ?>
 <?php foreach($user_list as $u):?>
-<?php $rank = 1; ?>
 <tr>
-<td class="rank"><?php echo $rank; ?></td>
-<td><?php echo html::anchor("/user/{$u['user_id']}", $u['user_id']); ?></td>
+<td><?php echo html::anchor("/user/{$u['user_id']}", $u['user_id']); ?><a href="/admin/user/edit/<?php echo $u['user_id'];?>" style="float: right;">[EDIT]</a> </td>
 <td><?php echo HTML::chars($u['nick']); ?></td>
 <td><?php echo $u['solved']; ?></td>
 <td><?php echo $u['submit']; ?></td>
