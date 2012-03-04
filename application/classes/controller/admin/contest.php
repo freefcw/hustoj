@@ -22,9 +22,26 @@ class Controller_Admin_Contest extends Controller_Admin_My{
 
 		// view
 		$body = View::factory('admin/contest/list');
-		$body->list = $contest_list;
+		$body->bind('contest_list', $contest_list);
 
         $this->view->title = 'Contest List';
+        $this->view->body = $body;
+    }
+
+    public function action_edit($cid = null)
+    {
+        if ($cid === null)
+            $cid = $this->request->param('id', null);
+
+        if ($cid === null) $this->error_page();
+
+        $c = new Model_Contest();
+        $contest = $c->get_contest($cid);
+
+        $body = View::factory('admin/contest/edit');
+        $body->bind('contest', $contest);
+
+        $this->view->title = 'Edit Contest'. $contest['contest_id'];
         $this->view->body = $body;
     }
 }
