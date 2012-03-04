@@ -48,8 +48,8 @@ class OJ {
      * @var array private value to human language
      */
 	public static $private = array(
-		'0' => 'Public',
-		'1' => 'Private'
+		'0' => 'public',
+		'1' => 'private'
 	);
 
     /**
