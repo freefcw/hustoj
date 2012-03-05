@@ -140,15 +140,8 @@ class Model_User extends Model_Mongo {
     {
         $collection = $this->db->selectCollection('user');
 
-        $new_value = array(
-                    'password'=> Auth::instance()->hash($user['password']),
-                    'school'=> $user['school'],
-                    'email'=> $user['email'],
-                    'nick'=> $user['nick'],
-                );
-
         $condition = array('user_id'=>$user['user_id']);
-        $ret = $collection->update($condition, array('$set'=>$new_value));
+        $ret = $collection->update($condition, array('$set'=>$user));
 
         return $ret;
     }

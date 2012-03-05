@@ -30,7 +30,11 @@ class Controller_Account extends Controller_My{
         } else {
             // if POST then update user info
             $user = $request->post();
-            $user['user_id'] = $uid;
+
+            $newuser['user_id'] = $uid;
+            $newuser['school'] = $user['school'];
+            $newuser['email'] = $user['email'];
+            $newuser['nick'] = $user['nick'];
 
             $u = New Model_User();
             // check user password
@@ -40,10 +44,10 @@ class Controller_Account extends Controller_My{
                 if ( strlen($user['newpassword']) > 0
                     AND ($user['newpassword'] === $user['confirm']))
                 {
-                    $user['password'] = $user['newpassword'];
+                    $newuser['password'] = Auth::instance()->hash($user['newpassword']);
                 }
                 //TODO: Validation user input, see action_new
-                $ret = $u->update_information($user);
+                $ret = $u->update_information($newuser);
                 $tip = 'Update Success';
             } else {
                 $error = 'Password Wrong';
