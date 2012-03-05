@@ -4,7 +4,7 @@
     </thead>
 <?php foreach($problem as $p):?>
 <tr>
-<td><?php echo $p['problem_id'];?><a href="/admin/problem/edit/<?php echo $p['problem_id'];?>" style="float: right;">[EDIT]</a></td>
+<td><?php echo $p['problem_id'];?><a class="edit-link" href="/admin/problem/edit/<?php echo $p['problem_id'];?>" style="float: right;">[EDIT]</a></td>
 <td><?php echo $p['title'];?></td>
 <td><?php echo OJ::mtime($p['add_date']);?></td>
 <td>Public</td>

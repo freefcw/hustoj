@@ -5,7 +5,7 @@
 	<tbody>
 <?php foreach($user_list as $u):?>
 <tr>
-<td><?php echo html::anchor("/user/{$u['user_id']}", $u['user_id']); ?><a href="/admin/user/edit/<?php echo $u['user_id'];?>" style="float: right;">[EDIT]</a> </td>
+<td><?php echo html::anchor("/user/{$u['user_id']}", $u['user_id']); ?><a class="edit-link" href="/admin/user/edit/<?php echo $u['user_id'];?>" style="float: right;">[EDIT]</a> </td>
 <td><?php echo HTML::chars($u['nick']); ?></td>
 <td><?php echo $u['solved']; ?></td>
 <td><?php echo $u['submit']; ?></td>

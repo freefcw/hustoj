@@ -191,3 +191,7 @@ table.best-solution{
     position: absolute;
     margin-left: -1.3em;
 }
+
+.edit-link{
+    color: SeaGreen;
+}
