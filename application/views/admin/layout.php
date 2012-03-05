@@ -59,7 +59,7 @@
   </div>
 
 <div id="wrapper">
-<div class="banner"><h1>HUST Online Judge</h1></div>
+
 <?php echo $body; ?>
 </div>
     <?php echo View::factory('footer'); ?>
