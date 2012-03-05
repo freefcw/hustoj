@@ -1,19 +1,19 @@
 <h2>Edit User</h2>
 <div class="row">
     <div class="span8">
-      <form class="form-horizontal" action="/admin/user/edit" method="POST">
+      <form class="form-horizontal" action="/admin/user/edit/<?php echo $user['user_id'];?>" method="POST">
         <fieldset>
           <legend>Basic Information</legend>
           <div class="control-group">
-            <label for="userid" class="control-label">User ID</label>
+            <label for="user_id" class="control-label">User ID</label>
             <div class="controls">
-              <input type="text" id="userid" class="input-xlarge" disabled="disabled" value="<?php echo $user['user_id'];?>">
+              <input type="text" id="userid" name="userid" disabled="disabled" class="input-xlarge disabled" value="<?php echo $user['user_id'];?>">
             </div>
           </div>
           <div class="control-group">
           <label for="nick" class="control-label">Nick Name</label>
           <div class="controls">
-            <input type="text" id="nick" class="input-xlarge" value="<?php echo $user['nick'];?>">
+            <input type="text" id="nick" name="nick" class="input-xlarge" value="<?php echo $user['nick'];?>">
           </div>
           </div>
           <div class="control-group">
@@ -45,17 +45,16 @@
           <div class="control-group">
             <label for="textarea" class="control-label">Introduce</label>
             <div class="controls">
-              <textarea cols="50" rows="3" id="textarea" class="span6" name="intro"></textarea>
+              <textarea cols="50" rows="3" id="textarea" class="span6" name="intro"><?php if(array_key_exists('intro', $user)) echo $user['intro'];?></textarea>
             </div>
           </div>
             <legend>Other Information</legend>
             <div class="control-group">
-                <label for="disable" class="control-label">Disable User</label>
-
+                <label for="disabled" class="control-label">Disable User</label>
                 <div class="controls">
-                    <select id="disable">
-                        <option value="0" <?php if (array_key_exists('disable', $user) and $user['disable'] == false): ?>selected="selected"<?php endif;?>>enabled</option>
-                        <option value="1" <?php if (array_key_exists('disable', $user) and $user['disable'] == true): ?>selected="selected"<?php endif;?>>disabled</option>
+                    <select id="disabled" name="disabled">
+                        <option value="0" <?php if (array_key_exists('disabled', $user) and $user['disabled'] == false): ?>selected="selected"<?php endif;?>>enabled</option>
+                        <option value="1" <?php if (array_key_exists('disabled', $user) and $user['disabled'] == true): ?>selected="selected"<?php endif;?>>disabled</option>
                     </select>
                 </div>
             </div>
