@@ -63,6 +63,27 @@ class Controller_Admin_Problem extends Controller_Admin_My {
         $this->action_list();
     }
 
+    public function action_search()
+    {
+        $text = $this->request->param('id', null);
+        if ($text === null) $this->error_page();
+
+        $m = new Model_Problem();
+        $result = $m->find_problem($text, 'title');
+
+        $json = array();
+        foreach($result as $item)
+        {
+            $tmp = array(
+                'id' => sprintf('%s', $item['_id']),
+                'title' => $item['title'],
+            );
+            $json[] = $tmp;
+        }
+
+        $this->view = json_encode($json);
+    }
+
     public function action_new()
     {
         // new problem
