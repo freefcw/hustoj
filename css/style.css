@@ -165,3 +165,8 @@ table.best-solution{
     width: 400px;
     margin: 8px auto 13px;
 }
+
+/*  admin */
+.capitalize{
+    text-transform: capitalize;
+}
