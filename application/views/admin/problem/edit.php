@@ -5,7 +5,7 @@
 <div class="control-group">
 <label class="control-label" for="title">Title</label>
 <div class="controls">
-<input type="text" class="input-xlarge" name="title" value="<?php echo $problem['title'];?>">
+<input type="text" class="input-xlarge" name="title" id="title" value="<?php echo $problem['title'];?>">
     <p></p>
     <label class="checkbox" for="spj">
             <input type="checkbox" name='spj' id="spj" <?php if(array_key_exists('disable', $problem) and $problem['spj'] == true):?>checked="checked"<?php endif;?>>
@@ -16,7 +16,7 @@
     <label class="control-label" for="time_limit">Time Limit</label>
     <div class="controls">
         <div class="input-append">
-            <input type="text" class="input-xlarge span1" name="time_limit" value="<?php echo $problem['time_limit'];?>"><span class="add-on">MS</span>
+            <input type="text" class="input-xlarge span1" name="time_limit" id="time_limit" value="<?php echo $problem['time_limit'];?>"><span class="add-on">MS</span>
         </div>
     </div>
     </div>
@@ -24,7 +24,7 @@
     <label class="control-label" for="memory_limit">Memory Limit</label>
     <div class="controls">
         <div class="input-append">
-            <input type="text" class="input-xlarge span1" name="memory_limit" value="<?php echo $problem['memory_limit'];?>"><span
+            <input type="text" class="input-xlarge span1" name="memory_limit" id="memory_limit" value="<?php echo $problem['memory_limit'];?>"><span
             class="add-on">KB</span>
         </div>
     </div>
