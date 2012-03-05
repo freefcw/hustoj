@@ -191,6 +191,8 @@ function translate_users()
             'ip' => $user['ip'],
             'access_time' => new MongoDate(strtotime($user['accesstime'])),
             'language' => intval($user['language']),
+            'disabled' => false,
+            'intro' => '',
             'password' => $user['password'],
             'reg_time' => new MongoDate(strtotime($user['reg_time'])),
         );
