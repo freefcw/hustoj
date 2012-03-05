@@ -31,20 +31,51 @@
         <textarea cols="50" rows="7" id="description" class="span8" name="description"><?php //echo $contest['description'];?></textarea>
     </div>
 </div>
-
-
+    <legend>Problem List</legend>
+    <div class="control-group">
+    <label class="control-label" for="problems">Add Probelm</label>
+    <div class="controls">
+        <input class="input-xlarge" id="problems" name="problems">
+        <input class="input-xlarge" id="problem-list" name="problemlist" type="hidden">
+        <p></p>
+    </div>
+    </div>
+        <div class="control-group">
+            <div class="controls">
+        <ul id="edit-problem-list">
+            <?php foreach($contest['plist'] as $p):?>
+            <li class="ui-state-default" id="<?php echo $p['p_id'];?>"?>"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><?php echo $p['title'];?></li>
+            <?php endforeach;?>
+        </ul>
+        <script>
+            function resort_problems()
+            {
+                $('#problem-list').val('');
+                $('#edit-problem-list li').each(function(k,v){
+//                    $(this).find('span')[0].innerHTML = String.fromCharCode(k + 65);
+//                    alert($(v).attr('title'));
+//                    alert($(v).attr('id'));
+                    var old_value = $('#problem-list').val();
+                    $('#problem-list').val(old_value + k + ':' + $(v).attr('id') + ';');
+                });
+            }
+        	$(function() {
+        		$( "#edit-problem-list" ).sortable();
+        		$( "#edit-problem-list" ).disableSelection();
+                $( "#edit-problem-list").bind('sortstop', function(){
+                    resort_problems();
+                });
+        	});
+            $(function(){
+                resort_problems();
+            });
+        </script>
+            </div>
+        </div>
 </fieldset>
-<legend>Problem List</legend>
-    <ul>
-        <?php foreach($contest['plist'] as $p):?>
-        <li><?php echo $p['title'];?></li>
-        <?php endforeach;?>
-    </ul>
+
 <div class="form-actions">
  <button class="btn btn-primary" type="submit">Save changes</button>
  <button class="btn" onclick="history.back()" type="reset">Cancel</button>
 </div>
 </form>
-
-
-<?php var_dump($contest);?>
