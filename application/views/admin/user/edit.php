@@ -1,7 +1,7 @@
 <h2>Edit User</h2>
 <div class="row">
     <div class="span8">
-      <form class="form-horizontal" action="/admin/contest/edit" method="POST">
+      <form class="form-horizontal" action="/admin/user/edit" method="POST">
         <fieldset>
           <legend>Basic Information</legend>
           <div class="control-group">
