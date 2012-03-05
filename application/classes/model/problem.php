@@ -7,22 +7,26 @@
 
 class Model_Problem extends Model_Mongo {
 
+    var $collection;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->collection = $this->db->selectCollection('problem');
+    }
+
     public function get_problem($pid)
     {
-        $collection = $this->db->selectCollection('problem');
-
         $condition = array('problem_id' => intval($pid));
-        $ret = $collection->findOne($condition);
+        $ret = $this->collection->findOne($condition);
 
         return $ret;
     }
 
     public function get_problem_by_id($id)
     {
-        $collection = $this->db->selectCollection('problem');
-
         $condition = array('_id' => $id);
-        $ret = $collection->findOne($condition);
+        $ret = $this->collection->findOne($condition);
 
         return $ret;
 
@@ -30,12 +34,11 @@ class Model_Problem extends Model_Mongo {
 
     public function get_page($page_id, $per_page = 50)
     {
-        $collection = $this->db->selectCollection('problem');
         $start = ($page_id - 1) * $per_page + 1000;
 
         $condition = array('problem_id' => array('$gte' => $start));
         $need = array('problem_id', 'title', 'accepted', 'submit');
-        $cursor =$collection->find($condition, $this->i_need($need))
+        $cursor =$this->collection->find($condition, $this->i_need($need))
             ->sort(array('problem_id' => 1))->limit($per_page);
         //foreach($cursor as $doc) var_dump($doc);
         //var_dump(iterator_to_array($cursor));
@@ -44,12 +47,11 @@ class Model_Problem extends Model_Mongo {
     }
     public function get_page_for_admin($page_id, $per_page = 50)
     {
-        $collection = $this->db->selectCollection('problem');
         $start = ($page_id - 1) * $per_page + 1000;
 
         $condition = array('problem_id' => array('$gte' => $start));
         $need = array('problem_id', 'title', 'deleted', 'add_date');
-        $cursor =$collection->find($condition, $this->i_need($need))
+        $cursor =$this->collection->find($condition, $this->i_need($need))
             ->sort(array('problem_id' => 1))->limit($per_page);
         //foreach($cursor as $doc) var_dump($doc);
         //var_dump(iterator_to_array($cursor));
@@ -64,10 +66,8 @@ class Model_Problem extends Model_Mongo {
     */
     public function get_total()
     {
-        $collection = $this->db->selectCollection('problem');
-
         $condition = array('problem_id' => array('$exists' => true));
-        $ret = $collection->count($condition);
+        $ret = $this->collection->count($condition);
 
         return $ret;
     }
@@ -80,58 +80,53 @@ class Model_Problem extends Model_Mongo {
      */
     public function get_recent($count = 5)
     {
-        $collection = $this->db->selectCollection('problem');
-
         $condition = array();
         $need = array();
 
-        $ret = $condition->find($condition, $this->i_need($need))
+        $ret = $this->connection->find($condition, $this->i_need($need))
             ->sort(array('problem_id' => -1))
             ->limit($count);
 
         return iterator_to_array($ret);
     }
 
-    public function find_problem($text, $area)
+    public function find_problem($text, $area, $orderby='problem_id')
     {
-        $collection = $this->db->selectCollection('problem');
-
         // $erea can be title|content
         $regexObject = new MongoRegex("/{$text}/i");
         $condition = array($area => $regexObject);
 
-        $ret = $collection->find($condition)
-            ->sort(array('problem_id' => 1));
+        $need = array('title');
+        $ret = $this->collection->find($condition, $this->i_need($need))
+            ->sort(array($orderby => 1))
+            ->limit(10);
 
         return iterator_to_array($ret);
     }
 
     public function delete($pid)
     {
-        $collection = $this->db->selectCollection('problem');
-
         // set delete as mark
         $condition = array('problem_id' => $pid);
         $area = array('$set' => array('delete' => true, 'problem_id' => 'null'));
 
-        $ret = $collection->update($condition, $area);
+        $ret = $this->collection->update($condition, $area);
 
         return $ret;
     }
 
     public function save($post, $is_contest = false)
     {
-        $collection = $this->db->selectCollection('problem');
-
         if (array_key_exists('problem_id', $post))
         {
             $condition = array('problem_id' => $post['problem_id']);
-            $ret = $collection->update($condition, array('$set' => $post));
+            $ret = $this->collection->update($condition, array('$set' => $post));
         } else {
             // TODO: new problem  with a problem id;
-            $ret = $collection->save($post);
+            $ret = $this->collection->save($post);
         }
 
         return $ret;
     }
+
 }
