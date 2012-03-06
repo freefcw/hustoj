@@ -44,7 +44,7 @@
             <div class="controls">
         <ul id="edit-problem-list">
             <?php foreach($contest['plist'] as $p):?>
-            <li class="ui-state-default" id="<?php echo $p['p_id'];?>"?>"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><?php echo $p['title'];?></li>
+            <li class="ui-state-default" id="<?php echo $p['p_id'];?>"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><?php echo $p['title'];?></li>
             <?php endforeach;?>
         </ul>
         <script>
