@@ -1,5 +1,5 @@
 <h2>Edit Problem <?php echo $problem['problem_id'];?></h2>
-<form class="form-horizontal" method="POST" action="/admin/problem/edit">
+<form class="form-horizontal" method="POST" action="/admin/problem/edit/<?php echo $problem['problem_id'];?>">
 <fieldset>
 <legend>Basic Information</legend>
 <div class="control-group">
@@ -8,7 +8,7 @@
 <input type="text" class="input-xlarge" name="title" id="title" value="<?php echo $problem['title'];?>">
     <p></p>
     <label class="checkbox" for="spj">
-            <input type="checkbox" name='spj' id="spj" <?php if(array_key_exists('disable', $problem) and $problem['spj'] == true):?>checked="checked"<?php endif;?>>
+            <input type="checkbox" name="spj" id="spj" <?php if(array_key_exists('spj', $problem) and $problem['spj'] == true):?>checked="checked"<?php endif;?>>
             Special Judge</label>
 </div>
 </div>
@@ -33,13 +33,13 @@
     <div class="control-group">
         <label class="control-label" for="description">Description</label>
         <div class="controls">
-            <textarea cols="50" rows="7" id="description" class="span8" name="description"><?php echo $problem['description'];?></textarea>
+            <textarea cols="50" rows="13" id="description" class="span8" name="description"><?php echo $problem['description'];?></textarea>
         </div>
     </div>
     <div class="control-group">
         <label class="control-label" for="input">Input</label>
         <div class="controls">
-            <textarea cols="50" rows="7" id="input" class="span8" name="input"><?php echo $problem['input'];?></textarea>
+            <textarea cols="50" rows="13" id="input" class="span8" name="input"><?php echo $problem['input'];?></textarea>
         </div>
     </div>
     <div class="control-group">
@@ -63,13 +63,13 @@
     <div class="control-group">
         <label class="control-label" for="hint">Hint</label>
         <div class="controls">
-            <textarea cols="50" rows="7" id="hint" class="span8" name="hint"><?php echo $problem['hint'];?></textarea>
+            <textarea cols="50" rows="3" id="hint" class="span8" name="hint"><?php echo $problem['hint'];?></textarea>
         </div>
     </div>
     <div class="control-group">
         <label class="control-label" for="source">source</label>
         <div class="controls">
-            <textarea cols="50" rows="7" id="source" class="span8" name="source"><?php echo $problem['source'];?></textarea>
+            <textarea cols="50" rows="2" id="source" class="span8" name="source"><?php echo $problem['source'];?></textarea>
         </div>
     </div>
     <div class="form-actions">
