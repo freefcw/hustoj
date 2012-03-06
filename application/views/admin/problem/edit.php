@@ -16,7 +16,7 @@
     <label class="control-label" for="time_limit">Time Limit</label>
     <div class="controls">
         <div class="input-append">
-            <input type="text" class="input-xlarge span1" name="time_limit" id="time_limit" value="<?php echo $problem['time_limit'];?>"><span class="add-on">MS</span>
+            <input type="text" class="input-xlarge span1" name="time_limit" id="time_limit" value="<?php echo $problem['time_limit'];?>"><span class="add-on">S</span>
         </div>
     </div>
     </div>
