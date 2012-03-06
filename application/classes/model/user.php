@@ -136,7 +136,7 @@ class Model_User extends Model_Mongo {
         return false;
     }
 
-    public function update_information($user)
+    public function save($user)
     {
         $collection = $this->db->selectCollection('user');
 

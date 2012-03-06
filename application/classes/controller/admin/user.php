@@ -48,7 +48,7 @@ class Controller_Admin_User extends Controller_Admin_My{
                 $newdata['password'] = Auth::instance()->hash($post['password']);
             }
 
-            $ret = $m->update_information($newdata);
+            $ret = $m->save($newdata);
         }
         $u = $m->get_info_by_name($user_id);
 

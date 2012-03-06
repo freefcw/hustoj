@@ -47,7 +47,7 @@ class Controller_Account extends Controller_My{
                     $newuser['password'] = Auth::instance()->hash($user['newpassword']);
                 }
                 //TODO: Validation user input, see action_new
-                $ret = $u->update_information($newuser);
+                $ret = $u->save($newuser);
                 $tip = 'Update Success';
             } else {
                 $error = 'Password Wrong';
