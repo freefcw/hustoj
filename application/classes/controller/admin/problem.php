@@ -25,7 +25,34 @@ class Controller_Admin_Problem extends Controller_Admin_My {
         if (($pid === null) or (! is_numeric($pid))) $this->error_page();
 
         $m = new Model_Problem();
-        $problem = $m->get_problem(intval($pid));
+
+        $pid = intval($pid);
+
+        if ($this->request->method() == 'POST')
+        {
+            $post = $this->request->post();
+
+            $newdata = array();
+
+            $newdata['problem_id'] = $pid;
+            $newdata['title'] = $post['title'];
+            $newdata['time_limit'] = $post['time_limit'];
+            $newdata['memory_limit'] = $post['memory_limit'];
+            $newdata['description'] = $post['description'];
+            $newdata['input'] = $post['input'];
+            $newdata['output'] = $post['output'];
+            $newdata['sample_input'] = $post['sample_input'];
+            $newdata['sample_output'] = $post['sample_output'];
+            $newdata['hint'] = $post['hint'];
+            $newdata['source'] = $post['source'];
+
+            $newdata['spj'] = false;
+            if (array_key_exists('spj', $post))
+                $newdata['spj'] = true;
+
+            $m->save($newdata);
+        }
+        $problem = $m->get_problem($pid);
 
         // view begin
         $body = View::factory('admin/problem/edit');
