@@ -30,17 +30,18 @@ class Controller_Admin_User extends Controller_Admin_My{
         {
             $post = $this->request->post();
 
-            $newdata = array(
-                'disable'=> false,
-            );
+            $newdata = array();
+
             $newdata['user_id'] = $post['user_id'];
             $user_id = $post['user_id'];
             $newdata['school'] = $post['school'];
             $newdata['intro'] = $post['intro'];
             $newdata['email'] = $post['email'];
 
-            if ($post['disabled'] == 1)
+            if ($post['disabled'] == '1')
                 $newdata['disabled'] = true;
+            else
+                $newdata['disabled'] = false;
 
             if ($post['password'] AND $post['repassword'] == $post['password'])
             {

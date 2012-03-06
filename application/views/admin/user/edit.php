@@ -7,7 +7,7 @@
           <div class="control-group">
             <label for="user_id" class="control-label">User ID</label>
             <div class="controls">
-              <input type="text" id="userid" name="userid" disabled="disabled" class="input-xlarge disabled" value="<?php echo $user['user_id'];?>">
+              <input type="text" id="user_id" name="user_id" readonly="readonly" class="input-xlarge disabled" value="<?php echo $user['user_id'];?>">
             </div>
           </div>
           <div class="control-group">
