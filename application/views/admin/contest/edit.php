@@ -43,18 +43,20 @@
 </div>
     <legend>Problem List</legend>
     <div class="control-group">
-    <label class="control-label" for="problems">Add Probelm</label>
+    <label class="control-label" for="problem-new">Add Probelm</label>
     <div class="controls">
-        <input class="input-xlarge" id="problems" name="problems">
+        <input class="input-xxlarge" id="problem-new" name="problem-new"> <input class="btn btn-primary" type="button" value="Add"/>
+        <input type="hidden" id="problem-id"/>
         <input class="input-xlarge" id="problem-list" name="problemlist" type="hidden">
         <p></p>
+
     </div>
     </div>
         <div class="control-group">
             <div class="controls">
         <ul id="edit-problem-list">
             <?php foreach($contest['plist'] as $p):?>
-            <li class="ui-state-default" id="<?php echo $p['p_id'];?>"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><?php echo $p['title'];?></li>
+            <li class="ui-state-default" id="<?php echo $p['p_id'];?>"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><?php echo $p['title'];?><a style="float:right;">del</a></li>
             <?php endforeach;?>
         </ul>
         <script>
@@ -69,6 +71,13 @@
                     $('#problem-list').val(old_value + k + ':' + $(v).attr('id') + ';');
                 });
             }
+            $(function(){
+               $( ".ui-state-default a").click(function(i, v){
+                   $(this).parent().remove();
+                   resort_problems();
+                   //alert('delete');
+               });
+            });
         	$(function() {
         		$( "#edit-problem-list" ).sortable();
         		$( "#edit-problem-list" ).disableSelection();
