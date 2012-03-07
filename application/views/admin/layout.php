@@ -7,6 +7,7 @@
 <meta name="robots" content="index,follow" />
 <title><?php echo $title; ?></title>
 <?php echo HTML::style('css/style.css');?>
+<?php echo HTML::style('css/ui-lightness/jquery-ui-1.8.18.custom.css');?>
 <?php echo HTML::script('js/jquery-1.7.1.min.js'); ?>
 <?php echo HTML::script('js/jquery-ui-1.8.18.custom.min.js'); ?>
 <?php echo HTML::script('js/bootstrap.min.js'); ?>

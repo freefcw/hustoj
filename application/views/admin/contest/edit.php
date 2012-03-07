@@ -24,6 +24,16 @@
 <div class="controls">
     <input class="input-xlarge" id="end_time" name="end_time" value="<?php echo OJ::mtime($contest['end_time']);?>">
 </div>
+    <script type="text/javascript">
+   	/* <![CDATA[ */
+   		$(function() {
+               var param = {showSecond: true, timeFormat: 'hh:mm:ss', dateFormat: 'yy-mm-dd'};
+               $('#start_time').datetimepicker(param);
+               $('#end_time').datetimepicker(param);
+   			});
+   	/* ]]> */
+   	</script>
+    <?php echo HTML::script('js/jquery-ui-timepicker-addon.js'); ?>
 </div>
 <div class="control-group">
     <label class="control-label" for="description">Description</label>
