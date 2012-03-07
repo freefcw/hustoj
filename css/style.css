@@ -172,7 +172,7 @@ table.best-solution{
 }
 
 #edit-problem-list {
-    list-style: upper-alpha inside;
+    list-style: upper-alpha outside;
     margin: 0;
     padding: 0 0 30px 0;
     width: 80%;
@@ -188,8 +188,8 @@ table.best-solution{
 }
 
 #edit-problem-list li span {
-    position: absolute;
-    margin-left: -1.3em;
+    float: left;
+    margin-left: -0.4em;
 }
 
 .edit-link{
