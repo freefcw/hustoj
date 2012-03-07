@@ -45,20 +45,10 @@
     <div class="control-group">
     <label class="control-label" for="problem-new">Add Probelm</label>
     <div class="controls">
-        <input class="input-xxlarge" id="problem-new" name="problem-new"> <input class="btn btn-primary" type="button" value="Add"/>
+        <input class="input-xxlarge" id="problem-new" name="problem-new"> <input class="btn btn-primary" type="button" value="Add" id="add-problem"/>
         <input type="hidden" id="problem-id"/>
         <input class="input-xlarge" id="problem-list" name="problemlist" type="hidden">
         <p></p>
-
-    </div>
-    </div>
-        <div class="control-group">
-            <div class="controls">
-        <ul id="edit-problem-list">
-            <?php foreach($contest['plist'] as $p):?>
-            <li class="ui-state-default" id="<?php echo $p['p_id'];?>"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><?php echo $p['title'];?><a style="float:right;">del</a></li>
-            <?php endforeach;?>
-        </ul>
         <script>
             function resort_problems()
             {
@@ -71,13 +61,65 @@
                     $('#problem-list').val(old_value + k + ':' + $(v).attr('id') + ';');
                 });
             }
-            $(function(){
+            function bind_delete_event(){
                $( ".ui-state-default a").click(function(i, v){
                    $(this).parent().remove();
                    resort_problems();
                    //alert('delete');
                });
+            }
+            function add_problem_event(){
+                            var ptitle = $( "#problem-new").val();
+                            var pid = $( "#problem-id").val();
+
+                            $("#edit-problem-list").append('<li class="ui-state-default" id="'+ pid
+                                + '"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>' + ptitle
+                                + '<a style="float:right;">DEL</a></li>');
+                            resort_problems();
+                            bind_delete_event();
+                        }
+
+       	$(function() {
+            $("#add-problem").click(add_problem_event);
+            $("#problem-new").keypress(function(e){
+                code = (e.keyCode ? e.keyCode : e.which);
+                if ( code == 13) return false;
             });
+
+       		$( "#problem-new" ).autocomplete({
+       			minLength: 2,
+       			source: '/admin/problem/search',
+       			focus: function( event, ui ) {
+       				$( "#problem-new" ).val( ui.item.title );
+       				return false;
+       			},
+       			select: function( event, ui ) {
+       				$( "#problem-new" ).val( ui.item.title );
+       				$( "#problem-id" ).val( ui.item.id );
+//       				$( "#project-description" ).html( ui.item.desc );
+//       				$( "#project-icon" ).attr( "src", "images/" + ui.item.icon );
+       				return false;
+       			}
+       		})
+       		.data( "autocomplete" )._renderItem = function( ul, item ) {
+       			return $( "<li></li>" )
+       				.data( "item.autocomplete", item )
+       				.append( "<a>" + item.title + "<br>" + item.id + "</a>" )
+       				.appendTo( ul );
+       		};
+       	});
+       	</script>
+    </div>
+    </div>
+        <div class="control-group">
+            <div class="controls">
+        <ul id="edit-problem-list">
+            <?php foreach($contest['plist'] as $p):?>
+            <li class="ui-state-default" id="<?php echo $p['p_id'];?>"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><?php echo $p['title'];?><a style="float:right;">DEL</a></li>
+            <?php endforeach;?>
+        </ul>
+        <script>
+
         	$(function() {
         		$( "#edit-problem-list" ).sortable();
         		$( "#edit-problem-list" ).disableSelection();
@@ -87,6 +129,7 @@
         	});
             $(function(){
                 resort_problems();
+                bind_delete_event();
             });
         </script>
             </div>
