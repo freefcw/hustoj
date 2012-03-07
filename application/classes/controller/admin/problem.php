@@ -92,7 +92,7 @@ class Controller_Admin_Problem extends Controller_Admin_My {
 
     public function action_search()
     {
-        $text = $this->request->param('id', null);
+        $text = $this->request->query('term', null);
         if ($text === null) $this->error_page();
 
         $m = new Model_Problem();
