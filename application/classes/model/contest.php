@@ -65,13 +65,15 @@ class Model_Contest extends Model_Mongo{
 
     public function save($data)
     {
-       if (array_key_exists('contest_id', $data))
-       {
+        if (array_key_exists('contest_id', $data))
+        {
            $condition = array('contest_id' => $data['contest_id']);
            $ret = $this->collection->update($condition, array('$set' => $data));
-       } else {
+        } else {
            $ret = $this->collection->save($data);
-       }
+        }
+
+        return $ret;
     }
 
     /**
