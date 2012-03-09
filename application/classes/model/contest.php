@@ -57,11 +57,21 @@ class Model_Contest extends Model_Mongo{
 	 */
     public function get_total()
     {
-        $collection = $this->db->selectCollection('contest');
-
         $result = $collection->count();
 
         return $result;
+    }
+
+
+    public function save($data)
+    {
+       if (array_key_exists('contest_id', $data))
+       {
+           $condition = array('contest_id' => $data['contest_id']);
+           $ret = $this->collection->update($condition, array('$set' => $data));
+       } else {
+           $ret = $this->collection->save($data);
+       }
     }
 
     /**
