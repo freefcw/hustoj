@@ -6,6 +6,11 @@
  */
 class Model_Submission extends Model_Mongo
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->collection = $this->db->selectCollection('solution');
+    }
 
     private function is_search($var)
     {
@@ -14,8 +19,6 @@ class Model_Submission extends Model_Mongo
     public function get_status($page_id = 1, $problem_id = -1, $user_id = '', $cid = null, $language = -1, $result = -1)
     {
         //TODO: move to solutions
-        $collection = $this->db->selectCollection('solution');
-
         $condition = array();
         if ($this->is_search($problem_id))
             $condition['problem_id'] = intval($problem_id);
@@ -31,7 +34,7 @@ class Model_Submission extends Model_Mongo
         $need = array('solution_id', 'problem_id', 'user_id', 'time', 'memory', 'language', 'result', 'code_length', 'add_date');
 
         $per_page = 20;
-        $ret = $collection->find($condition, $this->i_need($need))
+        $ret = $this->collection->find($condition, $this->i_need($need))
             ->sort(array('solution_id' => -1))
             ->limit($per_page)
             ->skip(($page_id - 1) * $per_page);
@@ -45,9 +48,9 @@ class Model_Submission extends Model_Mongo
         $data = array();
         $pid = intval($pid);
         // get total solutions
-        $collection = $this->db->selectCollection('solution');
+
         $condition = array('problem_id' => $pid);
-        $data['total'] = $collection->find($condition)->count();
+        $data['total'] = $this->collection->find($condition)->count();
 
         // get total user has submited
         $result = $this->db->command(array('distinct' => 'solution', 'key' => 'user_id', 'query' => $condition));
@@ -64,7 +67,7 @@ class Model_Submission extends Model_Mongo
         for($i = 4; $i <= 11; $i++)
         {
             $condition['result'] = $i;
-            $ret = $collection->find($condition)->count();
+            $ret = $this->collection->find($condition)->count();
             $data['more'][$i] = $ret;
         }
         return $data;
@@ -74,13 +77,11 @@ class Model_Submission extends Model_Mongo
     {
         # TODO: add content
 
-        $collection = $this->db->selectCollection('solution');
-
         $condition = array('result'=>4);
         $need = array('solution_id', 'user_id', 'language', 'memory', 'add_date', 'time', 'score');
 
         //$ret = $collection->find($condition, $this->i_need($need))->sort('score')->sort($this->i_need(array('score', 'add_date')));
-        $ret = $collection->find($condition, $this->i_need($need))->sort(array('time'=>1, 'memory'=>1))->limit(50);
+        $ret = $this->collection->find($condition, $this->i_need($need))->sort(array('time'=>1, 'memory'=>1))->limit(50);
 
 		$sql 	= "SELECT solution_id, count(*) att, user_id, language, memory, time, min(10000000000000000000 + time *100000000000 + memory *100000 + code_length) score, in_date
 					FROM solution
@@ -96,8 +97,6 @@ class Model_Submission extends Model_Mongo
 	public function get_status_count($problem_id = '', $user_id = '', $language = -1, $result = -1)
 	{
         //TODO: move to solutions
-        $collection = $this->db->selectCollection('solution');
-
         $condition = array();
         if (! is_null($problem_id)) $condition['problem_id'] = $problem_id;
         if (! is_null($user_id)) $condition['user_id'] = $user_id;
@@ -105,13 +104,12 @@ class Model_Submission extends Model_Mongo
         if (! is_null($result)) $condition['result'] = $result;
         //if (! is_null($cid)) $condition['cid'] = $cid;
 
-        $ret = $collection->count($condition);
+        $ret = $this->collection->count($condition);
         return $ret;
 	}
 
     public function new_solution($post)
     {
-        $collection = $this->db->selectCollection('solution');
         // contest solution or normal solution
         $new_doc = array(
             'p_id' => intval($post['pid']),

@@ -10,25 +10,24 @@ class Model_User extends Model_Mongo {
     {
         parent::__construct();
         //will load database library into $this->db, you can leave it out if you don't need it
+        $this->collection = $this->db->selectCollection('user');
     }
     
     public function auth($username, $password)
     {
-        $collection = $this->db->selectCollection('user');
-
         $condition = array();
         $condition['user_id'] = $username;
         $condition['password'] = $password;
 
 
-        $num = $collection->count($condition);
+        $num = $this->collection->count($condition);
 
         $this->log_auth($username, $password);
 
         if ($num == 0 ) return false;
         // if user login success, then log last access time
         $this->update_access_time($username);
-        $u = $collection->findOne($condition);
+        $u = $this->collection->findOne($condition);
         Session::instance()->set('privilege', $u['privilege']);
 
         return true;
@@ -44,8 +43,8 @@ class Model_User extends Model_Mongo {
             'time' => new MongoDate(time()),
         );
 
-        $collection = $this->db->selectCollection('logs');
-        $collection->save($log);
+        $log_collection = $this->db->selectCollection('logs');
+        $log_collection->save($log);
     }
 
     private function update_access_time($user_id)
@@ -58,14 +57,12 @@ class Model_User extends Model_Mongo {
 
     public function get_password($username)
     {
-        $collection = $this->db->selectCollection('user');
-
         $need = array('password');
 
         $condition = array();
         $condition['user_id'] = $username;
 
-        $ret = $collection->findOne($condition, $this->i_need($need));
+        $ret = $this->collection->findOne($condition, $this->i_need($need));
 
         return $ret['password'];
     }
@@ -76,11 +73,9 @@ class Model_User extends Model_Mongo {
          */
     public function changepassword($user_id, $new_password)
     {
-        $collection = $this->db->selectCollection('user');
-
         $new_value = array('password'=>$new_password);
 
-        $collection->update(array('user_id'=>$user_id), array('$set'=>$new_value));
+        $this->collection->update(array('user_id'=>$user_id), array('$set'=>$new_value));
     }
     /**
          * 通过用户名返回用户信息
@@ -90,9 +85,7 @@ class Model_User extends Model_Mongo {
          */
     public function get_info_by_name($user_id)
     {
-        $collection = $this->db->selectCollection('user');
-
-        $ret = $collection->findOne(array('user_id'=>$user_id));
+        $ret = $this->collection->findOne(array('user_id'=>$user_id));
 
         return $ret;
     }
@@ -100,13 +93,11 @@ class Model_User extends Model_Mongo {
 
     public function get_list($page_id, $per_page = 50)
     {
-        $collection = $this->db->selectCollection('user');
-
         $need = array('user_id', 'nick', 'solved', 'submit');
 
         $condition = array();
 
-        $ret = $collection->find($condition, $this->i_need($need))
+        $ret = $this->collection->find($condition, $this->i_need($need))
             ->sort(array('solved' => -1))
             ->skip(($page_id-1) * $per_page)
             ->limit($per_page);
@@ -117,20 +108,16 @@ class Model_User extends Model_Mongo {
 
     public function get_total()
     {
-        $collection = $this->db->selectCollection('user');
-
         // TODO: more params
-        $ret = $collection->count();
+        $ret = $this->collection->count();
 
         return $ret;
     }
 
     public function exist_id($user_id)
     {
-        $collection = $this->db->selectCollection('user');
-
         $condition = array('user_id'=>$user_id);
-        $ret = $collection->count($condition);
+        $ret = $this->collection->count($condition);
 
         if($ret != 0) return true;
         return false;
@@ -138,10 +125,8 @@ class Model_User extends Model_Mongo {
 
     public function save($user)
     {
-        $collection = $this->db->selectCollection('user');
-
         $condition = array('user_id'=>$user['user_id']);
-        $ret = $collection->update($condition, array('$set'=>$user));
+        $ret = $this->collection->update($condition, array('$set'=>$user));
 
         return $ret;
     }
@@ -163,8 +148,7 @@ class Model_User extends Model_Mongo {
         );
         //FIXME: seems ip and access_time no use
 
-        $collection = $this->db->selectCollection('user');
-        $collection->save($newuser);
+        $this->collection->save($newuser);
     }
 
     /**
@@ -177,8 +161,6 @@ class Model_User extends Model_Mongo {
         $condition = array('user_id' => $uid);
         $data= array('disable' => true);
 
-        $collection = $this->db->selectCollection('user');
-        $collection->update($condition, array('$set'=> $data));
-
+        $this->collection->update($condition, array('$set'=> $data));
     }
 }
