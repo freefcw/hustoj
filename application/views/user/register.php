@@ -24,7 +24,7 @@
     </div>
 </fieldset>
 <div class="form-actions">
-<input type="submit" name="submit" class="btn btn-primary"/>
+<input type="submit" name="submit" class="btn btn-primary" value="Register"/>
 <input type="reset" name="reset" class="btn"/>
 </div>
 </form>

@@ -18,7 +18,7 @@
 <div class="control-group">
 <?php echo Form::label('pid', "Language : ");?>
 <div class="controls">
-<?php echo Form::select('language', array('0'=>'C', '1'=>'C++', '2'=>'Pascal', '3'=>'Java'));?>
+<?php echo Form::select('language', OJ::$language);?>
 </div>
 </div>
 <?php if (Auth::instance()->get_user() == null):?>
