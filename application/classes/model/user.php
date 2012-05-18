@@ -28,7 +28,11 @@ class Model_User extends Model_Mongo {
         // if user login success, then log last access time
         $this->update_access_time($username);
         $u = $this->collection->findOne($condition);
-        Session::instance()->set('privilege', $u['privilege']);
+        if (array_key_exists('privilege', $u))
+            Session::instance()->set('privilege', $u['privilege']);
+        else
+            // default permission is insert on user create or here? new user should has the default permission...
+            Session::instance()->set('privilege', 'user');
 
         return true;
     }
@@ -136,7 +140,7 @@ class Model_User extends Model_Mongo {
         $now = new MongoDate(time());
         $newuser = array(
             'password' =>Auth::instance()->hash($user['password']),
-            'user_id' => $user['user_id'],
+            'user_id' => $user['username'],
             'school' => $user['school'],
             'email' => $user['email'],
             'nick' => $user['nick'],
@@ -144,7 +148,7 @@ class Model_User extends Model_Mongo {
             'solved' => 0,
             'submit' => 0,
             'access_time' => $now,
-            'ip' => Request::$client_ip
+            'ip' => Request::$client_ip,
         );
         //FIXME: seems ip and access_time no use
 
