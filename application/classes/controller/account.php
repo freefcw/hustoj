@@ -83,14 +83,26 @@ class Controller_Account extends Controller_My{
             ->rule('email', 'max_length', array(':value', 30))
             ->rule('email', 'email');
 
-        $this->view->title = 'test';
+        $errors = array();
         if($post->check())
         {
-            $this->view->title = 'ok';
-            //todo:user add
-            //todo: redirect new user page
-        }
-        $this->view->body = Debug::dump($post->errors());
+            $m = new Model_User();
+            if (!$m->exist_id($post['username']))
+            {
+//            Debug::dump($post);
+                $m->exist_id($post['username']);
+                $m->add_user($post);
 
+                Auth::instance()->login($post['username'], $post['password'], true);
+                $this->request->redirect('/home');
+            } else {
+                array_push($errors, 'User Id is existed!');
+            }
+
+        }
+        $this->view->title = "User Register";
+        array_merge($errors, $post->errors());
+        //TODO： add more error handle!
+        $this->view->body = Debug::dump($errors);
     }
 }

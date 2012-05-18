@@ -1,6 +1,13 @@
 <h2 class="page-title">Register Information</h2>
 <form action="/account/new" method="POST" class="form-horizontal span6" style="margin-left: 25%">
 <fieldset>
+    <?php if (isset($errors)):?>
+    <ul class="error">
+        <?php foreach($errors as $err):?>
+        <li><?php echo $err;?></li>
+        <?php endforeach;?>
+    </ul>
+    <?php endif;?>
     <div class="control-group">
 <label>User ID(3-15)*</label>
         <div class="controls">
