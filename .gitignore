@@ -1,2 +1,8 @@
+# idea files
+.idea
+
+# logs
 application/logs/
+
+# cache
 application/cache/
