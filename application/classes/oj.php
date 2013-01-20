@@ -127,4 +127,16 @@ class OJ {
     {
         return date('Y-m-d h:i:s', $mtime->sec);
     }
+
+    /**
+     * @static
+     * @param $mtime
+     * @return string
+     *
+     * generate read date
+     */
+    public static function getdate($mtime)
+    {
+        return date('Y年m月d', $mtime->sec);
+    }
 }
