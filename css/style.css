@@ -196,6 +196,21 @@ table.best-solution{
     color: SeaGreen;
 }
 
+.user-stats li.stats {
+    display: inline-block;
+}
+
+.user-stats li.stats a{
+    width: 80px;
+    min-height: 80px;
+}
+.user-stats li.stats a span{
+    margin: 20px 20px 10px 20px;
+    font-size: 36px;
+    height: 40px;
+    display: block;
+}
+
 /* css for timepicker */
 .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
 .ui-timepicker-div dl { text-align: left; }
