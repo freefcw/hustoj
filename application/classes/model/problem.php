@@ -96,7 +96,7 @@ class Model_Problem extends Model_Mongo {
         $regexObject = new MongoRegex("/{$text}/i");
         $condition = array($area => $regexObject);
 
-        $need = array('title');
+        $need = array();
         $ret = $this->collection->find($condition, $this->i_need($need))
             ->sort(array($orderby => 1))
             ->limit(10);
