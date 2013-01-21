@@ -193,22 +193,31 @@ table.best-solution{
 }
 
 .edit-link{
-    color: SeaGreen;
+    color: #2e8b57;
 }
 
 .user-stats li.stats {
     display: inline-block;
+    font-size: 13px;
 }
 
 .user-stats li.stats a{
-    width: 80px;
-    min-height: 80px;
+    width: 70px;
+    min-height: 70px;
 }
 .user-stats li.stats a span{
-    margin: 20px 20px 10px 20px;
+    margin: 20px 5px 5px 5px;
+    text-align: center;
     font-size: 36px;
     height: 40px;
     display: block;
+}
+
+div.user-stats li.count-accept a{
+    color: #32cd32;
+}
+div.user-stats li.count-submit a{
+    color: yellow;
 }
 
 /* css for timepicker */
