@@ -4,7 +4,7 @@
 <?php if (isset($cid)):?>
 <?php echo Form::input('cid', $cid, array('type'=>'hidden')); ?>
 <?php echo Form::input('cpid', $cpid, array('type'=>'hidden'));?>
-    <div style="margin: 20px auto 10px; font-size: 14px">
+    <div style="margin: 20px auto 10px; font-size: 14px; text-align: center;">
 <?php echo 'Problem ', OJ::contest_pid($cpid), ' Of Contest ', $cid; ?>
     </div>
 <?php else: ?>
