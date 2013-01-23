@@ -6,117 +6,126 @@
         Purpose of the stylesheet follows.
 */
 /* header */
-.banner{
+.banner {
     height: 50px;
 }
+
 /* navigation  */
-.edit-userinfo{
+.edit-userinfo {
     width: 450px;
     margin: auto;
 }
 
-.problem-pagination{
-    width: 600px;/* will ok in pagination less than 15, if larger than 15, make li a padding less, or other ui*/
+.problem-pagination {
+    width: 600px; /* will ok in pagination less than 15, if larger than 15, make li a padding less, or other ui*/
     float: left;
 }
-.sform{
+
+.sform {
     width: 320px;
     float: right;
     margin-top: 20px;
 }
-.sform label{
+
+.sform label {
     width: 30px;
 }
-.search-cat{
+
+.search-cat {
     width: 60px;
 }
 
-.contest-nav{
+.contest-nav {
     width: 50%;
     margin: 0 auto !important;
 }
 
 /* content */
-.news{
+.news {
     margin: 30px 10px;
 }
-.page-title{
+
+.page-title {
     text-align: center;
     margin: 10px 0 !important;
 }
-div.err-notice{
+
+div.err-notice {
     width: 300px;
     margin: auto;
 }
-.content-info{
+
+.content-info {
     /*font-size: 16px;*/
     text-align: center;
     margin-bottom: 10px;
 }
-div.content-info p{
+
+div.content-info p {
     margin-bottom: 3px !important;
 }
 
-#detail dt{
+#detail dt {
     text-transform: uppercase;
     font-size: 18px;
 }
 
-#detail dd, .welcome, .thanks, .about{
+#detail dd, .welcome, .thanks, .about {
     margin: 1em 20px 1em;
     font-size: 1.465em;
     font-family: "minion-pro-1", "minion-pro-2", "Palatino", Georgia, "Times New Roman", serif;
     line-height: 1.7em;
 }
-.welcome p{
+
+.welcome p {
     font-size: 16px;
 }
 
-.user-profile p{
+.user-profile p {
     font-size: 14px;
 }
 
-.thanks ul li{
+.thanks ul li {
     height: 1.7em;
 }
 
-#fn-nav{
+#fn-nav {
     text-align: center;
     font-size: 14px;
     width: 250px;
     margin: 0 auto 18px;
 }
 
-.submit{
+.submit {
     width: 600px;
     margin: 10px auto 50px;
 }
 
-.submit fieldset{
+.submit fieldset {
     width: 70%;
     margin: auto;
 }
 
-.submit textarea{
+.submit textarea {
     display: block;
     width: 590px;
     height: 400px;
 }
 
 /* faqs */
-#faqs dt.q{
+#faqs dt.q {
     font-size: larger;
     margin-bottom: 1em;
     padding-left: 9px;
 }
 
-#faqs dt span, #faqs dd .sp-a{
+#faqs dt span, #faqs dd .sp-a {
     font-size: 18px;
     font-weight: bold;
 }
 
 /* summary */
-#summary dl{
+#summary dl {
     font-size: 14px;
     margin-top: 30px;
     margin-left: 14px;
@@ -125,7 +134,7 @@ div.content-info p{
     float: left;
 }
 
-#summary dl dt{
+#summary dl dt {
     outline: 1px #87ceeb dotted;
     margin: 3px 0;
     width: 150px;
@@ -133,7 +142,7 @@ div.content-info p{
     float: left;
 }
 
-#summary dl dd{
+#summary dl dd {
     margin: 3px 5px;
     outline: 1px #87ceeb dotted;
     width: 40px;
@@ -141,33 +150,33 @@ div.content-info p{
     float: right;
 }
 
-table.best-solution{
+table.best-solution {
     width: 700px;
 }
 
 /*  footer  */
 
-#footer{
+#footer {
     margin-top: 50px;
 }
 
-#footer ul{
+#footer ul {
     margin: 0;
     text-align: center;
 }
 
-#footer ul li{
+#footer ul li {
     margin: 5px 10px;
     display: inline;
 }
 
-#copyright{
+#copyright {
     width: 400px;
     margin: 8px auto 13px;
 }
 
 /*  admin */
-.capitalize{
+.capitalize {
     text-transform: capitalize;
 }
 
@@ -192,7 +201,7 @@ table.best-solution{
     margin-left: -0.4em;
 }
 
-.edit-link{
+.edit-link {
     color: #2e8b57;
 }
 
@@ -201,11 +210,12 @@ table.best-solution{
     font-size: 13px;
 }
 
-.user-stats li.stats a{
+.user-stats li.stats a {
     width: 70px;
     min-height: 70px;
 }
-.user-stats li.stats a span{
+
+.user-stats li.stats a span {
     margin: 20px 5px 5px 5px;
     text-align: center;
     font-size: 36px;
@@ -213,17 +223,39 @@ table.best-solution{
     display: block;
 }
 
-div.user-stats li.count-accept a{
+div.user-stats li.count-accept a {
     color: #32cd32;
 }
-div.user-stats li.count-submit a{
-    color: yellow;
+
+div.user-stats li.count-submit a {
+    /*color: yellow;*/
 }
 
 /* css for timepicker */
-.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
-.ui-timepicker-div dl { text-align: left; }
-.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
-.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
-.ui-timepicker-div td { font-size: 90%; }
-.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+.ui-timepicker-div .ui-widget-header {
+    margin-bottom: 8px;
+}
+
+.ui-timepicker-div dl {
+    text-align: left;
+}
+
+.ui-timepicker-div dl dt {
+    height: 25px;
+    margin-bottom: -25px;
+}
+
+.ui-timepicker-div dl dd {
+    margin: 0 10px 10px 65px;
+}
+
+.ui-timepicker-div td {
+    font-size: 90%;
+}
+
+.ui-tpicker-grid-label {
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
