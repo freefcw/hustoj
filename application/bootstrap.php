@@ -3,17 +3,14 @@
 // -- Environment setup --------------------------------------------------------
 
 // Load the core Kohana class
-require SYSPATH.'classes/kohana/core'.EXT;
+require SYSPATH . 'classes/kohana/core' . EXT;
 
-if (is_file(APPPATH.'classes/kohana'.EXT))
-{
-	// Application extends the core
-	require APPPATH.'classes/kohana'.EXT;
-}
-else
-{
-	// Load empty core extension
-	require SYSPATH.'classes/kohana'.EXT;
+if (is_file(APPPATH . 'classes/kohana' . EXT)) {
+    // Application extends the core
+    require APPPATH . 'classes/kohana' . EXT;
+} else {
+    // Load empty core extension
+    require SYSPATH . 'classes/kohana' . EXT;
 }
 
 /**
@@ -61,9 +58,8 @@ I18n::lang('zh_CN');
  * Note: If you supply an invalid environment name, a PHP warning will be thrown
  * saying "Couldn't find constant Kohana::<INVALID_ENV_NAME>"
  */
-if (isset($_SERVER['KOHANA_ENV']))
-{
-	Kohana::$environment = constant('Kohana::'.strtoupper($_SERVER['KOHANA_ENV']));
+if (isset($_SERVER['KOHANA_ENV'])) {
+    Kohana::$environment = constant('Kohana::' . strtoupper($_SERVER['KOHANA_ENV']));
 }
 
 /**
@@ -79,15 +75,17 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  profile     enable or disable internal profiling               TRUE
  * - boolean  caching     enable or disable internal caching                 FALSE
  */
-Kohana::init(array(
-	'base_url'   => '/',
-	'index_file' => '/',
-));
+Kohana::init(
+    array(
+         'base_url'   => '/',
+         'index_file' => '/',
+    )
+);
 
 /**
  * Attach the file write to logging. Multiple writers are supported.
  */
-Kohana::$log->attach(new Log_File(APPPATH.'logs'));
+Kohana::$log->attach(new Log_File(APPPATH . 'logs'));
 
 /**
  * Attach a file reader to config. Multiple readers are supported.
@@ -97,16 +95,18 @@ Kohana::$config->attach(new Config_File);
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
-Kohana::modules(array(
-	 'auth'       => MODPATH.'auth',       // Basic authentication
-	 'cache'      => MODPATH.'cache',      // Caching with multiple backends
-	// 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
-	'database'   => MODPATH.'database',   // Database access
-	// 'image'      => MODPATH.'image',      // Image manipulation
-	// 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
-	// 'unittest'   => MODPATH.'unittest',   // Unit testing
-	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
-	));
+Kohana::modules(
+    array(
+         'auth'     => MODPATH . 'auth', // Basic authentication
+         'cache'    => MODPATH . 'cache', // Caching with multiple backends
+         // 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
+         'database' => MODPATH . 'database', // Database access
+         // 'image'      => MODPATH.'image',      // Image manipulation
+         // 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
+         // 'unittest'   => MODPATH.'unittest',   // Unit testing
+         // 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
+    )
+);
 
 Cookie::$salt = 'hustoj';
 
@@ -115,81 +115,124 @@ Cookie::$salt = 'hustoj';
  * defaults for the URI.
  */
 
-Route::set('auth', '<action>',
-	array('action' => '(login|logout|setting|setting)'))
-	->defaults(array(
-		'controller' => 'user'
-	));
-Route::set('search', '/problem/search')
-	->defaults(array(
-		'controller' => 'problem',
-		'action' => 'search'
-	));
+Route::set(
+    'auth', '<action>',
+    array('action' => '(login|logout|setting|setting)')
+)
+    ->defaults(
+    array(
+         'controller' => 'user'
+    )
+);
+Route::set('search', 'problem/search')
+    ->defaults(
+    array(
+         'controller' => 'problem',
+         'action'     => 'search'
+    )
+);
 
-Route::set('ranklist', 'rank/user(/<id>)')
-	->defaults(array(
-		'controller' => 'user',
-		'action'	 => 'list'
-	));
-Route::set('user', 'user/<id>',
-	array('id' => '[[:word:]]+'))
-	->defaults(array(
-		'controller' => 'user',
-		'action' => 'profile'
-	));
+Route::set(
+    'ranklist', 'rank/user(/<id>)',
+    array('id' => '[[:word:]]+')
+)
+    ->defaults(
+    array(
+         'controller' => 'user',
+         'action'     => 'list'
+    )
+);
+Route::set(
+    'user', 'user/<id>',
+    array('id' => '[[:word:]]+')
+)
+    ->defaults(
+    array(
+         'controller' => 'user',
+         'action'     => 'profile'
+    )
+);
 
-Route::set('page', '<action>',
-	array(
-		'action' => '(home|faqs|about|links|contact|status|help|terms)'
-	))
-	->defaults(array(
-		'controller' => 'index'
-	));
-Route::set('contest-problem', 'contest/<cid>/problem/<pid>',
+Route::set(
+    'topic', 't/<id>',
+    array('id' => '\d+')
+)
+    ->defaults(
+    array(
+         'controller' => 'discuss',
+         'action'     => 'topic'
+    )
+);
+
+Route::set(
+    'page', '<action>',
+    array(
+         'action' => '(home|faqs|about|links|contact|status|help|terms)'
+    )
+)
+    ->defaults(
+    array(
+         'controller' => 'index'
+    )
+);
+Route::set(
+    'contest-problem', 'contest/<cid>/problem/<pid>',
     array('cid' => '\d+',
-        'pid' => '\d+'
-    ))->defaults(array(
-        'controller'    => 'contest',
-        'action'        => 'problem',
-    ));
+          'pid' => '\d+'
+    )
+)->defaults(
+    array(
+         'controller' => 'contest',
+         'action'     => 'problem',
+    )
+);
 Route::set('adminindex', 'admin')
-	->defaults(array(
-		'controller' => 'admin_index',
-        'action'     => 'index'
-	)
+    ->defaults(
+    array(
+         'controller' => 'admin_index',
+         'action'     => 'index'
+    )
 );
 Route::set('adminuser', 'admin/user(/<action>(/<id>))')
-	->defaults(array(
-		'controller' => 'admin_user',
-        'action'     => 'index'
-	)
+    ->defaults(
+    array(
+         'controller' => 'admin_user',
+         'action'     => 'index'
+    )
 );
 Route::set('adminproblem', 'admin/problem(/<action>(/<id>))')
-	->defaults(array(
-		'controller' => 'admin_problem',
-        'action'     => 'index'
-	)
+    ->defaults(
+    array(
+         'controller' => 'admin_problem',
+         'action'     => 'index'
+    )
 );
 Route::set('admincontest', 'admin/contest(/<action>(/<id>))')
-	->defaults(array(
-		'controller' => 'admin_contest',
-        'action'     => 'index'
-	)
+    ->defaults(
+    array(
+         'controller' => 'admin_contest',
+         'action'     => 'index'
+    )
 );
 
 Route::set('adminsetting', 'admin/setting(/<action>(/<id>))')
-	->defaults(array(
-		'controller' => 'admin_setting',
-        'action'     => 'index'
-	)
+    ->defaults(
+    array(
+         'controller' => 'admin_setting',
+         'action'     => 'index'
+    )
 );
 
-Route::set('default', '(<controller>(/<action>(/<id>(/<overflow>))))',
-	array(
-		'id' => '[[:digit:]]{1,}',
-		'overflow' => '.*?'
-	))
-	->defaults(array(
-		'controller' => 'index',
-		'action'     => 'index',
-	));
+Route::set(
+    'default', '(<controller>(/<action>(/<id>(/<overflow>))))',
+    array(
+         'id'       => '[[:digit:]]{1,}',
+         'overflow' => '.*?'
+    )
+)
+    ->defaults(
+    array(
+         'controller' => 'index',
+         'action'     => 'index',
+    )
+);
