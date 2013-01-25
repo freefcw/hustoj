@@ -38,7 +38,9 @@ class Model_Topic extends Model_Mongo
     public function get_page($index = 0, $limit = 20)
     {
         $condition = array();
-        $result = $this->collection->find($condition)->limit($limit)->skip($index * $limit);
+        $result = $this->collection->find($condition)->sort(array('topic_id' => -1))->limit($limit)->skip(
+            $index * $limit
+        );
 
         return iterator_to_array($result);
     }
