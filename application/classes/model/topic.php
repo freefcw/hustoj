@@ -89,4 +89,12 @@ class Model_Topic extends Model_Mongo
     {
 
     }
+
+    /**
+     * @return mixed
+     */
+    protected function get_new_topic_id()
+    {
+        return $this->get_new_id('topic_id');
+    }
 }
