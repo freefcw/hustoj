@@ -8,15 +8,21 @@
 $mysql = new mysqli('localhost', 'root', 'hejun', 'judge');
 $mysql->set_charset('utf8');
 
+if ($mysql->connect_errno) {
+    printf("Connect failed: %s\n", $mysql->connect_error);
+    exit();
+}
+
 $m = new Mongo();
 $db = $m->selectDB('judge');
+
 error_reporting(E_ALL);
 // translate_problem();
 // translate_users();
 // translate_login_log();
 // translate_solutions();
 // translate_contest();
-// translate_topic();
+translate_topic();
 translate_reply();
 
 function translate_problem()
@@ -210,12 +216,13 @@ function translate_topic()
 
     while ($item = $result->fetch_assoc()) {
         $data = array(
-            'topic_id' => $item['tid'],
+            'topic_id' => intval($item['tid']),
             'title'    => $item['title'],
             'status'   => $item['top_level'],
-            'cid'      => $item['cid'],
-            'pid'      => $item['pid'],
+            'cid'      => intval($item['cid']),
+            'pid'      => intval($item['pid']),
             'user_id'  => $item['author_id'],
+            'reply_count' => 0,
         );
         //var_dump($data);
         $newitem->save($data);
@@ -232,10 +239,10 @@ function translate_reply()
 
     while ($item = $result->fetch_assoc()) {
         $data = array(
-            'reply_id' => $item['rid'],
+            'reply_id' => intval($item['rid']),
             'content'  => $item['content'],
             'status'   => $item['status'],
-            'topic_id' => $item['topic_id'],
+            'topic_id' => intval($item['topic_id']),
             'user_id'  => $item['author_id'],
             'ip'       => '',
             'time'     => new MongoDate(strtotime($item['time'])),
