@@ -1,4 +1,4 @@
-<table>
+<table class="table table-bordered">
     <thead>
     <tr>
         <th>Problem ID</th>
@@ -19,6 +19,9 @@
         <td><?php echo $t['cid'];?></td>
         <td><a href="/t/<?php echo $t['topic_id'];?>"><?php echo $t['title'];?></a></td>
         <td><?php echo $t['user_id'];?></td>
+        <td><?php echo OJ::mtime($t['date']);?></td>
+        <td><?php echo OJ::mtime($t['last_reply']);?></td>
+        <td><?php echo $t['reply_count'];?></td>
     </tr>
         <?php endforeach;?>
     </tbody>
