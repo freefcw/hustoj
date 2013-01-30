@@ -77,7 +77,9 @@ class Model_Topic extends Model_Mongo
      */
     public function add_topic($data)
     {
-        $data['time'] = new MongoDate(time());
+        $time = new MongoDate(time());
+        $data['time'] = $time;
+        $data['last_reply'] = $time;
 
         $this->collection->save($data);
     }
@@ -88,7 +90,7 @@ class Model_Topic extends Model_Mongo
     public function add_reply($data)
     {
         $data['time'] = new MongoDate(time());
-        $this->incr_replies_for_topic($data['topic_id'], $$data['time']);
+        $this->update_topic($data['topic_id'], $data['time']);
 
         $collection = $this->db->selectCollection('reply');
         $collection->save($data);
@@ -100,7 +102,7 @@ class Model_Topic extends Model_Mongo
      *
      * @return array
      */
-    protected function incr_replies_for_topic($topic_id, $time)
+    protected function update_topic($topic_id, $time)
     {
         $this->collection->update(
             array('topic_id' => $topic_id),
