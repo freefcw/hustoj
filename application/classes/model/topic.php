@@ -37,7 +37,8 @@ class Model_Topic extends Model_Mongo
      */
     public function get_page($index = 0, $limit = 20)
     {
-        $condition = array();
+        $condition = array('pid' => array('$ne' => 0));
+
         $result = $this->collection->find($condition)
             ->sort(array('topic_id' => -1))
             ->limit($limit)
