@@ -1,96 +1,115 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class OJ {
+/**
+ * static helper for html
+ */
+class OJ
+{
 
-	/**
-	 * @var  array  result code to human language readable long
-	 */
-	public static $status = array(
-		"4"=>"Accepted",
-		"5"=>"Presentation Error",
-		"6"=>"Wrong Answer",
-		"7"=>"Time Limit Exceed",
-		"8"=>"Memory Limit Exceed",
-		"9"=>"Output Limit Exceed",
-		"10"=>"Runtime Error",
-		"11"=>"Compile Error",
-		"0"=>"Pending",
-		"1"=>"Pending Rejudging",
-		"2"=>"Compiling",
-		"3"=>"Running &amp; Judging"
-	);
+    /**
+     * @var  array  result code to human language readable long
+     */
+    public static $status
+        = array(
+            "4"  => "Accepted",
+            "5"  => "Presentation Error",
+            "6"  => "Wrong Answer",
+            "7"  => "Time Limit Exceed",
+            "8"  => "Memory Limit Exceed",
+            "9"  => "Output Limit Exceed",
+            "10" => "Runtime Error",
+            "11" => "Compile Error",
+            "0"  => "Pending",
+            "1"  => "Pending Rejudging",
+            "2"  => "Compiling",
+            "3"  => "Running &amp; Judging"
+        );
 
     /**
      * @var array result code to human language short
      */
-    public static $result = array(
-        "4"=>"AC",
-        "5"=>"PE",
-        "6"=>"WA",
-        "7"=>"TLE",
-        "8"=>"MLE",
-        "9"=>"OLE",
-        "10"=>"RE",
-        "11"=>"CE",
-    );
+    public static $result
+        = array(
+            "4"  => "AC",
+            "5"  => "PE",
+            "6"  => "WA",
+            "7"  => "TLE",
+            "8"  => "MLE",
+            "9"  => "OLE",
+            "10" => "RE",
+            "11" => "CE",
+        );
 
     /**
      * @var array language code to human language
      */
-	public static $language = array(
-		 '0'=>'C',
-		 '1'=>'C++',
-		 '2'=>'Pascal',
-		 '3'=>'Java'
-	);
+    public static $language
+        = array(
+            '0' => 'C',
+            '1' => 'C++',
+            '2' => 'Pascal',
+            '3' => 'Java'
+        );
 
     /**
      * @var array private value to human language
      */
-	public static $private = array(
-		'0' => 'public',
-		'1' => 'private'
-	);
+    public static $private
+        = array(
+            '0' => 'public',
+            '1' => 'private'
+        );
 
     /**
      * @static
+     *
      * @param $value
+     *
      * @return string
      *
      * translate result code to human readable
      */
-	public static function jresult($value)
-	{
-		return OJ::$status[$value];
-	}
+    public static function jresult($value)
+    {
+        return OJ::$status[$value];
+    }
 
-	/**
+    /**
      * @static
+     *
      * @param $value
+     *
      * @return string
      *
      * translate language code to human readable
      */
-	public static function lang($value)
-	{
-		if ($value > 3) return 'Others';
-		return OJ::$language[$value];
-	}
-	/**
+    public static function lang($value)
+    {
+        if ($value > 3) {
+            return 'Others';
+        }
+        return OJ::$language[$value];
+    }
+
+    /**
      * @static
+     *
      * @param $value
+     *
      * @return mixed
      *
      * translate priavte code to human readable
      */
-	public static function is_private($value)
-	{
-		return OJ::$private[$value];
-	}
+    public static function is_private($value)
+    {
+        return OJ::$private[$value];
+    }
 
     /**
      * @static
+     *
      * @param $pid
+     *
      * @return string
      *
      * translate contest pid to A, B....
@@ -102,7 +121,9 @@ class OJ {
 
     /**
      * @static
+     *
      * @param $time
+     *
      * @return string
      *
      * make contest time normalize
@@ -118,25 +139,35 @@ class OJ {
 
     /**
      * @static
+     *
      * @param $mtime
+     *
      * @return string
      *
      * make mongoDate human readable
      */
     public static function mtime($mtime)
     {
-        return date('Y-m-d h:i:s', $mtime->sec);
+        if ($mtime) {
+            return date('Y-m-d h:i:s', $mtime->sec);
+        }
+        return '';
     }
 
     /**
      * @static
+     *
      * @param $mtime
+     *
      * @return string
      *
      * generate read date
      */
     public static function getdate($mtime)
     {
-        return date('Y年m月d', $mtime->sec);
+        if ($mtime) {
+            return date('Y年m月d', $mtime->sec);
+        }
+        return '';
     }
 }
