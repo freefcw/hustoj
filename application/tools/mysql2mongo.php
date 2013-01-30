@@ -232,6 +232,11 @@ function translate_topic()
     $result->free();
 }
 
+/**
+ * @param $mtime
+ *
+ * @return string
+ */
 function mtime($mtime)
 {
     if ($mtime) {
@@ -240,6 +245,13 @@ function mtime($mtime)
     return '';
 }
 
+/**
+ * @param $topic_id
+ * @param $date
+ * @param $content
+ *
+ * @return bool
+ */
 function update_topic_time($topic_id, $date, $content)
 {
     global $db;
@@ -248,21 +260,21 @@ function update_topic_time($topic_id, $date, $content)
 
     $item = $tdb->findOne(array('topic_id' => $topic_id));
 
+    $is_first = false;
+
     if ($item) {
 
         if (!array_key_exists('date', $item)) {
             $item['date'] = $date;
             $item['content'] = $content;
+            $item['last_reply'] = $date;
+            $is_first = true;
         }
 
-        if (!array_key_exists('last_reply', $item)) {
-            $item['last_reply'] = $date;
-        } else {
-            if ($item['last_reply'] < $date) {
-                $item['reply_count'] = $item['reply_count'] + 1;
+        if ($item['last_reply'] < $date) {
+            $item['reply_count'] = $item['reply_count'] + 1;
 
-                $item['last_reply'] = $date;
-            }
+            $item['last_reply'] = $date;
         }
 
         dump($item);
@@ -271,8 +283,12 @@ function update_topic_time($topic_id, $date, $content)
     } else {
         echo "Not found {$topic_id}, {$content}!\n";
     }
+    return $is_first;
 }
 
+/**
+ * @param $item
+ */
 function dump($item)
 {
     echo "ITEM:\n";
@@ -304,8 +320,10 @@ function translate_reply()
             'time'     => $time,
         );
         //var_dump($data);
-        update_topic_time($topic_id, $time, $item['content']);
-        $newitem->save($data);
+        $is_first = update_topic_time($topic_id, $time, $item['content']);
+        if (!$is_first) {
+            $newitem->save($data);
+        }
     }
     $result->free();
 }
