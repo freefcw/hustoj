@@ -14,7 +14,8 @@ class Controller_Discuss extends Controller_My
     public function action_topic()
     {
         // init
-        $topic_id = $this->request->param('id');
+        $topic_id = intval($this->request->param('id'));
+
         if ($topic_id == NULL) {
             $this->action_index();
         }
