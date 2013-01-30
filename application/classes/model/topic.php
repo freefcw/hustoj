@@ -38,9 +38,10 @@ class Model_Topic extends Model_Mongo
     public function get_page($index = 0, $limit = 20)
     {
         $condition = array();
-        $result = $this->collection->find($condition)->sort(array('topic_id' => -1))->limit($limit)->skip(
-            $index * $limit
-        );
+        $result = $this->collection->find($condition)
+            ->sort(array('topic_id' => -1))
+            ->limit($limit)
+            ->skip($index * $limit);
 
         return iterator_to_array($result);
     }
@@ -72,22 +73,40 @@ class Model_Topic extends Model_Mongo
     }
 
     /**
-     * @param $topic_id
      * @param $data
      */
-    public function new_reply($topic_id, $data)
+    public function add_topic($data)
     {
-        $condition = array('topic_id' => $topic_id);
+        $data['time'] = new MongoDate(time());
 
+        $this->collection->save($data);
+    }
+
+    /**
+     * @param $data
+     */
+    public function add_reply($data)
+    {
+        $data['time'] = new MongoDate(time());
+        $this->incr_replies_for_topic($data['topic_id'], $$data['time']);
+
+        $collection = $this->db->selectCollection('reply');
+        $collection->save($data);
     }
 
     /**
      * @param $topic_id
-     * @param $data
+     * @param $time
+     *
+     * @return array
      */
-    public function edit($topic_id, $data)
+    protected function incr_replies_for_topic($topic_id, $time)
     {
-
+        $this->collection->update(
+            array('topic_id' => $topic_id),
+            array('$inc' => array('reply_count' => 1),
+                  '$set' => array('last_reply' => $time))
+        );
     }
 
     /**
@@ -97,4 +116,5 @@ class Model_Topic extends Model_Mongo
     {
         return $this->get_new_id('topic_id');
     }
+
 }

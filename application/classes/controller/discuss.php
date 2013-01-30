@@ -48,4 +48,13 @@ class Controller_Discuss extends Controller_My
         $this->view->title = 'Discuss';
         $this->view->body = $body;
     }
+
+    public function action_new()
+    {
+        $mt = new Model_Topic();
+
+        //TODO:add body
+
+        $this->view->title = 'New Topic';
+    }
 }
