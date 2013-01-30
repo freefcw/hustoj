@@ -215,13 +215,14 @@ function translate_topic()
     $newitem = $db->selectCollection('topic');
 
     while ($item = $result->fetch_assoc()) {
+        $topic_id = intval($item['tid']);
         $data = array(
-            'topic_id' => intval($item['tid']),
-            'title'    => $item['title'],
-            'status'   => $item['top_level'],
-            'cid'      => intval($item['cid']),
-            'pid'      => intval($item['pid']),
-            'user_id'  => $item['author_id'],
+            'topic_id'    => $topic_id,
+            'title'       => $item['title'],
+            'status'      => $item['top_level'],
+            'cid'         => intval($item['cid']),
+            'pid'         => intval($item['pid']),
+            'user_id'     => $item['author_id'],
             'reply_count' => 0,
         );
         //var_dump($data);
@@ -230,24 +231,79 @@ function translate_topic()
     $result->free();
 }
 
+function mtime($mtime)
+{
+    if ($mtime) {
+        return date('Y-m-d h:i:s', $mtime->sec);
+    }
+    return '';
+}
+
+function update_topic_time($topic_id, $date, $content)
+{
+    global $db;
+
+    $tdb = $db->selectCollection('topic');
+
+    $item = $tdb->findOne(array('topic_id' => $topic_id));
+
+    if ($item) {
+
+        if (!array_key_exists('date', $item)) {
+            $item['date'] = $date;
+            $item['content'] = $content;
+        }
+
+        if (!array_key_exists('last_reply', $item)) {
+            $item['last_reply'] = $date;
+        } else {
+            if ($item['last_reply'] < $date) {
+                $item['reply_count'] = $item['reply_count'] + 1;
+
+                $item['last_reply'] = $date;
+            }
+        }
+
+        dump($item);
+
+        $tdb->save($item);
+    } else {
+        echo "Not found {$topic_id}, {$content}!\n";
+    }
+}
+
+function dump($item)
+{
+    echo "ITEM:\n";
+    echo 'topic_id:', $item['topic_id'], "\n";
+    echo 'title   :', $item['title'], "\n";
+    echo 'date    :', mtime($item['date']), "\n";
+    echo 'last    :', mtime($item['last_reply']), "\n";
+    echo 'count   :', $item['reply_count'], "\n";
+    echo "\n";
+}
+
 function translate_reply()
 {
     global $mysql, $db;
 
-    $result = $mysql->query('SELECT * FROM reply');
+    $result = $mysql->query('SELECT * FROM reply ORDER BY `time` ASC');
     $newitem = $db->selectCollection('reply');
 
     while ($item = $result->fetch_assoc()) {
+        $time = new MongoDate(strtotime($item['time']));
+        $topic_id = intval($item['topic_id']);
         $data = array(
             'reply_id' => intval($item['rid']),
             'content'  => $item['content'],
             'status'   => $item['status'],
-            'topic_id' => intval($item['topic_id']),
+            'topic_id' => $topic_id,
             'user_id'  => $item['author_id'],
             'ip'       => '',
-            'time'     => new MongoDate(strtotime($item['time'])),
+            'time'     => $time,
         );
         //var_dump($data);
+        update_topic_time($topic_id, $time, $item['content']);
         $newitem->save($data);
     }
     $result->free();
