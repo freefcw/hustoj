@@ -6,7 +6,8 @@
  */
 
 $mysql = new mysqli('localhost', 'root', 'hejun', 'judge');
-$mysql->set_charset('utf8');
+// if translated the db charset
+//$mysql->set_charset('utf8');
 
 if ($mysql->connect_errno) {
     printf("Connect failed: %s\n", $mysql->connect_error);
