@@ -41,7 +41,7 @@ class Controller_Discuss extends Controller_My
 
         $topic_list = $mt->get_page($page);
 
-        $body = View::factory('discuss/page');
+        $body = View::factory('discuss/list');
 
         $body->bind('topic_list', $topic_list);
 
