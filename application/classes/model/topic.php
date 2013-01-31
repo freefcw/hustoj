@@ -90,7 +90,12 @@ class Model_Topic extends Model_Mongo
      */
     public function add_reply($data)
     {
+        /*
+            content, topic_id, user_id, status, ip
+        */
         $data['time'] = new MongoDate(time());
+        $data['reply_id'] = $this->get_new_reply_id();
+
         $this->update_topic($data['topic_id'], $data['time']);
 
         $collection = $this->db->selectCollection('reply');
@@ -120,4 +125,11 @@ class Model_Topic extends Model_Mongo
         return $this->get_new_id('topic_id');
     }
 
+    /**
+     * @return mixed
+     */
+    protected function get_new_reply_id()
+    {
+        return $this->get_new_id('reply_id');
+    }
 }

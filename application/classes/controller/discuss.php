@@ -13,8 +13,9 @@ class Controller_Discuss extends Controller_My
 
     public function action_topic()
     {
+        $request = $this->request;
         // init
-        $topic_id = intval($this->request->param('id'));
+        $topic_id = intval($request->param('id'));
 
         if ($topic_id == NULL) {
             $this->action_index();
@@ -22,6 +23,18 @@ class Controller_Discuss extends Controller_My
 
         $mt = new Model_Topic();
         $topic = $mt->get_topic_by_id($topic_id);
+        //TODO: if cannot find the topic
+
+        if ($request->method() == 'POST') {
+            $data = array(
+                'content'  => $request->post('content'),
+                'topic_id' => $topic_id,
+                'user_id'  => Auth::instance()->get_user(),
+                'status'   => 0,
+                'ip'       => $request::$client_ip,
+            );
+            $mt->add_reply($data);
+        }
 
         $relies = $mt->get_relies_for_topic($topic_id);
 
