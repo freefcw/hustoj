@@ -26,6 +26,7 @@ class Controller_Discuss extends Controller_My
         //TODO: if cannot find the topic
 
         if ($request->method() == 'POST') {
+            $this->need_login();
             $data = array(
                 'content'  => $request->post('content'),
                 'topic_id' => $topic_id,
@@ -71,6 +72,7 @@ class Controller_Discuss extends Controller_My
         $mt = new Model_Topic();
 
         if ($request->method() == 'POST') {
+            $this->need_login();
             $data = array(
                 'title'   => $request->post('title'),
                 'content' => $request->post('content'),
