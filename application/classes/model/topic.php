@@ -84,7 +84,7 @@ class Model_Topic extends Model_Mongo
 
         $data['reply_count'] = 0;
         $data['status'] = 0;
-        $data['time'] = $time;
+        $data['date'] = $time;
         $data['last_reply'] = $time;
 
         $this->collection->save($data);
@@ -102,7 +102,7 @@ class Model_Topic extends Model_Mongo
         $data['date'] = new MongoDate(time());
         $data['reply_id'] = $this->get_new_reply_id();
 
-        $this->update_topic($data['topic_id'], $data['time']);
+        $this->update_topic($data['topic_id'], $data['date']);
 
         $collection = $this->db->selectCollection('reply');
         $collection->save($data);

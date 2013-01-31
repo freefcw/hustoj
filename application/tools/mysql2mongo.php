@@ -171,7 +171,7 @@ function translate_login_log()
             'user_id'  => $item['user_id'],
             'password' => $item['password'],
             'ip'       => $item['ip'],
-            'time'     => new MongoDate(strtotime($item['time'])),
+            'date'     => new MongoDate(strtotime($item['time'])),
         );
         $newdb->save($data);
     }
@@ -317,7 +317,7 @@ function translate_reply()
             'topic_id' => $topic_id,
             'user_id'  => $item['author_id'],
             'ip'       => '',
-            'time'     => $time,
+            'date'     => $date,
         );
         //var_dump($data);
         $is_first = update_topic_time($topic_id, $time, $item['content']);
