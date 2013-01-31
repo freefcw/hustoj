@@ -25,6 +25,15 @@ class Controller_My extends Controller
         $this->view->body = $body;
     }
 
+    public function need_login($redirect = '')
+    {
+        if (Auth::instance()->get_user()) {
+            return;
+        } else {
+            $this->request->redirect('/login');
+        }
+    }
+
     public function after()
     {
         $this->response->body($this->view);
