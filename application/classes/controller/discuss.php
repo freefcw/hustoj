@@ -75,8 +75,8 @@ class Controller_Discuss extends Controller_My
                 'title'   => $request->post('title'),
                 'content' => $request->post('content'),
                 'user_id' => Auth::instance()->get_user(),
-                'cid'     => $request->post('cid'),
-                'pid'     => $request->post('pid'),
+                'cid'     => intval($request->post('cid')),
+                'pid'     => intval($request->post('pid')),
                 'ip'      => $request::$client_ip,
             );
             $topic_id = $mt->add_topic($data);
