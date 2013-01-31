@@ -99,7 +99,7 @@ class Model_Topic extends Model_Mongo
         /*
             content, topic_id, user_id, status, ip
         */
-        $data['time'] = new MongoDate(time());
+        $data['date'] = new MongoDate(time());
         $data['reply_id'] = $this->get_new_reply_id();
 
         $this->update_topic($data['topic_id'], $data['time']);
