@@ -83,7 +83,7 @@ class Controller_Discuss extends Controller_My
             $this->request->redirect("/discuss/topic/{$topic_id}");
         }
 
-        $body = View::factory('discuss/new');
+        $body = View::factory('discuss/edit');
         $this->view->title = 'New Topic';
 
         $this->view->body = $body;
