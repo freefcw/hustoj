@@ -79,10 +79,16 @@ class Model_Topic extends Model_Mongo
     public function add_topic($data)
     {
         $time = new MongoDate(time());
+
+        $data['topic_id'] = $this->get_new_topic_id();
+
+        $data['reply_count'] = 0;
+        $data['status'] = 0;
         $data['time'] = $time;
         $data['last_reply'] = $time;
 
         $this->collection->save($data);
+        return $data['topic_id'];
     }
 
     /**

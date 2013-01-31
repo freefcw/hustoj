@@ -66,8 +66,26 @@ class Controller_Discuss extends Controller_My
     {
         $mt = new Model_Topic();
 
-        //TODO:add body
+        $request = $this->request;
 
+        $mt = new Model_Topic();
+
+        if ($request->method() == 'POST') {
+            $data = array(
+                'title'   => $request->post('title'),
+                'content' => $request->post('content'),
+                'user_id' => Auth::instance()->get_user(),
+                'cid'     => $request->post('cid'),
+                'pid'     => $request->post('pid'),
+                'ip'      => $request::$client_ip,
+            );
+            $topic_id = $mt->add_topic($data);
+            $this->request->redirect("/discuss/topic/{$topic_id}");
+        }
+
+        $body = View::factory('discuss/new');
         $this->view->title = 'New Topic';
+
+        $this->view->body = $body;
     }
 }
