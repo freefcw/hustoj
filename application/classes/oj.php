@@ -98,9 +98,21 @@ class OJ
      *
      * @return mixed
      *
-     * translate priavte code to human readable
      */
     public static function is_private($value)
+    {
+        if (intval($value) == 1) return true;
+        return false;
+    }
+
+    /**
+     * translate private code to human readable
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public static function private_value($value)
     {
         return OJ::$private[$value];
     }
