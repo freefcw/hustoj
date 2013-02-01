@@ -104,7 +104,7 @@ class Controller_Problem extends Controller_My
 
     public function action_submit()
     {
-        $this->need_login();
+        $this->check_login();
 
         $request = $this->request;
         $pid = $request->param('id', '');

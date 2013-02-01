@@ -26,7 +26,7 @@ class Controller_Discuss extends Controller_My
         //TODO: if cannot find the topic
 
         if ($request->method() == 'POST') {
-            $this->need_login();
+            $this->check_login();
             $data = array(
                 'content'  => $request->post('content'),
                 'topic_id' => $topic_id,
@@ -68,7 +68,7 @@ class Controller_Discuss extends Controller_My
 
     public function action_new()
     {
-        $this->need_login();
+        $this->check_login();
 
         $mt = new Model_Topic();
 

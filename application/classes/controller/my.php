@@ -17,6 +17,10 @@ class Controller_My extends Controller
 
     }
 
+    /**
+     * @param string $msg
+     * @param string $page
+     */
     public function error_page($msg = '', $page = 'error')
     {
         $body = View::factory("admin/index/{$page}");
@@ -25,7 +29,10 @@ class Controller_My extends Controller
         $this->view->body = $body;
     }
 
-    public function need_login($redirect = '')
+    /**
+     * @param string $redirect
+     */
+    public function check_login($redirect = '')
     {
         if (Auth::instance()->get_user()) {
             return;

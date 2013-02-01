@@ -19,7 +19,7 @@ class Controller_Account extends Controller_My
 
     public function action_setting()
     {
-        $this->need_login();
+        $this->check_login();
 
         $request = $this->request;
         $uid = Auth::instance()->get_user();
