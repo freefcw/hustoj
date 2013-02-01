@@ -30,6 +30,8 @@ class Controller_My extends Controller
         if (Auth::instance()->get_user()) {
             return;
         } else {
+            $session = Session::instance();
+            $session->set('return_url', $this->request->uri());
             $this->request->redirect('/login');
         }
     }
