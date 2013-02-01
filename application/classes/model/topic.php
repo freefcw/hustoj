@@ -31,13 +31,18 @@ class Model_Topic extends Model_Mongo
      * topics for the page at index
      *
      * @param int $index
+     * @param int $pid
      * @param int $limit
      *
      * @return array
      */
-    public function get_page($index = 0, $limit = 20)
+    public function get_page($index = 0, $pid = 0, $limit = 20)
     {
-        $condition = array('pid' => array('$ne' => 0));
+        if ($pid) {
+            $condition = array('pid' => $pid);
+        } else {
+            $condition = array('pid' => array('$ne' => 0));
+        }
 
         $result = $this->collection->find($condition)
             ->sort(array('topic_id' => -1))

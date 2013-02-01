@@ -49,11 +49,13 @@ class Controller_Discuss extends Controller_My
 
     public function action_page()
     {
-        $page = $this->request->param('id', 0);
+        $page = intval($this->request->param('id', 0));
+
+        $pid = intval($this->request->query('pid', null));
 
         $mt = new Model_Topic();
 
-        $topic_list = $mt->get_page($page);
+        $topic_list = $mt->get_page($page, $pid);
 
         $body = View::factory('discuss/list');
 
