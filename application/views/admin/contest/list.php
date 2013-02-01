@@ -7,7 +7,7 @@
 <tr>
 <td><?php echo $c['contest_id'];?><a class="edit-link" href="/admin/contest/edit/<?php echo $c['contest_id'];?>" style="float:right;">[EDIT]</a></td>
 <td><?php echo html::anchor("/contest/show/{$c['contest_id']}", $c['title']);?></td>
-<td><?php echo OJ::mtime($c['end_time']);?> <br/> <?php echo OJ::mtime($c['end_time']);?></td>
+<td><?php echo OJ::mtime($c['start_time']);?> <br/> <?php echo OJ::mtime($c['end_time']);?></td>
 <td class="capitalize"><a href="/admin/contest/changeprivate/<?php echo OJ::private_value($c['private']);?>"><?php echo OJ::private_value($c['private']);?></a>
 </td>
 </tr>
