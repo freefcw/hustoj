@@ -75,4 +75,20 @@ class Controller_Admin_Contest extends Controller_Admin_My
         $this->view->title = 'Member of Contest' . $contest['contest_id'];
         $this->view->body = $body;
     }
+
+    public function action_removeuser()
+    {
+        if ($this->request->method() == 'POST') {
+            $cid = $this->request->post('cid', null);
+            $user_id = $this->request->post('uid', null);
+
+            $cid = intval($cid);
+
+            $c = new Model_Contest();
+
+            $c->remove_user_from_contest($cid, $user_id);
+
+            $this->view = '{ok: 0}';
+        }
+    }
 }

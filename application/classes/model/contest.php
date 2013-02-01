@@ -247,4 +247,20 @@ class Model_Contest extends Model_Mongo
             $collection->save($item);
         }
     }
+
+    /**
+     * @param $cid
+     * @param $user_id
+     */
+    public function remove_user_from_contest($cid, $user_id)
+    {
+        $collection = $this->db->selectCollection('privilege');
+
+        $condition = array(
+            'contest_id' => $cid,
+            'user_id'    => $user_id,
+        );
+
+        $collection->remove($condition);
+    }
 }
