@@ -1,66 +1,67 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Problem extends Controller_My {
+class Controller_Problem extends Controller_My
+{
 
-	public function action_list()
-	{
-		// initial
-		$page_id = $this->request->param('id', 1);
-		
-		// db
-		$problem = new Model_Problem();
+    public function action_list()
+    {
+        // initial
+        $page_id = $this->request->param('id', 1);
 
-		// view
-		$body = View::factory('problem/list');
-		$body->page_id = $page_id;
+        // db
+        $problem = new Model_Problem();
 
-		$per_page = 50;
+        // view
+        $body = View::factory('problem/list');
+        $body->page_id = $page_id;
 
-		$body->problemlist = $problem->get_page($page_id, $per_page);
-		//TODO: add check permission of contest
-		$total = $problem->get_total();
-		//if (!is_string($total)) var_dump($total);
-		$body->pages = ceil(intval($total) / $per_page);
+        $per_page = 50;
 
-		$title = 'Problem Set '.$page_id;
-		$this->view->title = $title;
+        $body->problemlist = $problem->get_page($page_id, $per_page);
+        //TODO: add check permission of contest
+        $total = $problem->get_total();
+        //if (!is_string($total)) var_dump($total);
+        $body->pages = ceil(intval($total) / $per_page);
 
-		$this->view->body = $body;
-	}
+        $title = 'Problem Set ' . $page_id;
+        $this->view->title = $title;
 
-	public function action_show()
-	{
-		// initial
-		$pid = $this->request->param('id');
-		if ($pid == NULL) {
-			$this->action_list();
-		}
+        $this->view->body = $body;
+    }
 
-		// db
-		$problem = new Model_Problem();
+    public function action_show()
+    {
+        // initial
+        $pid = $this->request->param('id');
+        if ($pid == NULL) {
+            $this->action_list();
+        }
 
-		// view
-		$body = View::factory('problem/show');
-		$body->p = $problem->get_problem($pid);
+        // db
+        $problem = new Model_Problem();
 
-		$this->view->title = $body->p['title'];
-		$this->view->body = $body;
-	}
-	
-	public function action_status()
-	{
-		// init
-		$page = $this->request->param('id', 1);
+        // view
+        $body = View::factory('problem/show');
+        $body->p = $problem->get_problem($pid);
 
-		$pid = $this->request->query('pid', null);
+        $this->view->title = $body->p['title'];
+        $this->view->body = $body;
+    }
 
-		$uid = $this->request->query('uid', null);
+    public function action_status()
+    {
+        // init
+        $page = $this->request->param('id', 1);
+
+        $pid = $this->request->query('pid', null);
+
+        $uid = $this->request->query('uid', null);
         $cid = $this->request->query('cid', null);
-		$language = $this->request->query('language', null);
-		$result = $this->request->query('result', null);
-		
-		$per_page = 20;
-		
+        $language = $this->request->query('language', null);
+        $result = $this->request->query('result', null);
+
+        $per_page = 20;
+
 //		// validation
 //		$validation = Validation::factory(array(
 //			'pid' => $pid,
@@ -81,134 +82,115 @@ class Controller_Problem extends Controller_My {
 //			echo "error";
 //		}
 
-		// db
-		$db = new Model_Submission();
-		$status = $db->get_status($page, $pid, $uid, $cid, $language, $result);
-		$total = $db->get_status_count($pid, $uid, $cid, $language, $result);
+        // db
+        $db = new Model_Submission();
+        $status = $db->get_status($page, $pid, $uid, $cid, $language, $result);
+        $total = $db->get_status_count($pid, $uid, $cid, $language, $result);
 
-		// view
-		$body = View::factory('problem/status');
-		$body->list = $status;
-		$body->page = $page;
-		$body->total = ceil($total / $per_page);
-		$body->pid = $pid;
-		$body->uid = $uid;
+        // view
+        $body = View::factory('problem/status');
+        $body->list = $status;
+        $body->page = $page;
+        $body->total = ceil($total / $per_page);
+        $body->pid = $pid;
+        $body->uid = $uid;
         $body->cid = $cid;
-		$body->language = $language;
-		$body->result = $result;
+        $body->language = $language;
+        $body->result = $result;
 
-		$this->view->title = 'STATUS';
-		$this->view->body = $body;
-	}
+        $this->view->title = 'STATUS';
+        $this->view->body = $body;
+    }
 
-	public function action_submit()
-	{
+    public function action_submit()
+    {
+        $this->need_login();
+
         $request = $this->request;
-		$pid = $request->param('id', '');
+        $pid = $request->param('id', '');
 
-        if ($request->method() == 'GET')
-        {
+        if ($request->method() == 'GET') {
             $body = View::factory('problem/submit');
             $body->pid = $pid;
             $cid = $request->query('cid', null);
             $cpid = $request->query('pid', null);
-            if ($cid !== null)
-            {
+            if ($cid !== null) {
                 $body->cid = $cid;
                 $body->cpid = $cpid;
             }
 
             $this->view->title = 'Submit';
             $this->view->body = $body;
-            return ;
-        }
+        } else {
+            if ($request->method() == 'POST') {
+                $post = $request->post();
 
-        if ($request->method() == 'POST')
-        {
-            $post = $request->post();
-
-            if (Auth::instance()->get_user() == null)
-            {
-                $error = 'You Should Login To Submit !';
-                //TODO: validation
-                if (!Auth::instance()->login($post['user_id'], $post['password']))
-                {
-                    $error = 'User_id or Password Wrong';
-                }
-
-                $body = View::factory('problem/submit');
-                $body->error = $error;
-                $body->pid = $pid;
-
-                $this->view->title = 'Submit';
-                $this->view->body = $body;
-            } else {
                 //TODO:check permission, the user can submit? if not admin, may cause leak or cracked
                 // 1. not admin
                 // 2. time failed
                 // 3. not invite people
                 //TODO: validation
                 //TODO: add contest problem
-                $db = new Model_Problem();
+                $mp = new Model_Problem();
                 $post['user_id'] = Auth::instance()->get_user();
                 $post['ip'] = Request::$client_ip;
-                $ret = $db->new_solution($post);
+                $ret = $mp->new_solution($post);
 
                 $request->redirect('/status');
             }
         }
-	}
+    }
 
-	public function action_summary()
-	{
-		// init
-		$page_id = $this->request->param('id');
-		if ($page_id === NULL) {
-			# TODO: redirect to back?
-		}
+    public function action_summary()
+    {
+        // init
+        $page_id = $this->request->param('id');
+        if ($page_id === NULL) {
+            # TODO: redirect to back?
+        }
 
-		// db
-		$p = new Model_Submission();
-		$summary = $p->get_summary($page_id);
-		$best_solution = $p->get_best_solution($page_id);
+        // db
+        $p = new Model_Submission();
+        $summary = $p->get_summary($page_id);
+        $best_solution = $p->get_best_solution($page_id);
 
-		// view
+        // view
 
-		$body = View::factory('problem/summary');
-		$body->summary = $summary;
-		$body->solutions = $best_solution;
+        $body = View::factory('problem/summary');
+        $body->summary = $summary;
+        $body->solutions = $best_solution;
 
-		$this->view->title = "Summary of {$page_id}";
-		$this->view->body = $body;
-	}
-	
-	public function action_search()
-	{
-		// init
-		$text = $this->request->query('text');
-		$area = $this->request->query('area');
-		
-		if ($text === NULL) {
-			// TODO: add better handler
-			$this->action_list();
-		}
-		
-		// TODO: validation
-		
-		// db
-		$db = new Model_Problem();
-		// TODO: add filter
-		$list = $db->find_problem($text, $area);
-		
-		// view
-		$body = View::factory('problem/search');
-		
-		$body->area = $area;
-		$body->search_text = $text;
-		$body->problemlist = $list;
-		
-		$this->view->title = "{$text} search result";
-		$this->view->body = $body;
-	}
+        $this->view->title = "Summary of {$page_id}";
+        $this->view->body = $body;
+    }
+
+    public function action_search()
+    {
+        // init
+        $text = $this->request->query('text');
+        $area = $this->request->query('area');
+
+        if ($text === NULL) {
+            // TODO: add better handler
+            $this->action_list();
+        }
+
+        // TODO: validation
+
+        // db
+        $db = new Model_Problem();
+        // TODO: add filter
+        $list = $db->find_problem($text, $area);
+
+        // view
+        $body = View::factory('problem/search');
+
+        $body->area = $area;
+        $body->search_text = $text;
+        $body->problemlist = $list;
+
+        $this->view->title = "{$text} search result";
+        $this->view->body = $body;
+    }
 
 } // End Welcome

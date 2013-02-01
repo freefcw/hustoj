@@ -1,6 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Account extends Controller_My{
+class Controller_Account extends Controller_My
+{
 
     public function action_register()
     {
@@ -18,13 +19,12 @@ class Controller_Account extends Controller_My{
 
     public function action_setting()
     {
-        $request = $this->request;
-        // need login
-        $uid = Auth::instance()->get_user();
-        if ($uid == null) $request->redirect('/home');
+        $this->need_login();
 
-        if ($request->method() == 'GET')
-        {
+        $request = $this->request;
+        $uid = Auth::instance()->get_user();
+
+        if ($request->method() == 'GET') {
             $u = new Model_User();
             $user = $u->get_info_by_name($uid);
         } else {
@@ -38,12 +38,11 @@ class Controller_Account extends Controller_My{
 
             $u = New Model_User();
             // check user password
-            if (Auth::instance()->check_password($user['password']))
-            {
+            if (Auth::instance()->check_password($user['password'])) {
                 // if change password
-                if ( strlen($user['newpassword']) > 0
-                    AND ($user['newpassword'] === $user['confirm']))
-                {
+                if (strlen($user['newpassword']) > 0
+                    AND ($user['newpassword'] === $user['confirm'])
+                ) {
                     $newuser['password'] = Auth::instance()->hash($user['newpassword']);
                 }
                 //TODO: Validation user input, see action_new
@@ -56,18 +55,17 @@ class Controller_Account extends Controller_My{
 
         $body = View::factory('user/edit');
         $body->userinfo = $user;
-        $body->error = isset($error)? $error: null;
-        $body->tip = isset($tip)? $tip: null;
+        $body->error = isset($error) ? $error : null;
+        $body->tip = isset($tip) ? $tip : null;
 
         $this->view->title = "Update Imformation";
         $this->view->body = $body;
-   	}
+    }
 
 
     public function action_new()
     {
-        if ($this->request->method() == 'GET')
-        {
+        if ($this->request->method() == 'GET') {
             $this->request->redirect('/home');
         }
 
@@ -76,7 +74,7 @@ class Controller_Account extends Controller_My{
             ->rule('username', 'min_length', array(':value', 4))
             ->rule('username', 'max_length', array(':value', 15))
             ->rule('username', 'alpha_numeric')
-            //->rule('username', 'User_Model::unique_username')
+        //->rule('username', 'User_Model::unique_username')
             ->rule('password', 'min_length', array(':value', 6))
             ->rule('password', 'matches', array(':validation', 'password', 'confirm'))
             ->rule('school', 'max_length', array(':value', 30))
@@ -84,11 +82,9 @@ class Controller_Account extends Controller_My{
             ->rule('email', 'email');
 
         $errors = array();
-        if($post->check())
-        {
+        if ($post->check()) {
             $m = new Model_User();
-            if (!$m->exist_id($post['username']))
-            {
+            if (!$m->exist_id($post['username'])) {
 //            Debug::dump($post);
                 $m->exist_id($post['username']);
                 $m->add_user($post);
