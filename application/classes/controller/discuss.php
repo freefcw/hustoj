@@ -52,10 +52,11 @@ class Controller_Discuss extends Controller_My
         $page = intval($this->request->param('id', 0));
 
         $pid = intval($this->request->query('pid', null));
+        $user_id = $this->request->query('uid', null);
 
         $mt = new Model_Topic();
 
-        $topic_list = $mt->get_page($page, $pid);
+        $topic_list = $mt->get_page($page, $pid, $user_id);
 
         $body = View::factory('discuss/list');
 

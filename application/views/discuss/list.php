@@ -1,5 +1,6 @@
 <form action="/discuss" method="get" class="form-search pull-left">
-    <input type="text" class="input-medium search-query" placeholder="filter by problem id" name="pid">
+    <input type="text" class="input-small icon-search" placeholder="problem id" name="pid">
+    <input type="text" class="input-small icon-search" placeholder="user id" name="uid">
     <button type="submit" class="btn">Filter</button>
 </form>
 <a href="/discuss/new" class="btn btn-info pull-right">New Topic</a>

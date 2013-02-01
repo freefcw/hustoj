@@ -30,18 +30,23 @@ class Model_Topic extends Model_Mongo
     /**
      * topics for the page at index
      *
-     * @param int $index
-     * @param int $pid
-     * @param int $limit
+     * @param int  $index
+     * @param int  $pid
+     * @param null $user_id
+     * @param int  $limit
      *
      * @return array
      */
-    public function get_page($index = 0, $pid = 0, $limit = 20)
+    public function get_page($index = 0, $pid = 0, $user_id = null, $limit = 20)
     {
         if ($pid) {
             $condition = array('pid' => $pid);
         } else {
             $condition = array('pid' => array('$ne' => 0));
+        }
+
+        if ($user_id) {
+            $condition['user_id'] = $user_id;
         }
 
         $result = $this->collection->find($condition)
