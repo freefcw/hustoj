@@ -230,16 +230,21 @@ class Model_Contest extends Model_Mongo
 
     /**
      * @param $cid
-     * @param $user_id
+     * @param $user_list
+     *
+     * @return void
      */
-    public function add_user_to_contest($cid, $user_id)
+    public function add_user_to_contest($cid, $user_list)
     {
         $collection = $this->db->selectCollection('privilege');
-        $data = array(
-            'contest_id' => $cid,
-            'user_id'    => $user_id
-        );
 
-        $collection->save($data);
+        foreach($user_list as $user_id)
+        {
+            $item = array(
+                'contest_id' => $cid,
+                'user_id'    => $user_id
+            );
+            $collection->save($item);
+        }
     }
 }

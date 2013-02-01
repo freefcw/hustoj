@@ -29,11 +29,9 @@ class Controller_Admin_Contest extends Controller_Admin_My
         $this->view->body = $body;
     }
 
-    public function action_edit($cid = null)
+    public function action_edit()
     {
-        if ($cid === null) {
-            $cid = $this->request->param('id', null);
-        }
+        $cid = $this->request->param('id', null);
 
         if ($cid === null) {
             $this->error_page();
@@ -58,6 +56,14 @@ class Controller_Admin_Contest extends Controller_Admin_My
         $cid = intval($cid);
 
         $c = new Model_Contest();
+
+        if ($this->request->method() == 'POST') {
+            $content = $this->request->post('content');
+
+            $user_id_list = explode("\n", trim($content));
+
+            $c->add_user_to_contest($cid, $user_id_list);
+        }
 
         $contest = $c->get_contest($cid);
         $userlist = $c->get_user_of_contest($cid);
