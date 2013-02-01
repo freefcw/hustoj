@@ -5,19 +5,23 @@
  * @author freefcw
  */
 
-class Model_Contest extends Model_Mongo{
+class Model_Contest extends Model_Mongo
+{
 
     public function __construct()
     {
         parent::__construct();
         $this->collection = $this->db->selectCollection('contest');
     }
+
     /**
      * get contest list for a page
      *
      * @access public
-     * @param $page
+     *
+     * @param     $page
      * @param int $per_page
+     *
      * @internal param \the $int page id
      * @return array  a list of contest
      */
@@ -27,7 +31,7 @@ class Model_Contest extends Model_Mongo{
         $need = array();
 
         $result = $this->collection->find()
-            ->sort(array('contest_id'=>-1))
+            ->sort(array('contest_id' => -1))
             ->skip($per_page * ($page - 1))
             ->limit($per_page);
 
@@ -36,6 +40,7 @@ class Model_Contest extends Model_Mongo{
 
     /**
      * @param $cid
+     *
      * @return bool
      *
      * is contest opened
@@ -46,15 +51,18 @@ class Model_Contest extends Model_Mongo{
 
         $now = time();
 
-        if ($contest['start_time']->sec > $now) return false;
+        if ($contest['start_time']->sec > $now) {
+            return false;
+        }
         return true;
     }
+
     /**
-	 * count all the contest
-	 * 
-	 * @access	public
-	 * @return	int	the number of contest
-	 */
+     * count all the contest
+     *
+     * @access    public
+     * @return    int    the number of contest
+     */
     public function get_total()
     {
         $result = $collection->count();
@@ -65,12 +73,11 @@ class Model_Contest extends Model_Mongo{
 
     public function save($data)
     {
-        if (array_key_exists('contest_id', $data))
-        {
-           $condition = array('contest_id' => $data['contest_id']);
-           $ret = $this->collection->update($condition, array('$set' => $data));
+        if (array_key_exists('contest_id', $data)) {
+            $condition = array('contest_id' => $data['contest_id']);
+            $ret = $this->collection->update($condition, array('$set' => $data));
         } else {
-           $ret = $this->collection->save($data);
+            $ret = $this->collection->save($data);
         }
 
         return $ret;
@@ -79,17 +86,23 @@ class Model_Contest extends Model_Mongo{
     /**
      *
      * @param <type> $contest_id
+     *
      * @return mixed
      */
     public function get_contest($contest_id)
     {
-        $condition = array('contest_id'=>intval($contest_id));
+        $condition = array('contest_id' => intval($contest_id));
         $need = array();
 
         $result = $this->collection->findOne($condition);
         return $result;
     }
 
+    /**
+     * @param $cid
+     *
+     * @return array
+     */
     public function get_statistics($cid)
     {
         $collection = $this->db->selectCollection('solution');
@@ -101,21 +114,33 @@ class Model_Contest extends Model_Mongo{
 
         $data = array();
         $lang = array();
-        foreach($result as $ret)
-        {
-            if (!array_key_exists($ret['num'], $data)) $data[$ret['num']] = array();
-            if (!array_key_exists($ret['result'], $data[$ret['num']])) $data[$ret['num']][$ret['result']] = 0;
+        foreach ($result as $ret) {
+            if (!array_key_exists($ret['num'], $data)) {
+                $data[$ret['num']] = array();
+            }
+            if (!array_key_exists($ret['result'], $data[$ret['num']])) {
+                $data[$ret['num']][$ret['result']] = 0;
+            }
 
-            if (!array_key_exists($ret['num'], $lang)) $lang[$ret['num']] = array();
-            if (!array_key_exists($ret['language'], $lang[$ret['num']])) $lang[$ret['num']][$ret['language']] = 0;
+            if (!array_key_exists($ret['num'], $lang)) {
+                $lang[$ret['num']] = array();
+            }
+            if (!array_key_exists($ret['language'], $lang[$ret['num']])) {
+                $lang[$ret['num']][$ret['language']] = 0;
+            }
 
             $data[$ret['num']][$ret['result']]++;
             $lang[$ret['num']][$ret['language']]++;
         }
 
-        return array('result'=>$data, 'language'=>$lang);
+        return array('result' => $data, 'language' => $lang);
     }
 
+    /**
+     * @param $cid
+     *
+     * @return array
+     */
     public function get_contest_solutions($cid)
     {
         $collection = $this->db->selectCollection('solution');
@@ -124,13 +149,19 @@ class Model_Contest extends Model_Mongo{
         $need = array('user_id', 'result', 'num', 'add_date');
 
         $result = $collection->find($condition, $this->i_need($need))
-            ->sort(array('user_id'=>1, 'add_date'=>1));
+            ->sort(array('user_id' => 1, 'add_date' => 1));
 
 //        $sql = "SELECT user_id, result, num as cpid, in_date FROM solution WHERE contest_id = {$cid} ORDER BY user_id, in_date";
 //        $result = $this->_db->query(Database::SELECT, $sql, TRUE);
 
         return iterator_to_array($result);
     }
+
+    /**
+     * @param $cid
+     *
+     * @return array
+     */
     public function get_standing($cid)
     {
         $solutions = $this->get_contest_solutions($cid);
@@ -138,10 +169,8 @@ class Model_Contest extends Model_Mongo{
         //calc the stand
         $data = array();
         $start_time = $contest['start_time']->sec;
-        foreach($solutions as $s)
-        {
-            if(array_key_exists($s['user_id'], $data))
-            {
+        foreach ($solutions as $s) {
+            if (array_key_exists($s['user_id'], $data)) {
                 $team = $data[$s['user_id']];
                 $team->add($s['num'], $s['add_date']->sec - $start_time, $s['result']);
             } else {
@@ -151,25 +180,66 @@ class Model_Contest extends Model_Mongo{
                 $data[$s['user_id']] = $team;
             }
         }
-        usort($data, function($a, $b){
-            if ($a->solved > $b->solved)
-                return false;
-            if ($a->solved == $b->solved) {
-                if ($a->time < $b->time) return false;
-            };
-            return true;
-        });
+        usort(
+            $data, function ($a, $b) {
+                if ($a->solved > $b->solved) {
+                    return false;
+                }
+                if ($a->solved == $b->solved) {
+                    if ($a->time < $b->time) {
+                        return false;
+                    }
+                }
+                ;
+                return true;
+            }
+        );
 
         return $data;
     }
 
+    /**
+     * @param $cid
+     *
+     * @return array
+     */
     public function get_contest_problems($cid)
     {
         $contest = $this->get_contest($cid);
 
-        if (isset($contest['plist']))
+        if (isset($contest['plist'])) {
             return $contest['plist'];
+        }
 
         return array();
+    }
+
+    /**
+     * @param $cid
+     *
+     * @return array
+     */
+    public function get_user_of_contest($cid)
+    {
+        $collection = $this->db->selectCollection('privilege');
+
+        $condition = array('contest_id' => $cid);
+        $ret = $collection->find($condition);
+        return iterator_to_array($ret);
+    }
+
+    /**
+     * @param $cid
+     * @param $user_id
+     */
+    public function add_user_to_contest($cid, $user_id)
+    {
+        $collection = $this->db->selectCollection('privilege');
+        $data = array(
+            'contest_id' => $cid,
+            'user_id'    => $user_id
+        );
+
+        $collection->save($data);
     }
 }
