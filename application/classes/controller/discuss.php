@@ -68,6 +68,8 @@ class Controller_Discuss extends Controller_My
 
     public function action_new()
     {
+        $this->need_login();
+
         $mt = new Model_Topic();
 
         $request = $this->request;
@@ -75,7 +77,6 @@ class Controller_Discuss extends Controller_My
         $mt = new Model_Topic();
 
         if ($request->method() == 'POST') {
-            $this->need_login();
             $data = array(
                 'title'   => $request->post('title'),
                 'content' => $request->post('content'),
