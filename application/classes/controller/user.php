@@ -87,8 +87,6 @@ class Controller_User extends Controller_My
 
     public function action_logout()
     {
-        $session = Session::instance();
-        $session->delete('loginok');
         Auth::instance()->logout();
 
         $this->request->redirect('/home');
