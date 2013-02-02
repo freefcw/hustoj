@@ -186,7 +186,7 @@ Route::set(
          'action'     => 'problem',
     )
 );
-Route::set('adminindex', 'admin')
+Route::set('adminindex', 'admin(/<action>)')
     ->defaults(
     array(
          'controller' => 'admin_index',
