@@ -172,7 +172,7 @@ class Model_Submission extends Model_Mongo
     public function rejudge_solution($id)
     {
         $condition = array('solution_id' => $id);
-        $changes = array('$set' => array('resutl' => 1));
+        $changes = array('$set' => array('result' => 1));
         $this->collection->update($condition, $changes);
     }
 
@@ -182,7 +182,7 @@ class Model_Submission extends Model_Mongo
     public function rejudge_problem($id)
     {
         $condition = array('problem_id' => $id);
-        $changes = array('$set' => array('resutl' => 1));
+        $changes = array('$set' => array('result' => 1));
         $this->collection->update($condition, $changes);
     }
 }
