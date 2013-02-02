@@ -10,7 +10,9 @@ class Controller_Admin_Index extends Controller_Admin_My{
 
     public function action_index()
     {
+        $body = View::factory('admin/index/dashboard');
+
         $this->view->title = 'Admin Control Panel';
-        $this->view->body = 'hi, admin';
+        $this->view->body = $body;
     }
 }
