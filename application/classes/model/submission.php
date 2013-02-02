@@ -6,17 +6,35 @@
  */
 class Model_Submission extends Model_Mongo
 {
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
         $this->collection = $this->db->selectCollection('solution');
     }
 
+    /**
+     * @param $var
+     *
+     * @return bool
+     */
     private function is_search($var)
     {
         return ($var != -1 AND $var !== null AND $var !== '');
     }
-    public function get_status($page_id = 1, $problem_id = -1, $user_id = '', $cid = null, $language = -1, $result = -1)
+
+    /**
+     * @param int    $page_id
+     * @param        $problem_id
+     * @param string $user_id
+     * @param null   $cid
+     * @param        $language
+     * @param        $result
+     *
+     * @return array
+     */public function get_status($page_id = 1, $problem_id = -1, $user_id = '', $cid = null, $language = -1, $result = -1)
     {
         //TODO: move to solutions
         $condition = array();
@@ -42,6 +60,11 @@ class Model_Submission extends Model_Mongo
         return iterator_to_array($ret);
     }
 
+    /**
+     * @param $pid
+     *
+     * @return array
+     */
     public function get_summary($pid)
     {
         # TODO: add content
@@ -73,6 +96,13 @@ class Model_Submission extends Model_Mongo
         return $data;
     }
 
+    /**
+     * @param     $pid
+     * @param int $start
+     * @param int $limit
+     *
+     * @return array
+     */
     public function get_best_solution($pid, $start = 0, $limit = 20)
     {
         # TODO: add content
@@ -94,7 +124,14 @@ class Model_Submission extends Model_Mongo
         return iterator_to_array($ret);
     }
 
-	public function get_status_count($problem_id = '', $user_id = '', $language = -1, $result = -1)
+    /**
+     * @param string $problem_id
+     * @param string $user_id
+     * @param        $language
+     * @param        $result
+     *
+     * @return int
+     */public function get_status_count($problem_id = '', $user_id = '', $language = -1, $result = -1)
 	{
         //TODO: move to solutions
         $condition = array();
@@ -108,6 +145,9 @@ class Model_Submission extends Model_Mongo
         return $ret;
 	}
 
+    /**
+     * @param $post
+     */
     public function new_solution($post)
     {
         // contest solution or normal solution
@@ -124,5 +164,25 @@ class Model_Submission extends Model_Mongo
         );
 
         //$collection->save($new_doc);
+    }
+
+    /**
+     * @param $id
+     */
+    public function rejudge_solution($id)
+    {
+        $condition = array('solution_id' => $id);
+        $changes = array('$set' => array('resutl' => 1));
+        $this->collection->update($condition, $changes);
+    }
+
+    /**
+     * @param $id
+     */
+    public function rejudge_problem($id)
+    {
+        $condition = array('problem_id' => $id);
+        $changes = array('$set' => array('resutl' => 1));
+        $this->collection->update($condition, $changes);
     }
 }
