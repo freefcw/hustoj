@@ -183,6 +183,7 @@ class Model_Submission extends Model_Mongo
     {
         $condition = array('problem_id' => $id);
         $changes = array('$set' => array('result' => 1));
-        $this->collection->update($condition, $changes);
+        $options = array('multiple' => true);
+        $this->collection->update($condition, $changes, $options);
     }
 }
