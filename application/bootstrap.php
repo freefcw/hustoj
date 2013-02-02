@@ -186,13 +186,6 @@ Route::set(
          'action'     => 'problem',
     )
 );
-Route::set('adminindex', 'admin(/<action>)')
-    ->defaults(
-    array(
-         'controller' => 'admin_index',
-         'action'     => 'index'
-    )
-);
 Route::set('adminuser', 'admin/user(/<action>(/<id>))')
     ->defaults(
     array(
@@ -219,6 +212,13 @@ Route::set('adminsetting', 'admin/setting(/<action>(/<id>))')
     ->defaults(
     array(
          'controller' => 'admin_setting',
+         'action'     => 'index'
+    )
+);
+Route::set('adminindex', 'admin(/<action>)')
+    ->defaults(
+    array(
+         'controller' => 'admin_index',
          'action'     => 'index'
     )
 );
