@@ -15,4 +15,21 @@ class Controller_Admin_Index extends Controller_Admin_My{
         $this->view->title = 'Admin Control Panel';
         $this->view->body = $body;
     }
+
+    public function action_rejudge()
+    {
+        if ($this->request->method() == 'POST') {
+            $type = $this->request->post('type');
+            $id = intval($this->request->post('typeid'));
+
+            $m = new Model_Submission();
+            if ($type == 'pid') {
+                $m->rejudge_problem($id);
+            } else if ($type == 'rid') {
+                $m->rejudge_solution($id);
+            }
+        }
+        $this->request->redirect('/admin/');
+    }
+
 }
