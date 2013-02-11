@@ -24,7 +24,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </a>
-                <a class="brand" href="/">HUSTACM</a>
+                <a class="brand" href="/">ADMIN</a>
 
                 <div class="nav-collapse">
                     <ul class="nav">
