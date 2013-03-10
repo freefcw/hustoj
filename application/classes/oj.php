@@ -182,4 +182,44 @@ class OJ
         }
         return '';
     }
+
+    /**
+     * @static
+     *
+     * @param $timestamp mongdb datetime
+     * @param int $granularity
+     *
+     * @return string
+     *
+     * from http://stackoverflow.com/questions/2952361/date-time-convert-to-time-since-php* from http://stackoverflow.com/questions/2952361/date-time-convert-to-time-since-php
+     *
+     * make timestamp to timesince
+     *
+     */
+    public static function timesince($timestamp, $granularity = 2) {
+        $timestamp = time() - $timestamp->sec;
+        $units = array('1 year|%d years' => 31536000,
+            '1 week|%d weeks' => 604800,
+            '1 day|%d days' => 86400,
+            '1 hour|%d hours' => 3600,
+            '1 min|%d mins' => 60,
+            '1 sec|%d secs' => 1
+        );
+        $output = '';
+        foreach ($units as $key => $value) {
+            $key = explode('|', $key);
+            if ($timestamp >= $value) {
+                $pluralized = floor($timestamp / $value) > 1 ?
+                    sprintf($key[1], floor($timestamp / $value)) :
+                    $key[0];
+                $output .= ($output ? ' ' : '') . $pluralized;
+                $timestamp %= $value;
+                $granularity--;
+            }
+            if ($granularity == 0) {
+                break;
+            }
+        }
+        return $output ? $output : "Just now";
+    }
 }
