@@ -19,7 +19,7 @@
    - [Routing](routing)
    - [Error Handling](errors)
    - [Tips & Common Mistakes](tips)
-   - [Upgrading from v3.0](upgrading)
+   - [Upgrading from v3.2](upgrading)
 - Basic Usage
    - [Debugging](debugging)
    - [Loading Classes](autoloading)
@@ -37,12 +37,11 @@
    - [Database](security/database)
    - [Encryption](security/encryption)
    - [Deploying](security/deploying)
-- [Tutorials](tutorials)
+- Tutorials
    - [Hello World](tutorials/hello-world)
    - [Simple MVC](tutorials/simple-mvc)
    - [Custom Error Pages](tutorials/error-pages)
-   - [Content Translation](tutorials/translation)
    - [Clean URLs](tutorials/clean-urls)
    - [Sharing Kohana](tutorials/sharing-kohana)
-   - [Template Driven Site](tutorials/templates)
+   - [Kohana as a Library](tutorials/library-kohana)
    - [Working with Git](tutorials/git)

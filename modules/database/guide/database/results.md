@@ -2,7 +2,7 @@
 
 ## Execute
 
-Once you have a query object built, either through a prepared statement or through the builder, you must then `execute()` the query and retrieve the results. Depending on the query type used, the results returned will vary. 
+Once you have a query object built, either through a parameterized statement or through the builder, you must then `execute()` the query and retrieve the results. Depending on the query type used, the results returned will vary. 
 
 ## Select
 
@@ -70,7 +70,7 @@ To return a non-associative array, leave `$key` as NULL and just pass a `$value`
 
 Sometime you only want a single value from a query. The `get()` method returns the value of the named column from the current row. The second parameter, `$default`, is used to supply a default value when the result is NULL.
 
-	$total_users = DB::select(array('COUNT("username")', 'total_users'))->from('users')->execute()->get('total_users', 0);
+	$total_users = DB::select(array(DB::expr('COUNT(`username`)'), 'total_users'))->from('users')->execute()->get('total_users', 0);
 
 ### Select - `cached()`
 

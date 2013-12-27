@@ -245,7 +245,7 @@
 			<?php echo Text::auto_p(Text::auto_link($codebench['description']), FALSE) ?>
 		<?php } ?>
 
-		<?php // echo '<h2>Raw output:</h2>', Kohana::debug($codebench) ?>
+		<?php // echo '<h2>Raw output:</h2>', Debug::vars($codebench) ?>
 
 	<?php } ?>
 

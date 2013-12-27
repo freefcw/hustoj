@@ -1,11 +1,11 @@
-<?php defined('SYSPATH') or die('No direct access allowed.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * File Auth driver.
  * [!!] this Auth driver does not support roles nor autologin.
  *
  * @package    Kohana/Auth
  * @author     Kohana Team
- * @copyright  (c) 2007-2010 Kohana Team
+ * @copyright  (c) 2007-2012 Kohana Team
  * @license    http://kohanaframework.org/license
  */
 class Kohana_Auth_File extends Auth {
@@ -27,9 +27,9 @@ class Kohana_Auth_File extends Auth {
 	/**
 	 * Logs a user in.
 	 *
-	 * @param   string   username
-	 * @param   string   password
-	 * @param   boolean  enable autologin (not supported)
+	 * @param   string   $username  Username
+	 * @param   string   $password  Password
+	 * @param   boolean  $remember  Enable autologin (not supported)
 	 * @return  boolean
 	 */
 	protected function _login($username, $password, $remember)
@@ -53,7 +53,7 @@ class Kohana_Auth_File extends Auth {
 	/**
 	 * Forces a user to be logged in, without specifying a password.
 	 *
-	 * @param   mixed    username
+	 * @param   mixed    $username  Username
 	 * @return  boolean
 	 */
 	public function force_login($username)
@@ -65,7 +65,7 @@ class Kohana_Auth_File extends Auth {
 	/**
 	 * Get the stored password for a username.
 	 *
-	 * @param   mixed   username
+	 * @param   mixed   $username  Username
 	 * @return  string
 	 */
 	public function password($username)
@@ -76,7 +76,7 @@ class Kohana_Auth_File extends Auth {
 	/**
 	 * Compare password with original (plain text). Works for current (logged in) user
 	 *
-	 * @param   string  $password
+	 * @param   string   $password  Password
 	 * @return  boolean
 	 */
 	public function check_password($password)

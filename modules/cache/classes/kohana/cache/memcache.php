@@ -1,16 +1,16 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
  * [Kohana Cache](api/Kohana_Cache) Memcache driver,
- * 
+ *
  * ### Supported cache engines
- * 
+ *
  * *  [Memcache](http://www.php.net/manual/en/book.memcache.php)
  * *  [Memcached-tags](http://code.google.com/p/memcached-tags/)
- * 
+ *
  * ### Configuration example
- * 
+ *
  * Below is an example of a _memcache_ server configuration.
- * 
+ *
  *     return array(
  *          'default'   => array(                          // Default group
  *                  'driver'         => 'memcache',        // using Memcache driver
@@ -37,24 +37,24 @@
  *                  'compression'    => FALSE,             // Use compression?
  *           ),
  *     )
- * 
+ *
  * In cases where only one cache group is required, if the group is named `default` there is
  * no need to pass the group name when instantiating a cache instance.
- * 
+ *
  * #### General cache group configuration settings
- * 
+ *
  * Below are the settings available to all types of cache driver.
- * 
+ *
  * Name           | Required | Description
  * -------------- | -------- | ---------------------------------------------------------------
  * driver         | __YES__  | (_string_) The driver type to use
  * servers        | __YES__  | (_array_) Associative array of server details, must include a __host__ key. (see _Memcache server configuration_ below)
  * compression    | __NO__   | (_boolean_) Use data compression when caching
- * 
+ *
  * #### Memcache server configuration
- * 
+ *
  * The following settings should be used when defining each memcache server
- * 
+ *
  * Name             | Required | Description
  * ---------------- | -------- | ---------------------------------------------------------------
  * host             | __YES__  | (_string_) The host of the memcache server, i.e. __localhost__; or __127.0.0.1__; or __memcache.domain.tld__
@@ -65,19 +65,19 @@
  * retry_interval   | __NO__   | (_integer_) Controls how often a failed server will be retried, the default value is 15 seconds. Setting this parameter to -1 disables automatic retry. Default __15__
  * status           | __NO__   | (_boolean_) Controls if the server should be flagged as online. Default __TRUE__
  * failure_callback | __NO__   | (_[callback](http://www.php.net/manual/en/language.pseudo-types.php#language.types.callback)_) Allows the user to specify a callback function to run upon encountering an error. The callback is run before failover is attempted. The function takes two parameters, the hostname and port of the failed server. Default __NULL__
- * 
+ *
  * ### System requirements
- * 
+ *
  * *  Kohana 3.0.x
  * *  PHP 5.2.4 or greater
  * *  Memcache (plus Memcached-tags for native tagging support)
  * *  Zlib
- * 
+ *
  * @package    Kohana/Cache
  * @category   Base
  * @version    2.0
  * @author     Kohana Team
- * @copyright  (c) 2009-2010 Kohana Team
+ * @copyright  (c) 2009-2012 Kohana Team
  * @license    http://kohanaphp.com/license
  */
 class Kohana_Cache_Memcache extends Cache implements Cache_Arithmetic {
@@ -109,7 +109,7 @@ class Kohana_Cache_Memcache extends Cache implements Cache_Arithmetic {
 	/**
 	 * Constructs the memcache Kohana_Cache object
 	 *
-	 * @param   array     configuration
+	 * @param   array  $config  configuration
 	 * @throws  Cache_Exception
 	 */
 	protected function __construct(array $config)
@@ -165,15 +165,15 @@ class Kohana_Cache_Memcache extends Cache implements Cache_Arithmetic {
 
 	/**
 	 * Retrieve a cached value entry by id.
-	 * 
+	 *
 	 *     // Retrieve cache entry from memcache group
 	 *     $data = Cache::instance('memcache')->get('foo');
-	 * 
+	 *
 	 *     // Retrieve cache entry from memcache group and return 'bar' if miss
 	 *     $data = Cache::instance('memcache')->get('foo', 'bar');
 	 *
-	 * @param   string   id of cache to entry
-	 * @param   string   default value to return if cache miss
+	 * @param   string  $id       id of cache to entry
+	 * @param   string  $default  default value to return if cache miss
 	 * @return  mixed
 	 * @throws  Cache_Exception
 	 */
@@ -194,9 +194,9 @@ class Kohana_Cache_Memcache extends Cache implements Cache_Arithmetic {
 
 	/**
 	 * Set a value to cache with id and lifetime
-	 * 
+	 *
 	 *     $data = 'bar';
-	 * 
+	 *
 	 *     // Set 'bar' to 'foo' in memcache group for 10 minutes
 	 *     if (Cache::instance('memcache')->set('foo', $data, 600))
 	 *     {
@@ -204,9 +204,9 @@ class Kohana_Cache_Memcache extends Cache implements Cache_Arithmetic {
 	 *          return
 	 *     }
 	 *
-	 * @param   string   id of cache entry
-	 * @param   mixed    data to set to cache
-	 * @param   integer  lifetime in seconds, maximum value 2592000
+	 * @param   string   $id        id of cache entry
+	 * @param   mixed    $data      data to set to cache
+	 * @param   integer  $lifetime  lifetime in seconds, maximum value 2592000
 	 * @return  boolean
 	 */
 	public function set($id, $data, $lifetime = 3600)
@@ -235,15 +235,15 @@ class Kohana_Cache_Memcache extends Cache implements Cache_Arithmetic {
 
 	/**
 	 * Delete a cache entry based on id
-	 * 
+	 *
 	 *     // Delete the 'foo' cache entry immediately
 	 *     Cache::instance('memcache')->delete('foo');
-	 * 
+	 *
 	 *     // Delete the 'bar' cache entry after 30 seconds
 	 *     Cache::instance('memcache')->delete('bar', 30);
 	 *
-	 * @param   string   id of entry to delete
-	 * @param   integer  timeout of entry, if zero item is deleted immediately, otherwise the item will delete after the specified value in seconds
+	 * @param   string   $id       id of entry to delete
+	 * @param   integer  $timeout  timeout of entry, if zero item is deleted immediately, otherwise the item will delete after the specified value in seconds
 	 * @return  boolean
 	 */
 	public function delete($id, $timeout = 0)
@@ -254,11 +254,11 @@ class Kohana_Cache_Memcache extends Cache implements Cache_Arithmetic {
 
 	/**
 	 * Delete all cache entries.
-	 * 
+	 *
 	 * Beware of using this method when
 	 * using shared memory cache systems, as it will wipe every
 	 * entry within the system for all clients.
-	 * 
+	 *
 	 *     // Delete all cache entries in the default group
 	 *     Cache::instance('memcache')->delete_all();
 	 *
@@ -280,15 +280,15 @@ class Kohana_Cache_Memcache extends Cache implements Cache_Arithmetic {
 	 * on a particular server fails. This method switches off that instance of the
 	 * server if the configuration setting `instant_death` is set to `TRUE`.
 	 *
-	 * @param   string   hostname 
-	 * @param   integer  port 
+	 * @param   string   $hostname
+	 * @param   integer  $port
 	 * @return  void|boolean
 	 * @since   3.0.8
 	 */
 	public function _failed_request($hostname, $port)
 	{
 		if ( ! $this->_config['instant_death'])
-			return; 
+			return;
 
 		// Setup non-existent host
 		$host = FALSE;

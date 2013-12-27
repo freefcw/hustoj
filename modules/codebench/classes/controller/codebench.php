@@ -20,7 +20,7 @@ class Controller_Codebench extends Kohana_Controller_Template {
 		// Convert submitted class name to URI segment
 		if (isset($_POST['class']))
 		{
-			$this->request->redirect('codebench/'.trim($_POST['class']));
+			throw HTTP_Exception::factory(302)->location('codebench/'.trim($_POST['class']));
 		}
 
 		// Pass the class name on to the view

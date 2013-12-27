@@ -14,13 +14,6 @@ class Kohana_Unittest_Tests {
 	static protected $cache = array();
 
 	/**
-	 * Flag to identify whether the installed version of phpunit
-	 * is greater than or equal to 3.5
-	 * @var boolean
-	 */
-	static protected $phpunit_v35 = FALSE;
-
-	/**
 	 * Loads test files if they cannot be found by kohana
 	 * @param <type> $class
 	 */
@@ -50,28 +43,14 @@ class Kohana_Unittest_Tests {
 
 		spl_autoload_register(array('Unittest_tests', 'autoload'));
 
-		// As of PHPUnit v3.5 there are slight differences in the way files are black|whitelisted
-		self::$phpunit_v35 = function_exists('phpunit_autoload');
-
 		Unittest_tests::$cache = (($cache = Kohana::cache('unittest_whitelist_cache')) === NULL) ? array() : $cache;
 
-		$config = Kohana::$config->load('unittest');
-
-		if ($do_whitelist AND $config->use_whitelist)
-		{
-			self::whitelist();
-		}
-
-		if ($do_blacklist AND count($config['blacklist']))
-		{
-			Unittest_tests::blacklist($config->blacklist);
-		}
 	}
 
 	/**
 	 * Creates the test suite for kohana
 	 *
-	 * @return PHPUnit_Framework_TestSuite
+	 * @return Unittest_TestSuite
 	 */
 	static function suite()
 	{
@@ -81,13 +60,26 @@ class Kohana_Unittest_Tests {
 		{
 			return $suite;
 		}
-		
+
 		Unittest_Tests::configure_environment();
 
+		$suite = new Unittest_TestSuite;
+		
+		// Load the whitelist and blacklist for code coverage		
+		$config = Kohana::$config->load('unittest');
+		
+		if ($config->use_whitelist)
+		{
+			Unittest_Tests::whitelist(NULL, $suite);
+		}
+		
+		if (count($config['blacklist']))
+		{
+			Unittest_Tests::blacklist($config->blacklist, $suite);
+		}
+
+		// Add tests
 		$files = Kohana::list_files('tests');
-
-		$suite = new PHPUnit_Framework_TestSuite;
-
 		self::addTests($suite, $files);
 
 		return $suite;
@@ -98,21 +90,20 @@ class Kohana_Unittest_Tests {
 	 *
 	 * Uses recursion to scan subdirectories
 	 *
-	 * @param PHPUnit_Framework_TestSuite  $suite   The test suite to add to
+	 * @param Unittest_TestSuite  $suite   The test suite to add to
 	 * @param array                        $files   Array of files to test
 	 */
-	static function addTests(PHPUnit_Framework_TestSuite $suite, array $files)
+	static function addTests(Unittest_TestSuite $suite, array $files)
 	{
-		if (self::$phpunit_v35)
-		{
-			$filter = PHP_CodeCoverage_Filter::getInstance();
-		}
 
-		foreach ($files as $file)
+		foreach ($files as $path => $file)
 		{
 			if (is_array($file))
 			{
-				self::addTests($suite, $file);
+				if ($path != 'tests'.DIRECTORY_SEPARATOR.'test_data')
+				{					
+					self::addTests($suite, $file);
+				}
 			}
 			else
 			{
@@ -129,14 +120,7 @@ class Kohana_Unittest_Tests {
 						require_once($file);
 					}
 
-					if (isset($filter))
-					{
-						$filter->addFileToBlacklist($file);
-					}
-					else
-					{
-						PHPUnit_Util_Filter::addFileToFilter($file);
-					}
+					$suite->addFileToBlacklist($file);
 				}
 			}
 		}
@@ -145,38 +129,20 @@ class Kohana_Unittest_Tests {
 	/**
 	 * Blacklist a set of files in PHPUnit code coverage
 	 *
-	 * @param array A set of files to blacklist
+	 * @param array $blacklist_items A set of files to blacklist
+	 * @param Unittest_TestSuite $suite The test suite
 	 */
-	static public function blacklist(array $blacklist_items)
+	static public function blacklist(array $blacklist_items, Unittest_TestSuite $suite = NULL)
 	{
-		if (self::$phpunit_v35)
+		foreach ($blacklist_items as $item)
 		{
-			$filter = PHP_CodeCoverage_Filter::getInstance();
-
-			foreach ($blacklist_items as $item)
+			if (is_dir($item))
 			{
-				if (is_dir($item))
-				{
-					$filter->addDirectoryToBlacklist($item);
-				}
-				else
-				{
-					$filter->addFileToBlacklist($item);
-				}
+				$suite->addDirectoryToBlacklist($item);
 			}
-		}
-		else
-		{
-			foreach ($blacklist_items as $item)
+			else
 			{
-				if (is_dir($item))
-				{
-					PHPUnit_Util_Filter::addDirectoryToFilter($item);
-				}
-				else
-				{
-					PHPUnit_Util_Filter::addFileToFilter($item);
-				}
+				$suite->addFileToBlacklist($item);
 			}
 		}
 	}
@@ -188,8 +154,9 @@ class Kohana_Unittest_Tests {
 	 * set in the config file
 	 *
 	 * @param array $directories Optional directories to whitelist
+	 * @param Unittest_Testsuite $suite Suite to load the whitelist into
 	 */
-	static public function whitelist(array $directories = NULL)
+	static public function whitelist(array $directories = NULL, Unittest_TestSuite $suite = NULL)
 	{
 		if (empty($directories))
 		{
@@ -204,7 +171,7 @@ class Kohana_Unittest_Tests {
 			}
 
 			// Only whitelist the "top" files in the cascading filesystem
-			self::set_whitelist(Kohana::list_files('classes', $directories));
+			self::set_whitelist(Kohana::list_files('classes', $directories), $suite);
 		}
 	}
 
@@ -260,19 +227,16 @@ class Kohana_Unittest_Tests {
 	 * Recursively whitelists an array of files
 	 *
 	 * @param array $files Array of files to whitelist
+	 * @param Unittest_TestSuite $suite Suite to load the whitelist into
 	 */
-	static protected function set_whitelist($files)
+	static protected function set_whitelist($files, Unittest_TestSuite $suite = NULL)
 	{
-		if (self::$phpunit_v35)
-		{
-			$filter = PHP_CodeCoverage_Filter::getInstance();
-		}
 
 		foreach ($files as $file)
 		{
 			if (is_array($file))
 			{
-				self::set_whitelist($file);
+				self::set_whitelist($file, $suite);
 			}
 			else
 			{
@@ -288,9 +252,9 @@ class Kohana_Unittest_Tests {
 
 				if (Unittest_tests::$cache[$file])
 				{
-					if (isset($filter))
+					if (isset($suite))
 					{
-						$filter->addFileToWhitelist($file);
+						$suite->addFileToWhitelist($file);
 					}
 					else
 					{

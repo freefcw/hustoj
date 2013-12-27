@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Provides a shortcut to get Database related objects for [making queries](../database/query).
  *
@@ -35,8 +35,8 @@ class Kohana_DB {
 	 * `Database::INSERT` queries will return the insert id and number of rows.
 	 * For all other queries, the number of affected rows is returned.
 	 *
-	 * @param   integer  type: Database::SELECT, Database::UPDATE, etc
-	 * @param   string   SQL statement
+	 * @param   integer  $type  type: Database::SELECT, Database::UPDATE, etc
+	 * @param   string   $sql   SQL statement
 	 * @return  Database_Query
 	 */
 	public static function query($type, $sql)
@@ -54,8 +54,7 @@ class Kohana_DB {
 	 *     // SELECT id AS user_id
 	 *     $query = DB::select(array('id', 'user_id'));
 	 *
-	 * @param   mixed   column name or array($column, $alias) or object
-	 * @param   ...
+	 * @param   mixed   $columns  column name or array($column, $alias) or object
 	 * @return  Database_Query_Builder_Select
 	 */
 	public static function select($columns = NULL)
@@ -69,7 +68,7 @@ class Kohana_DB {
 	 *     // SELECT id, username
 	 *     $query = DB::select_array(array('id', 'username'));
 	 *
-	 * @param   array   columns to select
+	 * @param   array   $columns  columns to select
 	 * @return  Database_Query_Builder_Select
 	 */
 	public static function select_array(array $columns = NULL)
@@ -83,8 +82,8 @@ class Kohana_DB {
 	 *     // INSERT INTO users (id, username)
 	 *     $query = DB::insert('users', array('id', 'username'));
 	 *
-	 * @param   string  table to insert into
-	 * @param   array   list of column names or array($column, $alias) or object
+	 * @param   string  $table    table to insert into
+	 * @param   array   $columns  list of column names or array($column, $alias) or object
 	 * @return  Database_Query_Builder_Insert
 	 */
 	public static function insert($table = NULL, array $columns = NULL)
@@ -98,7 +97,7 @@ class Kohana_DB {
 	 *     // UPDATE users
 	 *     $query = DB::update('users');
 	 *
-	 * @param   string  table to update
+	 * @param   string  $table  table to update
 	 * @return  Database_Query_Builder_Update
 	 */
 	public static function update($table = NULL)
@@ -112,7 +111,7 @@ class Kohana_DB {
 	 *     // DELETE FROM users
 	 *     $query = DB::delete('users');
 	 *
-	 * @param   string  table to delete from
+	 * @param   string  $table  table to delete from
 	 * @return  Database_Query_Builder_Delete
 	 */
 	public static function delete($table = NULL)
@@ -128,7 +127,7 @@ class Kohana_DB {
 	 *     $query = DB::update('users')->set(array('login_count' => DB::expr('login_count + 1')))->where('id', '=', $id);
 	 *     $users = ORM::factory('user')->where(DB::expr("BINARY `hash`"), '=', $hash)->find();
 	 *
-	 * @param   string  expression
+	 * @param   string  $string  expression
 	 * @param   array   parameters
 	 * @return  Database_Expression
 	 */

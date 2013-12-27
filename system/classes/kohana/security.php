@@ -1,11 +1,11 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Security helper class.
  *
  * @package    Kohana
  * @category   Security
  * @author     Kohana Team
- * @copyright  (c) 2007-2011 Kohana Team
+ * @copyright  (c) 2007-2012 Kohana Team
  * @license    http://kohanaframework.org/license
  */
 class Kohana_Security {
@@ -34,7 +34,7 @@ class Kohana_Security {
 	 *
 	 * This provides a basic, but effective, method of preventing CSRF attacks.
 	 *
-	 * @param   boolean  force a new token to be generated?
+	 * @param   boolean $new    force a new token to be generated?
 	 * @return  string
 	 * @uses    Session::instance
 	 */
@@ -48,7 +48,17 @@ class Kohana_Security {
 		if ($new === TRUE OR ! $token)
 		{
 			// Generate a new unique token
-			$token = sha1(uniqid(NULL, TRUE));
+			if (function_exists('openssl_random_pseudo_bytes'))
+			{
+				// Generate a random pseudo bytes token if openssl_random_pseudo_bytes is available
+				// This is more secure than uniqid, because uniqid relies on microtime, which is predictable
+				$token = base64_encode(openssl_random_pseudo_bytes(32));
+			}
+			else
+			{
+				// Otherwise, fall back to a hashed uniqid
+				$token = sha1(uniqid(NULL, TRUE));
+			}
 
 			// Store the new token
 			$session->set(Security::$token_name, $token);
@@ -65,7 +75,7 @@ class Kohana_Security {
 	 *         // Pass
 	 *     }
 	 *
-	 * @param   string   token to check
+	 * @param   string  $token  token to check
 	 * @return  boolean
 	 * @uses    Security::token
 	 */
@@ -79,7 +89,7 @@ class Kohana_Security {
 	 *
 	 *     $str = Security::strip_image_tags($str);
 	 *
-	 * @param   string  string to sanitize
+	 * @param   string  $str    string to sanitize
 	 * @return  string
 	 */
 	public static function strip_image_tags($str)
@@ -92,7 +102,7 @@ class Kohana_Security {
 	 *
 	 *     $str = Security::encode_php_tags($str);
 	 *
-	 * @param   string  string to sanitize
+	 * @param   string  $str    string to sanitize
 	 * @return  string
 	 */
 	public static function encode_php_tags($str)
@@ -100,4 +110,4 @@ class Kohana_Security {
 		return str_replace(array('<?', '?>'), array('&lt;?', '?&gt;'), $str);
 	}
 
-} // End security
+}

@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Image manipulation support. Allows images to be resized, cropped, etc.
  *
@@ -16,6 +16,7 @@ abstract class Kohana_Image {
 	const HEIGHT  = 0x03;
 	const AUTO    = 0x04;
 	const INVERSE = 0x05;
+	const PRECISE = 0x06;
 
 	// Flipping directions
 	const HORIZONTAL = 0x11;
@@ -34,8 +35,8 @@ abstract class Kohana_Image {
 	 *
 	 *     $image = Image::factory('upload/test.jpg');
 	 *
-	 * @param   string   image file path
-	 * @param   string   driver type: GD, ImageMagick, etc
+	 * @param   string   $file    image file path
+	 * @param   string   $driver  driver type: GD, ImageMagick, etc
 	 * @return  Image
 	 * @uses    Image::$default_driver
 	 */
@@ -82,7 +83,7 @@ abstract class Kohana_Image {
 	 * Loads information about the image. Will throw an exception if the image
 	 * does not exist or is not an image.
 	 *
-	 * @param   string   image file path
+	 * @param   string  $file  image file path
 	 * @return  void
 	 * @throws  Kohana_Exception
 	 */
@@ -167,9 +168,9 @@ abstract class Kohana_Image {
 	 *     // Resize to 200x500 pixels, ignoring aspect ratio
 	 *     $image->resize(200, 500, Image::NONE);
 	 *
-	 * @param   integer  new width
-	 * @param   integer  new height
-	 * @param   integer  master dimension
+	 * @param   integer  $width   new width
+	 * @param   integer  $height  new height
+	 * @param   integer  $master  master dimension
 	 * @return  $this
 	 * @uses    Image::_do_resize
 	 */
@@ -247,6 +248,19 @@ abstract class Kohana_Image {
 				// Recalculate the width based on the height proportions
 				$width = $this->width * $height / $this->height;
 			break;
+			case Image::PRECISE:
+				// Resize to precise size
+				$ratio = $this->width / $this->height;
+
+				if ($width / $height > $ratio)
+				{
+					$height = $this->height * $width / $this->width;
+				}
+				else
+				{
+					$width = $this->width * $height / $this->height;
+				}
+			break;
 		}
 
 		// Convert the width and height to integers, minimum value is 1px
@@ -268,10 +282,10 @@ abstract class Kohana_Image {
 	 *     // Crop the image to 200x200 pixels, from the center
 	 *     $image->crop(200, 200);
 	 *
-	 * @param   integer  new width
-	 * @param   integer  new height
-	 * @param   mixed    offset from the left
-	 * @param   mixed    offset from the top
+	 * @param   integer  $width     new width
+	 * @param   integer  $height    new height
+	 * @param   mixed    $offset_x  offset from the left
+	 * @param   mixed    $offset_y  offset from the top
 	 * @return  $this
 	 * @uses    Image::_do_crop
 	 */
@@ -351,7 +365,7 @@ abstract class Kohana_Image {
 	 *     // Rotate 90% counter-clockwise
 	 *     $image->rotate(-90);
 	 *
-	 * @param   integer   degrees to rotate: -360-360
+	 * @param   integer  $degrees  degrees to rotate: -360-360
 	 * @return  $this
 	 * @uses    Image::_do_rotate
 	 */
@@ -367,7 +381,7 @@ abstract class Kohana_Image {
 				// Keep subtracting full circles until the degrees have normalized
 				$degrees -= 360;
 			}
-			while($degrees > 180);
+			while ($degrees > 180);
 		}
 
 		if ($degrees < -180)
@@ -377,7 +391,7 @@ abstract class Kohana_Image {
 				// Keep adding full circles until the degrees have normalized
 				$degrees += 360;
 			}
-			while($degrees < -180);
+			while ($degrees < -180);
 		}
 
 		$this->_do_rotate($degrees);
@@ -394,7 +408,7 @@ abstract class Kohana_Image {
 	 *     // Flip the image from left to right
 	 *     $image->flip(Image::VERTICAL);
 	 *
-	 * @param   integer  direction: Image::HORIZONTAL, Image::VERTICAL
+	 * @param   integer  $direction  direction: Image::HORIZONTAL, Image::VERTICAL
 	 * @return  $this
 	 * @uses    Image::_do_flip
 	 */
@@ -417,7 +431,7 @@ abstract class Kohana_Image {
 	 *     // Sharpen the image by 20%
 	 *     $image->sharpen(20);
 	 *
-	 * @param   integer  amount to sharpen: 1-100
+	 * @param   integer  $amount  amount to sharpen: 1-100
 	 * @return  $this
 	 * @uses    Image::_do_sharpen
 	 */
@@ -448,9 +462,9 @@ abstract class Kohana_Image {
 	 * [!!] By default, the reflection will be go from transparent at the top
 	 * to opaque at the bottom.
 	 *
-	 * @param   integer   reflection height
-	 * @param   integer   reflection opacity: 0-100
-	 * @param   boolean   TRUE to fade in, FALSE to fade out
+	 * @param   integer   $height   reflection height
+	 * @param   integer   $opacity  reflection opacity: 0-100
+	 * @param   boolean   $fade_in  TRUE to fade in, FALSE to fade out
 	 * @return  $this
 	 * @uses    Image::_do_reflection
 	 */
@@ -481,10 +495,10 @@ abstract class Kohana_Image {
 	 *     $mark = Image::factory('upload/watermark.png');
 	 *     $image->watermark($mark, TRUE, TRUE);
 	 *
-	 * @param   object   watermark Image instance
-	 * @param   integer  offset from the left
-	 * @param   integer  offset from the top
-	 * @param   integer  opacity of watermark: 1-100
+	 * @param   Image    $watermark  watermark Image instance
+	 * @param   integer  $offset_x   offset from the left
+	 * @param   integer  $offset_y   offset from the top
+	 * @param   integer  $opacity    opacity of watermark: 1-100
 	 * @return  $this
 	 * @uses    Image::_do_watermark
 	 */
@@ -540,8 +554,8 @@ abstract class Kohana_Image {
 	 *     // Make the image background black with 50% opacity
 	 *     $image->background('#000', 50);
 	 *
-	 * @param   string   hexadecimal color value
-	 * @param   integer  background opacity: 0-100
+	 * @param   string   $color    hexadecimal color value
+	 * @param   integer  $opacity  background opacity: 0-100
 	 * @return  $this
 	 * @uses    Image::_do_background
 	 */
@@ -585,8 +599,8 @@ abstract class Kohana_Image {
 	 * [!!] If the file does not exist, and the directory is not writable, an
 	 * exception will be thrown.
 	 *
-	 * @param   string   new image path
-	 * @param   integer  quality of image: 1-100
+	 * @param   string   $file     new image path
+	 * @param   integer  $quality  quality of image: 1-100
 	 * @return  boolean
 	 * @uses    Image::_save
 	 * @throws  Kohana_Exception
@@ -634,8 +648,8 @@ abstract class Kohana_Image {
 	 *     // Render the image as a PNG
 	 *     $data = $image->render('png');
 	 *
-	 * @param   string   image type to return: png, jpg, gif, etc
-	 * @param   integer  quality of image: 1-100
+	 * @param   string   $type     image type to return: png, jpg, gif, etc
+	 * @param   integer  $quality  quality of image: 1-100
 	 * @return  string
 	 * @uses    Image::_do_render
 	 */
@@ -653,8 +667,8 @@ abstract class Kohana_Image {
 	/**
 	 * Execute a resize.
 	 *
-	 * @param   integer  new width
-	 * @param   integer  new height
+	 * @param   integer  $width   new width
+	 * @param   integer  $height  new height
 	 * @return  void
 	 */
 	abstract protected function _do_resize($width, $height);
@@ -662,10 +676,10 @@ abstract class Kohana_Image {
 	/**
 	 * Execute a crop.
 	 *
-	 * @param   integer  new width
-	 * @param   integer  new height
-	 * @param   integer  offset from the left
-	 * @param   integer  offset from the top
+	 * @param   integer  $width     new width
+	 * @param   integer  $height    new height
+	 * @param   integer  $offset_x  offset from the left
+	 * @param   integer  $offset_y  offset from the top
 	 * @return  void
 	 */
 	abstract protected function _do_crop($width, $height, $offset_x, $offset_y);
@@ -673,7 +687,7 @@ abstract class Kohana_Image {
 	/**
 	 * Execute a rotation.
 	 *
-	 * @param   integer  degrees to rotate
+	 * @param   integer  $degrees  degrees to rotate
 	 * @return  void
 	 */
 	abstract protected function _do_rotate($degrees);
@@ -681,7 +695,7 @@ abstract class Kohana_Image {
 	/**
 	 * Execute a flip.
 	 *
-	 * @param   integer  direction to flip
+	 * @param   integer  $direction  direction to flip
 	 * @return  void
 	 */
 	abstract protected function _do_flip($direction);
@@ -689,7 +703,7 @@ abstract class Kohana_Image {
 	/**
 	 * Execute a sharpen.
 	 *
-	 * @param   integer  amount to sharpen
+	 * @param   integer  $amount  amount to sharpen
 	 * @return  void
 	 */
 	abstract protected function _do_sharpen($amount);
@@ -697,9 +711,9 @@ abstract class Kohana_Image {
 	/**
 	 * Execute a reflection.
 	 *
-	 * @param   integer   reflection height
-	 * @param   integer   reflection opacity
-	 * @param   boolean   TRUE to fade out, FALSE to fade in
+	 * @param   integer   $height   reflection height
+	 * @param   integer   $opacity  reflection opacity
+	 * @param   boolean   $fade_in  TRUE to fade out, FALSE to fade in
 	 * @return  void
 	 */
 	abstract protected function _do_reflection($height, $opacity, $fade_in);
@@ -707,10 +721,10 @@ abstract class Kohana_Image {
 	/**
 	 * Execute a watermarking.
 	 *
-	 * @param   object   watermarking Image
-	 * @param   integer  offset from the left
-	 * @param   integer  offset from the top
-	 * @param   integer  opacity of watermark
+	 * @param   Image    $image     watermarking Image
+	 * @param   integer  $offset_x  offset from the left
+	 * @param   integer  $offset_y  offset from the top
+	 * @param   integer  $opacity   opacity of watermark
 	 * @return  void
 	 */
 	abstract protected function _do_watermark(Image $image, $offset_x, $offset_y, $opacity);
@@ -718,10 +732,10 @@ abstract class Kohana_Image {
 	/**
 	 * Execute a background.
 	 *
-	 * @param   integer  red
-	 * @param   integer  green
-	 * @param   integer  blue
-	 * @param   integer  opacity
+	 * @param   integer  $r        red
+	 * @param   integer  $g        green
+	 * @param   integer  $b        blue
+	 * @param   integer  $opacity  opacity
 	 * @return void
 	 */
 	abstract protected function _do_background($r, $g, $b, $opacity);
@@ -729,8 +743,8 @@ abstract class Kohana_Image {
 	/**
 	 * Execute a save.
 	 *
-	 * @param   string   new image filename
-	 * @param   integer  quality
+	 * @param   string   $file     new image filename
+	 * @param   integer  $quality  quality
 	 * @return  boolean
 	 */
 	abstract protected function _do_save($file, $quality);
@@ -738,8 +752,8 @@ abstract class Kohana_Image {
 	/**
 	 * Execute a render.
 	 *
-	 * @param   string    image type: png, jpg, gif, etc
-	 * @param   integer   quality
+	 * @param   string    $type     image type: png, jpg, gif, etc
+	 * @param   integer   $quality  quality
 	 * @return  string
 	 */
 	abstract protected function _do_render($type, $quality);

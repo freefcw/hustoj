@@ -1,20 +1,20 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
  * See [Kohana_Cache_Memcache]
- * 
+ *
 * @package    Kohana/Cache
 * @category   Base
 * @version    2.0
 * @author     Kohana Team
-* @copyright  (c) 2009-2010 Kohana Team
+* @copyright  (c) 2009-2012 Kohana Team
 * @license    http://kohanaphp.com/license
  */
 class Kohana_Cache_MemcacheTag extends Cache_Memcache implements Cache_Tagging {
 
-	/** 
+	/**
 	 * Constructs the memcache object
 	 *
-	 * @param  array     configuration
+	 * @param  array  $config  configuration
 	 * @throws  Cache_Exception
 	 */
 	protected function __construct(array $config)
@@ -29,11 +29,11 @@ class Kohana_Cache_MemcacheTag extends Cache_Memcache implements Cache_Tagging {
 
 	/**
 	 * Set a value based on an id with tags
-	 * 
-	 * @param   string   id 
-	 * @param   mixed    data 
-	 * @param   integer  lifetime [Optional]
-	 * @param   array    tags [Optional]
+	 *
+	 * @param   string   $id        id
+	 * @param   mixed    $data      data
+	 * @param   integer  $lifetime  lifetime [Optional]
+	 * @param   array    $tags      tags [Optional]
 	 * @return  boolean
 	 */
 	public function set_with_tags($id, $data, $lifetime = NULL, array $tags = NULL)
@@ -56,7 +56,7 @@ class Kohana_Cache_MemcacheTag extends Cache_Memcache implements Cache_Tagging {
 	/**
 	 * Delete cache entries based on a tag
 	 *
-	 * @param   string   tag 
+	 * @param   string  $tag  tag
 	 * @return  boolean
 	 */
 	public function delete_tag($tag)
@@ -67,12 +67,12 @@ class Kohana_Cache_MemcacheTag extends Cache_Memcache implements Cache_Tagging {
 	/**
 	 * Find cache entries based on a tag
 	 *
-	 * @param   string   tag 
+	 * @param   string  $tag  tag
 	 * @return  void
 	 * @throws  Cache_Exception
 	 */
 	public function find($tag)
 	{
 		throw new Cache_Exception('Memcached-tags does not support finding by tag');
-	}	
+	}
 }

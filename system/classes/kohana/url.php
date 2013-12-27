@@ -1,11 +1,11 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * URL helper class.
  *
  * @package    Kohana
  * @category   Helpers
  * @author     Kohana Team
- * @copyright  (c) 2007-2011 Kohana Team
+ * @copyright  (c) 2007-2012 Kohana Team
  * @license    http://kohanaframework.org/license
  */
 class Kohana_URL {
@@ -44,8 +44,15 @@ class Kohana_URL {
 
 		if ($protocol instanceof Request)
 		{
-			// Use the current protocol
-			list($protocol) = explode('/', strtolower($protocol->protocol()));
+			if ( ! $protocol->secure())
+			{
+				// Use the current protocol
+				list($protocol) = explode('/', strtolower($protocol->protocol()));
+			}
+			else
+			{
+				$protocol = 'https';
+			}
 		}
 
 		if ( ! $protocol)
@@ -105,11 +112,23 @@ class Kohana_URL {
 		if ( ! UTF8::is_ascii($path))
 		{
 			// Encode all non-ASCII characters, as per RFC 1738
-			$path = preg_replace('~([^/]+)~e', 'rawurlencode("$1")', $path);
+			$path = preg_replace_callback('~([^/]+)~', 'URL::_rawurlencode_callback', $path);
 		}
 
 		// Concat the URL
 		return URL::base($protocol, $index).$path;
+	}
+
+	/**
+	 * Callback used for encoding all non-ASCII characters, as per RFC 1738
+	 * Used by URL::site()
+	 *
+	 * @param  array $matches  Array of matches from preg_replace_callback()
+	 * @return string          Encoded string
+	 */
+	protected static function _rawurlencode_callback($matches)
+	{
+		return rawurlencode($matches[0]);
 	}
 
 	/**
@@ -140,7 +159,7 @@ class Kohana_URL {
 			else
 			{
 				// Merge the current and new parameters
-				$params = array_merge($_GET, $params);
+				$params = Arr::merge($_GET, $params);
 			}
 		}
 
@@ -191,4 +210,4 @@ class Kohana_URL {
 		return trim($title, $separator);
 	}
 
-} // End url
+}

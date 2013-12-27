@@ -1,11 +1,11 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Database Model base class.
  *
  * @package    Kohana/Database
  * @category   Models
  * @author     Kohana Team
- * @copyright  (c) 2008-2010 Kohana Team
+ * @copyright  (c) 2008-2012 Kohana Team
  * @license    http://kohanaframework.org/license
  */
 abstract class Kohana_Model_Database extends Model {
@@ -17,8 +17,8 @@ abstract class Kohana_Model_Database extends Model {
 	 *
 	 *     $model = Model::factory($name);
 	 *
-	 * @param   string   model name
-	 * @param   mixed    Database instance object or string
+	 * @param   string   $name  model name
+	 * @param   mixed    $db    Database instance object or string
 	 * @return  Model
 	 */
 	public static function factory($name, $db = NULL)
@@ -30,22 +30,27 @@ abstract class Kohana_Model_Database extends Model {
 	}
 
 	// Database instance
-	protected $_db = 'default';
+	protected $_db;
 
 	/**
 	 * Loads the database.
 	 *
 	 *     $model = new Foo_Model($db);
 	 *
-	 * @param   mixed  Database instance object or string
+	 * @param   mixed  $db  Database instance object or string
 	 * @return  void
 	 */
 	public function __construct($db = NULL)
 	{
-		if ($db !== NULL)
+		if ($db)
 		{
-			// Set the database instance name
+			// Set the instance or name
 			$this->_db = $db;
+		}
+		elseif ( ! $this->_db)
+		{
+			// Use the default name
+			$this->_db = Database::$default;
 		}
 
 		if (is_string($this->_db))

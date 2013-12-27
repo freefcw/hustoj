@@ -2,9 +2,9 @@
 
 Here are some "real world" examples of using the database library to construct your queries and use the results.
 
-## Examples of Prepared Statements
+## Examples of Parameterized Statements
 
-TODO: 4-6 examples of prepared statements of varying complexity, including a good bind() example.
+TODO: 4-6 examples of parameterized statements of varying complexity, including a good bind() example.
 
 ## Pagination and search/filter
 
@@ -25,7 +25,7 @@ In this example, we loop through an array of whitelisted input fields and for ea
 	
 	//copy the query & execute it
 	$pagination_query = clone $query;
-	$count = $pagination_query->select('COUNT("*") AS mycount')->execute()->get('mycount');
+	$count = $pagination_query->select(DB::expr('COUNT(*)) AS mycount')->execute()->get('mycount');
 	
 	//pass the total item count to Pagination
 	$config = Kohana::$config->load('pagination');

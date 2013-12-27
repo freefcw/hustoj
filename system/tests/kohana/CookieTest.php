@@ -4,13 +4,14 @@
  * Tests the cookie class
  *
  * @group kohana
- * @group kohana.cookie
+ * @group kohana.core
+ * @group kohana.core.cookie
  *
  * @package    Kohana
  * @category   Tests
  * @author     Kohana Team
  * @author     Jeremy Bush <contractfrombelow@gmail.com>
- * @copyright  (c) 2008-2011 Kohana Team
+ * @copyright  (c) 2008-2012 Kohana Team
  * @license    http://kohanaframework.org/license
  */
 class Kohana_CookieTest extends Unittest_TestCase
@@ -20,7 +21,9 @@ class Kohana_CookieTest extends Unittest_TestCase
 	/**
 	 * Sets up the environment
 	 */
+	// @codingStandardsIgnoreStart
 	public function setUp()
+	// @codingStandardsIgnoreEnd
 	{
 		parent::setUp();
 
@@ -30,7 +33,9 @@ class Kohana_CookieTest extends Unittest_TestCase
 	/**
 	 * Tears down the environment
 	 */
+	// @codingStandardsIgnoreStart
 	public function tearDown()
+	// @codingStandardsIgnoreEnd
 	{
 		parent::tearDown();
 
@@ -63,8 +68,9 @@ class Kohana_CookieTest extends Unittest_TestCase
 	 */
 	public function test_set($key, $value, $exp, $expected)
 	{
-		if (headers_sent())
+		if (headers_sent()) {
 			$this->markTestSkipped('Cannot test setting cookies as headers have already been sent');
+		}
 
 		$this->assertSame($expected, cookie::set($key, $value, $exp));
 	}
@@ -99,8 +105,9 @@ class Kohana_CookieTest extends Unittest_TestCase
 	 */
 	public function test_get($key, $value, $expected)
 	{
-		if (headers_sent())
+		if (headers_sent()) {
 			$this->markTestSkipped('Cannot test setting cookies as headers have already been sent');
+		}
 
 		// Force $_COOKIE
 		if ($key !== NULL)
@@ -134,8 +141,9 @@ class Kohana_CookieTest extends Unittest_TestCase
 	 */
 	public function test_delete($key, $expected)
 	{
-		if (headers_sent())
+		if (headers_sent()) {
 			$this->markTestSkipped('Cannot test setting cookies as headers have already been sent');
+		}
 
 		$this->assertSame($expected, cookie::delete($key));
 	}

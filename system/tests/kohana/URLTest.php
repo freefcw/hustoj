@@ -4,13 +4,14 @@
  * Tests URL
  *
  * @group kohana
- * @group kohana.url
+ * @group kohana.core
+ * @group kohana.core.url
  *
  * @package    Kohana
  * @category   Tests
  * @author     Kohana Team
  * @author     BRMatt <matthew@sigswitch.com>
- * @copyright  (c) 2008-2011 Kohana Team
+ * @copyright  (c) 2008-2012 Kohana Team
  * @license    http://kohanaframework.org/license
  */
 class Kohana_URLTest extends Unittest_TestCase
@@ -19,12 +20,14 @@ class Kohana_URLTest extends Unittest_TestCase
 	 * Default values for the environment, see setEnvironment
 	 * @var array
 	 */
+	// @codingStandardsIgnoreStart
 	protected $environmentDefault =	array(
 		'Kohana::$base_url'	=> '/kohana/',
 		'Kohana::$index_file'=> 'index.php',
 		'HTTP_HOST' => 'example.com',
 		'_GET'		=> array(),
 	);
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Provides test data for test_base()
@@ -247,6 +250,10 @@ class Kohana_URLTest extends Unittest_TestCase
 			array(array(), '?key=1', array('key' => TRUE)),
 			array(array('_GET' => array('sort' => 'down')), '?sort=down&key=1', array('key' => TRUE)),
 			array(array('_GET' => array('sort' => 'down')), '?sort=down&key=0', array('key' => FALSE)),
+
+			// @issue 4240
+			array(array('_GET' => array('foo' => array('a' => 100))), '?foo%5Ba%5D=100&foo%5Bb%5D=bar', array('foo' => array('b' => 'bar'))),
+			array(array('_GET' => array('a' => 'a')), '?a=b', array('a' => 'b')),
 		);
 	}
 

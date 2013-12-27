@@ -1,10 +1,10 @@
-<?php defined('SYSPATH') or die('No direct access allowed.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Default auth user
  *
  * @package    Kohana/Auth
  * @author     Kohana Team
- * @copyright  (c) 2007-2011 Kohana Team
+ * @copyright  (c) 2007-2012 Kohana Team
  * @license    http://kohanaframework.org/license
  */
 class Model_Auth_User extends ORM {
@@ -15,8 +15,8 @@ class Model_Auth_User extends ORM {
 	 * @var array Relationhips
 	 */
 	protected $_has_many = array(
-		'user_tokens' => array('model' => 'user_token'),
-		'roles'       => array('model' => 'role', 'through' => 'roles_users'),
+		'user_tokens' => array('model' => 'User_Token'),
+		'roles'       => array('model' => 'Role', 'through' => 'roles_users'),
 	);
 
 	/**
@@ -110,7 +110,7 @@ class Model_Auth_User extends ORM {
 			$field = $this->unique_key($value);
 		}
 
-		return (bool) DB::select(array('COUNT("*")', 'total_count'))
+		return (bool) DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
 			->from($this->_table_name)
 			->where($field, '=', $value)
 			->where($this->_primary_key, '!=', $this->pk())
@@ -147,7 +147,7 @@ class Model_Auth_User extends ORM {
 	 *
 	 * Example usage:
 	 * ~~~
-	 * $user = ORM::factory('user')->create_user($_POST, array(
+	 * $user = ORM::factory('User')->create_user($_POST, array(
 	 *	'username',
 	 *	'password',
 	 *	'email',
@@ -174,7 +174,7 @@ class Model_Auth_User extends ORM {
 	 *
 	 * Example usage:
 	 * ~~~
-	 * $user = ORM::factory('user')
+	 * $user = ORM::factory('User')
 	 *	->where('username', '=', 'kiall')
 	 *	->find()
 	 *	->update_user($_POST, array(

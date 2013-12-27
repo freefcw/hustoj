@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Database-based session class.
  *
@@ -47,7 +47,7 @@ class Kohana_Session_Database extends Session {
 		if ( ! isset($config['group']))
 		{
 			// Use the default group
-			$config['group'] = 'default';
+			$config['group'] = Database::$default;
 		}
 
 		// Load the database

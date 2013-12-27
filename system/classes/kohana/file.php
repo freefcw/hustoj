@@ -1,11 +1,11 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * File helper class.
  *
  * @package    Kohana
  * @category   Helpers
  * @author     Kohana Team
- * @copyright  (c) 2007-2011 Kohana Team
+ * @copyright  (c) 2007-2012 Kohana Team
  * @license    http://kohanaframework.org/license
  */
 class Kohana_File {
@@ -17,7 +17,7 @@ class Kohana_File {
 	 *
 	 *     $mime = File::mime($file);
 	 *
-	 * @param   string  file name or path
+	 * @param   string  $filename   file name or path
 	 * @return  string  mime type on success
 	 * @return  FALSE   on failure
 	 */
@@ -66,7 +66,7 @@ class Kohana_File {
 	 *
 	 *     $mime = File::mime_by_ext('png'); // "image/png"
 	 *
-	 * @param   string  extension: php, pdf, txt, etc
+	 * @param   string  $extension  php, pdf, txt, etc
 	 * @return  string  mime type on success
 	 * @return  FALSE   on failure
 	 */
@@ -148,10 +148,9 @@ class Kohana_File {
 	 *
 	 *     $count = File::split($file);
 	 *
-	 * @param   string   file to be split
-	 * @param   string   directory to output to, defaults to the same directory as the file
-	 * @param   integer  size, in MB, for each piece to be
-	 * @return  integer  The number of pieces that were created
+	 * @param   string  $filename   file to be split
+	 * @param   integer $piece_size size, in MB, for each piece to be
+	 * @return  integer The number of pieces that were created
 	 */
 	public static function split($filename, $piece_size = 10)
 	{
@@ -164,16 +163,16 @@ class Kohana_File {
 		// Write files in 8k blocks
 		$block_size = 1024 * 8;
 
-		// Total number of peices
-		$peices = 0;
+		// Total number of pieces
+		$pieces = 0;
 
 		while ( ! feof($file))
 		{
 			// Create another piece
-			$peices += 1;
+			$pieces += 1;
 
 			// Create a new file piece
-			$piece = str_pad($peices, 3, '0', STR_PAD_LEFT);
+			$piece = str_pad($pieces, 3, '0', STR_PAD_LEFT);
 			$piece = fopen($filename.'.'.$piece, 'wb+');
 
 			// Number of bytes read
@@ -196,7 +195,7 @@ class Kohana_File {
 		// Close the file
 		fclose($file);
 
-		return $peices;
+		return $pieces;
 	}
 
 	/**
@@ -204,9 +203,8 @@ class Kohana_File {
 	 *
 	 *     $count = File::join($file);
 	 *
-	 * @param   string   split filename, without .000 extension
-	 * @param   string   output filename, if different then an the filename
-	 * @return  integer  The number of pieces that were joined.
+	 * @param   string  $filename   split filename, without .000 extension
+	 * @return  integer The number of pieces that were joined.
 	 */
 	public static function join($filename)
 	{
@@ -216,7 +214,7 @@ class Kohana_File {
 		// Read files in 8k blocks
 		$block_size = 1024 * 8;
 
-		// Total number of peices
+		// Total number of pieces
 		$pieces = 0;
 
 		while (is_file($piece = $filename.'.'.str_pad($pieces + 1, 3, '0', STR_PAD_LEFT)))
@@ -233,11 +231,11 @@ class Kohana_File {
 				fwrite($file, fread($piece, $block_size));
 			}
 
-			// Close the peice
+			// Close the piece
 			fclose($piece);
 		}
 
 		return $pieces;
 	}
 
-} // End file
+}

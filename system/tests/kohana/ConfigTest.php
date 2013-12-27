@@ -4,14 +4,15 @@
  * Tests the Config lib that's shipped with kohana
  *
  * @group kohana
- * @group kohana.config
+ * @group kohana.core
+ * @group kohana.core.config
  *
  * @package    Kohana
  * @category   Tests
  * @author     Kohana Team
  * @author     Jeremy Bush <contractfrombelow@gmail.com>
  * @author     Matt Button <matthew@sigswitch.com>
- * @copyright  (c) 2008-2011 Kohana Team
+ * @copyright  (c) 2008-2012 Kohana Team
  * @license    http://kohanaframework.org/license
  */
 class Kohana_ConfigTest extends Unittest_TestCase
@@ -380,7 +381,7 @@ class Kohana_ConfigTest extends Unittest_TestCase
 		// Due to crazy limitations in phpunit's mocking engine we have to be fairly
 		// liberal here as to what order we receive the config items
 		// Good news is that order shouldn't matter *yay*
-		//
+		// 
 		// Now save your eyes and skip the next... 13 lines!
 		$key = $this->logicalOr('pie', 'kohana');
 		$val = $this->logicalOr('good', 'awesome');

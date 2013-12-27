@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Response wrapper. Created as the result of any [Request] execution
  * or utility method (i.e. Redirect). Implements standard HTTP
@@ -7,7 +7,7 @@
  * @package    Kohana
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2008-2011 Kohana Team
+ * @copyright  (c) 2008-2012 Kohana Team
  * @license    http://kohanaphp.com/license
  * @since      3.1.0
  */
@@ -270,18 +270,18 @@ class Kohana_Response implements HTTP_Response {
 
 	/**
 	 * Set and get cookies values for this response.
-	 * 
+	 *
 	 *     // Get the cookies set to the response
 	 *     $cookies = $response->cookie();
-	 *     
+	 *
 	 *     // Set a cookie to the response
 	 *     $response->cookie('session', array(
 	 *          'value' => $value,
 	 *          'expiration' => 12352234
 	 *     ));
 	 *
-	 * @param   mixed     cookie name, or array of cookie values
-	 * @param   string    value to set to cookie
+	 * @param   mixed   $key    cookie name, or array of cookie values
+	 * @param   string  $value  value to set to cookie
 	 * @return  string
 	 * @return  void
 	 * @return  [Response]
@@ -326,7 +326,7 @@ class Kohana_Response implements HTTP_Response {
 	/**
 	 * Deletes a cookie set to the response
 	 *
-	 * @param   string   name
+	 * @param   string  $name
 	 * @return  Response
 	 */
 	public function delete_cookie($name)
@@ -349,8 +349,8 @@ class Kohana_Response implements HTTP_Response {
 	/**
 	 * Sends the response status and all set headers.
 	 *
-	 * @param   boolean   replace existing headers
-	 * @param   callback  function to handle header output
+	 * @param   boolean     $replace    replace existing headers
+	 * @param   callback    $callback   function to handle header output
 	 * @return  mixed
 	 */
 	public function send_headers($replace = FALSE, $callback = NULL)
@@ -381,9 +381,9 @@ class Kohana_Response implements HTTP_Response {
 	 *
 	 * [!!] No further processing can be done after this method is called!
 	 *
-	 * @param   string   filename with path, or TRUE for the current response
-	 * @param   string   downloaded file name
-	 * @param   array    additional options
+	 * @param   string  $filename   filename with path, or TRUE for the current response
+	 * @param   string  $download   downloaded file name
+	 * @param   array   $options    additional options
 	 * @return  void
 	 * @throws  Kohana_Exception
 	 * @uses    File::mime_by_ext
@@ -445,8 +445,8 @@ class Kohana_Response implements HTTP_Response {
 
 			if ( ! isset($mime))
 			{
-				// Get the mime type
-				$mime = File::mime($filename);
+				// Get the mime type from the extension of the download file
+				$mime = File::mime_by_ext(pathinfo($download, PATHINFO_EXTENSION));
 			}
 
 			// Open the file for reading
@@ -596,7 +596,7 @@ class Kohana_Response implements HTTP_Response {
 		// If Kohana expose, set the user-agent
 		if (Kohana::$expose)
 		{
-			$this->headers('user-agent', 'Kohana Framework '.Kohana::VERSION.' ('.Kohana::CODENAME.')');
+			$this->headers('user-agent', Kohana::version());
 		}
 
 		// Prepare cookies
@@ -638,7 +638,7 @@ class Kohana_Response implements HTTP_Response {
 	 */
 	public function generate_etag()
 	{
-	    if ($this->_body === NULL)
+	    if ($this->_body === '')
 		{
 			throw new Request_Exception('No response yet associated with request - cannot auto generate resource ETag');
 		}
@@ -648,63 +648,10 @@ class Kohana_Response implements HTTP_Response {
 	}
 
 	/**
-	 * Check Cache
-	 * Checks the browser cache to see the response needs to be returned
-	 *
-	 * @param   string   $etag Resource ETag
-	 * @param   Request  $request The request to test against
-	 * @return  Response
-	 * @throws  Request_Exception
-	 */
-	public function check_cache($etag = NULL, Request $request = NULL)
-	{
-		if ( ! $etag)
-		{
-			$etag = $this->generate_etag();
-		}
-
-		if ( ! $request)
-			throw new Request_Exception('A Request object must be supplied with an etag for evaluation');
-
-		// Set the ETag header
-		$this->_header['etag'] = $etag;
-
-		// Add the Cache-Control header if it is not already set
-		// This allows etags to be used with max-age, etc
-		if ($this->_header->offsetExists('cache-control'))
-		{
-			if (is_array($this->_header['cache-control']))
-			{
-				$this->_header['cache-control'][] = new HTTP_Header_Value('must-revalidate');
-			}
-			else
-			{
-				$this->_header['cache-control'] = $this->_header['cache-control'].', must-revalidate';
-			}
-		}
-		else
-		{
-			$this->_header['cache-control'] = 'must-revalidate';
-		}
-
-		if ($request->headers('if-none-match') AND (string) $request->headers('if-none-match') === $etag)
-		{
-			// No need to send data again
-			$this->_status = 304;
-			$this->send_headers();
-
-			// Stop execution
-			exit;
-		}
-
-		return $this;
-	}
-
-	/**
 	 * Parse the byte ranges from the HTTP_RANGE header used for
 	 * resumable downloads.
 	 *
-	 * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.35
+	 * @link   http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.35
 	 * @return array|FALSE
 	 */
 	protected function _parse_byte_range()
@@ -763,4 +710,5 @@ class Kohana_Response implements HTTP_Response {
 
 		return array($start, $end);
 	}
-} // End Kohana_Response
+
+}

@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Database query builder for INSERT statements. See [Query Builder](/database/query/builder) for usage and examples.
  *
@@ -22,8 +22,8 @@ class Kohana_Database_Query_Builder_Insert extends Database_Query_Builder {
 	/**
 	 * Set the table and columns for an insert.
 	 *
-	 * @param   mixed  table name or array($table, $alias) or object
-	 * @param   array  column names
+	 * @param   mixed  $table    table name or array($table, $alias) or object
+	 * @param   array  $columns  column names
 	 * @return  void
 	 */
 	public function __construct($table = NULL, array $columns = NULL)
@@ -47,7 +47,7 @@ class Kohana_Database_Query_Builder_Insert extends Database_Query_Builder {
 	/**
 	 * Sets the table to insert into.
 	 *
-	 * @param   mixed  table name or array($table, $alias) or object
+	 * @param   mixed  $table  table name or array($table, $alias) or object
 	 * @return  $this
 	 */
 	public function table($table)
@@ -60,7 +60,7 @@ class Kohana_Database_Query_Builder_Insert extends Database_Query_Builder {
 	/**
 	 * Set the columns that will be inserted.
 	 *
-	 * @param   array  column names
+	 * @param   array  $columns  column names
 	 * @return  $this
 	 */
 	public function columns(array $columns)
@@ -73,7 +73,7 @@ class Kohana_Database_Query_Builder_Insert extends Database_Query_Builder {
 	/**
 	 * Adds or overwrites values. Multiple value sets can be added.
 	 *
-	 * @param   array   values list
+	 * @param   array   $values  values list
 	 * @param   ...
 	 * @return  $this
 	 */
@@ -95,7 +95,7 @@ class Kohana_Database_Query_Builder_Insert extends Database_Query_Builder {
 	/**
 	 * Use a sub-query to for the inserted values.
 	 *
-	 * @param   object  Database_Query of SELECT type
+	 * @param   object  $query  Database_Query of SELECT type
 	 * @return  $this
 	 */
 	public function select(Database_Query $query)
@@ -113,11 +113,17 @@ class Kohana_Database_Query_Builder_Insert extends Database_Query_Builder {
 	/**
 	 * Compile the SQL query and return it.
 	 *
-	 * @param   object  Database instance
+	 * @param   mixed  $db  Database instance or name of instance
 	 * @return  string
 	 */
-	public function compile(Database $db)
+	public function compile($db = NULL)
 	{
+		if ( ! is_object($db))
+		{
+			// Get the database instance
+			$db = Database::instance($db);
+		}
+
 		// Start an insertion query
 		$query = 'INSERT INTO '.$db->quote_table($this->_table);
 

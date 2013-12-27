@@ -1,11 +1,11 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Cookie helper.
  *
  * @package    Kohana
  * @category   Helpers
  * @author     Kohana Team
- * @copyright  (c) 2008-2011 Kohana Team
+ * @copyright  (c) 2008-2012 Kohana Team
  * @license    http://kohanaframework.org/license
  */
 class Kohana_Cookie {
@@ -48,8 +48,8 @@ class Kohana_Cookie {
 	 *     // Get the "theme" cookie, or use "blue" if the cookie does not exist
 	 *     $theme = Cookie::get('theme', 'blue');
 	 *
-	 * @param   string  cookie name
-	 * @param   mixed   default value to return
+	 * @param   string  $key        cookie name
+	 * @param   mixed   $default    default value to return
 	 * @return  string
 	 */
 	public static function get($key, $default = NULL)
@@ -91,9 +91,9 @@ class Kohana_Cookie {
 	 *     // Set the "theme" cookie
 	 *     Cookie::set('theme', 'red');
 	 *
-	 * @param   string   name of cookie
-	 * @param   string   value of cookie
-	 * @param   integer  lifetime in seconds
+	 * @param   string  $name       name of cookie
+	 * @param   string  $value      value of cookie
+	 * @param   integer $expiration lifetime in seconds
 	 * @return  boolean
 	 * @uses    Cookie::salt
 	 */
@@ -122,7 +122,7 @@ class Kohana_Cookie {
 	 *
 	 *     Cookie::delete('theme');
 	 *
-	 * @param   string   cookie name
+	 * @param   string  $name   cookie name
 	 * @return  boolean
 	 * @uses    Cookie::set
 	 */
@@ -135,27 +135,29 @@ class Kohana_Cookie {
 		return setcookie($name, NULL, -86400, Cookie::$path, Cookie::$domain, Cookie::$secure, Cookie::$httponly);
 	}
 
-	/**
-	 * Generates a salt string for a cookie based on the name and value.
-	 *
-	 *     $salt = Cookie::salt('theme', 'red');
-	 *
-	 * @param   string   name of cookie
-	 * @param   string   value of cookie
-	 * @return  string
-	 */
+    /**
+     * Generates a salt string for a cookie based on the name and value.
+     *
+     *     $salt = Cookie::salt('theme', 'red');
+     *
+     * @param   string $name  name of cookie
+     * @param   string $value value of cookie
+     *
+     * @throws Kohana_Exception
+     * @return  string
+     */
 	public static function salt($name, $value)
 	{
 		// Require a valid salt
 		if ( ! Cookie::$salt)
 		{
-			throw new Kohana_Exception('A valid cookie salt is required. Please set Cookie::$salt.');
+			throw new Kohana_Exception('A valid cookie salt is required. Please set Cookie::$salt in your bootstrap.php. For more information check the documentation');
 		}
 
 		// Determine the user agent
 		$agent = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : 'unknown';
 
-		return sha1($agent.$name.$value.Cookie::$salt);
-	}
+		return hash_hmac('sha1', $agent.$name.$value.Cookie::$salt, Cookie::$salt);
+    }
 
-} // End cookie
+}

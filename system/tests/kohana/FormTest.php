@@ -4,13 +4,14 @@
  * Tests Kohana Form helper
  *
  * @group kohana
- * @group kohana.form
+ * @group kohana.core
+ * @group kohana.core.form
  *
  * @package    Kohana
  * @category   Tests
  * @author     Kohana Team
  * @author     Jeremy Bush <contractfrombelow@gmail.com>
- * @copyright  (c) 2008-2011 Kohana Team
+ * @copyright  (c) 2008-2012 Kohana Team
  * @license    http://kohanaframework.org/license
  */
 class Kohana_FormTest extends Unittest_TestCase
@@ -19,11 +20,13 @@ class Kohana_FormTest extends Unittest_TestCase
 	 * Defaults for this test
 	 * @var array
 	 */
+	// @codingStandardsIgnoreStart
 	protected $environmentDefault = array(
 		'Kohana::$base_url' => '/',
 		'HTTP_HOST' => 'kohanaframework.org',
 		'Kohana::$index_file' => '',
 	);
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Provides test data for test_open()

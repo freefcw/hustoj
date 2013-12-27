@@ -44,7 +44,7 @@ This example will create user accounts and demonstrate how to handle model and c
 		public function username_available($username)
 		{
 			// There are simpler ways to do this, but I will use ORM for the sake of the example
-			return ORM::factory('member', array('username' => $username))->loaded();
+			return ORM::factory('Member', array('username' => $username))->loaded();
 		}
 
 		public function hash_password($password)
@@ -85,7 +85,7 @@ Please forgive my slightly ugly form. I am trying not to use any modules or unre
 
 		if ($_POST)
 		{
-			$member = ORM::factory('member')
+			$member = ORM::factory('Member')
 				// The ORM::values() method is a shortcut to assign many values at once
 				->values($_POST, array('username', 'password'));
 

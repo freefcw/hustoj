@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Database query builder. See [Query Builder](/database/query/builder) for usage and examples.
  *
@@ -13,8 +13,8 @@ abstract class Kohana_Database_Query_Builder extends Database_Query {
 	/**
 	 * Compiles an array of JOIN statements into an SQL partial.
 	 *
-	 * @param   object  Database instance
-	 * @param   array   join statements
+	 * @param   object  $db     Database instance
+	 * @param   array   $joins  join statements
 	 * @return  string
 	 */
 	protected function _compile_join(Database $db, array $joins)
@@ -34,8 +34,8 @@ abstract class Kohana_Database_Query_Builder extends Database_Query {
 	 * Compiles an array of conditions into an SQL partial. Used for WHERE
 	 * and HAVING.
 	 *
-	 * @param   object  Database instance
-	 * @param   array   condition statements
+	 * @param   object  $db          Database instance
+	 * @param   array   $conditions  condition statements
 	 * @return  string
 	 */
 	protected function _compile_conditions(Database $db, array $conditions)
@@ -144,8 +144,8 @@ abstract class Kohana_Database_Query_Builder extends Database_Query {
 	/**
 	 * Compiles an array of set values into an SQL partial. Used for UPDATE.
 	 *
-	 * @param   object  Database instance
-	 * @param   array   updated values
+	 * @param   object  $db      Database instance
+	 * @param   array   $values  updated values
 	 * @return  string
 	 */
 	protected function _compile_set(Database $db, array $values)
@@ -174,8 +174,8 @@ abstract class Kohana_Database_Query_Builder extends Database_Query {
 	/**
 	 * Compiles an array of GROUP BY columns into an SQL partial.
 	 *
-	 * @param   object  Database instance
-	 * @param   array   columns
+	 * @param   object  $db       Database instance
+	 * @param   array   $columns
 	 * @return  string
 	 */
 	protected function _compile_group_by(Database $db, array $columns)
@@ -204,8 +204,8 @@ abstract class Kohana_Database_Query_Builder extends Database_Query {
 	/**
 	 * Compiles an array of ORDER BY statements into an SQL partial.
 	 *
-	 * @param   object  Database instance
-	 * @param   array   sorting columns
+	 * @param   object  $db       Database instance
+	 * @param   array   $columns  sorting columns
 	 * @return  string
 	 */
 	protected function _compile_order_by(Database $db, array $columns)

@@ -58,7 +58,7 @@ failure_callback | __NO__   | (_[callback](http://www.php.net/manual/en/language
 		                                            (can cause issues with integers)
 		'servers'            => array
 		(
-			array
+			'local' => array
 			(
 				'host'             => 'localhost',  // Memcache Server
 				'port'             => 11211,        // Memcache port number
@@ -74,7 +74,7 @@ failure_callback | __NO__   | (_[callback](http://www.php.net/manual/en/language
 		                                            (can cause issues with integers)
 		'servers'            => array
 		(
-			array
+			'local' => array
 			(
 				'host'             => 'localhost',  // Memcache Server
 				'port'             => 11211,        // Memcache port number

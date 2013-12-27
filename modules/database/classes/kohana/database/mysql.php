@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * MySQL database connection.
  *
@@ -97,7 +97,7 @@ class Kohana_Database_MySQL extends Database {
 	/**
 	 * Select the database
 	 *
-	 * @param   string  Database
+	 * @param   string  $database Database
 	 * @return  void
 	 */
 	protected function _select_db($database)
@@ -170,7 +170,7 @@ class Kohana_Database_MySQL extends Database {
 		// Make sure the database is connected
 		$this->_connection or $this->connect();
 
-		if ( ! empty($this->_config['profiling']))
+		if (Kohana::$profiling)
 		{
 			// Benchmark this query for the current instance
 			$benchmark = Profiler::start("Database ({$this->_instance})", $sql);
@@ -240,6 +240,7 @@ class Kohana_Database_MySQL extends Database {
 			'fixed'                     => array('type' => 'float', 'exact' => TRUE),
 			'fixed unsigned'            => array('type' => 'float', 'exact' => TRUE, 'min' => '0'),
 			'float unsigned'            => array('type' => 'float', 'min' => '0'),
+			'geometry'                  => array('type' => 'string', 'binary' => TRUE),
 			'int unsigned'              => array('type' => 'int', 'min' => '0', 'max' => '4294967295'),
 			'integer unsigned'          => array('type' => 'int', 'min' => '0', 'max' => '4294967295'),
 			'longblob'                  => array('type' => 'string', 'binary' => TRUE, 'character_maximum_length' => '4294967295'),
@@ -276,7 +277,7 @@ class Kohana_Database_MySQL extends Database {
 	 *
 	 * @link http://dev.mysql.com/doc/refman/5.0/en/set-transaction.html
 	 *
-	 * @param string Isolation level
+	 * @param string $mode  Isolation level
 	 * @return boolean
 	 */
 	public function begin($mode = NULL)
@@ -297,7 +298,6 @@ class Kohana_Database_MySQL extends Database {
 	/**
 	 * Commit a SQL transaction
 	 *
-	 * @param string Isolation level
 	 * @return boolean
 	 */
 	public function commit()
@@ -311,7 +311,6 @@ class Kohana_Database_MySQL extends Database {
 	/**
 	 * Rollback a SQL transaction
 	 *
-	 * @param string Isolation level
 	 * @return boolean
 	 */
 	public function rollback()

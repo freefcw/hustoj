@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * PDO database connection.
  *
@@ -13,7 +13,7 @@ class Kohana_Database_PDO extends Database {
 	// PDO uses no quoting for identifiers
 	protected $_identifier = '';
 
-	protected function __construct($name, array $config)
+	public function __construct($name, array $config)
 	{
 		parent::__construct($name, $config);
 
@@ -41,18 +41,18 @@ class Kohana_Database_PDO extends Database {
 		unset($this->_config['connection']);
 
 		// Force PDO to use exceptions for all errors
-		$attrs = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+		$options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 
 		if ( ! empty($persistent))
 		{
 			// Make the connection persistent
-			$attrs[PDO::ATTR_PERSISTENT] = TRUE;
+			$options[PDO::ATTR_PERSISTENT] = TRUE;
 		}
 
 		try
 		{
 			// Create a new PDO connection
-			$this->_connection = new PDO($dsn, $username, $password, $attrs);
+			$this->_connection = new PDO($dsn, $username, $password, $options);
 		}
 		catch (PDOException $e)
 		{
@@ -61,11 +61,11 @@ class Kohana_Database_PDO extends Database {
 				$e->getCode());
 		}
 
-		if ( ! empty($this->_config['charset']))
-		{
-			// Set the character set
-			$this->set_charset($this->_config['charset']);
-		}
+        if ( ! empty($this->_config['charset']))
+        {
+            // Set the character set
+            $this->set_charset($this->_config['charset']);
+        }
 	}
 
 	/**
@@ -124,9 +124,9 @@ class Kohana_Database_PDO extends Database {
 	public function set_charset($charset)
 	{
 		// Make sure the database is connected
-		$this->_connection or $this->connect();
+		$this->_connection OR $this->connect();
 
-		// Execute a raw SET NAMES query
+		// This SQL-92 syntax is not supported by all drivers
 		$this->_connection->exec('SET NAMES '.$this->quote($charset));
 	}
 
@@ -135,7 +135,7 @@ class Kohana_Database_PDO extends Database {
 		// Make sure the database is connected
 		$this->_connection or $this->connect();
 
-		if ( ! empty($this->_config['profiling']))
+		if (Kohana::$profiling)
 		{
 			// Benchmark this query for the current instance
 			$benchmark = Profiler::start("Database ({$this->_instance})", $sql);

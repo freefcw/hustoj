@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Database query builder for WHERE statements. See [Query Builder](/database/query/builder) for usage and examples.
  *
@@ -22,9 +22,9 @@ abstract class Kohana_Database_Query_Builder_Where extends Database_Query_Builde
 	/**
 	 * Alias of and_where()
 	 *
-	 * @param   mixed   column name or array($column, $alias) or object
-	 * @param   string  logic operator
-	 * @param   mixed   column value
+	 * @param   mixed   $column  column name or array($column, $alias) or object
+	 * @param   string  $op      logic operator
+	 * @param   mixed   $value   column value
 	 * @return  $this
 	 */
 	public function where($column, $op, $value)
@@ -35,9 +35,9 @@ abstract class Kohana_Database_Query_Builder_Where extends Database_Query_Builde
 	/**
 	 * Creates a new "AND WHERE" condition for the query.
 	 *
-	 * @param   mixed   column name or array($column, $alias) or object
-	 * @param   string  logic operator
-	 * @param   mixed   column value
+	 * @param   mixed   $column  column name or array($column, $alias) or object
+	 * @param   string  $op      logic operator
+	 * @param   mixed   $value   column value
 	 * @return  $this
 	 */
 	public function and_where($column, $op, $value)
@@ -50,9 +50,9 @@ abstract class Kohana_Database_Query_Builder_Where extends Database_Query_Builde
 	/**
 	 * Creates a new "OR WHERE" condition for the query.
 	 *
-	 * @param   mixed   column name or array($column, $alias) or object
-	 * @param   string  logic operator
-	 * @param   mixed   column value
+	 * @param   mixed   $column  column name or array($column, $alias) or object
+	 * @param   string  $op      logic operator
+	 * @param   mixed   $value   column value
 	 * @return  $this
 	 */
 	public function or_where($column, $op, $value)
@@ -97,7 +97,7 @@ abstract class Kohana_Database_Query_Builder_Where extends Database_Query_Builde
 	}
 
 	/**
-	 * Closes an open "AND WHERE (...)" grouping.
+	 * Closes an open "WHERE (...)" grouping.
 	 *
 	 * @return  $this
 	 */
@@ -107,7 +107,27 @@ abstract class Kohana_Database_Query_Builder_Where extends Database_Query_Builde
 	}
 
 	/**
-	 * Closes an open "AND WHERE (...)" grouping.
+	 * Closes an open "WHERE (...)" grouping or removes the grouping when it is
+	 * empty.
+	 *
+	 * @return  $this
+	 */
+	public function where_close_empty()
+	{
+		$group = end($this->_where);
+
+		if ($group AND reset($group) === '(')
+		{
+			array_pop($this->_where);
+
+			return $this;
+		}
+
+		return $this->where_close();
+	}
+
+	/**
+	 * Closes an open "WHERE (...)" grouping.
 	 *
 	 * @return  $this
 	 */
@@ -119,7 +139,7 @@ abstract class Kohana_Database_Query_Builder_Where extends Database_Query_Builde
 	}
 
 	/**
-	 * Closes an open "OR WHERE (...)" grouping.
+	 * Closes an open "WHERE (...)" grouping.
 	 *
 	 * @return  $this
 	 */
@@ -133,8 +153,8 @@ abstract class Kohana_Database_Query_Builder_Where extends Database_Query_Builde
 	/**
 	 * Applies sorting with "ORDER BY ..."
 	 *
-	 * @param   mixed   column name or array($column, $alias) or object
-	 * @param   string  direction of sorting
+	 * @param   mixed   $column     column name or array($column, $alias) or object
+	 * @param   string  $direction  direction of sorting
 	 * @return  $this
 	 */
 	public function order_by($column, $direction = NULL)
@@ -147,7 +167,7 @@ abstract class Kohana_Database_Query_Builder_Where extends Database_Query_Builde
 	/**
 	 * Return up to "LIMIT ..." results
 	 *
-	 * @param   integer  maximum results to return or NULL to reset
+	 * @param   integer  $number  maximum results to return or NULL to reset
 	 * @return  $this
 	 */
 	public function limit($number)

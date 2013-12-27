@@ -4,7 +4,8 @@
  * Tests the kohana text class (Kohana_Text)
  *
  * @group kohana
- * @group kohana.text
+ * @group kohana.core
+ * @group kohana.core.text
  *
  * @package    Kohana
  * @category   Tests
@@ -15,7 +16,9 @@ class Kohana_TextTest extends Unittest_TestCase
 	/**
 	 * Sets up the test enviroment
 	 */
+	// @codingStandardsIgnoreStart
 	function setUp()
+	// @codingStandardsIgnoreEnd
 	{
 		parent::setUp();
 
@@ -438,6 +441,8 @@ class Kohana_TextTest extends Unittest_TestCase
 			array('fourty-two', 42),
 			array('five million, six hundred and thirty-two', 5000632),
 			array('five million, six hundred and thirty', 5000630),
+			array('five million, six hundred thirty-two', 5000632, ' '),
+			array('five million, six hundred thirty', 5000630, ' '),
 			array('nine hundred million', 900000000),
 			array('thirty-seven thousand', 37000),
 			array('one thousand and twenty-four', 1024),
@@ -450,9 +455,9 @@ class Kohana_TextTest extends Unittest_TestCase
 	 * @test
 	 * @dataProvider provider_number
 	 */
-	public function test_number($expected, $number)
+	public function test_number($expected, $number, $separator = ' and ')
 	{
-		$this->assertSame($expected, Text::number($number));
+		$this->assertSame($expected, Text::number($number, $separator));
 	}
 
 	/**
@@ -486,6 +491,19 @@ class Kohana_TextTest extends Unittest_TestCase
 				'Look at me <a href="http://www.google.com">http://www.google.com</a>',
 				'Look at me <a href="http://www.google.com">http://www.google.com</a>',
 			),
+			// Punctuation at the end of the URL
+			array(
+				'Wow <a href="http://www.google.com">http://www.google.com</a>!',
+				'Wow http://www.google.com!',
+			),
+			array(
+				'Zomg <a href="http://www.google.com">www.google.com</a>!',
+				'Zomg www.google.com!',
+			),
+			array(
+				'Well this, <a href="http://www.google.com">www.google.com</a>, is cool',
+				'Well this, www.google.com, is cool',
+			),
 			// @issue 3190
 			array(
 				'<a href="http://www.google.com/">www.google.com</a>',
@@ -499,6 +517,27 @@ class Kohana_TextTest extends Unittest_TestCase
 			array(
 				'<strong><a href="http://www.google.com/">http://www.google.com/</a></strong>',
 				'<strong>http://www.google.com/</strong>',
+			),
+			// @issue 4208, URLs with a path
+			array(
+				'Foobar <a href="http://www.google.com/analytics">www.google.com/analytics</a> cake',
+				'Foobar www.google.com/analytics cake',
+			),
+			array(
+				'Look at this <a href="http://www.google.com/analytics">www.google.com/analytics</a>!',
+				'Look at this www.google.com/analytics!',
+			),
+			array(
+				'Path <a href="http://www.google.com/analytics">http://www.google.com/analytics</a> works?',
+				'Path http://www.google.com/analytics works?',
+			),
+			array(
+				'Path <a href="http://www.google.com/analytics">http://www.google.com/analytics</a>',
+				'Path http://www.google.com/analytics',
+			),
+			array(
+				'Path <a href="http://www.google.com/analytics">www.google.com/analytics</a>',
+				'Path www.google.com/analytics',
 			),
 		);
 	}
@@ -600,6 +639,69 @@ class Kohana_TextTest extends Unittest_TestCase
 			$this->assertContains('&#109;&#097;&#105;&#108;&#116;&#111;&#058;'.$email, $linked_text);
 		}
 
+	}
+
+	/**
+	 * Provides test data for test_readable_list.
+	 *
+	 * @return array
+	 */
+	public function provider_readable_list()
+	{
+		return array(
+			array('Tom, Dick and Harry',
+				array('Tom', 'Dick', 'Harry')
+			),
+			array('1, 2 and 3',
+				array(1, 2, 3)
+			)
+		);
+	}
+
+	/**
+	 * Provides test data for test_readable_list_throws_exception_with_unexpected_data_types.
+	 *
+	 * @return array
+	 */
+	public function provider_readable_list_throws_exception_with_unexpected_data_types()
+	{
+		return array(
+			array(
+				array(TRUE, FALSE, TRUE)
+			),
+			array(
+				array(
+					array('Values'),
+					array('In'),
+					array('Arrays')
+				)
+			)
+		);
+	}
+
+	/**
+	 * Tests Text::readable_list().
+	 *
+	 * @test
+	 * @dataProvider  provider_readable_list
+	 * @covers        Text::readable_list
+	 */
+	public function test_readable_list($expected, $words)
+	{
+		$this->assertSame($expected, Text::readable_list($words));
+	}
+
+	/**
+	 * Tests Text::readable_list().
+	 *
+	 * @test
+	 * @dataProvider       provider_readable_list_throws_exception_with_unexpected_data_types
+	 * @expectedException  Kohana_Exception
+	 * @covers             Text::readable_list
+	 */
+	public function test_readable_list_throws_exception_with_unexpected_data_types($words)
+	{
+		Text::readable_list($words);
 	}
 
 }

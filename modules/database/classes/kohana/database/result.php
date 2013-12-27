@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Database result wrapper.  See [Results](/database/results) for usage and examples.
  *
@@ -29,8 +29,10 @@ abstract class Kohana_Database_Result implements Countable, Iterator, SeekableIt
 	/**
 	 * Sets the total number of rows and stores the result locally.
 	 *
-	 * @param   mixed   query result
-	 * @param   string  SQL query
+	 * @param   mixed   $result     query result
+	 * @param   string  $sql        SQL query
+	 * @param   mixed   $as_object
+	 * @param   array   $params
 	 * @return  void
 	 */
 	public function __construct($result, $sql, $as_object = FALSE, array $params = NULL)
@@ -89,8 +91,8 @@ abstract class Kohana_Database_Result implements Countable, Iterator, SeekableIt
 	 *     // Associative array of rows, "id" => "name"
 	 *     $rows = $result->as_array('id', 'name');
 	 *
-	 * @param   string  column for associative keys
-	 * @param   string  column for values
+	 * @param   string  $key    column for associative keys
+	 * @param   string  $value  column for values
 	 * @return  array
 	 */
 	public function as_array($key = NULL, $value = NULL)
@@ -175,8 +177,8 @@ abstract class Kohana_Database_Result implements Countable, Iterator, SeekableIt
 	 *     // Get the "id" value
 	 *     $id = $result->get('id');
 	 *
-	 * @param   string  column to get
-	 * @param   mixed   default value if the column does not exist
+	 * @param   string  $name     column to get
+	 * @param   mixed   $default  default value if the column does not exist
 	 * @return  mixed
 	 */
 	public function get($name, $default = NULL)
@@ -217,6 +219,7 @@ abstract class Kohana_Database_Result implements Countable, Iterator, SeekableIt
 	 *         // Row 10 exists
 	 *     }
 	 *
+	 * @param   int     $offset
 	 * @return  boolean
 	 */
 	public function offsetExists($offset)
@@ -229,6 +232,7 @@ abstract class Kohana_Database_Result implements Countable, Iterator, SeekableIt
 	 *
 	 *     $row = $result[10];
 	 *
+	 * @param   int     $offset
 	 * @return  mixed
 	 */
 	public function offsetGet($offset)
@@ -244,6 +248,8 @@ abstract class Kohana_Database_Result implements Countable, Iterator, SeekableIt
 	 *
 	 * [!!] You cannot modify a database result.
 	 *
+	 * @param   int     $offset
+	 * @param   mixed   $value
 	 * @return  void
 	 * @throws  Kohana_Exception
 	 */
@@ -257,6 +263,7 @@ abstract class Kohana_Database_Result implements Countable, Iterator, SeekableIt
 	 *
 	 * [!!] You cannot modify a database result.
 	 *
+	 * @param   int     $offset
 	 * @return  void
 	 * @throws  Kohana_Exception
 	 */

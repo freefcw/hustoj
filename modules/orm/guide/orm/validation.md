@@ -41,7 +41,7 @@ All models automatically validate their own data when `ORM::save()`, `ORM::updat
 	{
 		try
 		{
-			$user = ORM::factory('user');
+			$user = ORM::factory('User');
 			$user->username = 'invalid username';
 			$user->save();
 		}
@@ -61,7 +61,7 @@ In the below example, the error messages will be defined in `application/message
 	{
 		try
 		{
-			$user = ORM::factory('user');
+			$user = ORM::factory('User');
 			$user->username = 'invalid username';
 			$user->save();
 		}
@@ -79,7 +79,7 @@ Certain forms contain information that should not be validated by the model, but
 	{
 		try
 		{
-			$user = ORM::factory('user');
+			$user = ORM::factory('User');
 			$user->username = $_POST['username'];
 			$user->password = $_POST['password'];
 

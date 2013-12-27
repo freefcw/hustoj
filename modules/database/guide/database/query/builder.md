@@ -2,8 +2,6 @@
 
 Creating queries dynamically using objects and methods allows queries to be written very quickly in an agnostic way. Query building also adds identifier (table and column name) quoting, as well as value quoting.
 
-[!!] At this time, it is not possible to combine query building with prepared statements.
-
 ## Select
 
 Each type of database query is represented by a different class, each with their own methods. For instance, to create a SELECT query, we use [DB::select] which is a shortcut to return a new [Database_Query_Builder_Select] object:
@@ -38,7 +36,7 @@ By default, [DB::select] will select all columns (`SELECT * ...`), but you can a
 
 Now take a minute to look at what this method chain is doing. First, we create a new selection object using the [DB::select] method. Next, we set table(s) using the `from()` method. Last, we search for a specific records using the `where()` method. We can display the SQL that will be executed by casting the query to a string:
 
-    echo Kohana::debug((string) $query);
+    echo Debug::vars((string) $query);
     // Should display:
     // SELECT `username`, `password` FROM `users` WHERE `username` = 'john'
 
@@ -150,11 +148,11 @@ This query would generate the following SQL:
 
 ### Database Functions
 
-Eventually you will probably run into a situation where you need to call `COUNT` or some other database function within your query. The query builder supports these functions in two ways. The first is by using quotes within aliases:
+Eventually you will probably run into a situation where you need to call `COUNT` or some other database function within your query. The query builder supports these functions using the `Database_Expression` class:
 
-    $query = DB::select(array('COUNT("username")', 'total_users'))->from('users');
+    $query = DB::select(array(DB::expr('COUNT(`username`)'), 'total_users'))->from('users');
 
-This looks almost exactly the same as a standard `AS` alias, but note how the column name is wrapped in double quotes. Any time a double-quoted value appears inside of a column name, **only** the part inside the double quotes will be escaped. This query would generate the following SQL:
+This looks almost exactly the same as a standard `AS` alias, but note how the column name is put in a call to `DB::expr()`. Any time `DB::expr()` is used, the column name will **not** be escaped. This query would generate the following SQL:
 
     SELECT COUNT(`username`) AS `total_users` FROM `users`
 
@@ -166,14 +164,14 @@ This looks almost exactly the same as a standard `AS` alias, but note how the co
         ->where('posts.created', '>=', $yesterday);
     
     $total = clone $query;
-    $total->select(array('COUNT( DISTINCT "username")', 'unique_users'));
+    $total->select(array(DB::expr('COUNT( DISTINCT `username`)'), 'unique_users'));
     $query->select('posts.username')->distinct();
 
 ### Aggregate Functions
 
 Aggregate functions like `COUNT()`, `SUM()`, `AVG()`, etc. will most likely be used with the `group_by()` and possibly the `having()` methods in order to group and filter the results on a set of columns.
 
-    $query = DB::select('username', array('COUNT("id")', 'total_posts')
+    $query = DB::select('username', array(DB::expr('COUNT(`id`)'), 'total_posts')
         ->from('posts')->group_by('username')->having('total_posts', '>=', 10);
 
 This will generate the following query:
@@ -184,7 +182,7 @@ This will generate the following query:
 
 Query Builder objects can be passed as parameters to many of the methods to create subqueries. Let's take the previous example query and pass it to a new query.
 
-    $sub = DB::select('username', array('COUNT("id")', 'total_posts')
+    $sub = DB::select('username', array(DB::expr('COUNT(`id`)'), 'total_posts')
         ->from('posts')->group_by('username')->having('total_posts', '>=', 10);
     
     $query = DB::select('profiles.*', 'posts.total_posts')->from('profiles')
@@ -198,7 +196,7 @@ This will generate the following query:
 
 Insert queries can also use a select query for the input values
 
-    $sub = DB::select('username', array('COUNT("id")', 'total_posts')
+    $sub = DB::select('username', array(DB::expr('COUNT(`id`)'), 'total_posts')
         ->from('posts')->group_by('username')->having('total_posts', '>=', 10);
     
     $query = DB::insert('post_totals', array('username', 'posts'))->select($sub);

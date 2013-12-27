@@ -4,12 +4,13 @@
  * Tests the View class
  *
  * @group kohana
- * @group kohana.view
+ * @group kohana.core
+ * @group kohana.core.view
  *
  * @package    Kohana
  * @category   Tests
  * @author     Kohana Team
- * @copyright  (c) 2008-2011 Kohana Team
+ * @copyright  (c) 2008-2012 Kohana Team
  * @license    http://kohanaframework.org/license
  */
 class Kohana_ViewTest extends Unittest_TestCase
@@ -21,12 +22,14 @@ class Kohana_ViewTest extends Unittest_TestCase
 	 *
 	 * @return null
 	 */
+	// @codingStandardsIgnoreStart
 	public static function setupBeforeClass()
+	// @codingStandardsIgnoreEnd
 	{
 		self::$old_modules = Kohana::modules();
 
 		$new_modules = self::$old_modules+array(
-			'test_views' => realpath(__DIR__.'/../test_data/')
+			'test_views' => realpath(dirname(__FILE__).'/../test_data/')
 		);
 		Kohana::modules($new_modules);
 	}
@@ -36,7 +39,9 @@ class Kohana_ViewTest extends Unittest_TestCase
 	 *
 	 * @return null
 	 */
+	// @codingStandardsIgnoreStart
 	public static function teardownAfterClass()
+	// @codingStandardsIgnoreEnd
 	{
 		Kohana::modules(self::$old_modules);
 	}

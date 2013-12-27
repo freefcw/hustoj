@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 
 /**
  * Database reader for the kohana config system
@@ -6,12 +6,12 @@
  * @package    Kohana/Database
  * @category   Configuration
  * @author     Kohana Team
- * @copyright  (c) 2011 Kohana Team
+ * @copyright  (c) 2012 Kohana Team
  * @license    http://kohanaframework.org/license
  */
 class Kohana_Config_Database_Reader implements Kohana_Config_Reader
 {
-	protected $_db_instance = 'default';
+	protected $_db_instance;
 
 	protected $_table_name  = 'config';
 
@@ -25,6 +25,10 @@ class Kohana_Config_Database_Reader implements Kohana_Config_Reader
 		if (isset($config['instance']))
 		{
 			$this->_db_instance = $config['instance'];
+		}
+		elseif ($this->_db_instance === NULL)
+		{
+			$this->_db_instance = Database::$default;
 		}
 
 		if (isset($config['table_name']))
@@ -43,6 +47,15 @@ class Kohana_Config_Database_Reader implements Kohana_Config_Reader
 	 */
 	public function load($group)
 	{
+		/**
+		 * Prevents the catch-22 scenario where the database config reader attempts to load the 
+		 * database connections details from the database.
+		 *
+		 * @link http://dev.kohanaframework.org/issues/4316
+		 */
+		if ($group === 'database')
+			return FALSE;
+
 		$query = DB::select('config_key', 'config_value')
 			->from($this->_table_name)
 			->where('group_name', '=', $group)

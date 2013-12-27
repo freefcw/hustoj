@@ -1,7 +1,7 @@
-<?php defined('SYSPATH') or die('No direct access allowed.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_User extends Model_Auth_User {
+//class Model_User extends Model_Auth_User {
 
 	// This class can be replaced or extended
 
-} // End User Model
+//} // End User Model

@@ -1,12 +1,12 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * [Request_Client_External] Curl driver performs external requests using the
  * php-curl extention. This is the default driver for all external requests.
- * 
+ *
  * @package    Kohana
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2008-2011 Kohana Team
+ * @copyright  (c) 2008-2012 Kohana Team
  * @license    http://kohanaframework.org/license
  * @uses       [PHP cURL](http://php.net/manual/en/book.curl.php)
  */
@@ -16,16 +16,19 @@ class Kohana_Request_Client_Curl extends Request_Client_External {
 	 * Sends the HTTP message [Request] to a remote server and processes
 	 * the response.
 	 *
-	 * @param   Request   request to send
+	 * @param   Request   $request  request to send
+	 * @param   Response  $request  response to send
 	 * @return  Response
 	 */
-	public function _send_message(Request $request)
+	public function _send_message(Request $request, Response $response)
 	{
 		// Response headers
 		$response_headers = array();
 
+		$options = array();
+
 		// Set the request method
-		$options[CURLOPT_CUSTOMREQUEST] = $request->method();
+		$options = $this->_set_curl_request_method($request, $options);
 
 		// Set the request body. This is perfectly legal in CURL even
 		// if using a request other than POST. PUT does support this method
@@ -52,8 +55,7 @@ class Kohana_Request_Client_Curl extends Request_Client_External {
 			$options[CURLOPT_COOKIE] = http_build_query($cookies, NULL, '; ');
 		}
 
-		// Create response
-		$response = $request->create_response();
+		// Get any exisiting response headers
 		$response_header = $response->headers();
 
 		// Implement the standard parsing parameters
@@ -61,7 +63,7 @@ class Kohana_Request_Client_Curl extends Request_Client_External {
 		$this->_options[CURLOPT_RETURNTRANSFER] = TRUE;
 		$this->_options[CURLOPT_HEADER]         = FALSE;
 
-		// Apply any additional options set to 
+		// Apply any additional options set to
 		$options += $this->_options;
 
 		$uri = $request->uri();
@@ -107,4 +109,25 @@ class Kohana_Request_Client_Curl extends Request_Client_External {
 		return $response;
 	}
 
-} // End Kohana_Request_Client_Curl
+	/**
+	 * Sets the appropriate curl request options. Uses the responding option
+	 * for POST or CURLOPT_CUSTOMREQUEST otherwise
+	 *
+	 * @param Request $request
+	 * @param array $options
+	 * @return array
+	 */
+	public function _set_curl_request_method(Request $request, array $options)
+	{
+		switch ($request->method()) {
+			case Request::POST:
+				$options[CURLOPT_POST] = TRUE;
+				break;
+			default:
+				$options[CURLOPT_CUSTOMREQUEST] = $request->method();
+				break;
+		}
+		return $options;
+	}
+
+}

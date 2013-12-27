@@ -4,22 +4,30 @@
  * Tests HTML
  *
  * @group kohana
- * @group kohana.html
+ * @group kohana.core
+ * @group kohana.core.html
  *
  * @package    Kohana
  * @category   Tests
  * @author     Kohana Team
  * @author     BRMatt <matthew@sigswitch.com>
- * @copyright  (c) 2008-2011 Kohana Team
+ * @copyright  (c) 2008-2012 Kohana Team
  * @license    http://kohanaframework.org/license
  */
 class Kohana_HTMLTest extends Unittest_TestCase
 {
+	/**
+	 * Defaults for this test
+	 * @var array
+	 */
+	// @codingStandardsIgnoreStart
 	protected $environmentDefault = array(
 		'Kohana::$base_url'    => '/kohana/',
 		'Kohana::$index_file'  => 'index.php',
+		'HTML::$strict' => TRUE,
 		'HTTP_HOST'	=> 'www.kohanaframework.org',
 	);
+	// @codingStandardsIgnoreStart
 
 	/**
 	 * Provides test data for test_attributes()
@@ -31,19 +39,28 @@ class Kohana_HTMLTest extends Unittest_TestCase
 		return array(
 			array(
 				array('name' => 'field', 'random' => 'not_quite', 'id' => 'unique_field'),
+				array(),
 				' id="unique_field" name="field" random="not_quite"'
 			),
 			array(
 				array('invalid' => NULL),
+				array(),
 				''
 			),
 			array(
+				array(),
 				array(),
 				''
 			),
 			array(
 				array('name' => 'field', 'checked'),
+				array(),
 				' name="field" checked="checked"',
+			),
+			array(
+				array('id' => 'disabled_field', 'disabled'),
+				array('HTML::$strict' => FALSE),
+				' id="disabled_field" disabled',
 			),
 		);
 	}
@@ -54,10 +71,13 @@ class Kohana_HTMLTest extends Unittest_TestCase
 	 * @test
 	 * @dataProvider provider_attributes
 	 * @param array  $attributes  Attributes to use
+	 * @param array  $options     Environment options to use
 	 * @param string $expected    Expected output
 	 */
-	public function test_attributes($attributes, $expected)
+	public function test_attributes(array $attributes, array $options, $expected)
 	{
+		$this->setEnvironment($options);
+
 		$this->assertSame(
 			$expected,
 			HTML::attributes($attributes)
@@ -86,6 +106,13 @@ class Kohana_HTMLTest extends Unittest_TestCase
 			array(
 				'<script type="text/javascript" src="https://www.kohanaframework.org/kohana/my/script.js"></script>',
 				'my/script.js',
+				NULL,
+				'https',
+				FALSE
+			),
+			array(
+				'<script type="text/javascript" src="https://www.kohanaframework.org/kohana/my/script.js"></script>',
+				'/my/script.js', // Test absolute paths
 				NULL,
 				'https',
 				FALSE
@@ -146,6 +173,23 @@ class Kohana_HTMLTest extends Unittest_TestCase
 				'<link type="text/css" href="https://www.kohanaframework.org/kohana/index.php/my/style.css" rel="stylesheet" />',
 				'my/style.css',
 				array(),
+				'https',
+				TRUE
+			),
+			array(
+				'<link type="text/css" href="https://www.kohanaframework.org/kohana/index.php/my/style.css" rel="stylesheet" />',
+				'/my/style.css',
+				array(),
+				'https',
+				TRUE
+			),
+			array(
+				// #4283: http://dev.kohanaframework.org/issues/4283
+				'<link type="text/css" href="https://www.kohanaframework.org/kohana/index.php/my/style.css" rel="stylesheet/less" />',
+				'my/style.css',
+				array(
+					'rel' => 'stylesheet/less'
+				),
 				'https',
 				TRUE
 			),
@@ -237,6 +281,15 @@ class Kohana_HTMLTest extends Unittest_TestCase
 				'https',
 				FALSE,
 			),
+			array(
+				'<a href="https://www.kohanaframework.org/kohana/users/example">Kohana</a>',
+				array(),
+				'/users/example',
+				'Kohana',
+				NULL,
+				'https',
+				FALSE,
+			),
 		);
 	}
 
@@ -285,7 +338,15 @@ class Kohana_HTMLTest extends Unittest_TestCase
 				'My picture file',
 				'ftp',
 				FALSE
-			)
+			),
+			array(
+				'<a href="ftp://www.kohanaframework.org/kohana/mypic.png">My picture file</a>',
+				array(),
+				'/mypic.png',
+				'My picture file',
+				'ftp',
+				FALSE
+			),
 		);
 	}
 

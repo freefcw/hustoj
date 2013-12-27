@@ -8,46 +8,46 @@ Controllers are called by the [Request::execute()] function based on the [Route]
 
 In order to function, a controller must do the following:
 
-* Reside in `classes/controller` (or a sub-directory)
-* Filename must be lowercase, e.g. `articles.php`
+* Reside in `classes/Controller` (or a sub-directory)
+* Filename must match the class name exactly, e.g. `Articles.php`
 * The class name must map to the filename (with `/` replaced with `_`) and each word is capitalized
 * Must have the Controller class as a (grand)parent
 
 Some examples of controller names and file locations:
 
-	// classes/controller/foobar.php
+	// classes/Controller/Foobar.php
 	class Controller_Foobar extends Controller {
 	
-	// classes/controller/admin.php
+	// classes/Controller/Admin.php
 	class Controller_Admin extends Controller {
 
 Controllers can be in sub-folders:
 
-	// classes/controller/baz/bar.php
+	// classes/Controller/Baz/Bar.php
 	class Controller_Baz_Bar extends Controller {
 	
-	// classes/controller/product/category.php
+	// classes/Controller/Product/Category.php
 	class Controller_Product_Category extends Controller {
 	
 [!!] Note that controllers in sub-folders can not be called by the default route, you will need to define a route that has a [directory](routing#directory) param or sets a default value for directory.
 
 Controllers can extend other controllers.
 
-	// classes/controller/users.php
+	// classes/Controller/Users.php
 	class Controller_Users extends Controller_Template
 	
-	// classes/controller/api.php
+	// classes/Controller/Api.php
 	class Controller_Api extends Controller_REST
 	
 [!!] [Controller_Template] is an example controller provided in Kohana.
 
 You can also have a controller extend another controller to share common things, such as requiring you to be logged in to use all of those controllers.
 
-	// classes/controller/admin.php
+	// classes/Controller/Admin.php
 	class Controller_Admin extends Controller {
 		// This controller would have a before() that checks if the user is logged in
 	
-	// classes/controller/admin/plugins.php
+	// classes/Controller/Admin/Plugins.php
 	class Controller_Admin_Plugins extends Controller_Admin {
 		// Because this controller extends Controller_Admin, it would have the same logged in check
 		
@@ -62,7 +62,6 @@ Property/method | What it does
 [$this->request->route()](../api/Request#property:route) | The [Route] that matched the current request url
 [$this->request->directory()](../api/Request#property:directory), <br /> [$this->request->controller](../api/Request#property:controller), <br /> [$this->request->action](../api/Request#property:action) | The directory, controller and action that matched for the current route
 [$this->request->param()](../api/Request#param) | Any other params defined in your route
-[$this->request->redirect()](../api/Request#redirect) | Redirect the request to a different url
 
 ## $this->response
 [$this->response->body()](../api/Response#property:body) | The content to return for this request
@@ -74,7 +73,7 @@ Property/method | What it does
 
 You create actions for your controller by defining a public function with an `action_` prefix.  Any method that is not declared as `public` and prefixed with `action_` can NOT be called via routing.
 
-An action method will decide what should be done based on the current request, it *controls* the application.  Did the user want to save a blog post?  Did they provide the necessary fields?   Do they have permission to do that?  The controller will call other classes, including models, to accomplish this.  Every action should set `$this->response->body($view)` to the [view file](mvc/views) to be sent to the browser, unless it [redirected](../api/Request#redirect) or otherwise ended the script earlier.
+An action method will decide what should be done based on the current request, it *controls* the application.  Did the user want to save a blog post?  Did they provide the necessary fields?   Do they have permission to do that?  The controller will call other classes, including models, to accomplish this.  Every action should set `$this->response->body($view)` to the [view file](mvc/views) to be sent to the browser, unless it redirected or otherwise ended the script earlier.
 
 A very basic action method that simply loads a [view](mvc/views) file.
 
@@ -111,7 +110,7 @@ A view action for a product page.
 
 		if ( ! $product->loaded())
 		{
-			throw new HTTP_Exception_404('Product not found!');
+			throw HTTP_Exception::factory(404, 'Product not found!');
 		}
 
 		$this->response->body(View::factory('product/view')
@@ -124,12 +123,12 @@ A user login action.
 	{
 		$view = View::factory('user/login');
 
-		if ($_POST)
+		if ($this->request->post())
 		{
 			// Try to login
-			if (Auth::instance()->login(arr::get($_POST, 'username'), arr::get($_POST, 'password')))
+			if (Auth::instance()->login($this->request->post('username'), $this->request->post('password')))
 			{
-				Request::current()->redirect('home');
+				$this->redirect('home', 303);
 			}
 
 			$view->errors = 'Invalid email or password';
@@ -155,7 +154,7 @@ You can check what action has been requested (via `$this->request->action`) and 
 			// If this user doesn't have the admin role, and is not trying to login, redirect to login
 			if ( ! Auth::instance()->logged_in('admin') AND $this->request->action !== 'login')
 			{
-				$this->request->redirect('admin/login');
+				$this->redirect('admin/login', 302);
 			}
 		}
 		

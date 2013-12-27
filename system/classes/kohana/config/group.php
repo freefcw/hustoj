@@ -1,17 +1,17 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 
 /**
  * The group wrapper acts as an interface to all the config directives
  * gathered from across the system.
  *
- * This is the object returned from Kohana_Config::load 
+ * This is the object returned from Kohana_Config::load
  *
  * Any modifications to configuration items should be done through an instance of this object
  *
  * @package    Kohana
  * @category   Configuration
  * @author     Kohana Team
- * @copyright  (c) 2010 Kohana Team
+ * @copyright  (c) 2012 Kohana Team
  * @license    http://kohanaphp.com/license
  */
 class Kohana_Config_Group extends ArrayObject {
@@ -31,7 +31,7 @@ class Kohana_Config_Group extends ArrayObject {
 	protected $_group_name = '';
 
 	/**
-	 * Constructs the group object.  Kohana_Config passes the config group 
+	 * Constructs the group object.  Kohana_Config passes the config group
 	 * and its config items to the object here.
 	 *
 	 * @param Kohana_Config  $instance "Owning" instance of Kohana_Config
@@ -77,14 +77,14 @@ class Kohana_Config_Group extends ArrayObject {
 	{
 		return $this->_group_name;
 	}
-	
+
 	/**
 	 * Get a variable from the configuration or return the default value.
 	 *
 	 *     $value = $config->get($key);
 	 *
-	 * @param   string   array key
-	 * @param   mixed    default value
+	 * @param   string  $key        array key
+	 * @param   mixed   $default    default value
 	 * @return  mixed
 	 */
 	public function get($key, $default = NULL)
@@ -97,8 +97,8 @@ class Kohana_Config_Group extends ArrayObject {
 	 *
 	 *     $config->set($key, $new_value);
 	 *
-	 * @param   string   array key
-	 * @param   mixed    array value
+	 * @param   string  $key    array key
+	 * @param   mixed   $value  array value
 	 * @return  $this
 	 */
 	public function set($key, $value)
@@ -110,7 +110,7 @@ class Kohana_Config_Group extends ArrayObject {
 
 	/**
 	 * Overrides ArrayObject::offsetSet()
-	 * This method is called when config is changed via 
+	 * This method is called when config is changed via
 	 *
 	 *     $config->var = 'asd';
 	 *
@@ -127,4 +127,5 @@ class Kohana_Config_Group extends ArrayObject {
 
 		return parent::offsetSet($key, $value);
 	}
+
 }

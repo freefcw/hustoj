@@ -1,9 +1,9 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Wrapper for configuration arrays. Multiple configuration readers can be
  * attached to allow loading configuration from files, database, etc.
  *
- * Configuration directives cascade across config sources in the same way that 
+ * Configuration directives cascade across config sources in the same way that
  * files cascade across the filesystem.
  *
  * Directives from sources high in the sources list will override ones from those
@@ -12,13 +12,16 @@
  * @package    Kohana
  * @category   Configuration
  * @author     Kohana Team
- * @copyright  (c) 2009-2011 Kohana Team
+ * @copyright  (c) 2009-2012 Kohana Team
  * @license    http://kohanaframework.org/license
  */
 class Kohana_Config {
 
 	// Configuration readers
 	protected $_sources = array();
+
+	// Array of config groups
+	protected $_groups = array();
 
 	/**
 	 * Attach a configuration reader. By default, the reader will be added as
@@ -28,8 +31,8 @@ class Kohana_Config {
 	 *     $config->attach($reader);        // Try first
 	 *     $config->attach($reader, FALSE); // Try last
 	 *
-	 * @param   object   Kohana_Config_Source instance
-	 * @param   boolean  add the reader as the first used object
+	 * @param   Kohana_Config_Source    $source instance
+	 * @param   boolean                 $first  add the reader as the first used object
 	 * @return  $this
 	 */
 	public function attach(Kohana_Config_Source $source, $first = TRUE)
@@ -45,6 +48,9 @@ class Kohana_Config {
 			$this->_sources[] = $source;
 		}
 
+		// Clear any cached _groups
+		$this->_groups = array();
+
 		return $this;
 	}
 
@@ -53,7 +59,7 @@ class Kohana_Config {
 	 *
 	 *     $config->detach($reader);
 	 *
-	 * @param   object  Kohana_Config_Source instance
+	 * @param   Kohana_Config_Source    $source instance
 	 * @return  $this
 	 */
 	public function detach(Kohana_Config_Source $source)
@@ -68,21 +74,21 @@ class Kohana_Config {
 	}
 
 	/**
-	 * Load a configuration group. Searches all the config sources, merging all the 
-	 * directives found into a single config group.  Any changes made to the config 
-	 * in this group will be mirrored across all writable sources.  
+	 * Load a configuration group. Searches all the config sources, merging all the
+	 * directives found into a single config group.  Any changes made to the config
+	 * in this group will be mirrored across all writable sources.
 	 *
 	 *     $array = $config->load($name);
 	 *
 	 * See [Kohana_Config_Group] for more info
 	 *
-	 * @param   string  configuration group name
-	 * @return  object  Kohana_Config_Group
+	 * @param   string  $group  configuration group name
+	 * @return  Kohana_Config_Group
 	 * @throws  Kohana_Exception
 	 */
 	public function load($group)
 	{
-		if( ! count($this->_sources))
+		if ( ! count($this->_sources))
 		{
 			throw new Kohana_Exception('No configuration sources attached');
 		}
@@ -100,10 +106,10 @@ class Kohana_Config {
 		if (strpos($group, '.') !== FALSE)
 		{
 			// Split the config group and path
-			list ($group, $path) = explode('.', $group, 2);
+			list($group, $path) = explode('.', $group, 2);
 		}
 
-		if(isset($this->_groups[$group]))
+		if (isset($this->_groups[$group]))
 		{
 			if (isset($path))
 			{
@@ -140,10 +146,10 @@ class Kohana_Config {
 
 	/**
 	 * Copy one configuration group to all of the other writers.
-	 * 
+	 *
 	 *     $config->copy($name);
 	 *
-	 * @param   string   configuration group name
+	 * @param   string  $group  configuration group name
 	 * @return  $this
 	 */
 	public function copy($group)
@@ -151,7 +157,7 @@ class Kohana_Config {
 		// Load the configuration group
 		$config = $this->load($group);
 
-		foreach($config->as_array() as $key => $value)
+		foreach ($config->as_array() as $key => $value)
 		{
 			$this->_write_config($group, $key, $value);
 		}
@@ -162,21 +168,20 @@ class Kohana_Config {
 	/**
 	 * Callback used by the config group to store changes made to configuration
 	 *
-	 * @param string         Group name
-	 * @param string         Variable name
-	 * @param mixed          The new value
+	 * @param string    $group  Group name
+	 * @param string    $key    Variable name
+	 * @param mixed     $value  The new value
 	 * @return Kohana_Config Chainable instance
 	 */
 	public function _write_config($group, $key, $value)
 	{
-		foreach($this->_sources as $source)
+		foreach ($this->_sources as $source)
 		{
 			if ( ! ($source instanceof Kohana_Config_Writer))
 			{
 				continue;
 			}
 
-			
 			// Copy each value in the config
 			$source->write($group, $key, $value);
 		}
@@ -184,4 +189,4 @@ class Kohana_Config {
 		return $this;
 	}
 
-} // End Kohana_Config
+}
