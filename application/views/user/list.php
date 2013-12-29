@@ -8,7 +8,7 @@
 <?php $rank = $rank + 1; ?>
 <tr>
 <td class="rank"><?php echo $rank; ?></td>
-<td><?php echo html::anchor("/user/{$u['user_id']}", $u['user_id']); ?></td>
+<td><?php echo html::anchor("/u/{$u['user_id']}", $u['user_id']); ?></td>
 <td><?php echo HTML::chars($u['nick']); ?></td>
 <td><?php echo $u['solved']; ?></td>
 <td><?php echo $u['submit']; ?></td>
@@ -32,5 +32,5 @@
 <?php if ($page != $total_page): ?>
 	<li><?php echo html::anchor(sprintf('/rank/user/%s', $page+1), 'Next');?></li>
 <?php endif; ?>
-<?php echo html::anchor(sprintf('/rank/user/%s', $total_page), 'Last');?>
+<?php echo html::anchor(sprintf('/rank/u/%s', $total_page), 'Last');?>
 </ul>

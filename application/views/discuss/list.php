@@ -1,6 +1,9 @@
+<ul class="breadcrumb">
+    <li><a href="/discuss/">Discuss</a> <span class="divider">/</span></li>
+</ul>
 <form action="/discuss" method="get" class="form-search pull-left">
-    <input type="text" class="input-small icon-search" placeholder="problem id" name="pid">
-    <input type="text" class="input-small icon-search" placeholder="user id" name="uid">
+    <input type="text" class="input-small icon-search" placeholder="Problem Id" name="pid">
+    <input type="text" class="input-small icon-search" placeholder="User Id" name="uid">
     <button type="submit" class="btn">Filter</button>
 </form>
 <a href="/discuss/new" class="btn btn-info pull-right">New Topic</a>
@@ -23,8 +26,8 @@
 
             <a href="/t/<?php echo $t['topic_id'];?>"><strong><?php echo $t['title'];?></strong></a>
         </td>
-        <td><a href="/user/<?php echo $t['user_id'];?>"><?php echo $t['user_id'];?></a></td>
-        <td><?php echo OJ::mtime($t['last_reply']);?></td>
+        <td><a href="<?php echo(Route::url('profile', array('uid' => $t['user_id'])));?>"><?php echo $t['user_id'];?></a></td>
+        <td><?php echo($t['last_reply']);?></td>
         <td><?php echo $t['reply_count'];?></td>
     </tr>
         <?php endforeach;?>

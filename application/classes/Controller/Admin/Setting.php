@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Controller_Admin_Setting extends Controller_Admin_My{
+class Controller_Admin_Setting extends Controller_Admin_Base{
 
     public function action_index()
     {

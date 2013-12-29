@@ -24,7 +24,7 @@
 
             <div class="controls">
                 <input class="input-xlarge" id="start_time" name="start_time"
-                       value="<?php echo OJ::mtime($contest['start_time']);?>">
+                       value="<?php echo($contest['start_time']);?>">
 
                 <p></p>
             </div>
@@ -33,7 +33,7 @@
 
             <div class="controls">
                 <input class="input-xlarge" id="end_time" name="end_time"
-                       value="<?php echo OJ::mtime($contest['end_time']);?>">
+                       value="<?php echo($contest['end_time']);?>">
             </div>
             <script type="text/javascript">
                 /* <![CDATA[ */

@@ -1,28 +1,27 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Index extends Controller_My
+class Controller_Index extends Controller_Base
 {
 
     public function action_index()
     {
-        $this->view->title = 'Home';
+        $template_data = array(
+            'title' => 'Home',
+            'rss' => array(),
+        );
 
-        $cache = Cache::instance();
-        $rss = $cache->get('bitbucket-rss', null);
-        if ($rss === null) {
-            //$data = file_get_contents('https://bitbucket.org/freefcw/hustoj/rss');
-            //$rss = Feed::parse($data);
-            $rss = array(
-                array('title' => '1000', 'link' => '/problem/show/1000'),
-                array('title' => '1001', 'link' => '/problem/show/1001')
-            );
-            $cache->set('bitbucket-rss', $rss, 300);
-        }
-        $body = View::factory('index');
-        $body->rss = $rss;
-
-        $this->view->body = $body;
-
+//        $cache = Cache::instance();
+//        $rss = $cache->get('bitbucket-rss', null);
+//        if ($rss === null) {
+//            //$data = file_get_contents('https://bitbucket.org/freefcw/hustoj/rss');
+//            //$rss = Feed::parse($data);
+//            $rss = array(
+//                array('title' => '1000', 'link' => '/problem/show/1000'),
+//                array('title' => '1001', 'link' => '/problem/show/1001')
+//            );
+//            $cache->set('bitbucket-rss', $rss, 300);
+//        }
+        $this->add_view_data($template_data);
     }
 
     public function action_home()
@@ -30,31 +29,9 @@ class Controller_Index extends Controller_My
         $this->action_index();
     }
 
-    public function action_install()
-    {
-        $db = MDB::getInstance();
-        $counters = $db->db->selectCollection('counterss');
-        $item = $counters->findOne();
-        if ($item) {
-            $this->request->redirect('/');
-        } else {
-            $item = array(
-                'topic_id'   => 1,
-                'reply_id'   => 1,
-                'problem_id' => 1000,
-                'contest_id' => 1000,
-            );
-            $counters->save($item);
-        }
-
-    }
-
     public function action_faqs()
     {
-        $this->view->title = 'FAQS';
-
-        $body = View::factory('index/faqs');
-        $this->view->body = $body;
+        $this->template_data['title'] = 'FAQS';
     }
 
     public function action_status()
@@ -65,53 +42,32 @@ class Controller_Index extends Controller_My
         //TODO: 3. add total submission status, total, tle, ac, re, etc.
         //TODO: 4. server status, system load, network...
         //TODO:
-        $this->view->title = "HUST OJ STATUS";
-
-        $body = View::factory('index/status');
-        $this->view->body = $body;
+        $this->template_data['title'] = 'HUST OJ STATUS';
     }
 
     public function action_about()
     {
-
-        $this->view->title = "About HUST OJ";
-
-        $body = View::factory('index/about');
-        $this->view->body = $body;
+        $this->template_data['title'] = "About HUST OJ";
     }
 
     public function action_links()
     {
-
-        $this->view->title = "Friends Link";
-
-        $body = View::factory('index/links');
-        $this->view->body = $body;
+        $this->template_data['title'] = "Friends Link";
     }
 
     public function action_contact()
     {
-
-        $this->view->title = "Contact US";
-
-        $body = View::factory('index/contact');
-        $this->view->body = $body;
+        $this->template_data['title'] = "Contact US";
     }
 
     public function action_help()
     {
-        $this->view->title = 'FAQS';
-
-        $body = View::factory('index/help');
-        $this->view->body = $body;
+        $this->template_data['title'] = 'FAQS';
     }
 
     public function action_terms()
     {
-        $this->view->title = 'TERMS';
-
-        $body = View::factory('index/help');
-        $this->view->body = $body;
+        $this->template_data['title'] = 'TERMS';
     }
 
 } // End Index

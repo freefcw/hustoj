@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Contest extends Controller_My
+class Controller_Contest extends Controller_Base
 {
 
     public function action_index()
@@ -20,11 +20,10 @@ class Controller_Contest extends Controller_My
     public function action_list()
     {
         // initial
-        $page_id = $this->request->param('id', 1);
+        $page = $this->request->param('id', 1);
 
-        // db
-        $c = new Model_Contest();
-        $contest_list = $c->get_list($page_id);
+        $filter = array();
+        $contest_list = Model_Contest::find($filter, $page);
 
         // view
         $body = View::factory('contest/list');
@@ -43,14 +42,13 @@ class Controller_Contest extends Controller_My
         }
         $this->view->set_global('cid', $cid);
 
-        $c = new Model_Contest();
-        $contest = $c->get_contest($cid);
+        $contest = Model_Contest::find_by_id($cid);
 
         $this->set_contest_info($contest);
 
         // view
         $body = View::factory('contest/show');
-        $body->cid = $cid;
+        $this->template_data['cid']= $cid;
 
 
         $this->view->title = "Contest - {$contest['title']}";
@@ -73,8 +71,8 @@ class Controller_Contest extends Controller_My
         $p_count = count($db->get_contest_problems($cid));
 
         $body = View::factory('contest/standing');
-        $body->standing = $standing;
-        $body->p_count = $p_count;
+        $this->template_data['standing']= $standing;
+        $this->template_data['p_count']= $p_count;
 
         $this->view->set_global('cid', $cid);
         $this->view->title = 'Standing';
@@ -97,15 +95,12 @@ class Controller_Contest extends Controller_My
 
         $this->set_contest_info($c->get_contest($cid));
 
-        // view
-        $body = View::factory('contest/stat');
-        $body->result = $stats['result'];
-        $body->language = $stats['language'];
-        $body->set('problem_count', count($c->get_contest_problems($cid)));
+        $this->template_data['result']= $stats['result'];
+        $this->template_data['language']= $stats['language'];
+        $this->template_data['problem_count'] = count($c->get_contest_problems($cid));
 
-        $this->view->title = "Contest Statistics";
-        $body->set_global('cid', $cid);
-        $this->view->body = $body;
+        $this->template_data['title'] = "Contest Statistics";
+        $this->template_data['cid'] = $cid;
     }
 
     public function action_problem()
@@ -128,19 +123,15 @@ class Controller_Contest extends Controller_My
             if ($begin > $now) {
                 $error = 'Contest is not Open';
             } else {
-                $mp = new Model_Problem();
                 $plist = $contest['plist'];
 
-                $problem = $mp->get_problem_by_id($plist[intval($pid)]['p_id']);
+                $problem = Model_Problem::find_by_id($plist[intval($pid)]['p_id']);
             }
         }
 
-        $this->view->title = $problem['title'];
-        $body = View::factory('problem/show');
-        $body->p = $problem;
-        $this->view->set_global('cid', $cid);
-        $this->view->set_global('pid', $pid);
-
-        $this->view->body = $body;
+        $this->template_data['title'] = $problem['title'];
+        $this->template_data['p']= $problem;
+        $this->template_data['cid'] = $cid;
+        $this->template_data['pid'] = $pid;
     }
 }

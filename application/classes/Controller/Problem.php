@@ -1,51 +1,45 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Problem extends Controller_My
+class Controller_Problem extends Controller_Base
 {
+
+    public function action_index()
+    {
+        $this->view = 'problem/list';
+        $this->action_list();
+    }
 
     public function action_list()
     {
-        // initial
         $page_id = $this->request->param('id', 1);
-
-        // db
-        $problem = new Model_Problem();
-
-        // view
-        $body = View::factory('problem/list');
-        $body->page_id = $page_id;
 
         $per_page = 50;
 
-        $body->problemlist = $problem->get_page($page_id, $per_page);
+        $filter = array();
+
+        $this->template_data['problemlist'] = Model_Problem::find($filter, $page_id, $per_page, 'ASC');
         //TODO: add check permission of contest
-        $total = $problem->get_total();
-        //if (!is_string($total)) var_dump($total);
-        $body->pages = ceil(intval($total) / $per_page);
+        $total = Model_Problem::count($filter);
 
         $title = 'Problem Set ' . $page_id;
-        $this->view->title = $title;
-
-        $this->view->body = $body;
+        $this->template_data['page_id'] = $page_id;
+        $this->template_data['pages'] = ceil(intval($total) / $per_page);
+        $this->template_data['title'] = $title;
     }
 
     public function action_show()
     {
         // initial
-        $pid = $this->request->param('id');
+        $pid = $this->request->param('id', null);
+
         if ($pid == NULL) {
-            $this->action_list();
+            $this->redirect('/problem/list');
         }
 
-        // db
-        $problem = new Model_Problem();
+        $problem = Model_Problem::find_by_id($pid);
 
-        // view
-        $body = View::factory('problem/show');
-        $body->p = $problem->get_problem($pid);
-
-        $this->view->title = $body->p['title'];
-        $this->view->body = $body;
+        $this->template_data['title'] = $problem['title'];
+        $this->template_data['p'] = $problem;
     }
 
     public function action_status()
@@ -54,7 +48,6 @@ class Controller_Problem extends Controller_My
         $page = $this->request->param('id', 1);
 
         $pid = $this->request->query('pid', null);
-
         $uid = $this->request->query('uid', null);
         $cid = $this->request->query('cid', null);
         $language = $this->request->query('language', null);
@@ -82,24 +75,33 @@ class Controller_Problem extends Controller_My
 //			echo "error";
 //		}
 
+        $filter = array(
+            'problem_id' => $pid,
+            'user_id' => $uid,
+            'contest_id' => $cid,
+            'language' => $language,
+            'result' => $result,
+        );
         // db
-        $db = new Model_Submission();
-        $status = $db->get_status($page, $pid, $uid, $cid, $language, $result);
-        $total = $db->get_status_count($pid, $uid, $cid, $language, $result);
+
+        foreach($filter as $k => $v)
+        {
+            if (is_null($v) or $v === '' or $v == -1) unset($filter[$k]);
+        }
+        $status = Model_Solution::find($filter, $page);
+        $total = Model_Solution::count($filter);
 
         // view
-        $body = View::factory('problem/status');
-        $body->list = $status;
-        $body->page = $page;
-        $body->total = ceil($total / $per_page);
-        $body->pid = $pid;
-        $body->uid = $uid;
-        $body->cid = $cid;
-        $body->language = $language;
-        $body->result = $result;
+        $this->template_data['list']= $status;
+        $this->template_data['page']= $page;
+        $this->template_data['total']= ceil($total / $per_page);
+        $this->template_data['pid']= $pid;
+        $this->template_data['uid']= $uid;
+        $this->template_data['cid']= $cid;
+        $this->template_data['language']= $language;
+        $this->template_data['result']= $result;
 
-        $this->view->title = 'STATUS';
-        $this->view->body = $body;
+        $this->template_data['title'] = 'STATUS';
     }
 
     public function action_submit()
@@ -109,32 +111,33 @@ class Controller_Problem extends Controller_My
         $request = $this->request;
         $pid = $request->param('id', '');
 
-        if ($request->method() == 'GET') {
-            $body = View::factory('problem/submit');
-            $body->pid = $pid;
+        if ( $this->request->is_get() ) {
+            $this->template_data['pid'] = 'pid';
             $cid = $request->query('cid', null);
             $cpid = $request->query('pid', null);
             if ($cid !== null) {
-                $body->cid = $cid;
-                $body->cpid = $cpid;
+                $this->template_data['cid'] = $cid;
+                $this->template_data['cpid'] = $cpid;
             }
 
-            $this->view->title = 'Submit';
-            $this->view->body = $body;
-        } else {
-            if ($request->method() == 'POST') {
-                $post = $request->post();
+            $this->template_data['title'] = 'Subtmit';
 
+        } else {
+            if ( $this->request->is_post() ) {
                 //TODO:check permission, the user can submit? if not admin, may cause leak or cracked
                 // 1. not admin
                 // 2. time failed
                 // 3. not invite people
                 //TODO: validation
                 //TODO: add contest problem
-                $mp = new Model_Problem();
-                $post['user_id'] = Auth::instance()->get_user();
-                $post['ip'] = Request::$client_ip;
-                $ret = $mp->new_solution($post);
+
+                $solution = new Model_Solution();
+                $current_user = Auth::instance()->get_user();
+                $solution->user_id = $current_user->user_id;
+                $solution->ip = Request::$client_ip;
+                $solution->update($this->cleaned_post());
+                $solution->save();
+//                $solution->problem_id = $c
 
                 $request->redirect('/status');
             }
@@ -144,31 +147,22 @@ class Controller_Problem extends Controller_My
     public function action_summary()
     {
         // init
-        $page_id = $this->request->param('id');
-        if ($page_id === NULL) {
-            # TODO: redirect to back?
-        }
+        $problem_id = $this->request->param('id');
+        if ( ! $problem_id )
+            $this->redirect('/');
 
-        // db
-        $p = new Model_Submission();
-        $summary = $p->get_summary($page_id);
-        $best_solution = $p->get_best_solution($page_id);
+        $this->template_data['summary'] = Model_Solution::get_summry($problem_id);
+        $this->template_data['solutions'] = Model_Solution::best_solution($problem_id);
 
-        // view
+        $this->template_data['title'] = "Summary of {$problem_id}";
 
-        $body = View::factory('problem/summary');
-        $body->summary = $summary;
-        $body->solutions = $best_solution;
-
-        $this->view->title = "Summary of {$page_id}";
-        $this->view->body = $body;
     }
 
     public function action_search()
     {
         // init
-        $text = $this->request->query('text');
-        $area = $this->request->query('area');
+        $text = $this->get_query('text');
+        $area = $this->get_query('area');
 
         if ($text === NULL) {
             // TODO: add better handler
@@ -177,20 +171,12 @@ class Controller_Problem extends Controller_My
 
         // TODO: validation
 
-        // db
-        $db = new Model_Problem();
-        // TODO: add filter
-        $list = $db->find_problem($text, $area);
+        $list = Model_Problem::find_problem($text, $area);
 
-        // view
-        $body = View::factory('problem/search');
-
-        $body->area = $area;
-        $body->search_text = $text;
-        $body->problemlist = $list;
-
-        $this->view->title = "{$text} search result";
-        $this->view->body = $body;
+        $this->template_data['area'] = $area;
+        $this->template_data['search_text'] = $text;
+        $this->template_data['problemlist'] = $list;
+        $this->template_data['title'] = "{$text} search result";
     }
 
 } // End Welcome

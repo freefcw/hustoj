@@ -37,13 +37,13 @@
                     </ul>
 
                     <ul class="nav pull-right">
-                        <?php if ($current_user == null): ?>
+                <?php $cu = Auth::instance()->get_user(); if ( $cu == null): ?>
                         <li><a href="/login">Login</a></li>
                         <li><a href="/account/register">Register</a></li>
-                        <?php else: ?>
-                        <li><a href="/user/<?php echo $current_user;?>"
-                               title="<?php echo $current_user;?>"><?php echo $current_user;?></a></li>
-                        <li><a href="/account/setting">Setting</a></li>
+                <?php else: ?>
+                        <li><a href="<?php echo(Route::url('profile', array('uid' => $cu->user_id)));?>"
+                               title="<?php echo($cu->user_id);?>"><?php echo($cu->user_id);?></a></li>
+                        <li><a href="/user/edit">Setting</a></li>
                         <li class="divider-vertical"></li>
                 <li class="dropdown" data-dropdown="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">More</a>
@@ -51,10 +51,10 @@
                   <li><a href="#">Message</a></li>
                         <?php if (Auth::instance()->is_admin()): ?>
                             <li><a href="/admin">Admin Control</a></li>
-                            <?php endif; ?>
+                        <?php endif; ?>
                         <li class="divider"></li>
                         <li><a href="/logout">Logout</a></li>
-                        <?php endif; ?>
+                <?php endif; ?>
                     </ul>
                     </li>
                     </ul>
@@ -67,7 +67,7 @@
 
     <div id="wrapper">
         <div class="banner"><h1>HUST Online Judge</h1></div>
-        <?php echo $body; ?>
+        <?php echo($body); ?>
     </div>
     <?php echo View::factory('footer'); ?>
 </div>

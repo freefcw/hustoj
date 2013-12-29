@@ -5,11 +5,28 @@
  * Time: 上午12:36
  */
 
-class Model_Topic extends Model_Mongo
+class Model_Topic extends Model_Base
 {
+    static $table = 'topic';
+    static $primary_key = 'tid';
 
-    var $collection;
+    static $cols = array(
+        'tid',
+        'title',
+        'status',
+        'top_level',
+        'cid',
+        'pid',
+        'author_id',
+    );
 
+    public $tid;
+    public $title;
+    public $status;
+    public $top_level;
+    public $cid;
+    public $pid;
+    public $author_id;
     /**
      *
      */
@@ -148,4 +165,13 @@ class Model_Topic extends Model_Mongo
     {
         return $this->get_new_id('reply_id');
     }
+
+
+    protected function initial_data()
+    {
+
+    }
+
+    public function validate()
+    {}
 }

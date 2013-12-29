@@ -5,37 +5,47 @@
  * @author freefcw
  */
 
-class Model_Contest extends Model_Mongo
+class Model_Contest extends Model_Base
 {
+    static $cols = array(
+        'contest_id',
+        'title',
+        'start_time',
+        'end_time',
+        'defunct',
+        'description',
+        'private',
+    );
 
-    public function __construct()
-    {
-        parent::__construct();
-        $this->collection = $this->db->selectCollection('contest');
-    }
+    static $primary_key = 'contest_id';
+
+    static $table = 'contest';
+
+    public $contest_id;
+    public $title;
+    public $start_time;
+    public $end_time;
+    public $defunct;
+    public $description;
+    public $private;
 
     /**
-     * get contest list for a page
+     * @param string $id
      *
-     * @access public
-     *
-     * @param     $page
-     * @param int $per_page
-     *
-     * @internal param \the $int page id
-     * @return array  a list of contest
+     * @return Model_Contest
      */
-    public function get_list($page, $per_page = 25)
+    public static function find_by_id($id)
     {
-        $condition = array();
-        $need = array();
+        return parent::find_by_id($id);
+    }
 
-        $result = $this->collection->find()
-            ->sort(array('contest_id' => -1))
-            ->skip($per_page * ($page - 1))
-            ->limit($per_page);
 
-        return iterator_to_array($result);
+    /**
+     * @return Model_Problem[]
+     */
+    public function problems()
+    {
+//        DB::select()->from()
     }
 
     /**
@@ -45,43 +55,15 @@ class Model_Contest extends Model_Mongo
      *
      * is contest opened
      */
-    public function is_contest_open($cid)
+    public function is_open($cid)
     {
-        $contest = $this->get_contest($cid);
-
         $now = time();
 
-        if ($contest['start_time']->sec > $now) {
-            return false;
-        }
+        if ($this->start_time > $now) return false;
+
         return true;
     }
 
-    /**
-     * count all the contest
-     *
-     * @access    public
-     * @return    int    the number of contest
-     */
-    public function get_total()
-    {
-        $result = $collection->count();
-
-        return $result;
-    }
-
-
-    public function save($data)
-    {
-        if (array_key_exists('contest_id', $data)) {
-            $condition = array('contest_id' => $data['contest_id']);
-            $ret = $this->collection->update($condition, array('$set' => $data));
-        } else {
-            $ret = $this->collection->save($data);
-        }
-
-        return $ret;
-    }
 
     /**
      *
@@ -263,4 +245,10 @@ class Model_Contest extends Model_Mongo
 
         $collection->remove($condition);
     }
+
+    public function initial_data()
+    {}
+
+    public function validate()
+    {}
 }

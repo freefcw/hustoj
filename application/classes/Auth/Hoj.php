@@ -7,49 +7,50 @@
 
 class Auth_Hoj extends Kohana_Auth
 {
-    protected function _login($username, $password, $remember)
+    protected function _login($user, $password, $remember)
     {
-        if (is_string($password)) $password = $this->hash($password);
+        if (! is_object($user)) {
+            $username = $user;
 
-        $user = new Model_User();
-        if ($user->auth($username, $password))
-        {
-            // Complete the login
-            return $this->complete_login($username);
+            $user = Model_User::authenticate($username, $this->hash($password));
+            if ( $user )
+            {
+                return $this->complete_login($user);
+            }
+            return FALSE;
         }
+        if ( $user )
+            return TRUE;
 
         return FALSE;
     }
 
-    public function password($username)
+    public function password($user)
     {
-        $user = new Model_User();
-        return $user->get_password($username);
-    }
-
-    public function hash($pwd)
-    {
-        return md5($pwd);
+        if ( ! is_object($user))
+        {
+            $user = Model_User::find_by_username($user);
+        }
+        return $user->password;
     }
 
     public function check_password($password)
     {
-        $username = $this->get_user();
+        $user = $this->get_user();
 
-        if ($username == null) return false;
+        if ( ! $user)
+            return false;
 
-        return ($this->hash($password) == $this->password($username));
+        return ($this->hash($password) === $user->password);
     }
-//
-//    public function logged_in($role = NULL)
-//    {
-//        // Check to see if the user is logged in, and if $role is set, has all roles
-//    }
-//
-//    public function get_user($default = NULL)
-//    {
-//        // Get the logged in user, or return the $default if a user is not found
-//    }
+
+    public function logged_in($role = null)
+    {
+        $user = $this->get_user();
+        if ( ! $user)
+            return FALSE;
+        return TRUE;
+    }
 
     /**
    	 * Forces a user to be logged in, without specifying a password.
@@ -69,5 +70,22 @@ class Auth_Hoj extends Kohana_Auth
         $privilege = Session::instance()->get('privilege');
         if ($privilege == 'admin') return true;
         return false;
+    }
+
+    /**
+     * @param Model_User $user
+     *
+     * @return bool
+     */
+    public function complete_login($user)
+    {
+
+        if ( $user )
+        {
+            $user->accesstime = date('Y-m-d H:i:s');
+            $user->ip = Request::$client_ip;
+            $user->save();
+        }
+        return parent::complete_login($user);
     }
 }

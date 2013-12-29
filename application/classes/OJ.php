@@ -5,6 +5,7 @@
  */
 class OJ
 {
+    const time_format = 'Y-m-d h:i:s';
 
     /**
      * @var  array  result code to human language readable long
@@ -56,8 +57,8 @@ class OJ
      */
     public static $private
         = array(
-            '0' => 'public',
-            '1' => 'private'
+            0 => 'public',
+            1 => 'private'
         );
 
     /**
@@ -149,39 +150,6 @@ class OJ
         return sprintf("%02d:%02d:%02d", $hour, $minute, $sec);
     }
 
-    /**
-     * @static
-     *
-     * @param $mtime
-     *
-     * @return string
-     *
-     * make mongoDate human readable
-     */
-    public static function mtime($mtime)
-    {
-        if ($mtime) {
-            return date('Y-m-d h:i:s', $mtime->sec);
-        }
-        return '';
-    }
-
-    /**
-     * @static
-     *
-     * @param $mtime
-     *
-     * @return string
-     *
-     * generate read date
-     */
-    public static function getdate($mtime)
-    {
-        if ($mtime) {
-            return date('Y年m月d', $mtime->sec);
-        }
-        return '';
-    }
 
     /**
      * @static
@@ -221,5 +189,83 @@ class OJ
             }
         }
         return $output ? $output : "Just now";
+    }
+
+    /**
+     * 统一格式化时间
+     *
+     * @param string $format
+     *
+     * @return bool|string
+     */
+    public static function time_format($format='Y-m-d H:i:s')
+    {
+        return date($format);
+    }
+
+    /**
+     * 生成分页的url
+     *
+     * @param $page
+     *
+     * @return string
+     */
+    public static function gen_page_url($page)
+    {
+        $params = Request::current()->query();
+        $params['page'] = $page;
+        return Request::current()->uri().URL::query($params);
+    }
+
+    /**
+     * @param     $total int
+     * @param int $per_page
+     *
+     * @return float
+     */
+    public static function get_total_pages($total, $per_page = 20)
+    {
+        return ceil($total / $per_page);
+    }
+
+    public static function get_max_pagination_page($total_pages = 1, $distance = 5)
+    {
+        $current_page = Request::current()->query('page');
+
+        if ( ! $current_page ) $current_page = 1;
+
+        $start = $current_page - $distance;
+        if ( $total_pages - $current_page < $distance)
+        {
+            $start = $total_pages - $distance * 2 + 1;
+        }
+        if ( $start < 1 ) $start = 1;
+
+        $end = $start + $distance * 2 -1;
+        if ( $end > $total_pages ) $end = $total_pages;
+
+        return array($start, $end);
+    }
+
+    /**
+     * 过滤数据，包括tag和special chars
+     *
+     * @param $value
+     * @return array|string
+     */
+    public static function clean_data($value)
+    {
+        if ( is_array($value) )
+        {
+            foreach($value as $k => $v)
+            {
+                $value[$k] = PP::clean_data($v);
+            }
+        } else {
+            $value = strip_tags($value);
+            $value = HTML::chars($value, TRUE);
+        }
+
+        return $value;
     }
 }

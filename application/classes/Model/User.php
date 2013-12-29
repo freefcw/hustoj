@@ -4,79 +4,78 @@
  *
  * @author freefcw
  */
-class Model_User extends Model_Mongo
+class Model_User extends Model_Base
 {
+    static $cols = array(
+        'user_id',
+        'email',
+        'submit',
+        'solved',
+        'defunct',
+        'ip',
+        'accesstime',
+        'volume',
+        'language',
+        'password',
+        'reg_time',
+        'nick',
+        'school',
+    );
+
+    static $primary_key = 'user_id';
+
+    static $table = 'users';
+
+    public $user_id;
+    public $email;
+    public $submit;
+    public $solved;
+    public $defunct;
+    public $ip;
+    public $accesstime;
+    public $volume;
+    public $language;
+    public $password;
+    public $reg_time;
+    public $nick;
+    public $school;
+
 
     /**
+     * 判断用户登录信息是否正确
      *
+     * @param string $username
+     * @param string $password
+     *
+     * @return Model_User
      */
-    public function __construct()
+    public static function authenticate($username, $password)
     {
-        parent::__construct();
-        //will load database library into $this->db, you can leave it out if you don't need it
-        $this->collection = $this->db->selectCollection('user');
+        $query = DB::select()
+                   ->from(self::$table)
+                   ->where('user_id', '=', $username)
+                   ->where('password', '=', $password)
+                   ->as_object(get_called_class());
+
+        $result = $query->execute();
+        return $result->current();
     }
 
-    /**
-     * @param $username
-     * @param $password
-     *
-     * @return bool
-     */
-    public function auth($username, $password)
+    public static function find_by_solved($filters, $page = 1, $limit = 50)
     {
-        $condition = array();
-        $condition['user_id'] = $username;
-        $condition['password'] = $password;
-
-
-        $num = $this->collection->count($condition);
-
-        $this->log_auth($username, $password);
-
-        if ($num == 0) {
-            return false;
-        }
-        // if user login success, then log last access time
-        $this->update_access_time($username);
-        $u = $this->collection->findOne($condition);
-        if (array_key_exists('privilege', $u)) {
-            Session::instance()->set('privilege', $u['privilege']);
-        } else // default permission is insert on user create or here? new user should has the default permission...
+        $query = DB::select()->from(static::$table);
+        foreach($filters as $col => $value)
         {
-            Session::instance()->set('privilege', 'user');
+            $query->where($col, '=', $value);
         }
+        if ( $limit ) $query->limit($limit);
+        if ( $page ) $query->offset( $limit * ($page - 1));
 
-        return true;
-    }
+        $query->order_by('solved',  'DESC');
 
-    /**
-     * @param $user_id
-     * @param $pwd
-     */
-    private function log_auth($user_id, $pwd)
-    {
-        $log = array(
-            'type'     => 'login',
-            'user_id'  => $user_id,
-            'password' => Auth_Hoj::instance()->hash($pwd),
-            'ip'       => Request::$client_ip,
-            'time'     => new MongoDate(time()),
-        );
+        $result = $query->as_object(get_called_class())->execute();
 
-        $log_collection = $this->db->selectCollection('logs');
-        $log_collection->save($log);
-    }
-
-    /**
-     * @param $user_id
-     */
-    private function update_access_time($user_id)
-    {
-        $new_value = array('access_time' => new MongoDate(time()));
-
-        $collection = $this->db->selectCollection('user');
-        $collection->update(array('user_id' => $user_id), array('$set' => $new_value));
+        return $result->as_array();
     }
 
     /**
@@ -178,18 +177,6 @@ class Model_User extends Model_Mongo
         return false;
     }
 
-    /**
-     * @param $user
-     *
-     * @return bool
-     */
-    public function save($user)
-    {
-        $condition = array('user_id' => $user['user_id']);
-        $ret = $this->collection->update($condition, array('$set' => $user));
-
-        return $ret;
-    }
 
     /**
      * @param $user
@@ -226,4 +213,10 @@ class Model_User extends Model_Mongo
 
         $this->collection->update($condition, array('$set' => $data));
     }
+
+    public function validate()
+    {}
+
+    protected function initial_data()
+    {}
 }

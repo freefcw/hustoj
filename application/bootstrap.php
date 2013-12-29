@@ -52,16 +52,26 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
  */
 I18n::lang('zh_CN');
 
+if (isset($_SERVER['SERVER_PROTOCOL']))
+{
+    // Replace the default protocol.
+    HTTP::$protocol = $_SERVER['SERVER_PROTOCOL'];
+}
+
 /**
  * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
  *
  * Note: If you supply an invalid environment name, a PHP warning will be thrown
  * saying "Couldn't find constant Kohana::<INVALID_ENV_NAME>"
  */
-if (isset($_SERVER['KOHANA_ENV'])) {
-    Kohana::$environment = constant('Kohana::' . strtoupper($_SERVER['KOHANA_ENV']));
+$env = getenv('KOHANA_ENV');
+if (defined('Kohana::'.strtoupper($env)) === false)
+{
+    $env = 'production';
+    Kohana::$environment = Kohana::PRODUCTION;
+} else {
+    Kohana::$environment = constant('Kohana::'.strtoupper($env));
 }
-
 /**
  * Initialize Kohana, setting the default options.
  *
@@ -75,13 +85,12 @@ if (isset($_SERVER['KOHANA_ENV'])) {
  * - boolean  profile     enable or disable internal profiling               TRUE
  * - boolean  caching     enable or disable internal caching                 FALSE
  */
-Kohana::init(
-    array(
-         'base_url'   => '/',
-         'index_file' => '/',
-    )
-);
-
+Kohana::init(array(
+     'base_url'  => '/', //Kohana::$config->load('init.base_url', '/'),
+     'index_file' => FALSE,
+     'profile'    => Kohana::$environment !== Kohana::PRODUCTION,
+     'caching'    => Kohana::$environment === Kohana::PRODUCTION,
+ ));
 /**
  * Attach the file write to logging. Multiple writers are supported.
  */
@@ -91,24 +100,18 @@ Kohana::$log->attach(new Log_File(APPPATH . 'logs'));
  * Attach a file reader to config. Multiple readers are supported.
  */
 Kohana::$config->attach(new Config_File);
+Kohana::$config->attach(new Config_File('config/'.$env));
 
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
-Kohana::modules(
-    array(
-         'auth'     => MODPATH . 'auth', // Basic authentication
-         'cache'    => MODPATH . 'cache', // Caching with multiple backends
-         // 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
-         'database' => MODPATH . 'database', // Database access
-         // 'image'      => MODPATH.'image',      // Image manipulation
-         // 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
-         // 'unittest'   => MODPATH.'unittest',   // Unit testing
-         // 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
-    )
-);
+Kohana::modules(Kohana::$config->load('modules')->as_array());
 
+/**
+ * set Cookie config
+ */
 Cookie::$salt = 'hustoj';
+Cookie::$domain = 'acm.hust.edu.cn';
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
@@ -118,15 +121,12 @@ Cookie::$salt = 'hustoj';
 Route::set(
     'auth', '<action>',
     array('action' => '(login|logout|setting|setting)')
-)
-    ->defaults(
-    array(
+)->defaults(array(
          'controller' => 'user'
     )
 );
 Route::set('search', 'problem/search')
-    ->defaults(
-    array(
+    ->defaults(array(
          'controller' => 'problem',
          'action'     => 'search'
     )
@@ -134,20 +134,19 @@ Route::set('search', 'problem/search')
 
 Route::set(
     'ranklist', 'rank/user(/<id>)',
-    array('id' => '[[:word:]]+')
-)
-    ->defaults(
     array(
+        'id' => '[[:word:]]+'
+    ))->defaults(array(
          'controller' => 'user',
          'action'     => 'list'
     )
 );
+
 Route::set(
-    'user', 'user/<id>',
-    array('id' => '[[:word:]]+')
-)
-    ->defaults(
+    'profile', 'u/<uid>',
     array(
+        'uid' => '[[:word:]]+'
+    ))->defaults(array(
          'controller' => 'user',
          'action'     => 'profile'
     )
@@ -155,12 +154,11 @@ Route::set(
 
 Route::set(
     'topic', 't/<id>',
-    array('id' => '\d+')
-)
-    ->defaults(
     array(
-         'controller' => 'discuss',
-         'action'     => 'topic'
+        'id' => '\d+'
+    ))->defaults(array(
+        'controller' => 'discuss',
+        'action'     => 'topic'
     )
 );
 
@@ -168,10 +166,7 @@ Route::set(
     'page', '<action>',
     array(
          'action' => '(home|faqs|about|links|contact|status|help|terms)'
-    )
-)
-    ->defaults(
-    array(
+    ))->defaults(array(
          'controller' => 'index'
     )
 );
@@ -179,47 +174,17 @@ Route::set(
     'contest-problem', 'contest/<cid>/problem/<pid>',
     array('cid' => '\d+',
           'pid' => '\d+'
-    )
-)->defaults(
-    array(
+    ))->defaults(array(
          'controller' => 'contest',
          'action'     => 'problem',
     )
 );
-Route::set('adminuser', 'admin/user(/<action>(/<id>))')
-    ->defaults(
-    array(
-         'controller' => 'admin_user',
-         'action'     => 'index'
-    )
-);
-Route::set('adminproblem', 'admin/problem(/<action>(/<id>))')
-    ->defaults(
-    array(
-         'controller' => 'admin_problem',
-         'action'     => 'index'
-    )
-);
-Route::set('admincontest', 'admin/contest(/<action>(/<id>))')
-    ->defaults(
-    array(
-         'controller' => 'admin_contest',
-         'action'     => 'index'
-    )
-);
 
-Route::set('adminsetting', 'admin/setting(/<action>(/<id>))')
-    ->defaults(
-    array(
-         'controller' => 'admin_setting',
-         'action'     => 'index'
-    )
-);
-Route::set('adminindex', 'admin(/<action>)')
-    ->defaults(
-    array(
-         'controller' => 'admin_index',
-         'action'     => 'index'
+Route::set('admin', 'admin/<controller>(/<action>(/<id>))')
+    ->defaults(array(
+        'directory'  => 'admin',
+        'controller' => 'index',
+        'action'     => 'index'
     )
 );
 
@@ -228,10 +193,7 @@ Route::set(
     array(
          'id'       => '[[:digit:]]{1,}',
          'overflow' => '.*?'
-    )
-)
-    ->defaults(
-    array(
+    ))->defaults(array(
          'controller' => 'index',
          'action'     => 'index',
     )

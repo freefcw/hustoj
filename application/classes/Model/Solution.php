@@ -4,17 +4,44 @@
  * Date: 12-1-10
  * Time: 上午1:16
  */
-class Model_Submission extends Model_Mongo
+class Model_Solution extends Model_Base
 {
-    /**
-     *
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->collection = $this->db->selectCollection('solution');
-    }
+    static $table = 'solution';
+    static $primary_key = 'solution_id';
 
+    static $cols = array(
+        'solution_id',
+        'problem_id',
+        'user_id',
+        'time',
+        'memory',
+        'in_date',
+        'className',
+        'result',
+        'language',
+        'ip',
+        'contest_id',
+        'valid',
+        'num',
+        'code_length',
+        'judgetime',
+    );
+
+    public $solution_id;
+    public $problem_id;
+    public $user_id;
+    public $time;
+    public $memory;
+    public $in_date;
+    public $className;
+    public $result;
+    public $language;
+    public $ip;
+    public $contest_id;
+    public $valid;
+    public $num;
+    public $code_length;
+    public $judgetime;
     /**
      * @param $var
      *
@@ -65,7 +92,7 @@ class Model_Submission extends Model_Mongo
      *
      * @return array
      */
-    public function get_summary($pid)
+    public static function get_summary($pid)
     {
         # TODO: add content
         $data = array();
@@ -103,7 +130,7 @@ class Model_Submission extends Model_Mongo
      *
      * @return array
      */
-    public function get_best_solution($pid, $start = 0, $limit = 20)
+    public static function best_solution($pid, $start = 0, $limit = 20)
     {
         # TODO: add content
 
@@ -186,4 +213,10 @@ class Model_Submission extends Model_Mongo
         $options = array('multiple' => true);
         $this->collection->update($condition, $changes, $options);
     }
+
+    protected function initial_data()
+    {}
+
+    public function validate()
+    {}
 }

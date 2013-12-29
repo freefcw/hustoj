@@ -3,7 +3,7 @@
 /**
  *
  */
-class Controller_Discuss extends Controller_My
+class Controller_Discuss extends Controller_Base
 {
 
     public function action_index()

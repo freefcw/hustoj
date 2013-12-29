@@ -79,7 +79,7 @@
       <h3>Detail</h3>
     <dl>
         <dt>Last accesss time</dt>
-        <dd><?php echo OJ::mtime($user['access_time']);?></dd>
+        <dd><?php echo($user['access_time']);?></dd>
         <dt>Last access ip</dt>
         <dd><?php echo $user['ip'];?></dd>
         <dt>Total Submit</dt>

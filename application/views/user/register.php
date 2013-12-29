@@ -1,5 +1,5 @@
 <h2 class="page-title">Register Information</h2>
-<form action="/account/new" method="POST" class="form-horizontal span6" style="margin-left: 25%">
+<form action="/user/new" method="POST" class="form-horizontal span6" style="margin-left: 25%">
 <fieldset>
     <?php if (isset($errors)):?>
     <ul class="error">

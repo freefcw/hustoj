@@ -230,6 +230,20 @@ div.user-stats li.count-accept a {
 div.user-stats li.count-submit a {
     /*color: yellow;*/
 }
+.topic-content {
+    padding: 10px;
+    border: darkgray 1px inset;
+}
+
+.reply-content {
+    margin-top: 5px;
+}
+
+.reply-header {
+    border-bottom: 1px solid darkgrey;
+    padding-top: 10px;
+    padding-bottom: 7px;
+}
 
 /* css for timepicker */
 .ui-timepicker-div .ui-widget-header {

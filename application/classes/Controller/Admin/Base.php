@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Admin_My extends Controller {
+class Controller_Admin_Base extends Controller {
 
 	protected $view;
 

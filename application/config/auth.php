@@ -9,7 +9,7 @@
 // see also: http://kohanaframework.org/3.2/guide/auth/config
 return array(
 
-	'driver'       => 'hoj',
+	'driver'       => 'Hoj',
 	'hash_method'  => 'sha256',
 	'hash_key'     => 'hustoj',
 	'lifetime'     => 1209600,

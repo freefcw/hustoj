@@ -4,24 +4,12 @@ return array
 (
     'default' => array
     (
-        'type'       => 'mysql',
+        'type'       => 'MySQL',
         'connection' => array(
-            /**
-             * The following options are available for MySQL:
-             *
-             * string   hostname     server hostname, or socket
-             * string   database     database name
-             * string   username     database username
-             * string   password     database password
-             * boolean  persistent   use persistent connections?
-             * array    variables    system variables as "key => value" pairs
-             *
-             * Ports and sockets may be appended to the hostname.
-             */
-            'hostname'   => 'localhost',
+            'hostname'   => '127.0.0.1',
             'database'   => 'judge',
             'username'   => 'root',
-            'password'   => 'hejun',
+            'password'   => 'root',
             'persistent' => FALSE,
         ),
         'table_prefix' => '',
@@ -54,14 +42,5 @@ return array
         'charset'      => 'utf8',
         'caching'      => FALSE,
         'profiling'    => TRUE,
-    ),
-    'mongodb' => array(
-        'type'          => 'mongodb',
-        'connection'    => array(
-            'dsn'       => 'mongodb://localhost',//mongodb://{$username}:{$password}@{$host}
-            'username'  => '',
-            'password'  => '',
-            'database'  => 'judge',
-        ),
     ),
 );

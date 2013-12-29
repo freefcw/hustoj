@@ -11,8 +11,8 @@
                 <li><a><i class="icon-signal"></i> 5</a></li>
                 <li><a><i class="icon-home"></i> <?php echo $u['school'];?></a></li>
                 <li><a><i class="icon-envelope"></i> <?php echo str_replace('@', '##', $u['email']);?></a></li>
-                <li><a><i class="icon-time"></i> 出生于公元 <?php echo OJ::getdate($u['reg_time']);?></a></li>
-                <li><a><i class="icon-time"></i> 上次访问时间 <?php echo OJ::getdate($u['access_time']);?></a></li>
+                <li><a><i class="icon-time"></i> 出生于公元 <?php echo($u['reg_time']);?></a></li>
+                <li><a><i class="icon-time"></i> 上次访问时间 <?php echo($u['access_time']);?></a></li>
             </ul>
         </div>
         <div class="span3 user-stats">

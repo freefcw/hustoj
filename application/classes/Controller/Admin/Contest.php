@@ -5,7 +5,7 @@
  * Time: 上午11:24
  */
 
-class Controller_Admin_Contest extends Controller_Admin_My
+class Controller_Admin_Contest extends Controller_Admin_Base
 {
     public function action_index()
     {

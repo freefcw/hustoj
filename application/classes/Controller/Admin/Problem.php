@@ -5,7 +5,7 @@
  * Time: 上午11:04
  */
 
-class Controller_Admin_Problem extends Controller_Admin_My {
+class Controller_Admin_Problem extends Controller_Admin_Base {
 
     public function action_index()
     {
@@ -52,7 +52,7 @@ class Controller_Admin_Problem extends Controller_Admin_My {
 
             $m->save($newdata);
         }
-        $problem = $m->get_problem($pid);
+        $problem = $m->find_by_id($pid);
 
         // view begin
         $body = View::factory('admin/problem/edit');
@@ -124,8 +124,8 @@ class Controller_Admin_Problem extends Controller_Admin_My {
     {
         $page = $this->request->param('id', 1);
 
-        $m = new Model_Problem();
-        $problem_list = $m->get_page_for_admin($page);
+        $filter = array();
+        $problem_list = Model_Problem::find($filter, $page);
 
         $body = View::factory('admin/problem/list');
         $body->bind('problem', $problem_list);

@@ -40,7 +40,7 @@
                         <li><a href="/login">Login</a></li>
                         <li><a href="/account/register">Register</a></li>
                         <?php else: ?>
-                        <li><a href="/user/<?php echo $current_user;?>"
+                        <li><a href="<?php echo(Route::url('profile', array('uid' => $cu->user_id)));?>"
                                title="<?php echo $current_user;?>"><?php echo $current_user;?></a></li>
                         <li><a href="/account/setting">Setting</a></li>
                         <li class="divider-vertical"></li>
