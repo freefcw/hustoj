@@ -9,6 +9,34 @@ class Model_Solution extends Model_Base
     static $table = 'solution';
     static $primary_key = 'solution_id';
 
+    const STATUS_PENDING         = 0;
+    const STATUS_PENDING_REJUDGE = 1;
+    const STATUS_COMPLIE         = 2;
+    const STATUS_REJUDGING       = 3;
+    const STATUS_AC              = 4;
+    const STATUS_PE              = 5;
+    const STATUS_WA              = 6;
+    const STATUS_TLE             = 7;
+    const STATUS_MLE             = 8;
+    const STATUS_OLE             = 9;
+    const STATUS_RE              = 10;
+    const STATUS_CE              = 11;
+
+    public static $status = array(
+            4  => "Accepted",
+            5  => "Presentation Error",
+            6  => "Wrong Answer",
+            7  => "Time Limit Exceed",
+            8  => "Memory Limit Exceed",
+            9  => "Output Limit Exceed",
+            10 => "Runtime Error",
+            11 => "Compile Error",
+            0  => "Pending",
+            1  => "Pending Rejudging",
+            2  => "Compiling",
+            3  => "Running &amp; Judging"
+        );
+
     static $cols = array(
         'solution_id',
         'problem_id',
@@ -42,176 +70,118 @@ class Model_Solution extends Model_Base
     public $num;
     public $code_length;
     public $judgetime;
-    /**
-     * @param $var
-     *
-     * @return bool
-     */
-    private function is_search($var)
+
+    public static function summary_for_problem($problem_id)
     {
-        return ($var != -1 AND $var !== null AND $var !== '');
-    }
-
-    /**
-     * @param int    $page_id
-     * @param        $problem_id
-     * @param string $user_id
-     * @param null   $cid
-     * @param        $language
-     * @param        $result
-     *
-     * @return array
-     */public function get_status($page_id = 1, $problem_id = -1, $user_id = '', $cid = null, $language = -1, $result = -1)
-    {
-        //TODO: move to solutions
-        $condition = array();
-        if ($this->is_search($problem_id))
-            $condition['problem_id'] = intval($problem_id);
-        if ($this->is_search($user_id))
-            $condition['user_id'] = $user_id;
-        if ($this->is_search($language))
-            $condition['language'] = intval($language);
-        if ($this->is_search($result))
-            $condition['result'] = intval($result);
-        if ($this->is_search($cid))
-            $condition['contest_id'] = intval($cid);
-
-        $need = array('solution_id', 'problem_id', 'user_id', 'time', 'memory', 'language', 'result', 'code_length', 'add_date');
-
-        $per_page = 20;
-        $ret = $this->collection->find($condition, $this->i_need($need))
-            ->sort(array('solution_id' => -1))
-            ->limit($per_page)
-            ->skip(($page_id - 1) * $per_page);
-
-        return iterator_to_array($ret);
-    }
-
-    /**
-     * @param $pid
-     *
-     * @return array
-     */
-    public static function get_summary($pid)
-    {
-        # TODO: add content
+        $filter = array(
+            'problem_id' => $problem_id,
+        );
         $data = array();
-        $pid = intval($pid);
-        // get total solutions
+        $data['total'] = self::count($filter);
+        $data['submit_user'] = self::count_distinct_user($filter);
 
-        $condition = array('problem_id' => $pid);
-        $data['total'] = $this->collection->find($condition)->count();
+        $filter['result'] = self::STATUS_AC;
+        $data['ac_user'] = self::count_distinct_user($filter);
 
-        // get total user has submited
-        $result = $this->db->command(array('distinct' => 'solution', 'key' => 'user_id', 'query' => $condition));
-        $data['submit_user'] = count($result['values']);
-
-        // get total user has ac
-        $condition = array('problem_id' => $pid, 'result' => 4);
-        $result = $this->db->command(array('distinct' => 'solution', 'key' => 'user_id', 'query' => $condition));
-        //no this method:$result = $collection->find($condition)->distinct('user_id');
-        $data['ac_user'] = count($result['values']);
-
-        // get all status
         $data['more'] = array();
-        for($i = 4; $i <= 11; $i++)
+        $status = array(
+            self::STATUS_AC,
+            self::STATUS_PE,
+            self::STATUS_WA,
+            self::STATUS_TLE,
+            self::STATUS_MLE,
+            self::STATUS_OLE,
+            self::STATUS_RE,
+            self::STATUS_CE,
+        );
+        foreach($status as $st)
         {
-            $condition['result'] = $i;
-            $ret = $this->collection->find($condition)->count();
-            $data['more'][$i] = $ret;
+            $filter['result'] = $st;
+            $data['more'][$st] = self::count($filter);
         }
         return $data;
     }
 
+    protected static function count_distinct_user($filter)
+    {
+        $query = DB::select(DB::expr('count(distinct(`user_id`)) as total'))->from(self::$table);
+        foreach($filter as $k => $v)
+        {
+            $query->where($k, '=', $v);
+        }
+
+        $result = $query->execute();
+        $result = $result->current();
+        return $result['total'];
+    }
+
     /**
-     * @param     $pid
-     * @param int $start
+     * @param     $problem_id
+     * @param int $page
      * @param int $limit
      *
      * @return array
      */
-    public static function best_solution($pid, $start = 0, $limit = 20)
+    public static function solution_by_rank($problem_id, $page=0, $limit=50)
     {
-        # TODO: add content
+        $start = $page * $limit;
 
-        $condition = array('result'=>4);
-        $need = array('solution_id', 'user_id', 'language', 'memory', 'add_date', 'time', 'score');
+        $sql = "SELECT solution_id, count(*) att, user_id, language, memory, time, min(10000000000000000000 + time * 100000000000 + memory * 100000 + code_length) score, in_date
+                FROM solution
+                WHERE result = 4
+                AND problem_id = {$problem_id}
+                GROUP BY user_id
+                ORDER BY score, in_date
+                LIMIT {$start}, {$limit}";
 
-        //$ret = $collection->find($condition, $this->i_need($need))->sort('score')->sort($this->i_need(array('score', 'add_date')));
-        $ret = $this->collection->find($condition, $this->i_need($need))->sort(array('time'=>1, 'memory'=>1))->limit(50);
+        $result = DB::query(Database::SELECT, $sql)->execute();
 
-		$sql 	= "SELECT solution_id, count(*) att, user_id, language, memory, time, min(10000000000000000000 + time *100000000000 + memory *100000 + code_length) score, in_date
-					FROM solution
-					WHERE result = 4
-					GROUP BY user_id
-					ORDER BY score, in_date
-					LIMIT $start, $limit";
-
-
-        return iterator_to_array($ret);
+        return $result->as_array();
     }
 
     /**
-     * @param string $problem_id
-     * @param string $user_id
-     * @param        $language
-     * @param        $result
+     * 重新判这个解题
+     */
+    public function rejudge()
+    {
+        $this->result = self::STATUS_PENDING_REJUDGE;
+        $this->save();
+    }
+
+    /**
      *
-     * @return int
-     */public function get_status_count($problem_id = '', $user_id = '', $language = -1, $result = -1)
-	{
-        //TODO: move to solutions
-        $condition = array();
-        if (! is_null($problem_id)) $condition['problem_id'] = $problem_id;
-        if (! is_null($user_id)) $condition['user_id'] = $user_id;
-        if (! is_null($language)) $condition['language'] = $language;
-        if (! is_null($result)) $condition['result'] = $result;
-        //if (! is_null($cid)) $condition['cid'] = $cid;
-
-        $ret = $this->collection->count($condition);
-        return $ret;
-	}
-
-    /**
-     * @param $post
+     * 重判某个题目
+     * @param $problem_id
+     *
+     * @return object
      */
-    public function new_solution($post)
+    public static function rejudge_problem($problem_id)
     {
-        // contest solution or normal solution
-        $new_doc = array(
-            'p_id' => intval($post['pid']),
-            'user_id' => $post['user_id'],
-            'add_date' => new MongoDate(time()),
-            'language' => intval($post['language']),
-            'ip' => Request::$client_ip,
-            'code_length' => strlen($post['source']),
-            'contest_id' => intval($post['cid']),
-            'num' => intval($post['num']),
-            'source' => $post['source'],
+        $data = array(
+            'result' => self::STATUS_PENDING_REJUDGE,
         );
+        $query = DB::update(self::$table)
+            ->set($data)
+            ->where('problem_id', '=', $problem_id);
 
-        //$collection->save($new_doc);
+        $result = $query->execute();
+        return $result;
     }
 
     /**
-     * @param $id
+     * @param $contest_id
+     *
+     * @return Model_Solution[]
      */
-    public function rejudge_solution($id)
+    public static function find_solution_for_contest($contest_id)
     {
-        $condition = array('solution_id' => $id);
-        $changes = array('$set' => array('result' => 1));
-        $this->collection->update($condition, $changes);
-    }
+        $query = DB::select()->from(self::$table)
+            ->where('contest_id', '=', $contest_id)
+            ->order_by('user_id')
+            ->order_by('in_date');
 
-    /**
-     * @param $id
-     */
-    public function rejudge_problem($id)
-    {
-        $condition = array('problem_id' => $id);
-        $changes = array('$set' => array('result' => 1));
-        $options = array('multiple' => true);
-        $this->collection->update($condition, $changes, $options);
+        $result = $query->as_object(get_called_class())->execute();
+        return $result->as_array();
     }
 
     protected function initial_data()

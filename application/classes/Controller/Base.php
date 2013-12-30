@@ -40,11 +40,14 @@ class Controller_Base extends Controller
 
     /**
      * @param string $redirect
+     *
+     * @return Model_User|null
      */
     public function check_login($redirect = '')
     {
-        if (Auth::instance()->get_user()) {
-            return;
+        $user = Auth::instance()->get_user();
+        if ( $user ) {
+            return $user;
         } else {
             $session = Session::instance();
             $session->set('return_url', $this->request->uri());
@@ -82,7 +85,7 @@ class Controller_Base extends Controller
      *
      * @return array
      */
-    protected function clear_data($data, $filters = array(Model_Base::ALL, '', NULL))
+    protected function clear_data($data, $filters = array('', NULL))
     {
         $ret = array();
         foreach($data as $key => $value)

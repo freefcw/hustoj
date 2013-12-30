@@ -5,7 +5,7 @@ From <span class="label label-success"><?php echo($contest['start_time']);?></sp
 <ul class="nav nav-pills contest-nav">
 <li <?php if (Request::$current->action() == 'show'):?> class="active" <?php endif;?>><?php echo html::anchor("/contest/show/{$cid}", 'Problems');?></li>
 <li <?php if (Request::$current->action() == 'standing'):?> class="active" <?php endif;?>><?php echo html::anchor("/contest/standing/{$cid}", 'Standing');?></li>
-<li <?php if (Request::$current->action() == 'statics'):?> class="active" <?php endif;?>><?php echo html::anchor("/contest/statics/{$cid}", 'Statistics');?></li>
+<li <?php if (Request::$current->action() == 'statistics'):?> class="active" <?php endif;?>><?php echo html::anchor("/contest/statistics/{$cid}", 'Statistics');?></li>
 <li><?php echo html::anchor("/problem/status?cid={$cid}", 'Status');?></li>
 <li><?php echo html::anchor("#!/discuss/contest/{$cid}", 'Clarification');?></li>
 </ul>

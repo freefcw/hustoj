@@ -111,7 +111,7 @@ Kohana::modules(Kohana::$config->load('modules')->as_array());
  * set Cookie config
  */
 Cookie::$salt = 'hustoj';
-Cookie::$domain = 'acm.hust.edu.cn';
+Cookie::$domain = Kohana::$config->load('base.domain');
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of

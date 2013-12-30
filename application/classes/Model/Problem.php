@@ -73,6 +73,16 @@ class Model_Problem extends Model_Base
     }
 
 
+    public function summary()
+    {
+        return Model_Solution::summary_for_problem($this->problem_id);
+    }
+
+    public function best_solution($page=0, $limit=50)
+    {
+        return Model_Solution::solution_by_rank($this->problem_id, $page, $limit);
+    }
+
     protected function initial_data()
     {}
 

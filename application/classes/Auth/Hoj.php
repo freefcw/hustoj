@@ -40,7 +40,6 @@ class Auth_Hoj extends Kohana_Auth
 
         if ( ! $user)
             return false;
-
         return ($this->hash($password) === $user->password);
     }
 

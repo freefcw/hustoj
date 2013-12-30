@@ -26,9 +26,12 @@ class Controller_User extends Controller_Base
     public function action_profile()
     {
         // init
-        $uid = $this->request->param('id');
+        $uid = $this->request->param('uid');
 
         $user = Model_User::find_by_id($uid);
+
+        if ( ! $user )
+            $this->redirect(Route::url('default'));
 
         $this->template_data['title'] = "About {$uid}";
         $this->template_data['u'] = $user;
@@ -36,25 +39,28 @@ class Controller_User extends Controller_Base
 
     public function action_edit()
     {
-        $this->check_login();
-
-        $user = Auth::instance()->get_user();
+        $user = $this->check_login();
 
         if ( $this->request->is_post() ) {
             $safe_data = $this->cleaned_post();
-            $user->update($safe_data);
 
             // check user password
             if ( Auth::instance()->check_password($safe_data['password']) ) {
                 // if change password
-                if (strlen($safe_data['newpassword']) > 0
+                unset($safe_data['password']);
+                if (strlen($safe_data['newpassword']) > 6
                     AND ($safe_data['newpassword'] === $safe_data['confirm'])
                 ) {
                     $user->password = Auth::instance()->hash($safe_data['newpassword']);
+                } else {
+                    $error = 'new password is less than 4 chars or not same';
                 }
-                //TODO: Validation user input, see action_new
-                $user->save();
-                $tip = 'Update Success';
+                if ( !isset($error))
+                {
+                    $user->update($safe_data);
+                    $user->save();
+                    $tip = 'Update Success';
+                }
             } else {
                 $error = 'Password Wrong';
             }
@@ -75,7 +81,7 @@ class Controller_User extends Controller_Base
     public function action_login()
     {
         if (Auth::instance()->get_user()) {
-            $this->redirect('/home');
+            $this->redirect(Route::url('default'));
         }
         if ( $this->request->is_post() ) {
             $username = $this->get_post('username');
@@ -84,7 +90,7 @@ class Controller_User extends Controller_Base
             if (Auth::instance()->login($username, $password, true)) {
                 $session = Session::instance();
                 $url = $session->get_once('return_url');
-                if ( ! $url ) $url = '/home';
+                if ( ! $url ) $url = Route::url('default');
                 $this->redirect($url);
             }
 
@@ -100,7 +106,7 @@ class Controller_User extends Controller_Base
     public function action_new()
     {
         if ( $this->request->is_get() ) {
-            $this->request->redirect('/home');
+            $this->redirect(Route::url('default'));
         }
 
         $post = Validation::factory($this->cleaned_post())
@@ -125,7 +131,7 @@ class Controller_User extends Controller_Base
                 $user->save();
 
                 Auth::instance()->login($post['username'], $post['password'], true);
-                $this->redirect('/home');
+                $this->redirect(Route::url('default'));
             } else {
                 array_push($errors, 'User Id is existed!');
             }
@@ -141,6 +147,6 @@ class Controller_User extends Controller_Base
     {
         Auth::instance()->logout();
 
-        $this->redirect('/home');
+        $this->redirect(Route::url('default'));
     }
 }

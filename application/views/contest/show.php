@@ -1,18 +1,18 @@
-<?php echo View::factory('contest/nav');?>
-<?php if(isset($contest['plist'])):?>
+<?php /* @var Model_Contest $contest */?>
+<?php echo View::factory('contest/nav', array('title' => $title, 'cid' => $cid, 'contest' => $contest));?>
 <table class="table table-striped">
 	<thead>
 		<tr><th>ID</th><th>Title</th></tr>
 	</thead>
 	<tbody>
-<?php $p_num = 0;?>
-<?php foreach($contest['plist'] as $p): ?>
+<?php
+foreach($contest->problem() as $p):
+    $problem = $p->detail();
+?>
 <tr>
-<td><?php echo OJ::contest_pid($p_num);?></td>
-<td><?php echo html::anchor("/contest/{$cid}/problem/{$p_num}", $p['title']);?></td>
+<td><?php echo($p->display_order());?></td>
+<td><?php echo(html::anchor("/contest/{$cid}/problem/{$p['num']}", $problem->title));?></td>
 </tr>
-<?php $p_num++;?>
 <?php endforeach;?>
 </tbody>
 </table>
-<?php endif;?>

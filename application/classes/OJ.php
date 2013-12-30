@@ -165,7 +165,7 @@ class OJ
      *
      */
     public static function timesince($timestamp, $granularity = 2) {
-        $timestamp = time() - $timestamp->sec;
+        $timestamp = time() - $timestamp;
         $units = array('1 year|%d years' => 31536000,
             '1 week|%d weeks' => 604800,
             '1 day|%d days' => 86400,
@@ -259,7 +259,7 @@ class OJ
         {
             foreach($value as $k => $v)
             {
-                $value[$k] = PP::clean_data($v);
+                $value[$k] = OJ::clean_data($v);
             }
         } else {
             $value = strip_tags($value);

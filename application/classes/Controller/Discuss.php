@@ -8,90 +8,80 @@ class Controller_Discuss extends Controller_Base
 
     public function action_index()
     {
-        $this->action_page();
+        $this->view = 'discuss/list';
+        $this->action_list();
     }
 
     public function action_topic()
     {
-        $request = $this->request;
         // init
-        $topic_id = intval($request->param('id'));
+        $topic_id = intval($this->request->param('id'));
 
         if ($topic_id == NULL) {
             $this->action_index();
         }
 
-        $mt = new Model_Topic();
-        $topic = $mt->get_topic_by_id($topic_id);
-        //TODO: if cannot find the topic
+        $topic = Model_Topic::find_by_id($topic_id);
+        if ( ! $topic)
+            $this->redirect('/discuss');
 
-        if ($request->method() == 'POST') {
-            $this->check_login();
-            $data = array(
-                'content'  => $request->post('content'),
-                'topic_id' => $topic_id,
-                'user_id'  => Auth::instance()->get_user(),
-                'status'   => 0,
-                'ip'       => $request::$client_ip,
-            );
-            $mt->add_reply($data);
+        $cu = Auth::instance()->get_user();
+        if ( $this->request->is_post() ) {
+            $reply = new Model_Reply;
+            $reply->author_id = $cu->user_id;
+            $reply->topic_id = $topic_id;
+            $reply->content = $this->get_post('contest');
+            $reply->save();
         }
 
-        $relies = $mt->get_relies_for_topic($topic_id);
+        $relies = $topic->replies();
 
-        $body = View::factory('discuss/topic');
-        $body->bind('the_topic', $topic);
-        $body->bind('relies', $relies);
-
-        $this->view->title = 'Discuss';
-        $this->view->body = $body;
+        $this->template_data['the_topic'] = $topic;
+        $this->template_data['relies'] = $relies;
+        $this->template_data['title'] = $topic->title;
     }
 
-    public function action_page()
+    public function action_list()
     {
         $page = intval($this->request->param('id', 0));
-
         $pid = intval($this->request->query('pid', null));
         $user_id = $this->request->query('uid', null);
 
-        $mt = new Model_Topic();
+        $filter = array(
+            'pid' => $pid,
+            'author_id' => $user_id,
+        );
+        $filter = $this->clear_data($filter);
 
-        $topic_list = $mt->get_page($page, $pid, $user_id);
+        $topic_list = Model_Topic::find($filter, $page);
 
-        $body = View::factory('discuss/list');
-
-        $body->bind('topic_list', $topic_list);
-
-        $this->view->title = 'Discuss';
-        $this->view->body = $body;
+        $this->template_data['topic_list'] = $topic_list;
+        $this->template_data['title'] = 'Discuss';
     }
 
     public function action_new()
     {
-        $this->check_login();
+        $cu = Auth::instance()->get_user();
 
-        $mt = new Model_Topic();
+        if ( $this->request->is_post() ) {
+            $topic = new Model_Topic;
+            $topic->title = $this->get_post('title');
+            $topic->author_id = $cu->user_id;
+            $topic->cid = intval($this->get_post('cid'));
+            $topic->pid = intval($this->get_post('pid'));
+            $topic->save();
 
-        $request = $this->request;
+            $reply = new Model_Reply;
+            $reply->topic_id = $topic->tid;
+            $reply->content = $this->get_post('content');
+            $reply->author_id = $cu->user_id;
+            $reply->save();
 
-        $mt = new Model_Topic();
-
-        if ($request->method() == 'POST') {
-            $data = array(
-                'title'   => $request->post('title'),
-                'content' => $request->post('content'),
-                'user_id' => Auth::instance()->get_user(),
-                'cid'     => intval($request->post('cid')),
-                'pid'     => intval($request->post('pid')),
-                'ip'      => $request::$client_ip,
-            );
-            $topic_id = $mt->add_topic($data);
-            $this->request->redirect("/discuss/topic/{$topic_id}");
+            $this->redirect("/discuss/topic/{$topic->tid}");
         }
 
-        $body = View::factory('discuss/edit');
-        $this->view->title = 'New Topic';
+        $this->view = 'discuss/edit';
 
-        $this->view->body = $body;
+        $this->template_data['title'] = 'New Topic';
     }
 }

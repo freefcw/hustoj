@@ -5,7 +5,9 @@ class Controller_Admin_Index extends Controller_Admin_Base{
     public function before()
     {
         parent::before();
-        if (!Auth::instance()->is_admin()) $this->request->redirect('/');
+
+        if (!Auth::instance()->is_admin())
+            $this->redirect(Route::url('default'));
     }
 
     public function action_index()

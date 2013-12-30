@@ -28,9 +28,12 @@ class Model_Reply extends Model_Base
     public $status;
     public $ip;
 
-
     protected function initial_data()
-    {}
+    {
+        $this->time = OJ::time_format();
+        $this->status = 0;
+        $this->ip = Request::$client_ip;
+    }
 
     public function validate()
     {}

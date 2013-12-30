@@ -78,145 +78,29 @@ class Model_User extends Model_Base
         return $result->as_array();
     }
 
-    /**
-     * @param $username
-     *
-     * @return mixed
-     */
-    public function get_password($username)
+    public function update_password($password)
     {
-        $need = array('password');
-
-        $condition = array();
-        $condition['user_id'] = $username;
-
-        $ret = $this->collection->findOne($condition, $this->i_need($need));
-
-        return $ret['password'];
+        $this->password = Auth_Hoj::instance()->hash($password);
     }
 
     /**
-     *
-     * @param <int> $user_id
-     * @param <string> $new_password
+     * disable people
      */
-    public function changepassword($user_id, $new_password)
+    public function disable()
     {
-        $new_value = array('password' => $new_password);
-
-        $this->collection->update(array('user_id' => $user_id), array('$set' => $new_value));
-    }
-
-    /**
-     * 通过用户名返回用户信息
-     *
-     * @param $user_id
-     *
-     * @return array|null <mixed> user imformation
-     */
-    public function get_info_by_name($user_id)
-    {
-        $ret = $this->collection->findOne(array('user_id' => $user_id));
-
-        return $ret;
-    }
-
-
-    /**
-     *
-     * get user list
-     *
-     * @param     $page_id
-     * @param int $per_page
-     *
-     * @return array
-     */
-    public function get_list($page_id, $per_page = 50)
-    {
-        $need = array('user_id', 'nick', 'solved', 'submit');
-
-        $condition = array();
-
-        $ret = $this->collection->find($condition, $this->i_need($need))
-            ->sort(array('solved' => -1))
-            ->skip(($page_id - 1) * $per_page)
-            ->limit($per_page);
-        //TODO: skip performance
-
-        return iterator_to_array($ret);
-    }
-
-    /**
-     * get total user
-     *
-     * @return int
-     */
-    public function get_total()
-    {
-        // TODO: more params
-        $ret = $this->collection->count();
-
-        return $ret;
-    }
-
-    /**
-     * if user exist
-     *
-     * @param $user_id
-     *
-     * @return bool
-     */
-    public function exist_id($user_id)
-    {
-        $condition = array('user_id' => $user_id);
-        $ret = $this->collection->count($condition);
-
-        if ($ret != 0) {
-            return true;
-        }
-        return false;
-    }
-
-
-    /**
-     * @param $user
-     */
-    public function add_user($user)
-    {
-        $now = new MongoDate(time());
-        $newuser = array(
-            'password'    => Auth::instance()->hash($user['password']),
-            'user_id'     => $user['username'],
-            'school'      => $user['school'],
-            'email'       => $user['email'],
-            'nick'        => $user['nick'],
-            'reg_time'    => $now,
-            'solved'      => 0,
-            'submit'      => 0,
-            'access_time' => $now,
-            'ip'          => Request::$client_ip,
-        );
-        //FIXME: seems ip and access_time no use
-
-        $this->collection->save($newuser);
-    }
-
-    /**
-     * disable somebody by user_id
-     *
-     * @param $uid
-     */
-    public function ban($uid)
-    {
-        $condition = array('user_id' => $uid);
-        $data = array('disable' => true);
-
-        $this->collection->update($condition, array('$set' => $data));
     }
 
     public function validate()
     {}
 
     protected function initial_data()
-    {}
+    {
+        $now = time();
+
+        $this->reg_time    = $now;
+        $this->solved      = 0;
+        $this->submit      = 0;
+        $this->accesstime  = $now;
+        $this->ip          = Request::$client_ip;
+    }
 }

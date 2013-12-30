@@ -28,7 +28,7 @@
             <td><?php print $s['time'];?>MS</td>
             <td><a href="/u/<?php print $s['user_id'];?>"><?php print $s['user_id'];?></a></td>
             <td><?php print OJ::lang($s['language']);?></td>
-            <td><?php echo($s['add_date']);?></td>
+            <td><?php echo($s['in_date']);?></td>
         </tr>
         <?php endforeach; ?>
     </tbody>

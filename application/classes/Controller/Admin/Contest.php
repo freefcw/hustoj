@@ -37,8 +37,7 @@ class Controller_Admin_Contest extends Controller_Admin_Base
             $this->error_page();
         }
 
-        $c = new Model_Contest();
-        $contest = $c->get_contest($cid);
+        $contest = Model_Contest::find_by_id($cid);
 
         $body = View::factory('admin/contest/edit');
         $body->bind('contest', $contest);
@@ -65,7 +64,7 @@ class Controller_Admin_Contest extends Controller_Admin_Base
             $c->add_user_to_contest($cid, $user_id_list);
         }
 
-        $contest = $c->get_contest($cid);
+        $contest = Model_Contest::find_by_id($cid);
         $userlist = $c->get_user_of_contest($cid);
 
         $body = View::factory('admin/contest/user');

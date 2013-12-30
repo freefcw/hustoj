@@ -17,6 +17,8 @@ class Model_Contest extends Model_Base
         'private',
     );
 
+    private $problem_list = null;
+
     static $primary_key = 'contest_id';
 
     static $table = 'contest';
@@ -41,159 +43,103 @@ class Model_Contest extends Model_Base
 
 
     /**
-     * @return Model_Problem[]
+     * 题目列表
+     *
+     * @param int $num 如果不为null则为第 $num 个题目
+     *
+     * @return Model_Problem|Model_CPRelation[]
      */
-    public function problems()
+    public function problem($num = NULL)
     {
-//        DB::select()->from()
+        if ( is_null($this->problem_list) )
+        {
+            $this->problem_list = Model_CPRelation::problems_for_contest($this->contest_id);
+        }
+        if ( is_null($num)  )
+            return $this->problem_list;
+
+        $relation = $this->problem_list[$num];
+        return $relation->detail();
     }
 
     /**
-     * @param $cid
+     * 题目数量
      *
-     * @return bool
-     *
-     * is contest opened
+     * @return int
      */
-    public function is_open($cid)
+    public function number_of_problems()
+    {
+        return count($this->problem());
+    }
+
+    /**
+     * is contest opened
+     * @return bool
+     */
+    public function is_open()
     {
         $now = time();
-
-        if ($this->start_time > $now) return false;
-
-        return true;
+        if ( $now > strtotime($this->start_time)  AND $now < strtotime($this->end_time) )
+            return true;
+        return false;
     }
 
-
-    /**
-     *
-     * @param <type> $contest_id
-     *
-     * @return mixed
-     */
-    public function get_contest($contest_id)
+    public function statistics()
     {
-        $condition = array('contest_id' => intval($contest_id));
-        $need = array();
-
-        $result = $this->collection->findOne($condition);
-        return $result;
-    }
-
-    /**
-     * @param $cid
-     *
-     * @return array
-     */
-    public function get_statistics($cid)
-    {
-        $collection = $this->db->selectCollection('solution');
-
-        $condition = array('contest_id' => intval($cid));
-        $need = array('result', 'num', 'language');
-
-        $result = $collection->find($condition, $this->i_need($need));
+        $solutions = $this->solutions();
 
         $data = array();
         $lang = array();
-        foreach ($result as $ret) {
-            if (!array_key_exists($ret['num'], $data)) {
-                $data[$ret['num']] = array();
-            }
-            if (!array_key_exists($ret['result'], $data[$ret['num']])) {
-                $data[$ret['num']][$ret['result']] = 0;
-            }
 
-            if (!array_key_exists($ret['num'], $lang)) {
-                $lang[$ret['num']] = array();
-            }
-            if (!array_key_exists($ret['language'], $lang[$ret['num']])) {
-                $lang[$ret['num']][$ret['language']] = 0;
-            }
+        foreach($solutions as $item)
+        {
+            if (!array_key_exists($item->num, $data)) $data[$item->num] = array();
+            if (!array_key_exists($item->result, $data[$item->num])) $data[$item->num][$item->result] = 0;
 
-            $data[$ret['num']][$ret['result']]++;
-            $lang[$ret['num']][$ret['language']]++;
+            if (!array_key_exists($item->num, $lang)) $lang[$item->num] = array();
+            if (!array_key_exists($item->language, $lang[$item->num])) $lang[$item->num][$item->language] = 0;
+
+            $data[$item->num][$item->result]++;
+            $lang[$item->num][$item->language]++;
         }
 
-        return array('result' => $data, 'language' => $lang);
+        return array('result' => $data, 'language'=>$lang);
     }
 
-    /**
-     * @param $cid
-     *
-     * @return array
-     */
-    public function get_contest_solutions($cid)
+    public function solutions()
     {
-        $collection = $this->db->selectCollection('solution');
-
-        $condition = array('contest_id' => intval($cid));
-        $need = array('user_id', 'result', 'num', 'add_date');
-
-        $result = $collection->find($condition, $this->i_need($need))
-            ->sort(array('user_id' => 1, 'add_date' => 1));
-
-//        $sql = "SELECT user_id, result, num as cpid, in_date FROM solution WHERE contest_id = {$cid} ORDER BY user_id, in_date";
-//        $result = $this->_db->query(Database::SELECT, $sql, TRUE);
-
-        return iterator_to_array($result);
+        return Model_Solution::find_solution_for_contest($this->contest_id);
     }
 
-    /**
-     * @param $cid
-     *
-     * @return array
-     */
-    public function get_standing($cid)
+    public function standing()
     {
-        $solutions = $this->get_contest_solutions($cid);
-        $contest = $this->get_contest($cid);
-        //calc the stand
+        $solutions = $this->solutions();
+
+        /* @var $data Model_Team[] */
         $data = array();
-        $start_time = $contest['start_time']->sec;
-        foreach ($solutions as $s) {
-            if (array_key_exists($s['user_id'], $data)) {
-                $team = $data[$s['user_id']];
-                $team->add($s['num'], $s['add_date']->sec - $start_time, $s['result']);
+        $start_time = strtotime($this->start_time);
+        foreach($solutions as $item)
+        {
+            if(array_key_exists($item->user_id, $data))
+            {
+                $team = $data[$item->user_id];
+                $team->add($item->num, strtotime($item->in_date) - $start_time, $item->result);
             } else {
                 $team = new Model_Team();
-                $team->add($s['num'], $s['add_date']->sec - $start_time, $s['result']);
-                $team->user_id = $s['user_id'];
-                $data[$s['user_id']] = $team;
+                $team->user_id = $item->user_id;
+                $team->add($item->num, strtotime($item->in_date) - $start_time, $item->result);
+                $data[$item->user_id] = $team;
             }
         }
-        usort(
-            $data, function ($a, $b) {
-                if ($a->solved > $b->solved) {
-                    return false;
-                }
-                if ($a->solved == $b->solved) {
-                    if ($a->time < $b->time) {
-                        return false;
-                    }
-                }
-                ;
-                return true;
-            }
-        );
-
+        usort($data, function($a, $b){
+            if ($a->solved > $b->solved)
+                return false;
+            if ($a->solved == $b->solved) {
+                if ($a->time < $b->time) return false;
+            };
+            return true;
+        });
         return $data;
-    }
-
-    /**
-     * @param $cid
-     *
-     * @return array
-     */
-    public function get_contest_problems($cid)
-    {
-        $contest = $this->get_contest($cid);
-
-        if (isset($contest['plist'])) {
-            return $contest['plist'];
-        }
-
-        return array();
     }
 
     /**

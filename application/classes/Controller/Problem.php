@@ -2,7 +2,6 @@
 
 class Controller_Problem extends Controller_Base
 {
-
     public function action_index()
     {
         $this->view = 'problem/list';
@@ -11,18 +10,18 @@ class Controller_Problem extends Controller_Base
 
     public function action_list()
     {
-        $page_id = $this->request->param('id', 1);
+        $page = $this->request->param('id', 1);
 
         $per_page = 50;
 
         $filter = array();
 
-        $this->template_data['problemlist'] = Model_Problem::find($filter, $page_id, $per_page, 'ASC');
+        $this->template_data['problemlist'] = Model_Problem::find($filter, $page, $per_page, 'ASC');
         //TODO: add check permission of contest
         $total = Model_Problem::count($filter);
 
-        $title = 'Problem Set ' . $page_id;
-        $this->template_data['page_id'] = $page_id;
+        $title = 'Problem Set ' . $page;
+        $this->template_data['page_id'] = $page;
         $this->template_data['pages'] = ceil(intval($total) / $per_page);
         $this->template_data['title'] = $title;
     }
@@ -47,11 +46,11 @@ class Controller_Problem extends Controller_Base
         // init
         $page = $this->request->param('id', 1);
 
-        $pid = $this->request->query('pid', null);
-        $uid = $this->request->query('uid', null);
-        $cid = $this->request->query('cid', null);
-        $language = $this->request->query('language', null);
-        $result = $this->request->query('result', null);
+        $pid = $this->get_query('pid', null);
+        $uid = $this->get_query('uid', null);
+        $cid = $this->get_query('cid', null);
+        $language = $this->get_query('language', null);
+        $result = $this->get_query('result', null);
 
         $per_page = 20;
 
@@ -108,51 +107,53 @@ class Controller_Problem extends Controller_Base
     {
         $this->check_login();
 
-        $request = $this->request;
-        $pid = $request->param('id', '');
+        $pid = $this->request->param('id', '');
 
-        if ( $this->request->is_get() ) {
-            $this->template_data['pid'] = 'pid';
-            $cid = $request->query('cid', null);
-            $cpid = $request->query('pid', null);
-            if ($cid !== null) {
-                $this->template_data['cid'] = $cid;
-                $this->template_data['cpid'] = $cpid;
-            }
+        if ( $this->request->is_post() ) {
+            //TODO:check permission, the user can submit? if not admin, may cause leak or cracked
+            // 1. not admin
+            // 2. time failed
+            // 3. not invite people
+            //TODO: validation
+            //TODO: add contest problem
+//            $problem = Model_Problem::find_by_id($pid);
+//            $problem->can_user_access();
 
-            $this->template_data['title'] = 'Subtmit';
-
-        } else {
-            if ( $this->request->is_post() ) {
-                //TODO:check permission, the user can submit? if not admin, may cause leak or cracked
-                // 1. not admin
-                // 2. time failed
-                // 3. not invite people
-                //TODO: validation
-                //TODO: add contest problem
-
-                $solution = new Model_Solution();
-                $current_user = Auth::instance()->get_user();
-                $solution->user_id = $current_user->user_id;
-                $solution->ip = Request::$client_ip;
-                $solution->update($this->cleaned_post());
-                $solution->save();
+            $solution = new Model_Solution();
+            $current_user = Auth::instance()->get_user();
+            $solution->user_id = $current_user->user_id;
+            $solution->ip = Request::$client_ip;
+            $solution->update($this->cleaned_post());
+            $solution->save();
 //                $solution->problem_id = $c
 
-                $request->redirect('/status');
-            }
+            $this->redirect('/status');
+            return;
         }
+
+        $this->template_data['pid'] = $pid;
+        $cid = $this->get_query('cid', null);
+        $cpid = $this->get_query('pid', null);
+        if ($cid !== null) {
+            $this->template_data['cid'] = $cid;
+            $this->template_data['cpid'] = $cpid;
+        }
+
+        $this->template_data['title'] = 'Subtmit';
+
     }
 
     public function action_summary()
     {
         // init
         $problem_id = $this->request->param('id');
-        if ( ! $problem_id )
-            $this->redirect('/');
+        $problem = Model_Problem::find_by_id($problem_id);
+        if ( ! $problem )
+            $this->redirect(Route::url('default'));
 
-        $this->template_data['summary'] = Model_Solution::get_summry($problem_id);
-        $this->template_data['solutions'] = Model_Solution::best_solution($problem_id);
+        $this->template_data['summary'] = $problem->summary();
+        $this->template_data['solutions'] = $problem->best_solution();
+
 
         $this->template_data['title'] = "Summary of {$problem_id}";
 

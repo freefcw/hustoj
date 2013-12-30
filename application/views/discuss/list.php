@@ -14,21 +14,17 @@
     <tr>
         <th>Title</th>
         <th>Author</th>
-        <th>Last Reply</th>
-        <th>Reply Count</th>
     </tr>
     </thead>
     <tbody>
-    <?php foreach ($topic_list as $t): ?>
+    <?php /* @var Model_Topic[] $topic_list */ foreach ($topic_list as $t): ?>
     <tr>
         <td>
-            <a href="/problem/show/<?php echo $t['pid'];?>" style="color: #000000"> <?php echo $t['pid'];?> </a>
+            <a href="/problem/show/<?php echo $t->pid;?>" style="color: #000000"> <?php echo $t->pid;?> </a>
 
-            <a href="/t/<?php echo $t['topic_id'];?>"><strong><?php echo $t['title'];?></strong></a>
+            <a href="/t/<?php echo($t->tid);?>"><strong><?php echo($t->title);?></strong></a>
         </td>
-        <td><a href="<?php echo(Route::url('profile', array('uid' => $t['user_id'])));?>"><?php echo $t['user_id'];?></a></td>
-        <td><?php echo($t['last_reply']);?></td>
-        <td><?php echo $t['reply_count'];?></td>
+        <td><a href="<?php echo(Route::url('profile', array('uid' => $t->author_id)));?>"><?php echo($t->author_id);?></a></td>
     </tr>
         <?php endforeach;?>
     </tbody>

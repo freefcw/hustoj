@@ -10,12 +10,13 @@ class Controller_Admin_Base extends Controller {
         // default is null
 
         $this->view->current_user = Auth::instance()->get_user();
-        if (!Auth::instance()->is_admin()) $this->request->redirect('/');
+        if (!Auth::instance()->is_admin())
+            $this->redirect(Route::url('default'));
 	}
 
     public function error_page()
     {
-        $this->request->redirect('/');
+        $this->redirect(Route::url('default'));
         // TODO: add more handle err
     }
 
