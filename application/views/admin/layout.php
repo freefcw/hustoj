@@ -5,12 +5,12 @@
     <meta name="keyword" content="HUST, 华中科技大学, ACM, freefcw, sempr, online judge, 计算机竞赛, 编程, ICPC"/>
     <meta name="description" content="HUST ACM - 华中科技大学ACM组织"/>
     <meta name="robots" content="index,follow"/>
-    <title><?php echo $title; ?></title>
-    <?php echo HTML::style('css/style.css');?>
-    <?php echo HTML::style('css/ui-lightness/jquery-ui-1.8.18.custom.css');?>
-    <?php echo HTML::script('js/jquery-1.7.1.min.js'); ?>
-    <?php echo HTML::script('js/jquery-ui-1.8.18.custom.min.js'); ?>
-    <?php echo HTML::script('js/bootstrap.min.js'); ?>
+    <title><?php echo($title); ?></title>
+    <?php echo(HTML::style('css/style.css'));?>
+    <?php echo(HTML::style('css/ui-lightness/jquery-ui-1.8.18.custom.css'));?>
+    <?php echo(HTML::script('js/jquery-1.7.1.min.js')); ?>
+    <?php echo(HTML::script('js/jquery-ui-1.8.18.custom.min.js')); ?>
+    <?php echo(HTML::script('js/bootstrap.min.js')); ?>
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="shortcut icon" href="favicon.ico"/>
 </head>
@@ -41,7 +41,7 @@
                         <li><a href="/account/register">Register</a></li>
                         <?php else: ?>
                         <li><a href="<?php echo(Route::url('profile', array('uid' => $cu->user_id)));?>"
-                               title="<?php echo $current_user;?>"><?php echo $current_user;?></a></li>
+                               title="<?php echo($current_user);?>"><?php echo($current_user);?></a></li>
                         <li><a href="/account/setting">Setting</a></li>
                         <li class="divider-vertical"></li>
                 <li class="dropdown" data-dropdown="dropdown">
@@ -66,9 +66,9 @@
 
     <div id="wrapper">
 
-        <?php echo $body; ?>
+        <?php echo($body); ?>
     </div>
-    <?php echo View::factory('footer'); ?>
+    <?php echo(View::factory('footer')); ?>
 </div>
 </body>
 </html>

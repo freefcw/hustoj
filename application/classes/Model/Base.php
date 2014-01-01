@@ -13,11 +13,14 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
 
     static $table = '';
 
+    const ORDER_DESC = 'DESC';
+    const ORDER_ASC  = 'ASC';
+
     public function __construct($db = null)
     {
         parent::__construct($db);
 
-        if ( ! isset($this->{self::$primary_key}) )
+        if ( ! isset($this->{static::$primary_key}) )
         {
             $this->initial_data();
         }
@@ -65,14 +68,14 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
      *
      * 通过简单的过滤器查找数据
      *
-     * @param array  $filters
-     * @param int    $page
-     * @param int    $limit
-     * @param string $direction
+     * @param array $filters
+     * @param int   $page
+     * @param int   $limit
+     * @param array $orderby
      *
      * @return Model_Base
      */
-    public static function find($filters, $page = 1, $limit = 50, $direction='DESC')
+    public static function find($filters, $page = 1, $limit = 50, $orderby=array())
     {
         $query = DB::select()->from(static::$table);
         foreach($filters as $col => $value)
@@ -82,7 +85,10 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
         if ( $limit ) $query->limit($limit);
         if ( $page ) $query->offset( $limit * ($page - 1));
 
-        $query->order_by(static::$primary_key,  $direction);
+        foreach($orderby as $col => $order)
+        {
+            $query->order_by($col,  $order);
+        }
 
         $result = $query->as_object(get_called_class())->execute();
 

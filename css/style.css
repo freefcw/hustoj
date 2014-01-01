@@ -1,14 +1,4 @@
-/*
-    Document   : style.css
-    Created on : 2009-5-14, 2:12:48
-    Author     : freefcw
-    Description:
-        Purpose of the stylesheet follows.
-*/
-/* header */
-.banner {
-    height: 50px;
-}
+
 
 /* navigation  */
 .edit-userinfo {
@@ -21,26 +11,22 @@
     float: left;
 }
 
-.sform {
-    width: 320px;
-    float: right;
-    margin-top: 20px;
-}
-
-.sform label {
-    width: 30px;
-}
-
-.search-cat {
-    width: 60px;
-}
-
 .contest-nav {
     width: 50%;
-    margin: 0 auto !important;
+    margin: 10px auto 30px !important;
 }
 
 /* content */
+.problem-search{
+    width: 400px;
+    float: right;
+}
+
+.status-filter{
+    width: 900px;
+    margin: 15px auto 5px;
+}
+
 .news {
     margin: 30px 10px;
 }
@@ -168,11 +154,12 @@ table.best-solution {
 #footer ul li {
     margin: 5px 10px;
     display: inline;
+    text-align: center;
 }
 
 #copyright {
-    width: 400px;
     margin: 8px auto 13px;
+    text-align: center;
 }
 
 /*  admin */

@@ -153,6 +153,14 @@ Route::set(
 );
 
 Route::set(
+        'status', 'status'
+    )->defaults(array(
+        'controller' => 'solution',
+        'action'     => 'status'
+    )
+);
+
+Route::set(
     'topic', 't/<id>',
     array(
         'id' => '\d+'
@@ -165,7 +173,7 @@ Route::set(
 Route::set(
     'page', '<action>',
     array(
-         'action' => '(home|faqs|about|links|contact|status|help|terms)'
+         'action' => '(home|faqs|about|links|contact|help|terms)'
     ))->defaults(array(
          'controller' => 'index'
     )

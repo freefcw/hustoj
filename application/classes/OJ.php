@@ -165,7 +165,7 @@ class OJ
      *
      */
     public static function timesince($timestamp, $granularity = 2) {
-        $timestamp = time() - $timestamp;
+        $timestamp = time() - strtotime($timestamp);
         $units = array('1 year|%d years' => 31536000,
             '1 week|%d weeks' => 604800,
             '1 day|%d days' => 86400,

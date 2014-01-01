@@ -83,6 +83,12 @@ class Model_User extends Model_Base
         $this->password = Auth_Hoj::instance()->hash($password);
     }
 
+    public function ratio_of_accept()
+    {
+        if ($this->submit != 0) return sprintf( "%.02lf%%", $this->solved / $this->submit * 100);
+        return '0.00%';
+    }
+
     /**
      * disable people
      */

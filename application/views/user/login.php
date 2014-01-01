@@ -2,20 +2,22 @@
 <div class="alert-message error err-notice"><p><?php echo $error; ?></p></div>
 <?php endif ?>
 <h3 class="page-title">User Login</h3>
-<form action="/login" method="post" class="form-horizontal span6" style="margin-left: 25%">
-    <fieldset>
-        <div class="control-group">
-    <label>Username<!-- or Email --></label>
-            <div class="controls">
-            <input name="username" type="text" value="<?php echo $username ?>"/></div>
+<form action="/login" role="form" method="post" class="form-horizontal" style="margin:auto; width: 30%">
+    <div class="form-group">
+        <label for="username" class="form-group col-sm-4">Username</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" id="username" name="username" placeholder="username" value="<?php echo $username ?>"/>
         </div>
-        <div class="control-group">
-    <label>Password</label>
-            <div class="controls"><input type="password" name="pwd"/></div>
+    </div>
+    <div class="form-group">
+        <label for="password" class="form-group col-sm-4">Password</label>
+        <div class="col-sm-8">
+            <input type="password" name="pwd" class="form-control" id="password" placeholder="passowrd"/>
         </div>
-    </fieldset>
-    <div class="form-actions">
-    <input value="Login" type="submit" class="btn btn-primary"> <a href="/lostpassword">Forget Password?</a>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+            <button type="submit" class="btn btn-default">Sign in</button> <a href="/lostpassword">Forget Password?</a>
+        </div>
     </div>
 </form>
-<br style="clear: both;">
