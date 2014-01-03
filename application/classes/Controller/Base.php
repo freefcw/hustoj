@@ -8,15 +8,7 @@ class Controller_Base extends Controller
 
     public function before()
     {
-        $this->view = View::factory('layout');
-
-        // default is null
-
-        $this->view->current_user = Auth::instance()->get_user();
-
-        # TODO: add admin control
         $this->init();
-
     }
     /**
      * 初始化controller
@@ -65,6 +57,7 @@ class Controller_Base extends Controller
 
     public function after()
     {
+        View::set_global('current_user', Auth::instance()->get_user());
         if ( ! $this->response->body())
         {
             $layout = View::factory($this->layout, $this->template_data);

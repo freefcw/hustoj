@@ -1,10 +1,6 @@
 <ul class="pagination problem-pagination">
 <?php for($i = 1; $i <= $pages; $i++): ?>
-<?php if($i == $page_id):?>
-<li class="active"><?php echo(html::anchor("/problem/list/{$i}", $i, array('class' => 'active')));?></li>
-<?php else: ?>
-<li><?php echo(html::anchor("/problem/list/{$i}", $i));?></li>
-<?php endif;?>
+    <li<?php if($i == Request::$current->param('id')):?> class="active"<?php endif;?>><a href="/problem/list/<?php echo($i);?>"><?php echo($i);?></a></li>
 <?php endfor;?>
 </ul>
 <div class="problem-search">

@@ -4,10 +4,7 @@ class Controller_Admin_Setting extends Controller_Admin_Base{
 
     public function action_index()
     {
-        $body = View::factory('admin/setting/index');
-
-        $this->view->title = 'General Setting';
-        $this->view->body = $body;
+        $this->template_data['title'] = 'General Setting';
     }
 
     public function action_system(){}

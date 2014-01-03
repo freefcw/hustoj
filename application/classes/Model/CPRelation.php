@@ -5,7 +5,7 @@
  * Time: 2:42 PM
  */
 
-class Model_CPRelation extends Model_Base
+class Model_CPRelation extends Model_Relation
 {
     static $primary_key = 'contest_id';
     static $table = 'contest_problem';
@@ -34,6 +34,13 @@ class Model_CPRelation extends Model_Base
         return $result->as_array();
     }
 
+    public static function empty_contest($contest_id)
+    {
+        $query = DB::delete(self::$table)
+            ->where('contest_id', '=', $contest_id);
+        return $query->execute();
+    }
+
     public function detail()
     {
         if ( ! $this->detail )
@@ -52,5 +59,7 @@ class Model_CPRelation extends Model_Base
     {}
 
     protected function initial_data()
-    {}
+    {
+        $this->title = '';
+    }
 }

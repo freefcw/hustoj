@@ -12,20 +12,19 @@ class Controller_Problem extends Controller_Base
     {
         $page = $this->request->param('id', 1);
 
-        $per_page = 50;
-
-        $filter = array();
+        $filter = array(
+            'defunct' => Model_Base::DEFUNCT_NO
+        );
 
         $orderby = array(
             Model_Problem::$primary_key => Model_Base::ORDER_ASC
         );
-        $this->template_data['problemlist'] = Model_Problem::find($filter, $page, $per_page, $orderby);
+        $this->template_data['problemlist'] = Model_Problem::find($filter, $page, OJ::per_page, $orderby);
         //TODO: add check permission of contest
         $total = Model_Problem::count($filter);
 
         $title = 'Problem Set ' . $page;
-        $this->template_data['page_id'] = $page;
-        $this->template_data['pages'] = ceil(intval($total) / $per_page);
+        $this->template_data['pages'] = ceil(intval($total) / OJ::per_page);
         $this->template_data['title'] = $title;
     }
 
@@ -43,7 +42,6 @@ class Controller_Problem extends Controller_Base
         $this->template_data['title'] = $problem['title'];
         $this->template_data['p'] = $problem;
     }
-
 
 
     public function action_submit()
@@ -115,7 +113,7 @@ class Controller_Problem extends Controller_Base
 
         // TODO: validation
 
-        $list = Model_Problem::find_problem($text, $area);
+        $list = Model_Problem::search($text, $area);
 
         $this->template_data['area'] = $area;
         $this->template_data['search_text'] = $text;

@@ -1,4 +1,5 @@
-<?php if (isset($cid)) {
+<?php /* @var Model_Problem $p */
+if (isset($cid)) {
     echo(View::factory('contest/nav', array('title' => $title, 'contest' => $contest, 'cid'=>$cid)));
 } ?>
 <h1 class="page-title"><?php if (isset($cid)) {
@@ -9,9 +10,13 @@
     -- <?php echo($p['title']); ?></h1>
 <div class="content-info">
     <p>Time Limit: <span class="label label-warning"><?php echo($p['time_limit']);?>S</span> Memory Limit: <span
-            class="label label-important"><?php echo($p['memory_limit']);?>MB</span><br/></p>
-
-    <p>Submissions: <?php echo($p['submit']);?>  Solved: <?php echo($p['accepted']);?></p>
+            class="label label-danger"><?php echo($p['memory_limit']);?>MB</span><br/>
+    </p>
+    <div>
+        <?php if ($p->is_special_judge()):?><span class="label label-danger">Special Judge</span><?php endif;?>
+        Submissions: <?php echo($p['submit']);?>
+        Solved: <?php echo($p['accepted']);?>
+    </div>
 </div>
 <dl id="detail">
     <dt>Desctiption</dt>

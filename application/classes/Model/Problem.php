@@ -61,21 +61,39 @@ class Model_Problem extends Model_Base
     public $solved;
     public $case_time_limit;
 
-    public static function find_problem($text, $area, $orderby = 'problem_id')
+    /**
+     * @param        $text
+     * @param        $area
+     * @param string $orderby
+     *
+     * @return Model_Problem[]
+     */
+    public static function search($text, $area, $orderby = 'problem_id')
     {
+        $term = "%{$text}%";
         $query = DB::select()->from(self::$table)
-            ->where($area, 'LIKE', $text)
-            ->limit(100);
+            ->where($area, 'LIKE', $term)
+            ->limit(100)
+            ->order_by($orderby, self::ORDER_DESC);
 
         $ret = $query->as_object(get_called_class())->execute();
 
         return $ret->as_array();
     }
 
+    public function rejudge()
+    {
+        return Model_Solution::rejudge_problem($this->problem_id);
+    }
 
     public function summary()
     {
         return Model_Solution::summary_for_problem($this->problem_id);
+    }
+
+    public function is_special_judge()
+    {
+        return $this->spj == '1';
     }
 
     public function best_solution($page=0, $limit=50)
@@ -84,7 +102,12 @@ class Model_Problem extends Model_Base
     }
 
     protected function initial_data()
-    {}
+    {
+        $this->defunct = self::DEFUNCT_YES;
+        $this->ratio = 0;
+        $this->difficulty = 0;
+        $this->case_time_limit = 0;
+    }
 
     public function validate()
     {}

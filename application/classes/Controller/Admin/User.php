@@ -9,64 +9,45 @@ class Controller_Admin_User extends Controller_Admin_Base{
 
     public function action_list()
     {
+        $this->view = 'admin/user/list';
     	$page = $this->request->param('id', 1);
 
-    	$m = new Model_User();
-    	$user_list = $m->get_list($page);
+    	$user_list = Model_User::find(array(), $page);
 
-        $body = View::factory('admin/user/list');
-        $body->bind('user_list', $user_list);
-
-        $this->view->title = 'User List '. $page;
-        $this->view->body = $body;
+        $this->template_data['user_list'] = $user_list;
+        $this->template_data['title']  = 'User List '. $page;
     }
 
     public function action_edit()
     {
         $user_id = $this->request->param('id', null);
-        if ($user_id === null) $this->error_page();
-        $m = new Model_User();
-        if ($this->request->method() == 'POST')
+
+        $user = Model_User::find_by_id($user_id);
+        if ( !$user ) $this->redirect('/admin');
+
+        if ( $this->request->is_post() )
         {
-            $post = $this->request->post();
+            $safe_data = $this->cleaned_post();
 
-            $newdata = array();
-
-            $newdata['user_id'] = $post['user_id'];
-            $user_id = $post['user_id'];
-            $newdata['school'] = $post['school'];
-            $newdata['intro'] = $post['intro'];
-            $newdata['email'] = $post['email'];
-
-            if ($post['disabled'] == '1')
-                $newdata['disabled'] = true;
-            else
-                $newdata['disabled'] = false;
-
-            if ($post['password'] AND $post['repassword'] == $post['password'])
+            if ($safe_data['password'] AND $safe_data['repassword'] == $safe_data['password'])
             {
-                $newdata['password'] = Auth::instance()->hash($post['password']);
+                unset($safe_data['password']);
+                $safe_data['password'] = Auth::instance()->hash($safe_data['password']);
             }
-
-            $ret = $m->save($newdata);
+            $user->update($safe_data);
         }
-        $u = $m->get_info_by_name($user_id);
 
-        $body = View::factory('/admin/user/edit');
-        $body->bind('user', $u);
-
-        $this->view->title = 'Edit '. $user_id;
-        $this->view->body = $body;
+        $this->template_data['user'] = $user;
+        $this->template_data['title'] = 'Edit User '. $user_id;
     }
 
     public function action_del()
     {
         // ban it forever, just mark it
         $user_id = $this->request->param('id', null);
-        if ($user_id === null) $this->error_page();
 
-        $user = new Model_User();
-        $user->ban($user_id);
+        $user = Model_User::find_by_id($user_id);
+        $user->defunct = 1;
 
         //TODO: use ajax
         $this->action_index();

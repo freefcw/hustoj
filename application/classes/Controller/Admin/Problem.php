@@ -9,115 +9,105 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
 
     public function action_index()
     {
+        $this->view = 'admin/problem/list';
         $this->action_list();
     }
 
-    public function action_edit($p_id = null)
+    public function action_edit()
     {
-        if ($p_id !== null)
+        $pid = $this->request->param('id', null);
+
+        if ( $pid )
         {
-            // come from action_new
-            $pid = $p_id;
+            $problem = Model_Problem::find_by_id($pid);
         } else {
-            $pid = $this->request->param('id', null);
+            $problem = new Model_Problem;
         }
 
-        if (($pid === null) or (! is_numeric($pid))) $this->error_page();
-
-        $m = new Model_Problem();
-
-        $pid = intval($pid);
-
-        if ($this->request->method() == 'POST')
+        if ( $this->request->is_post() )
         {
-            $post = $this->request->post();
+            $post = $this->cleaned_post();
+            $problem->update($post);
 
-            $newdata = array();
-
-            $newdata['problem_id'] = $pid;
-            $newdata['title'] = $post['title'];
-            $newdata['time_limit'] = $post['time_limit'];
-            $newdata['memory_limit'] = $post['memory_limit'];
-            $newdata['description'] = $post['description'];
-            $newdata['input'] = $post['input'];
-            $newdata['output'] = $post['output'];
-            $newdata['sample_input'] = $post['sample_input'];
-            $newdata['sample_output'] = $post['sample_output'];
-            $newdata['hint'] = $post['hint'];
-            $newdata['source'] = $post['source'];
-
-            $newdata['spj'] = false;
+            $problem->spj = 0;
             if (array_key_exists('spj', $post))
-                $newdata['spj'] = true;
-
-            $m->save($newdata);
+                $problem->spj = 1;
+            $problem->save();
         }
-        $problem = $m->find_by_id($pid);
-
-        // view begin
-        $body = View::factory('admin/problem/edit');
-        $body->bind('problem', $problem);
-
-        $this->view->title = 'Edit '. $problem['problem_id']. ' -- '. $problem['title'];
-        $this->view->body = $body;
+        $this->template_data['problem'] = $problem;
+        $this->template_data['title'] = 'Edit '. $problem['problem_id']. ' -- '. $problem['title'];
     }
 
     public function action_save()
     {
-        if ($this->request->method() != 'GET') $this->error_page();
-
-        $post = $this->request->post();
-
-        $m = new Model_Problem();
-        $pid = $m->save($post);
-
-        $this->action_edit($pid);
+        if ( $this->request->is_post() )
+        {
+            $safe_data = $this->cleaned_post();
+            $problem = new Model_Problem;
+            $problem->update($safe_data);
+            $problem->save();
+            $this->action_edit($problem->problem_id);
+        }
+        $this->redirect('/admin/');
     }
 
-    public function action_delete()
+    public function action_defunct()
     {
-        // TODO: add as a ajax request
-        //
-        // delete a problem
-        $pid = $this->request->param('id', null);
-        if (($pid === null) or (! is_numeric($pid)))
-        {
-            $this->error_page();
-        }
-        $m = new Model_Problem();
-        $m->delete(intval($pid));
+        $pid = $this->get_query('problem_id');
 
-        $this->action_list();
+        if ($pid)
+        {
+            $problem = Model_Problem::find_by_id($pid);
+            if ( $problem->defunct == Model_Base::DEFUNCT_NO )
+            {
+                $problem->defunct = Model_Base::DEFUNCT_YES;
+                $data = Model_Base::DEFUNCT_YES;
+            } else {
+                $problem->defunct = Model_Base::DEFUNCT_NO;
+                $data = Model_Base::DEFUNCT_NO;
+            }
+            $problem->save();
+            $ret = new JPackage();
+            $ret->result = $data;
+            $this->response->body($ret->tojson());
+        } else {
+            $ret = new JPackage();
+            $ret->code = 0;
+            $ret->message = 'Not Found';
+            $this->response->body($ret->tojson());
+        }
     }
 
     public function action_search()
     {
         $text = $this->request->query('term', null);
-        if ($text === null) $this->error_page();
+        if ( $text == null)
+        {
+            $this->response->body('');
+            return;
+        }
 
-        $m = new Model_Problem();
-        $result = $m->find_problem($text, 'title');
+        $result = Model_Problem::search($text, 'title');
 
         $json = array();
         foreach($result as $item)
         {
             $tmp = array(
-                'id' => sprintf('%s', $item['_id']),
+                'id' => $item->problem_id,
                 'title' => $item['title'],
             );
             $json[] = $tmp;
         }
 
-        $this->view = json_encode($json);
+        $this->response->body(json_encode($json));
     }
 
     public function action_new()
     {
-        // new problem
-        $body = View::factory('admin/problem/edit');
-
-        $this->view->title = 'Add new Problem';
-        $this->view->body = $body;
+        $this->view = 'admin/problem/edit';
+        $problem = new Model_Problem;
+        $this->template_data['problem'] = $problem;
+        $this->template_data['title'] = 'New Problem';
     }
 
     public function action_list()
@@ -127,11 +117,8 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
         $filter = array();
         $problem_list = Model_Problem::find($filter, $page);
 
-        $body = View::factory('admin/problem/list');
-        $body->bind('problem', $problem_list);
-
-        // list problem
-        $this->view->title = 'Problem List';
-        $this->view->body = $body;
+        $this->template_data['pages'] = ceil(intval(Model_Problem::count($filter)) / OJ::per_page);
+        $this->template_data['problem_list'] = $problem_list;
+        $this->template_data['title'] = 'Problem List';
     }
 }

@@ -142,58 +142,83 @@ class Model_Contest extends Model_Base
         return $data;
     }
 
-    /**
-     * @param $cid
-     *
-     * @return array
-     */
-    public function get_user_of_contest($cid)
+    public function arrange_problem($orderlist)
     {
-        $collection = $this->db->selectCollection('privilege');
-
-        $condition = array('contest_id' => $cid);
-        $ret = $collection->find($condition);
-        return iterator_to_array($ret);
-    }
-
-    /**
-     * @param $cid
-     * @param $user_list
-     *
-     * @return void
-     */
-    public function add_user_to_contest($cid, $user_list)
-    {
-        $collection = $this->db->selectCollection('privilege');
-
-        foreach($user_list as $user_id)
+        Model_CPRelation::empty_contest($this->contest_id);
+        $plist = explode(';', $orderlist);
+        foreach($plist as $item)
         {
-            $item = array(
-                'contest_id' => $cid,
-                'user_id'    => $user_id
-            );
-            $collection->save($item);
+            if ( $item == '') continue;
+            list($num, $problem_id) = explode(':', $item);
+
+            $cr = new Model_CPRelation;
+            $cr->contest_id = $this->contest_id;
+            $cr->problem_id = $problem_id;
+            $cr->num = $num;
+            $cr->save();
         }
     }
 
     /**
-     * @param $cid
+     * 获取私有比赛的用户
+     *
+     * @return array
+     */
+    public function members()
+    {
+        return Model_Privilege::member_of_contest($this->contest_id);
+    }
+
+    public function is_private()
+    {
+        return intval($this->private) == 1;
+    }
+
+    /**
+     * @param $user_list
+     *
+     * @return void
+     */
+    public function add_member($user_list)
+    {
+        // TODO: check user
+        foreach($user_list as $user_id)
+        {
+            $perm = new Model_Privilege;
+            $perm->user_id = $user_id;
+            $perm->rightstr = 'c'.$this->contest_id;
+            $perm->save();
+        }
+    }
+
+    /**
      * @param $user_id
      */
-    public function remove_user_from_contest($cid, $user_id)
+    public function remove_member($user_id)
     {
-        $collection = $this->db->selectCollection('privilege');
-
-        $condition = array(
-            'contest_id' => $cid,
-            'user_id'    => $user_id,
+        $filter = array(
+            'user_id' => $user_id,
+            'rightstr' => 'c'.$this->contest_id,
         );
+        $perm = Model_Privilege::find($filter);
 
-        $collection->remove($condition);
+        var_dump($perm);
+        foreach($perm as $item)
+        {
+            $item->defunct = 1;
+            $item->destroy();
+        }
     }
 
     public function initial_data()
-    {}
+    {
+        $this->title       = '';
+        $this->start_time  = '';
+        $this->end_time    = '';
+        $this->defunct     = 'N';
+        $this->description = '';
+        $this->private     = 1;
+    }
 
     public function validate()
     {}

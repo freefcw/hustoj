@@ -14,65 +14,66 @@ class Controller_Admin_Contest extends Controller_Admin_Base
 
     public function action_list()
     {
+        $this->view = 'admin/contest/list';
         // initial
         $page_id = $this->request->param('id', 1);
 
-        // db
-        $c = new Model_Contest();
-        $contest_list = $c->get_list($page_id);
+        $contest_list = Model_Contest::find(array(), $page_id);
 
-        // view
-        $body = View::factory('admin/contest/list');
-        $body->bind('contest_list', $contest_list);
-
-        $this->view->title = 'Contest List';
-        $this->view->body = $body;
+        $this->template_data['contest_list'] = $contest_list;
+        $this->template_data['title'] = 'Contest List';
     }
 
     public function action_edit()
     {
         $cid = $this->request->param('id', null);
+        if ($cid)
+            $contest = Model_Contest::find_by_id($cid);
+        else
+            $contest = new Model_Contest;
 
-        if ($cid === null) {
-            $this->error_page();
+        if ( $this->request->is_post() )
+        {
+            $safe_data = $this->cleaned_post();
+            $contest->update($safe_data);
+            if ( ! in_array('private', $safe_data) )
+                $contest->private = 0;
+            $contest->save();
+            $orderlist = $safe_data['problemlist'];
+            $contest->arrange_problem($orderlist);
         }
 
-        $contest = Model_Contest::find_by_id($cid);
-
-        $body = View::factory('admin/contest/edit');
-        $body->bind('contest', $contest);
-
-        $this->view->title = 'Edit Contest' . $contest['contest_id'];
-        $this->view->body = $body;
+        $this->template_data['contest'] = $contest;
+        $this->template_data['title'] = 'Edit Contest ' . $contest['contest_id'];
     }
 
-    public function action_listuser()
+    public function action_new()
+    {
+        $this->view = 'admin/contest/edit';
+        $contest = new Model_Contest;
+        $this->template_data['contest'] = $contest;
+        $this->template_data['title'] = 'New Contest';
+
+    }
+
+    public function action_member()
     {
         $cid = $this->request->param('id', null);
-        if ($cid === null) {
-            $this->error_page();
-        }
-        $cid = intval($cid);
 
-        $c = new Model_Contest();
-
-        if ($this->request->method() == 'POST') {
-            $content = $this->request->post('content');
+        $contest = Model_Contest::find_by_id($cid);
+        if ( $this->request->is_post() )
+        {
+            $content = $this->get_post('content');
 
             $user_id_list = explode("\n", trim($content));
 
-            $c->add_user_to_contest($cid, $user_id_list);
+            $contest->add_member($user_id_list);
         }
 
         $contest = Model_Contest::find_by_id($cid);
-        $userlist = $c->get_user_of_contest($cid);
-
-        $body = View::factory('admin/contest/user');
-        $body->bind('contest', $contest);
-        $body->bind('users', $userlist);
-
-        $this->view->title = 'Member of Contest' . $contest['contest_id'];
-        $this->view->body = $body;
+        $this->template_data['users'] = $contest->members();
+        $this->template_data['contest'] = $contest;
+        $this->template_data['title'] = 'Member of Contest ' . $contest->contest_id;
     }
 
     public function action_removeuser()
@@ -81,13 +82,10 @@ class Controller_Admin_Contest extends Controller_Admin_Base
             $cid = $this->request->post('cid', null);
             $user_id = $this->request->post('uid', null);
 
-            $cid = intval($cid);
+            $contest = Model_Contest::find_by_id($cid);
+            $contest->remove_member($user_id);
 
-            $c = new Model_Contest();
-
-            $c->remove_user_from_contest($cid, $user_id);
-
-            $this->view = '{ok: 0}';
+            $this->response->body('{ok: 0}');
         }
     }
 }

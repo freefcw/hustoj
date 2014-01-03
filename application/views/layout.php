@@ -7,9 +7,10 @@
     <meta name="robots" content="index,follow"/>
     <title><?php echo($title); ?></title>
     <?php echo(HTML::style('css/style.css'));?>
-    <?php echo(HTML::script('js/jquery-1.7.1.min.js')); ?>
-    <?php echo(HTML::script('js/jquery-ui-1.8.18.custom.min.js')); ?>
+    <?php echo(HTML::script('js/jquery-1.9.1.js')); ?>
     <?php echo(HTML::script('js/bootstrap.min.js')); ?>
+    <?php echo(HTML::style('css/ui-lightness/jquery-ui-1.10.3.custom.min.css'));?>
+    <?php echo(HTML::script('js/jquery-ui-1.10.3.custom.js')); ?>
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="shortcut icon" href="favicon.ico"/>
 </head>
@@ -36,7 +37,7 @@
                 <li><a href="/discuss">Discuss</a></li>
             </ul>
 
-            <ul class="nav  navbar-nav pull-right">
+            <ul class="nav navbar-nav pull-right">
                 <?php $cu = Auth::instance()->get_user(); if ( $cu == null): ?>
                     <li><a href="/login">Login</a></li>
                     <li><a href="/user/register">Register</a></li>
@@ -45,9 +46,9 @@
                        title="<?php echo($cu->user_id);?>"><?php echo($cu->user_id);?></a></li>
                 <li><a href="/user/edit">Setting</a></li>
                 <li class="divider-vertical"></li>
-                <li class="dropdown" data-dropdown="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">More</a>
-                    <ul class="dropdown-menu">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
                         <li><a href="#">Message</a></li>
                         <?php if (Auth::instance()->is_admin()): ?>
                             <li><a href="/admin">Admin Control</a></li>

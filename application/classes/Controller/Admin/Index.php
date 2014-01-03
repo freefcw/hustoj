@@ -1,37 +1,28 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Admin_Index extends Controller_Admin_Base{
-
-    public function before()
-    {
-        parent::before();
-
-        if (!Auth::instance()->is_admin())
-            $this->redirect(Route::url('default'));
-    }
+class Controller_Admin_Index extends Controller_Admin_Base
+{
 
     public function action_index()
     {
-        $body = View::factory('admin/index/dashboard');
-
-        $this->view->title = 'Admin Control Panel';
-        $this->view->body = $body;
+        $this->template_data['title'] = 'Admin Control Panel';
     }
 
     public function action_rejudge()
     {
-        if ($this->request->method() == 'POST') {
-            $type = $this->request->post('type');
-            $id = intval($this->request->post('typeid'));
+        if ( $this->request->is_post() ) {
+            $type = $this->get_post('type');
+            $id = intval($this->get_post('typeid'));
 
-            $m = new Model_Submission();
-            if ($type == 'pid') {
-                $m->rejudge_problem($id);
-            } else if ($type == 'rid') {
-                $m->rejudge_solution($id);
+            if ($type == 'PROBLEM') {
+                $problem = Model_Problem::find_by_id($id);
+                $problem->rejudge();
+            } else if ($type == 'SOLUTION') {
+                $solution = Model_Solution::find_by_id($id);
+                $solution->rejudge();
             }
         }
-        $this->request->redirect('/admin/');
+        $this->redirect('/admin/');
     }
 
 }

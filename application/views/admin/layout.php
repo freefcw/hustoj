@@ -7,67 +7,65 @@
     <meta name="robots" content="index,follow"/>
     <title><?php echo($title); ?></title>
     <?php echo(HTML::style('css/style.css'));?>
-    <?php echo(HTML::style('css/ui-lightness/jquery-ui-1.8.18.custom.css'));?>
-    <?php echo(HTML::script('js/jquery-1.7.1.min.js')); ?>
-    <?php echo(HTML::script('js/jquery-ui-1.8.18.custom.min.js')); ?>
+    <?php echo(HTML::style('css/ui-lightness/jquery-ui-1.10.3.custom.min.css'));?>
+    <?php echo(HTML::script('js/jquery-1.9.1.js')); ?>
+    <?php echo(HTML::script('js/jquery-ui-1.10.3.custom.js')); ?>
     <?php echo(HTML::script('js/bootstrap.min.js')); ?>
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="shortcut icon" href="favicon.ico"/>
 </head>
 <body>
-<div class="container">
-    <div class="navbar">
-        <div class="navbar-inner">
-            <div class="container" style="width: auto;">
-                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a>
-                <a class="brand" href="/">ADMIN</a>
 
-                <div class="nav-collapse">
-                    <ul class="nav">
-                        <li><!--class="active"--><a href="/admin">Summary</a></li>
-                        <li><a href="/admin/problem">Problems</a></li>
-                        <li><a href="/admin/user">Users</a></li>
-                        <li><a href="/admin/contest">Contest</a></li>
-                        <li><a href="/admin/setting">Configure</a></li>
-                        <li><a href="#">Discuss</a></li>
-                    </ul>
-                    <ul class="nav pull-right">
-                        <?php if ($current_user == null): ?>
-                        <li><a href="/login">Login</a></li>
-                        <li><a href="/account/register">Register</a></li>
-                        <?php else: ?>
-                        <li><a href="<?php echo(Route::url('profile', array('uid' => $cu->user_id)));?>"
-                               title="<?php echo($current_user);?>"><?php echo($current_user);?></a></li>
-                        <li><a href="/account/setting">Setting</a></li>
-                        <li class="divider-vertical"></li>
-                <li class="dropdown" data-dropdown="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">More</a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Message</a></li>
-                        <?php if (Auth::instance()->is_admin()): ?>
-                            <li><a href="/admin">Admin Control</a></li>
-                            <?php endif; ?>
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/admin">ADMIN</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><!--class="active"--><a href="/admin">Home</a></li>
+                <li><a href="/admin/problem">Problems</a></li>
+                <li><a href="/admin/user">Users</a></li>
+                <li><a href="/admin/contest">Contest</a></li>
+                <li><a href="/admin/setting">Configure</a></li>
+                <li><a href="#">Discuss</a></li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li><a href="<?php echo(Route::url('profile', array('uid' => $current_user->user_id)));?>"
+                       title="<?php echo($current_user->user_id);?>"><?php echo($current_user->user_id);?></a></li>
+                <li class="divider-vertical"></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/admin">Admin Control</a></li>
                         <li class="divider"></li>
                         <li><a href="/logout">Logout</a></li>
-                        <?php endif; ?>
                     </ul>
-                    </li>
-                    </ul>
-                </div>
-                <!-- /.nav-collapse -->
-            </div>
+                </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-1 sidebar">
+            <?php echo View::factory('admin/'. strtolower(Request::current()->controller()).'/sidebar');?>
         </div>
-        <!-- /navbar-inner -->
+        <div class="col-md-11">
+            <h3><?php echo $title;?></h3>
+            <?php if (isset($message) && $message):?>
+                <?php echo View::factory('admin/message', $message);?>
+            <?php endif;?>
+            <?php echo($body); ?>
+        </div>
     </div>
-
-    <div id="wrapper">
-
-        <?php echo($body); ?>
-    </div>
+    <div class="runtime-info" style="margin-top: 50px">{memory_usage}, {execution_time}</div>
     <?php echo(View::factory('footer')); ?>
 </div>
 </body>

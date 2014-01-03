@@ -7,6 +7,8 @@ class OJ
 {
     const time_format = 'Y-m-d h:i:s';
 
+    const per_page = 50;
+
     /**
      * @var  array  result code to human language readable long
      */
@@ -90,20 +92,6 @@ class OJ
             return 'Others';
         }
         return OJ::$language[$value];
-    }
-
-    /**
-     * @static
-     *
-     * @param $value
-     *
-     * @return mixed
-     *
-     */
-    public static function is_private($value)
-    {
-        if (intval($value) == 1) return true;
-        return false;
     }
 
     /**

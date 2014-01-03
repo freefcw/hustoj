@@ -176,9 +176,7 @@ table.best-solution {
 
 #edit-problem-list li {
     margin: 0 3px 3px 3px;
-    padding: 0.4em 0.4em 0.4em 0.5em;
-    font-size: 1.4em;
-    height: 18px;
+    padding: 0.4em 0.4em 0.4em 0.5em !important;
     border: 1px solid #f4a460;
     /*outline: 1px solid #f4a460;*/
 }

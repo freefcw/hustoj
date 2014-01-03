@@ -40,6 +40,8 @@ class Model_User extends Model_Base
     public $nick;
     public $school;
 
+    protected $permission_list = array();
+
 
     /**
      * 判断用户登录信息是否正确
@@ -87,6 +89,29 @@ class Model_User extends Model_Base
     {
         if ($this->submit != 0) return sprintf( "%.02lf%%", $this->solved / $this->submit * 100);
         return '0.00%';
+    }
+
+    /**
+     * 判断用户是否有某项权限
+     * @param $permission
+     *
+     * @return array|bool
+     */
+    public function has_permission($permission)
+    {
+        if ( ! $this->permission_list )
+            return $this->permission_list = Model_Privilege::permission_of_user($this->user_id);
+        return in_array($permission, $this->permission_list);
+    }
+
+    /**
+     * 判断用户是否是管理员
+     *
+     * @return array|bool
+     */
+    public function is_admin()
+    {
+        return $this->has_permission(Model_Privilege::PERM_ADMIN);
     }
 
     /**

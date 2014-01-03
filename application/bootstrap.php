@@ -118,6 +118,14 @@ Cookie::$domain = Kohana::$config->load('base.domain');
  * defaults for the URI.
  */
 
+Route::set('admin', 'admin(/<controller>(/<action>(/<id>)))')
+    ->defaults(array(
+        'directory'  => 'admin',
+        'controller' => 'index',
+        'action'     => 'index'
+    )
+);
+
 Route::set(
     'auth', '<action>',
     array('action' => '(login|logout|setting|setting)')
@@ -185,14 +193,6 @@ Route::set(
     ))->defaults(array(
          'controller' => 'contest',
          'action'     => 'problem',
-    )
-);
-
-Route::set('admin', 'admin/<controller>(/<action>(/<id>))')
-    ->defaults(array(
-        'directory'  => 'admin',
-        'controller' => 'index',
-        'action'     => 'index'
     )
 );
 

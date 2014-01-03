@@ -13,8 +13,10 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
 
     static $table = '';
 
-    const ORDER_DESC = 'DESC';
-    const ORDER_ASC  = 'ASC';
+    const ORDER_DESC  = 'DESC';
+    const ORDER_ASC   = 'ASC';
+    const DEFUNCT_YES = 'Y';
+    const DEFUNCT_NO  = 'N';
 
     public function __construct($db = null)
     {
@@ -56,7 +58,7 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
      *
      * @param string $id 主键id
      *
-     * @return Model_Base
+     * @return Model_Base|Model_Code|Model_Problem|Model_User|Model_Topic
      */
     public static function find_by_id($id)
     {
@@ -73,7 +75,7 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
      * @param int   $limit
      * @param array $orderby
      *
-     * @return Model_Base
+     * @return Model_Base[]|Model_Code[]|Model_Problem[]|Model_User[]|Model_Topic[]
      */
     public static function find($filters, $page = 1, $limit = 50, $orderby=array())
     {
@@ -144,6 +146,18 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
     }
 
     /**
+     * 是否为死亡数据
+     *
+     * @return bool
+     */
+    public function is_defunct()
+    {
+        if ( in_array('defunct', self::$cols))
+            return $this->defunct == self::DEFUNCT_YES;
+        return false;
+    }
+
+    /**
      * 更新数据
      *
      * @param $data
@@ -172,7 +186,7 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
         // 过滤不存在的数据
         $data = $this->raw_array();
 
-        if ( isset($this->{static::$primary_key}) )
+        if ( isset($this->{static::$primary_key}) and $this->{static::$primary_key})
         {
             // if primary key exist, then update, contain primary key, haha
             $primary_id = $this->{static::$primary_key};
