@@ -8,10 +8,8 @@ class Controller_User extends Controller_Base
         // initial
         $page = $this->request->param('id', 1);
 
-        // db
-        $per_page = 50;
         $filter = array();
-        $users = Model_User::find_by_solved($filter, $page, $per_page);
+        $users = Model_User::find_by_solved($filter, $page, OJ::per_page);
 
         // views
         $total = Model_User::count($filter);
@@ -19,8 +17,8 @@ class Controller_User extends Controller_Base
         $this->template_data['users'] = $users;
         $this->template_data['page'] = $page;
         $this->template_data['total'] = $total;
-        $this->template_data['total_page'] = ceil($total / $per_page);
-        $this->template_data['per_page'] = $per_page;
+        $this->template_data['total_page'] = ceil($total / OJ::per_page);
+        $this->template_data['per_page'] = OJ::per_page;
     }
 
     public function action_profile()

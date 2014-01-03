@@ -10,8 +10,8 @@ class Controller_Solution extends Controller_Base
     public function action_status()
     {
         // init
-        $page = $this->request->param('id', 1);
-
+        $page = $this->get_query('page', 1);
+        if ($page < 1) $page = 1;
         $pid = $this->get_query('pid', null);
         $uid = $this->get_query('uid', null);
         $cid = $this->get_query('cid', null);
@@ -56,19 +56,12 @@ class Controller_Solution extends Controller_Base
         $orderby = array(
             Model_Solution::$primary_key => Model_Base::ORDER_DESC
         );
-        $status = Model_Solution::find($filter, $page, $limit=50, $orderby);
+        $status = Model_Solution::find($filter, $page, OJ::per_page, $orderby);
         $total = Model_Solution::count($filter);
 
         // view
         $this->template_data['list']= $status;
-        $this->template_data['page']= $page;
         $this->template_data['total']= ceil($total / $per_page);
-        $this->template_data['pid']= $pid;
-        $this->template_data['uid']= $uid;
-        $this->template_data['cid']= $cid;
-        $this->template_data['language']= $language;
-        $this->template_data['result']= $result;
-
         $this->template_data['title'] = 'STATUS';
     }
 }

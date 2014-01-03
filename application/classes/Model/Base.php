@@ -181,7 +181,7 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
     public function save()
     {
         // prepare data
-//        $this->data['update_at'] = PP::time_format();
+//        $this->data['update_at'] = PP::format_time();
 
         // 过滤不存在的数据
         $data = $this->raw_array();

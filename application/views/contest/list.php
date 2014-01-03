@@ -13,3 +13,21 @@
 <?php endforeach; ?>
 </tbody>
 </table>
+<ul class="pager" style="margin-left: 15%; margin-right: 15%">
+    <?php $page = Request::$current->query('page');?>
+    <?php if ($page != 1):?>
+    <?php
+        $params = Request::$current->query();
+        $params['page'] = $page - 1;
+        $query_param = URL::query($params);
+    ?>
+        <li class="previous"><?php echo html::anchor("/contest/{$query_param}", '&larr; Newer');?></li>
+    <?php endif;?>
+    <?php if ($page < $total): ?>
+    <?php
+        $params['page'] = $page + 1;
+        $query_param = URL::query($params);
+    ?>
+    <li class="next"><?php echo html::anchor("/contest/{$query_param}", 'Older &rarr;');?></li>
+    <?php endif;?>
+</ul>

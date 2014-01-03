@@ -138,19 +138,17 @@ class OJ
         return sprintf("%02d:%02d:%02d", $hour, $minute, $sec);
     }
 
-
     /**
      * @static
      *
-     * @param $timestamp mongdb datetime
+     * @param     $timestamp
      * @param int $granularity
      *
      * @return string
      *
-     * from http://stackoverflow.com/questions/2952361/date-time-convert-to-time-since-php* from http://stackoverflow.com/questions/2952361/date-time-convert-to-time-since-php
+     * from http://stackoverflow.com/questions/2952361/date-time-convert-to-time-since-php
      *
      * make timestamp to timesince
-     *
      */
     public static function timesince($timestamp, $granularity = 2) {
         $timestamp = time() - strtotime($timestamp);
@@ -186,7 +184,7 @@ class OJ
      *
      * @return bool|string
      */
-    public static function time_format($format='Y-m-d H:i:s')
+    public static function format_time($format='Y-m-d H:i:s')
     {
         return date($format);
     }

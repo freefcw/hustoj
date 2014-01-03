@@ -12,13 +12,20 @@ class Controller_Contest extends Controller_Base
     public function action_list()
     {
         // initial
-        $page = $this->request->param('id', 1);
+        $page = $this->get_query('page', 1);
 
-        $filter = array();
-        $contest_list = Model_Contest::find($filter, $page);
+        $filter = array(
+            'defunct' => Model_Base::DEFUNCT_NO,
+        );
+        $order_by = array(
+            'contest_id' => Model_Base::ORDER_DESC
+        );
+        $contest_list = Model_Contest::find($filter, $page, OJ::per_page, $order_by);
+        $total = Model_Contest::count($filter);
 
         // view
-        $this->template_data['list'] = $contest_list;
+        $this->template_data['total'] = ceil($total / OJ::per_page);
+        $this->template_data['list']  = $contest_list;
         $this->template_data['title'] = "Contest List";
     }
 

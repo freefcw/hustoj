@@ -30,7 +30,7 @@ class Model_Reply extends Model_Base
 
     protected function initial_data()
     {
-        $this->time = OJ::time_format();
+        $this->time = OJ::format_time();
         $this->status = 0;
         $this->ip = Request::$client_ip;
     }

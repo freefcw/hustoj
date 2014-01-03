@@ -49,39 +49,21 @@
 <?php endforeach;?>
 </tbody>
 </table>
-<?php
-    $query_param = '';
-    if ($pid)
-    {
-        $query_param .= "pid={$pid}";
-    }
-    if ($uid)
-    {
-        if ($query_param !== '') $query_param .= '&';
-        $query_param .= "uid={$uid}";
-    }
-    if ($language)
-    {
-        if ($query_param !== '') $query_param .= '&';
-        $query_param .= "language={$language}";
-    }
-    if ($result)
-    {
-        if ($query_param !== '') $query_param .= '&';
-        $query_param .= "result={$result}";
-    }
-    if ($cid)
-    {
-        if ($query_param !== '') $query_param .= '&';
-        $query_param .= "cid={$cid}";
-    }
-    if (strlen($query_param) !== '') $query_param = '?'. $query_param;
-	#$query_param = "?pid={$pid}&uid={$uid}&language={$language}&result={$result}&cid={$cid}";
-?>
 <ul class="pager" style="margin-left: 15%; margin-right: 15%">
-<?php if ($page != 1):?>
-<li class="previous"><?php echo html::anchor(sprintf("/problem/status/%s/{$query_param}", $page), '&larr; Newer');?></li>
-<?php endif;?>
-<?php if ($page == $total) $page = $total - 1; ?>
-<li class="next"><?php echo html::anchor(sprintf("/problem/status/%s/{$query_param}", $page+1), 'Older &rarr;');?></li>
+    <?php $page = Request::$current->query('page');?>
+    <?php if ($page != 1):?>
+        <?php
+        $params = Request::$current->query();
+        $params['page'] = $page - 1;
+        $query_param = URL::query($params);
+        ?>
+        <li class="previous"><?php echo html::anchor("/status/{$query_param}", '&larr; Newer');?></li>
+    <?php endif;?>
+    <?php if ($page < $total): ?>
+    <?php
+        $params['page'] = $page + 1;
+        $query_param = URL::query($params);
+    ?>
+    <li class="next"><?php echo html::anchor("/status/{$query_param}", 'Older &rarr;');?></li>
+    <?php endif;?>
 </ul>

@@ -40,7 +40,8 @@ class Model_User extends Model_Base
     public $nick;
     public $school;
 
-    protected $permission_list = array();
+    protected $permission_list = null;
+    protected $resolved_problem_list = null;
 
 
     /**
@@ -133,5 +134,19 @@ class Model_User extends Model_Base
         $this->submit      = 0;
         $this->accesstime  = $now;
         $this->ip          = Request::$client_ip;
+    }
+
+    /**
+     * is user resolved probelm
+     *
+     * @param $problem_id
+     *
+     * @return bool
+     */
+    public function resolved_problem($problem_id)
+    {
+        if ( ! $this->resolved_problem_list )
+            $this->resolved_problem_list = Model_Solution::user_resolved($this->user_id);
+        return in_array($problem_id, $this->resolved_problem_list);
     }
 }

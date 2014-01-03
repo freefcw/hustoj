@@ -139,6 +139,24 @@ class Model_Solution extends Model_Base
         return $result->as_array();
     }
 
+    public static function user_resolved($user_id)
+    {
+        $query = DB::select()->from(self::$table)
+            ->where('user_id', '=', $user_id)
+            ->where('result', '=', self::STATUS_AC);
+
+        $result = $query->as_object(get_called_class())->execute();
+        /* @var Model_Solution[] $result */
+        $problem_list = array();
+        foreach($result as $solution)
+        {
+            if ( ! in_array($solution->problem_id, $problem_list))
+                array_push($problem_list, $solution->problem_id);
+        }
+
+        return $problem_list;
+    }
+
     /**
      * 重新判这个解题
      */

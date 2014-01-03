@@ -20,7 +20,7 @@ class Model_Userlog extends Model_Base
 
     protected function initial_data()
     {
-        $this->time = OJ::time_format();
+        $this->time = OJ::format_time();
         $this->ip = Request::$client_ip;
     }
 
