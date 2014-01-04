@@ -190,30 +190,16 @@ table.best-solution {
     color: #2e8b57;
 }
 
-.user-stats li.stats {
-    display: inline-block;
-    font-size: 13px;
-}
-
-.user-stats li.stats a {
-    width: 70px;
-    min-height: 70px;
-}
-
-.user-stats li.stats a span {
+div.user-stats li.count a {
+    padding: 20px;
+    height: 100px;
     margin: 20px 5px 5px 5px;
     text-align: center;
-    font-size: 36px;
-    height: 40px;
-    display: block;
+    font-size: 40px;
 }
 
 div.user-stats li.count-accept a {
     color: #32cd32;
-}
-
-div.user-stats li.count-submit a {
-    /*color: yellow;*/
 }
 .topic-content {
     padding: 10px;
@@ -222,6 +208,7 @@ div.user-stats li.count-submit a {
 
 .reply-content {
     margin-top: 5px;
+    white-space: pre;
 }
 
 .reply-header {

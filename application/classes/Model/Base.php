@@ -28,6 +28,26 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
         }
     }
 
+    /**
+     * 过滤无效的数据, '', 0
+     *
+     * @param       $data array
+     * @param array $filters
+     *
+     * @return array
+     */
+    public static function clean_data($data, $filters = array('', NULL))
+    {
+        $ret = array();
+        foreach($data as $key => $value)
+        {
+            if ( ! in_array($value, $filters) )
+                $ret[$key] = $value;
+        }
+
+        return $ret;
+    }
+
     //////////////////////////////////////////
     //            ArrayAccess
     //////////////////////////////////////////

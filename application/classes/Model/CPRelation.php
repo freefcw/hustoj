@@ -41,7 +41,18 @@ class Model_CPRelation extends Model_Relation
         return $query->execute();
     }
 
-    public function detail()
+    public function title()
+    {
+        $problem = $this->real_problem();
+        if ($problem)
+            return $problem->title;
+        return '';
+    }
+
+    /**
+     * @return Model_Problem
+     */
+    public function real_problem()
     {
         if ( ! $this->detail )
         {

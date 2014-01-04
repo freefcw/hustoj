@@ -17,6 +17,7 @@
 <table class="table table-bordered">
     <thead>
     <tr>
+        <td></td>
         <th>Title</th>
         <th>Author</th>
     </tr>
@@ -25,7 +26,8 @@
     <?php /* @var Model_Topic[] $topic_list */ foreach ($topic_list as $t): ?>
     <tr>
         <td>
-            <a href="/problem/show/<?php echo($t->pid);?>" style="color: #000000"> <?php echo($t->pid);?> </a>
+            <?php if ($t->pid):?><a href="/problem/show/<?php echo($t->pid);?>" style="color: #000000"> <?php echo($t->pid);?> </a><?php endif;?></td>
+        <td>
             <a href="/t/<?php echo($t->tid);?>"><strong><?php echo($t->title);?></strong></a>
         </td>
         <td><a href="<?php echo(Route::url('profile', array('uid' => $t->author_id)));?>"><?php echo($t->author_id);?></a></td>
@@ -33,3 +35,21 @@
         <?php endforeach;?>
     </tbody>
 </table>
+<ul class="pager" style="margin-left: 15%; margin-right: 15%">
+    <?php $page = Request::$current->query('page');?>
+    <?php if ($page != 1):?>
+        <?php
+        $params = Request::$current->query();
+        $params['page'] = $page - 1;
+        $query_param = URL::query($params);
+        ?>
+        <li class="previous"><?php echo html::anchor("/discuss/{$query_param}", '&larr; Newer');?></li>
+    <?php endif;?>
+    <?php if ($page < $total): ?>
+        <?php
+        $params['page'] = $page + 1;
+        $query_param = URL::query($params);
+        ?>
+        <li class="next"><?php echo html::anchor("/discuss/{$query_param}", 'Older &rarr;');?></li>
+    <?php endif;?>
+</ul>

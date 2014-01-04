@@ -30,7 +30,7 @@ class Controller_Discuss extends Controller_Base
             $reply = new Model_Reply;
             $reply->author_id = $cu->user_id;
             $reply->topic_id = $topic_id;
-            $reply->content = $this->get_post('contest');
+            $reply->content = $this->get_post('content');
             $reply->save();
         }
 
@@ -43,19 +43,19 @@ class Controller_Discuss extends Controller_Base
 
     public function action_list()
     {
-        $page = intval($this->request->param('id', 0));
-        $pid = intval($this->request->query('pid', null));
-        $user_id = $this->request->query('uid', null);
+        $page = $this->get_query('page', 1);
 
         $filter = array(
-            'pid' => $pid,
-            'author_id' => $user_id,
+            'pid' => $this->get_query('pid'),
+            'author_id' => $this->get_query('uid'),
         );
-        $filter = $this->clear_data($filter);
 
-        $topic_list = Model_Topic::find($filter, $page);
+        $filter = Model_Base::clean_data($filter);
+        $topic_list = Model_Topic::page($filter, $page, OJ::per_page);
+        $total = Model_Topic::count($filter);
 
         $this->template_data['topic_list'] = $topic_list;
+        $this->template_data['total'] = ceil( $total / OJ::per_page);
         $this->template_data['title'] = 'Discuss';
     }
 

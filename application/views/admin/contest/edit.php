@@ -137,7 +137,7 @@
                 <ul id="edit-problem-list">
                     <?php foreach ($contest->problem() as $pr): ?>
                     <li class="ui-state-default" data-value="<?php echo $pr->problem_id;?>"><span
-                            class="ui-icon ui-icon-arrowthick-2-n-s"></span><?php $problem = $pr->detail();echo $problem->title;?><a
+                            class="ui-icon ui-icon-arrowthick-2-n-s"></span><?php echo $pr->title();?><a
                             style="float:right;">[x]</a></li>
                     <?php endforeach;?>
                 </ul>

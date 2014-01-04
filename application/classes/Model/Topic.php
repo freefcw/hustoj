@@ -37,6 +37,21 @@ class Model_Topic extends Model_Base
         return Model_Reply::find($filter);
     }
 
+    /**
+     * @param     $filter
+     * @param     $page
+     * @param int $per_page
+     *
+     * @return Model_Topic[]
+     */
+    public static function page($filter, $page, $per_page = 50)
+    {
+        $order_by  = array(
+            'tid' => self::ORDER_DESC
+        );
+        return self::find($filter, $page, $per_page, $order_by);
+    }
+
     protected function initial_data()
     {
     }
