@@ -13,7 +13,7 @@ class Controller_User extends Controller_Base
 
         // views
         $total = Model_User::count($filter);
-        $this->template_data['title'] = "User List";
+        $this->template_data['title'] = "User Rank";
         $this->template_data['users'] = $users;
         $this->template_data['page'] = $page;
         $this->template_data['total'] = $total;
