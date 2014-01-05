@@ -54,6 +54,58 @@ class Model_User extends Model_Base
      */
     public static function authenticate($username, $password)
     {
+        $user = self::find_by_id($username);
+        if ( $user)
+        {
+            if ( self::is_old_password($user->password))
+            {
+                if ($user->password == md5($password))
+                {
+                    $user->password = Auth::instance()->hash($password);
+                    $user->save();
+                    return $user;
+                }
+                return false;
+            }
+            $origin_hash = base64_decode($user->password);
+            $salt = substr($origin_hash, 20);
+            $hash = Auth::instance()->hash($password, $salt);
+            if ( $user->password == $hash ) return $user;
+        }
+        return false;
+    }
+
+    /**
+     * 判断是否是老密码
+     *
+     * @param $str
+     *
+     * @return bool
+     */
+    public static function is_old_password($str)
+    {
+        for ($i = strlen($str) - 1; $i >= 0; $i--)
+        {
+            $c = $str[$i];
+            if ('0'<=$c && $c<='9') continue;
+            if ('a'<=$c && $c<='f') continue;
+            if ('A'<=$c && $c<='F') continue;
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     *
+     * this is new
+     *
+     * @param $username
+     * @param $password
+     *
+     * @return mixed
+     */
+    protected static function auth($username, $password)
+    {
         $query = DB::select()
                    ->from(self::$table)
                    ->where('user_id', '=', $username)

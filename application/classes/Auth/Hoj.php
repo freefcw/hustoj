@@ -12,7 +12,7 @@ class Auth_Hoj extends Kohana_Auth
         if (! is_object($user)) {
             $username = $user;
 
-            $user = Model_User::authenticate($username, $this->hash($password));
+            $user = Model_User::authenticate($username, $password);
             if ( $user )
             {
                 return $this->complete_login($user);
@@ -33,6 +33,17 @@ class Auth_Hoj extends Kohana_Auth
         }
         return $user->password;
     }
+
+    public function hash($str, $salt = null)
+    {
+        if ( ! $salt)
+        {
+            $salt = sha1(rand());
+            $salt = substr($salt, 0, 4);
+        }
+        return base64_encode( sha1(md5($str) . $salt, true) . $salt );
+    }
+
 
     public function check_password($password)
     {

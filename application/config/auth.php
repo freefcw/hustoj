@@ -10,8 +10,8 @@
 return array(
 
 	'driver'       => 'Hoj',
-	'hash_method'  => 'sha256',
-	'hash_key'     => 'hustoj',
+	'hash_method'  => 'sha256', // no effect
+	'hash_key'     => 'hustoj', // no effect
 	'lifetime'     => 1209600,
 	'session_type' => Session::$default,
 	'session_key'  => 'auth_user',

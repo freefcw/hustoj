@@ -21,6 +21,8 @@ class Controller_Index extends Controller_Base
 //            );
 //            $cache->set('bitbucket-rss', $rss, 300);
 //        }
+
+
         $this->add_view_data($template_data);
     }
 
