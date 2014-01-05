@@ -43,7 +43,11 @@
         <td><?php if($i->result == 4) echo $i->time, 'ms'; else echo('----');?></td>
         <td><?php if($i->result == 4) echo $i->memory, 'kb'; else echo('----');?></td>
         <td><?php echo OJ::lang($i->language);?></td>
-        <td><?php echo $i->code_length;?>B</td>
+        <td><?php if ( $current_user AND ($current_user->user_id == $i->user_id OR $current_user->is_admin())):?>
+        <a href="/solution/source/<?php echo($i->solution_id);?>" title="click view source"><?php echo $i->code_length;?>B</a>
+        <?php else:?>
+        <?php echo $i->code_length;?>B
+        <?php endif;?></td>
         <td><?php echo($i->in_date);?></td>
     </tr>
 <?php endforeach;?>

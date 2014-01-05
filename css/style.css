@@ -22,9 +22,8 @@
     float: right;
 }
 
-.status-filter{
-    width: 900px;
-    margin: 15px auto 5px;
+.status-filter .form-group{
+    margin-right: 20px;
 }
 
 .news {
@@ -50,6 +49,11 @@ div.err-notice {
 div.content-info p {
     margin-bottom: 3px !important;
 }
+
+.solution-info{
+    vertical-align: top;
+}
+
 
 #detail dt {
     text-transform: uppercase;
@@ -215,6 +219,19 @@ div.user-stats li.count-accept a {
     border-bottom: 1px solid darkgrey;
     padding-top: 10px;
     padding-bottom: 7px;
+}
+
+.rank-pager li{
+    margin-right: 50px;
+}
+
+.rank-pager .reflesh a{
+    background-color: cornflowerblue;
+    color: #ffffff;
+}
+
+.rank-pager .reflesh a:hover{
+    color: #2a6496;
 }
 
 /* css for timepicker */

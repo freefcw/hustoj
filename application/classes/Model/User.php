@@ -61,6 +61,7 @@ class Model_User extends Model_Base
             {
                 if ($user->password == md5($password))
                 {
+                    // update old password
                     $user->password = Auth::instance()->hash($password);
                     $user->save();
                     return $user;
@@ -116,6 +117,14 @@ class Model_User extends Model_Base
         return $result->current();
     }
 
+    /**
+     *
+     * @param     $filters
+     * @param int $page
+     * @param int $limit
+     *
+     * @return mixed
+     */
     public static function find_by_solved($filters, $page = 1, $limit = 50)
     {
         $query = DB::select()->from(static::$table);
@@ -133,11 +142,22 @@ class Model_User extends Model_Base
         return $result->as_array();
     }
 
+    /**
+     * update password
+     *
+     * @param $password
+     */
     public function update_password($password)
     {
         $this->password = Auth_Hoj::instance()->hash($password);
+        $this->save();
     }
 
+    /**
+     * pass ratio
+     *
+     * @return string
+     */
     public function ratio_of_accept()
     {
         if ($this->submit != 0) return sprintf( "%.02lf%%", $this->solved / $this->submit * 100);
@@ -168,10 +188,12 @@ class Model_User extends Model_Base
     }
 
     /**
-     * disable people
+     * disable user
      */
     public function disable()
     {
+        $this->defunct = self::DEFUNCT_YES;
+        $this->save();
     }
 
     public function validate()
@@ -200,5 +222,18 @@ class Model_User extends Model_Base
         if ( ! $this->resolved_problem_list )
             $this->resolved_problem_list = Model_Solution::user_resolved($this->user_id);
         return in_array($problem_id, $this->resolved_problem_list);
+    }
+
+    /**
+     * check user has permission view all code
+     *
+     * @return bool
+     */
+    public function can_view_code()
+    {
+        if ( $this->has_permission(Model_Privilege::PERM_SOURCEVIEW)
+            OR $this->is_admin() )
+            return true;
+        return false;
     }
 }

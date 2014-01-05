@@ -18,14 +18,14 @@
 </tbody>
 </table>
 <!--<div class="pagination" style="width: 500px;margin-left: auto;margin-right: auto;">-->
-<ul class="pager">
-    <li><?php echo html::anchor("/rank/user/{$page}", 'Reflesh');?></li>
+<ul class="pager rank-pager">
     <li><?php echo html::anchor("/rank/user", 'First');?></li>
 <?php if ($page != 1): ?>
 	<li><?php echo html::anchor(sprintf('/rank/user/%s', $page-1), 'Previous');?></li>
 <?php endif; ?>
+    <li class="reflesh"><?php echo html::anchor("/rank/user/{$page}", 'Reflesh');?></li>
 <?php if ($page != $total_page): ?>
 	<li><?php echo html::anchor(sprintf('/rank/user/%s', $page+1), 'Next');?></li>
 <?php endif; ?>
-    <?php echo html::anchor(sprintf('/rank/u/%s', $total_page), 'Last');?>
+    <li><?php echo html::anchor(sprintf('/rank/user/%s', $total_page), 'Last');?></li>
 </ul>

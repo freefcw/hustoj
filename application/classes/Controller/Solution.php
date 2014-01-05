@@ -7,6 +7,24 @@
 
 class Controller_Solution extends Controller_Base
 {
+
+    public function action_source()
+    {
+        $user = $this->check_login('/');
+
+        $sid = $this->request->param('id');
+        if ($sid)
+        {
+            $solution = Model_Solution::find_by_id($sid);
+            if ($solution AND $solution->allow($user))
+            {
+                $this->template_data['title'] = 'Solution Code';
+                $this->template_data['solution'] = $solution;
+                return;
+            }
+        }
+        $this->redirect('/');
+    }
     public function action_status()
     {
         // init

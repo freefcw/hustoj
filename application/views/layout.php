@@ -6,12 +6,15 @@
     <meta name="description" content="HUST ACM - 华中科技大学ACM组织"/>
     <meta name="robots" content="index,follow"/>
     <title><?php echo($title); ?></title>
-    <?php echo(HTML::style('css/style.css'));?>
-    <?php echo(HTML::script('js/jquery-1.9.1.js')); ?>
-    <?php echo(HTML::script('js/bootstrap.min.js')); ?>
-    <?php echo(HTML::style('css/ui-lightness/jquery-ui-1.10.3.custom.min.css'));?>
-    <?php echo(HTML::script('js/jquery-ui-1.10.3.custom.js')); ?>
     <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/js/code/prettify.css">
+    <link type="text/css" href="/css/ui-lightness/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="/js/code/prettify.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-1.10.3.custom.js"></script>
     <link rel="shortcut icon" href="favicon.ico"/>
 </head>
 <body>

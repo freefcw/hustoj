@@ -115,6 +115,38 @@ class Model_Solution extends Model_Base
         return $result['total'];
     }
 
+    public function display_result()
+    {
+        return OJ::jresult($this->result);
+    }
+
+    public function display_language()
+    {
+        return OJ::lang($this->language);
+    }
+
+    /**
+     * @param Model_User|string $user
+     *
+     * @return bool
+     */
+    public function allow($user)
+    {
+        if (is_string($user))
+            return $user === $this->user_id;
+
+        if ( $user->user_id == $this->user_id ) return true;
+        if ( $user->can_view_code() ) return true;
+
+        return false;
+    }
+
+    public function code()
+    {
+        $code = Model_Code::find_by_id($this->solution_id);
+        return $code->source;
+    }
+
     /**
      * @param     $problem_id
      * @param int $page
