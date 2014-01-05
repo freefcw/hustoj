@@ -29,7 +29,7 @@
 		<dd><p class="a"><span class="sp-a">A:</span>Your program shall read input from stdin('Standard Input') and write output to stdout('Standard Output').For example,you can use 'scanf' in C or 'cin' in C++ to read from stdin,and use 'printf' in C or 'cout' in C++ to write to stdout.<br />User programs are not allowed to open and read from/write to files, you will get a "<span class="hint">Runtime Error</span>" if you try to do so.<br /></p>
 		<dl>
 			<dt>Here is a sample solution for problem 1000 using C++:</dt>
-			<dd><pre>
+			<dd><pre class="prettyprint linenums solution-code">
 #include &lt;iostream&gt;
 using namespace std;
 int main(){
@@ -42,7 +42,7 @@ int main(){
 </dd>
 			<dt>Here is a sample solution for problem 1000 using C:</dt>
 <dd>
-<pre>
+<pre class="prettyprint linenums solution-code">
 #include &lt;stdio.h&gt;
 int main(){
     int a,b;
@@ -53,7 +53,7 @@ int main(){
 </pre>
 </dd>
 <dt>Here is a sample solution for problem 1000 using PASCAL:</dt>
-<dd><pre>
+<dd><pre class="prettyprint linenums solution-code">
 program p1001(Input,Output);
 var
   a,b:Integer;
@@ -66,7 +66,7 @@ begin
 end.
 </pre></dd>
 <dt>Here is a sample solution for problem 1000 using Java:</dt>
-<dd><pre>
+<dd><pre class="prettyprint linenums solution-code">
 public class Main{
 	public static void main(String args[]){
 		Scanner cin = new Scanner(System.in);
@@ -113,3 +113,6 @@ If you can't, then please <a href=registerpage.php>register</a> an id with passw
 </dt>
 </dl>
 
+<script type="text/javascript">
+    $(prettyPrint());
+</script>

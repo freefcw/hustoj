@@ -5,7 +5,7 @@
  * Time: 11:59 AM
  */
 
-class Model_Userlog extends Model_Base
+class Model_Userlog extends Model_Save
 {
     static $cols = array();
 

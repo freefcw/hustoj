@@ -87,7 +87,9 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
             return;
         }
 
-        $result = Model_Problem::search($text, 'title');
+        $order_by = array();
+        $show_all = true;
+        $result = Model_Problem::search($text, 'title', $order_by, $show_all);
 
         $json = array();
         foreach($result as $item)

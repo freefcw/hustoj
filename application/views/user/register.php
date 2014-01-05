@@ -44,8 +44,8 @@
     </div>
     <div class="form-group">
         <div class="col-sm-offset-6">
-            <input type="submit" name="submit" class="btn btn-primary" value="Register"/>
-            <input type="reset" name="reset" class="btn"/>
+            <input type="submit" class="btn btn-primary" value="Register"/>
+            <input type="reset" class="btn"/>
         </div>
     </div>
 </form>

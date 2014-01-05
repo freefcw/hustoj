@@ -5,7 +5,7 @@
  * Time: 8:50 PM
  */
 
-class Model_Privilege extends Model_Relation
+class Model_Privilege extends Model_Save
 {
     static $table = 'privilege';
     static $primary_key = 'user_id';

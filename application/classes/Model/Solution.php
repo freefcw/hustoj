@@ -130,11 +130,12 @@ class Model_Solution extends Model_Base
      *
      * @return bool
      */
-    public function allow($user)
+    public function allow_view_code($user)
     {
         if (is_string($user))
-            return $user === $this->user_id;
-
+        {
+            $user = Model_User::find_by_id($user);
+        }
         if ( $user->user_id == $this->user_id ) return true;
         if ( $user->can_view_code() ) return true;
 
@@ -220,13 +221,17 @@ class Model_Solution extends Model_Base
 
     /**
      * @param $contest_id
+     * @param $start
+     * @param $end
      *
      * @return Model_Solution[]
      */
-    public static function find_solution_for_contest($contest_id)
+    public static function find_solution_for_contest($contest_id, $start, $end)
     {
         $query = DB::select()->from(self::$table)
             ->where('contest_id', '=', $contest_id)
+            ->where('in_date', '>', $start)
+            ->where('in_date', '<', $end)
             ->order_by('user_id')
             ->order_by('in_date');
 
@@ -235,7 +240,15 @@ class Model_Solution extends Model_Base
     }
 
     protected function initial_data()
-    {}
+    {
+        $this->time   = 0;
+        $this->memory = 0;
+        $this->in_date = OJ::format_time();
+        $this->className = '';
+        $this->result = self::STATUS_PENDING;
+        $this->valid = 1;
+        $this->num = -1;
+    }
 
     public function validate()
     {}

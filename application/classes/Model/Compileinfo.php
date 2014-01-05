@@ -5,7 +5,7 @@
  * Time: 2:16 PM
  */
 
-class Model_Compileinfo extends Model_Base
+class Model_Compileinfo extends Model_Save
 {
     static $cols = array(
         'solution_id',
@@ -24,9 +24,14 @@ class Model_Compileinfo extends Model_Base
      *
      * @return Model_Compileinfo
      */
-    public static function find_by_id($id)
+    public static function for_solution($id)
     {
-        return parent::find_by_id($id);
+        $filter = array(
+            'solution_id' => $id,
+        );
+        $result = self::find($filter);
+        if ($result)
+            return $result[0];
     }
 
     protected function initial_data()

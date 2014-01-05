@@ -46,38 +46,63 @@ class Controller_Problem extends Controller_Base
 
     public function action_submit()
     {
-        $this->check_login();
+        $current_user = $this->check_login();
 
         $pid = $this->request->param('id', '');
 
         if ( $this->request->is_post() ) {
-            //TODO:check permission, the user can submit? if not admin, may cause leak or cracked
-            // 1. not admin
-            // 2. time failed
-            // 3. not invite people
-            //TODO: validation
-            //TODO: add contest problem
-//            $problem = Model_Problem::find_by_id($pid);
-//            $problem->can_user_access();
+            $pid = $this->get_post('pid');
+            $cid = $this->get_post('cid', null);
+            $cpid = $this->get_post('cpid', -1);
+
+            // if no pid, then it should be contest
+            if ( $pid )
+            {
+                $problem = Model_Problem::find_by_id($pid);
+                if ( !$problem OR !$problem->can_user_access($current_user))
+                {
+                    $this->redirect('/');
+                }
+            } else {
+                $cid = $this->get_post('cid');
+                $cpid = $this->get_post('cpid');
+
+                $contest = Model_Contest::find_by_id($cid);
+                if ( !$contest OR !$contest->can_user_access($current_user))
+                {
+                    $this->redirect('/');
+                }
+                $problem = $contest->problem($cpid);
+            }
+            $code = new Model_Code;
+            $code->source = $this->get_raw_post('source');
 
             $solution = new Model_Solution();
-            $current_user = Auth::instance()->get_user();
             $solution->user_id = $current_user->user_id;
+            $solution->problem_id = $problem->problem_id;
+            $solution->code_length = strlen($code->source);
+            $solution->contest_id = $cid;
+            $solution->num = $cpid;
             $solution->ip = Request::$client_ip;
-            $solution->update($this->cleaned_post());
             $solution->save();
+
+            $code->solution_id = $solution->solution_id;
+            $code->save();
+
+
 //                $solution->problem_id = $c
 
             $this->redirect('/status');
             return;
         }
 
-        $this->template_data['pid'] = $pid;
+        $this->template_data['pid'] = OJ::clean_data($pid);
+
         $cid = $this->get_query('cid', null);
         $cpid = $this->get_query('pid', null);
         if ($cid !== null) {
-            $this->template_data['cid'] = $cid;
-            $this->template_data['cpid'] = $cpid;
+            $this->template_data['cid'] = OJ::clean_data($cid);
+            $this->template_data['cpid'] = OJ::clean_data($cpid);
         }
 
         $this->template_data['title'] = 'Subtmit';

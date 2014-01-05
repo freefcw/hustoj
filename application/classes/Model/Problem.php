@@ -62,19 +62,27 @@ class Model_Problem extends Model_Base
     public $case_time_limit;
 
     /**
-     * @param        $text
-     * @param        $area
-     * @param string $orderby
+     * @param       $text
+     * @param       $area
+     * @param array $orderby
+     * @param bool  $show_all
      *
      * @return Model_Problem[]
      */
-    public static function search($text, $area, $orderby = 'problem_id')
+    public static function search($text, $area, $orderby = array(), $show_all=false)
     {
         $term = "%{$text}%";
         $query = DB::select()->from(self::$table)
             ->where($area, 'LIKE', $term)
-            ->limit(100)
-            ->order_by($orderby, self::ORDER_DESC);
+            ->limit(100);
+
+        foreach($orderby as $key => $order)
+        {
+            $query->order_by($key, $order);
+        }
+
+        if ( ! $show_all )
+            $query->where('defunct', '=', 'N');
 
         $ret = $query->as_object(get_called_class())->execute();
 
@@ -89,6 +97,18 @@ class Model_Problem extends Model_Base
     public function summary()
     {
         return Model_Solution::summary_for_problem($this->problem_id);
+    }
+
+    /**
+     * @param Model_User $user
+     *
+     * @return bool
+     */
+    public function can_user_access($user)
+    {
+        if ($user->is_admin()) return true;
+        if  ( ! $this->is_defunct() ) return true;
+        return false;
     }
 
     public function is_special_judge()

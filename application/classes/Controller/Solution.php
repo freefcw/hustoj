@@ -16,7 +16,7 @@ class Controller_Solution extends Controller_Base
         if ($sid)
         {
             $solution = Model_Solution::find_by_id($sid);
-            if ($solution AND $solution->allow($user))
+            if ($solution AND $solution->allow_view_code($user))
             {
                 $this->template_data['title'] = 'Solution Code';
                 $this->template_data['solution'] = $solution;

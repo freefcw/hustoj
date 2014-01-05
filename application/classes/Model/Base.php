@@ -78,7 +78,7 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
      *
      * @param string $id 主键id
      *
-     * @return Model_Base|Model_Code|Model_Problem|Model_User|Model_Topic
+     * @return Model_Base|Model_Code|Model_Problem|Model_User|Model_Topic|Model_Solution
      */
     public static function find_by_id($id)
     {

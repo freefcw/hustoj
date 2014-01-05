@@ -5,7 +5,7 @@
  * Time: 8:52 PM
  */
 
-class Model_Online extends Model_Base
+class Model_Online extends Model_Save
 {
     static $table = 'online';
     static $primary_key = 'hash';

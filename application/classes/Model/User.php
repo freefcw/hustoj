@@ -62,7 +62,7 @@ class Model_User extends Model_Base
                 if ($user->password == md5($password))
                 {
                     // update old password
-                    $user->password = Auth::instance()->hash($password);
+                    $user->update_password($password);
                     $user->save();
                     return $user;
                 }
@@ -150,7 +150,6 @@ class Model_User extends Model_Base
     public function update_password($password)
     {
         $this->password = Auth_Hoj::instance()->hash($password);
-        $this->save();
     }
 
     /**
@@ -173,7 +172,8 @@ class Model_User extends Model_Base
     public function has_permission($permission)
     {
         if ( ! $this->permission_list )
-            return $this->permission_list = Model_Privilege::permission_of_user($this->user_id);
+            $this->permission_list = Model_Privilege::permission_of_user($this->user_id);
+
         return in_array($permission, $this->permission_list);
     }
 
@@ -193,7 +193,6 @@ class Model_User extends Model_Base
     public function disable()
     {
         $this->defunct = self::DEFUNCT_YES;
-        $this->save();
     }
 
     public function validate()
@@ -201,13 +200,16 @@ class Model_User extends Model_Base
 
     protected function initial_data()
     {
-        $now = time();
+        $now = OJ::format_time();
 
         $this->reg_time    = $now;
         $this->solved      = 0;
         $this->submit      = 0;
+        $this->volume      = 1;
+        $this->language    = 1;
         $this->accesstime  = $now;
         $this->ip          = Request::$client_ip;
+        $this->defunct     = self::DEFUNCT_NO;
     }
 
     /**
@@ -235,5 +237,44 @@ class Model_User extends Model_Base
             OR $this->is_admin() )
             return true;
         return false;
+    }
+
+    /**
+     * 保存当前实例到数据库
+     *
+     * @param $new_user
+     *
+     * @return int
+     */
+    public function save($new_user=false)
+    {
+        // prepare data
+        //        $this->data['update_at'] = PP::format_time();
+
+        // 过滤不存在的数据
+        $data = $this->raw_array();
+
+        if ( ! $new_user )
+        {
+            // if primary key exist, then update, contain primary key, haha
+            $primary_id = $this->{static::$primary_key};
+            //            unset($this->data[static::$primary_key]);
+
+            $query = DB::update(static::$table)->set($data)->where(static::$primary_key, '=', $primary_id);
+            $ret   = $query->execute();
+
+            return $ret;
+        } else
+        {
+            // else save new record
+            $keys   = array_keys($data);
+            $values = array_values($data);
+
+            list($id, $affect_row) = DB::insert(static::$table, $keys)->values($values)->execute();
+
+            $this->{static::$primary_key} = $id;
+
+            return $affect_row;
+        }
     }
 }

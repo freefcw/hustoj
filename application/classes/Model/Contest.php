@@ -17,6 +17,7 @@ class Model_Contest extends Model_Base
         'private',
     );
 
+    /* @var Model_CPRelation[] */
     private $problem_list = null;
 
     static $primary_key = 'contest_id';
@@ -59,7 +60,7 @@ class Model_Contest extends Model_Base
             return $this->problem_list;
 
         $relation = $this->problem_list[$num];
-        return $relation->detail();
+        return $relation->real_problem();
     }
 
     /**
@@ -73,13 +74,29 @@ class Model_Contest extends Model_Base
     }
 
     /**
+     *
+     * @param Model_User $user
+     *
+     * @return bool
+     */
+    public function can_user_access($user)
+    {
+        if ( ! $this->is_private()) return true;
+        if ( $user->is_admin() ) return true;
+        $permission = 'c'. $this->contest_id;
+        if ( $user->has_permission($permission) ) return true;
+        return false;
+    }
+
+    /**
      * is contest opened
      * @return bool
      */
     public function is_open()
     {
         $now = time();
-        if ( $now > strtotime($this->start_time)  AND $now < strtotime($this->end_time) )
+//        if ( $now > strtotime($this->start_time)  AND $now < strtotime($this->end_time) )
+        if ( $now > strtotime($this->start_time) )
             return true;
         return false;
     }
@@ -90,17 +107,42 @@ class Model_Contest extends Model_Base
 
         $data = array();
         $lang = array();
+        for($index = 0; $index < $this->number_of_problems(); $index++ )
+        {
+            $data[$index] = array();
+            $lang[$index] = array();
+            foreach(OJ::$result as $key => $display)
+                $data[$index][$key] = 0;
+//            $data[$pnum] = 0;
+            foreach(OJ::$language as $key => $display)
+            {
+                $lang[$index][$key] = 0;
+            }
+            $lang[$index]['total'] = 0;
+        }
 
         foreach($solutions as $item)
         {
-            if (!array_key_exists($item->num, $data)) $data[$item->num] = array();
-            if (!array_key_exists($item->result, $data[$item->num])) $data[$item->num][$item->result] = 0;
-
-            if (!array_key_exists($item->num, $lang)) $lang[$item->num] = array();
-            if (!array_key_exists($item->language, $lang[$item->num])) $lang[$item->num][$item->language] = 0;
-
             $data[$item->num][$item->result]++;
             $lang[$item->num][$item->language]++;
+        }
+
+        foreach(OJ::$result as $key => $display)
+        {
+            $data['total'][$key] = 0;
+            for($index = 0; $index < $this->number_of_problems(); $index++ )
+            {
+                $data['total'][$key] += $data[$index][$key];
+            }
+        }
+
+        foreach(OJ::$language as $key => $display)
+        {
+            $lang['total'][$key] = 0;
+            for($index = 0; $index < $this->number_of_problems(); $index++ )
+            {
+                $lang['total'][$key] += $lang[$index][$key];
+            }
         }
 
         return array('result' => $data, 'language'=>$lang);
@@ -108,7 +150,7 @@ class Model_Contest extends Model_Base
 
     public function solutions()
     {
-        return Model_Solution::find_solution_for_contest($this->contest_id);
+        return Model_Solution::find_solution_for_contest($this->contest_id, $this->start_time, $this->end_time);
     }
 
     public function standing()

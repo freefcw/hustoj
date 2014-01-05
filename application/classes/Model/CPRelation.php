@@ -5,7 +5,7 @@
  * Time: 2:42 PM
  */
 
-class Model_CPRelation extends Model_Relation
+class Model_CPRelation extends Model_Save
 {
     static $primary_key = 'contest_id';
     static $table = 'contest_problem';

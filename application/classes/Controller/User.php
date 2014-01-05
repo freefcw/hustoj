@@ -125,8 +125,10 @@ class Controller_User extends Controller_Base
             if ( ! $user )
             {
                 $user = new Model_User;
-                $user->update($post);
-                $user->save();
+                $user->update($post->data());
+                $user->user_id = $post['username'];
+                $user->update_password($post['password']);
+                $user->save(true);
 
                 Auth::instance()->login($post['username'], $post['password'], true);
                 $this->redirect(Route::url('default'));

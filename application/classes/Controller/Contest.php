@@ -37,10 +37,11 @@ class Controller_Contest extends Controller_Base
         if (is_null($cid)) {
             $this->redirect(Route::url('default'));
         }
-        $this->template_data['cid'] = $cid;
 
         $contest = Model_Contest::find_by_id($cid);
+        $this->check_permission($contest);
 
+        $this->template_data['cid'] = $cid;
         $this->template_data['contest'] = $contest;
         $this->template_data['title'] = "Contest - {$contest['title']}";
     }
@@ -53,11 +54,8 @@ class Controller_Contest extends Controller_Base
         }
 
         $contest = Model_Contest::find_by_id($cid);
+        $this->check_permission($contest);
 
-        if ( $contest->is_open() )
-        {
-            $error = 'Contest Not Open';
-        }
         $this->template_data['cid'] = $cid;
         $this->template_data['contest'] = $contest;
         $this->template_data['title'] = "Contest - {$contest['title']} - Standing";
@@ -70,8 +68,10 @@ class Controller_Contest extends Controller_Base
         if ($cid === null) {
             $this->redirect(Route::url('default'));
         }
-
         $contest = Model_Contest::find_by_id($cid);
+
+        $this->check_permission($contest);
+
         $ret = $contest->statistics();
         $this->template_data['contest'] = $contest;
         $this->template_data['result'] = $ret['result'];
@@ -93,6 +93,7 @@ class Controller_Contest extends Controller_Base
         }
 
         $contest = Model_Contest::find_by_id($cid);
+        $this->check_permission($contest);
 
         if ($contest == null) {
             $error = 'No Such Contest';
@@ -108,5 +109,19 @@ class Controller_Contest extends Controller_Base
         $this->template_data['cid'] = $cid;
         $this->template_data['p'] = $problem;
         $this->template_data['pid'] = $pid;
+    }
+
+    /**
+     * @param Model_Contest $contest
+     */
+    protected function check_permission($contest)
+    {
+        $current_user = Auth::instance()->get_user();
+        if ( $contest AND $contest->can_user_access($current_user))
+        {
+            return ;
+        }
+        //TODO: add more notice
+        $this->redirect('/contest');
     }
 }
