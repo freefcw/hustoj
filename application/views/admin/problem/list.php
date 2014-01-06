@@ -5,14 +5,15 @@
 </ul>
 <table class="table table-striped">
     <thead>
-    <tr><th>Problem Id</th><th>Title</th><th>Add Date</th><th>Defunct</tr>
+    <tr><th>Problem Id</th><th>Title</th><th>Add Date</th><th>Defunct</th><th>OP</th></tr>
     </thead>
 <?php /* @var Model_Problem[] $problem_list */ foreach($problem_list as $p):?>
 <tr>
-<td><?php echo $p->problem_id;?><a class="edit-link" href="/admin/problem/edit/<?php echo $p->problem_id;?>" style="float: right;">[EDIT]</a></td>
+<td><?php echo $p->problem_id;?></td>
 <td><?php echo $p->title;?></td>
 <td><?php echo($p->in_date);?></td>
-<td><span id="defunct-<?php echo($p->problem_id);?>"><?php echo($p->defunct);?></span> <a class="dp" data-value="<?php echo $p->problem_id;?>">Toggle</a></td>
+<td><span id="defunct-<?php echo($p->problem_id);?>"><?php echo($p->defunct);?></span> <a class="dp btn btn-danger" data-value="<?php echo $p->problem_id;?>">Change</a></td>
+<td><a class="edit-link" href="/admin/problem/edit/<?php echo $p->problem_id;?>">[Edit]</a></td>
 </tr>
 <?php endforeach;?>
 </table>
@@ -20,8 +21,8 @@
     $('a.dp').click(function(){
         var problem_id = $(this).attr('data-value');
         console.log(problem_id);
-        var sure = confirm('Are u sure change this problem status?');
-        if (sure)
+        var user_ok = confirm('Are u sure change this problem status?');
+        if (user_ok)
         {
             var url = '/admin/problem/defunct'
             $.getJSON(url, {'problem_id': problem_id}, function(response){

@@ -2,13 +2,13 @@
 
 class Controller_Admin_Base extends Controller_Base {
     protected $layout = 'admin/layout';
+    protected $current_user = NULL;
 
 	public function before()
 	{
         parent::before();
 
-        if ( !Auth::instance()->is_admin() )
-            $this->redirect(Route::url('default'));
+        $this->current_user = $this->check_admin();
 	}
 
     /**
@@ -17,7 +17,6 @@ class Controller_Admin_Base extends Controller_Base {
     protected function init()
     {
         $this->view = 'admin/'.strtolower($this->request->controller()). '/'. $this->request->action();
-        $this->view_vars = array();
     }
 
 } // End Welcome

@@ -52,6 +52,20 @@ class Model_Topic extends Model_Base
         return self::find($filter, $page, $per_page, $order_by);
     }
 
+    /**
+     * delete topic and replies
+     *
+     * @return int|void
+     */
+    public function destroy()
+    {
+        $condition = array(
+            'topic_id' => $this->tid,
+        );
+        Model_Reply::delete($condition);
+        parent::destroy();
+    }
+
     protected function initial_data()
     {
     }

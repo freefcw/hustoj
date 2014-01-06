@@ -46,20 +46,20 @@ class Model_Problem extends Model_Base
     public $sample_output;
     public $spj;
     public $hint;
-    public $source;
+    public $source = '';
     public $sample_Program;
     public $in_date;
     public $time_limit;
     public $memory_limit;
-    public $defunct;
+    public $defunct = self::DEFUNCT_YES;
     public $accepted;
-    public $submit;
-    public $ratio;
+    public $submit = 0;
+    public $ratio = 0;
     public $error;
-    public $difficulty;
+    public $difficulty = 0;
     public $submit_user;
-    public $solved;
-    public $case_time_limit;
+    public $solved = 0;
+    public $case_time_limit = 0;
 
     /**
      * @param       $text
@@ -123,10 +123,7 @@ class Model_Problem extends Model_Base
 
     protected function initial_data()
     {
-        $this->defunct = self::DEFUNCT_YES;
-        $this->ratio = 0;
-        $this->difficulty = 0;
-        $this->case_time_limit = 0;
+        $this->in_date = OJ::format_time();
     }
 
     public function validate()

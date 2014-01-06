@@ -16,10 +16,11 @@ class Controller_Admin_Contest extends Controller_Admin_Base
     {
         $this->view = 'admin/contest/list';
         // initial
-        $page_id = $this->request->param('id', 1);
+        $page_id = $this->get_query('page', 1);
 
         $contest_list = Model_Contest::find(array(), $page_id);
 
+        $this->template_data['total'] = Model_Contest::count();
         $this->template_data['contest_list'] = $contest_list;
         $this->template_data['title'] = 'Contest List';
     }

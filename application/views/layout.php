@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/js/code/prettify.css">
     <link type="text/css" href="/css/ui-lightness/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
     <script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="/js/page.js"></script>
     <script type="text/javascript" src="/js/code/prettify.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/jquery-ui-1.10.3.custom.js"></script>

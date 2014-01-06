@@ -17,15 +17,22 @@
 <?php endforeach; ?>
 </tbody>
 </table>
-<!--<div class="pagination" style="width: 500px;margin-left: auto;margin-right: auto;">-->
+<?php
+function gen_url($page=NULL)
+{
+    static $base_url = '/rank/user';
+    if ($base_url)
+        return sprintf('%s/%s', $base_url, $page);
+    return $base_url;
+}?>
 <ul class="pager rank-pager">
-    <li><?php echo html::anchor("/rank/user", 'First');?></li>
-<?php if ($page != 1): ?>
-	<li><?php echo html::anchor(sprintf('/rank/user/%s', $page-1), 'Previous');?></li>
-<?php endif; ?>
-    <li class="reflesh"><?php echo html::anchor("/rank/user/{$page}", 'Reflesh');?></li>
-<?php if ($page != $total_page): ?>
-	<li><?php echo html::anchor(sprintf('/rank/user/%s', $page+1), 'Next');?></li>
-<?php endif; ?>
-    <li><?php echo html::anchor(sprintf('/rank/user/%s', $total_page), 'Last');?></li>
+    <?php if ($page != 1): ?>
+        <li><?php echo html::anchor(gen_url(), 'Top');?></li>
+        <li><?php echo html::anchor(gen_url($page - 1), 'Previous');?></li>
+    <?php endif; ?>
+    <li class="reflesh"><?php echo html::anchor(gen_url($page), 'Reflesh');?></li>
+    <?php if ($page != $total_page): ?>
+        <li><?php echo html::anchor(gen_url($page + 1), 'Next');?></li>
+        <li><?php echo html::anchor(gen_url($total_page), 'Last');?></li>
+    <?php endif; ?>
 </ul>

@@ -193,6 +193,7 @@ class Model_User extends Model_Base
     public function disable()
     {
         $this->defunct = self::DEFUNCT_YES;
+        $this->save();
     }
 
     public function validate()

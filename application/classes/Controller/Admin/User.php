@@ -10,10 +10,11 @@ class Controller_Admin_User extends Controller_Admin_Base{
     public function action_list()
     {
         $this->view = 'admin/user/list';
-    	$page = $this->request->param('id', 1);
+        $page = $this->get_query('page', 1);
 
     	$user_list = Model_User::find(array(), $page);
 
+        $this->template_data['total'] = Model_User::count();
         $this->template_data['user_list'] = $user_list;
         $this->template_data['title']  = 'User List '. $page;
     }

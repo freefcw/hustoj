@@ -82,6 +82,7 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
      */
     public static function find_by_id($id)
     {
+        if ( ! $id ) return null;
         $result = DB::select()->from(static::$table)->where(static::$primary_key, '=', $id)->as_object(get_called_class())->execute();
         return $result->current();
     }
@@ -156,13 +157,22 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
     /**
      * 删除指定数据
      *
-     * @param int $id 要查找的数据的id
+     * @param array $condition
      *
      * @return int 返回执行后结果
      */
-    public static function delete($id)
+    public static function delete($condition = array())
     {
-        return DB::delete(static::$table)->where(static::$primary_key, '=', $id)->execute();
+        if ( $condition )
+        {
+            $query = DB::delete(static::$table);
+
+            foreach($condition as $col => $val)
+            {
+                $query->where($col, '=', $val);
+            }
+            return $query->execute();
+        }
     }
 
     /**
@@ -172,7 +182,7 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
      */
     public function is_defunct()
     {
-        if ( in_array('defunct', self::$cols))
+        if ( in_array('defunct', static::$cols))
             return $this->defunct == self::DEFUNCT_YES;
         return false;
     }

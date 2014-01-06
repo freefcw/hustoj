@@ -6,16 +6,20 @@
 </ul>
 <div class="topic">
 <h2><?php echo($the_topic->title);?></h2>
-<div class="more">by <a href="/u/<?php echo($the_topic->author_id);?>"><?php echo($the_topic->author_id);?></a>
+<?php if ($current_user AND $current_user->is_admin()):?>
+<div class="admin-op">
+    <a class="btn btn-danger make-sure" href="/discuss/removetopic/<?php echo $the_topic->tid;?>">DELETE TOPIC</a>
+    <a class="btn btn-warning make-sure" href="/user/disable/<?php echo $the_topic->author_id;?>">DISABLE <?php echo($the_topic->author_id);?></a>
 </div>
+<?php endif;?>
+
 <?php foreach ($the_topic->replies() as $r): ?>
 <div class="reply" id="reply-<?php echo($r->rid);?>">
     <div class="reply-header">
         <a href="/u/<?php echo($r->author_id);?>"><?php echo($r->author_id);?></a> reply at <?php echo(OJ::timesince($r->time));?>
+    <?php if ($current_user AND $current_user->is_admin()):?> <a class="btn btn-warning" href="/discuss/removereply/<?php echo($r->rid);?>">DELETE reply</a> <?php endif;?>
     </div>
-    <div class="reply-content">
-        <?php echo($r->content);?>
-    </div>
+    <div class="reply-content well"><?php echo($r->content);?></div>
 </div>
 <?php endforeach;?>
 

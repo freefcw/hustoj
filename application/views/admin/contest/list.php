@@ -1,17 +1,21 @@
 <table class="table table-striped">
 <thead>
-    <tr><th>ID</th><th>Title</th><th>Status</th><th>Private</th></tr>
+    <tr><th>ID</th><th>Title</th><th>Status</th><th>Private</th><th>OP</th></tr>
 </thead>
 <tbody>
 <?php /* @var Model_Contest[] $contest_list */ foreach($contest_list as $contest):?>
     <tr>
-        <td><?php echo $contest['contest_id'];?><a class="edit-link" href="/admin/contest/edit/<?php echo $contest['contest_id'];?>" style="float:right;">[EDIT]</a></td>
-        <td><?php echo html::anchor("/contest/show/{$contest->contest_id}", $contest->title);?></td>
-        <td><?php echo($contest->start_time);?> <br/> <?php echo($contest->end_time);?></td>
+        <td><?php echo $contest['contest_id'];?></td>
+        <td><a href="/contest/show/<?php echo $contest->contest_id;?>" title="view"><?php echo($contest->title);?></a></td>
+        <td><span><?php echo($contest->start_time);?></span> <br/>  <span><?php echo($contest->end_time);?></span></td>
         <td class="capitalize">
-            <a href="/admin/contest/changeprivate/<?php echo OJ::private_value($contest->private);?>"><?php echo OJ::private_value($contest['private']);?></a>
-            <?php if ($contest->is_private()):?>| <a href="/admin/contest/member/<?php echo $contest->contest_id;?>">Edit Member</a><?php endif;?>
+            <?php if ($contest->is_private()):?>
+                <a href="/admin/contest/member/<?php echo $contest->contest_id;?>">Member</a>
+            <?php else:?>
+                <?php echo OJ::private_value($contest['private']);?>
+            <?php endif;?>
         </td>
+        <td><a class="edit-link" href="/admin/contest/edit/<?php echo $contest['contest_id'];?>">[Edit]</a></td>
     </tr>
 <?php endforeach; ?>
 </tbody>
@@ -32,3 +36,5 @@
         }
     });
 </script>
+
+<?php echo(View::factory('common/pager', array('base_url' => '/admin/contest', 'total' => $total)));?>

@@ -1,6 +1,6 @@
 <ul class="pagination problem-pagination">
 <?php for($i = 1; $i <= $pages; $i++): ?>
-    <li<?php if($i == Request::$current->param('id')):?> class="active"<?php endif;?>><a href="/problem/list/<?php echo($i);?>"><?php echo($i);?></a></li>
+    <li<?php if($i == Request::$current->param('id', 1)):?> class="active"<?php endif;?>><a href="/problem/list/<?php echo($i);?>"><?php echo($i);?></a></li>
 <?php endfor;?>
 </ul>
 <div class="problem-search">

@@ -16,7 +16,6 @@ class Controller_Base extends Controller
     protected function init()
     {
         $this->view = strtolower($this->request->controller()). '/'. $this->request->action();
-        $this->view_vars = array();
     }
     /**
      * @param string $msg
@@ -45,6 +44,19 @@ class Controller_Base extends Controller
             $session->set('return_url', $this->request->uri());
             $this->redirect('/login');
         }
+    }
+
+    /**
+     * check current user is admin
+     */
+    public function check_admin()
+    {
+        $user = $this->check_login();
+        if ( $user->is_admin() )
+        {
+            return $user;
+        }
+        $this->redirect('/');
     }
 
     /**

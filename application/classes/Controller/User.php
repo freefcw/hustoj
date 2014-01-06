@@ -35,6 +35,20 @@ class Controller_User extends Controller_Base
         $this->template_data['u'] = $user;
     }
 
+    public function action_disable()
+    {
+        $this->check_admin();
+
+        $uid = $this->request->param('id');
+        $user = Model_User::find_by_id($uid);
+
+        if ( $user )
+        {
+            $user->disable();
+        }
+        $this->redirect($this->request->referrer());
+    }
+
     public function action_edit()
     {
         $user = $this->check_login();
@@ -71,6 +85,12 @@ class Controller_User extends Controller_Base
         $this->template_data['title'] = "Update Imformation";
     }
 
+    public function action_disabled()
+    {
+        //TODO: more detail
+        $this->template_data['title'] = 'ACCOUNT DISABLED';
+    }
+
     public function action_register()
     {
         $this->template_data['title'] = 'User Register';
@@ -85,7 +105,17 @@ class Controller_User extends Controller_Base
             $username = $this->get_post('username');
             $password = $this->get_post('pwd');
 
-            if (Auth::instance()->login($username, $password, true)) {
+            if ( Auth::instance()->login($username, $password, true) ) {
+
+                // check user is valid
+                $user = Auth::instance()->get_user();
+                if ( $user->is_defunct() )
+                {
+                    Auth::instance()->logout();
+                    return $this->redirect('/user/disabled');
+                }
+
+                // go back url
                 $session = Session::instance();
                 $url = $session->get_once('return_url');
                 if ( ! $url ) $url = Route::url('default');

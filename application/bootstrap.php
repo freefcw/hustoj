@@ -202,7 +202,6 @@ Route::set(
 Route::set(
     'default', '(<controller>(/<action>(/<id>(/<overflow>))))',
     array(
-         'id'       => '[[:digit:]]{1,}',
          'overflow' => '.*?'
     ))->defaults(array(
          'controller' => 'index',

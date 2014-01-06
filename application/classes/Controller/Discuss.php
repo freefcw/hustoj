@@ -32,6 +32,7 @@ class Controller_Discuss extends Controller_Base
             $reply->topic_id = $topic_id;
             $reply->content = $this->get_post('content');
             $reply->save();
+            $this->redirect(Request::current()->uri());
         }
 
         $relies = $topic->replies();
@@ -39,6 +40,30 @@ class Controller_Discuss extends Controller_Base
         $this->template_data['the_topic'] = $topic;
         $this->template_data['relies'] = $relies;
         $this->template_data['title'] = $topic->title;
+    }
+
+    public function action_removetopic()
+    {
+        $this->check_admin();
+        $topic_id = $this->request->param('id');
+        if (  ! $topic_id )
+            $this->redirect('/');
+
+        $topic = Model_Topic::find_by_id($topic_id);
+        $topic->destroy();
+        $this->redirect('/discuss');
+    }
+
+    public function action_removereply()
+    {
+        $this->check_admin();
+        $reply_id = $this->request->param('id');
+        if (  ! $reply_id )
+            $this->redirect('/');
+
+        $reply = Model_Reply::find_by_id($reply_id);
+        $reply->destroy();
+        $this->redirect($this->request->referrer());
     }
 
     public function action_list()

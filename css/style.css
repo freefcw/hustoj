@@ -192,6 +192,16 @@ table.best-solution {
 
 .edit-link {
     color: #2e8b57;
+    margin-right: 10px;
+}
+
+.topic h2{
+    display: inline-block;
+}
+.admin-op{
+    float: right;
+    margin-top: 30px;
+    vertical-align: bottom;
 }
 
 div.user-stats li.count a {
@@ -213,6 +223,7 @@ div.user-stats li.count-accept a {
 .reply-content {
     margin-top: 5px;
     white-space: pre;
+    word-wrap: break-word;
 }
 
 .reply-header {
