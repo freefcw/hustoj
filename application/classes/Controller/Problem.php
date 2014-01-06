@@ -33,14 +33,12 @@ class Controller_Problem extends Controller_Base
         // initial
         $pid = $this->request->param('id', null);
 
-        if ($pid == NULL) {
-            $this->redirect('/problem/list');
-        }
-
         $problem = Model_Problem::find_by_id($pid);
+        if ( ! $problem OR $problem->is_defunct() )
+            $this->redirect('/problem/list');
 
         $this->template_data['title'] = $problem['title'];
-        $this->template_data['p'] = $problem;
+        $this->template_data['problem'] = $problem;
     }
 
 

@@ -29,6 +29,31 @@ class Controller_Contest extends Controller_Base
         $this->template_data['title'] = "Contest List";
     }
 
+    public function action_talk()
+    {
+        $this->view = 'discuss/list';
+        $page = $this->get_query('page', 1);
+        $cid = $this->get_query('cid');
+
+        $contest = Model_Contest::find_by_id($cid);
+
+        $this->check_permission($contest);
+
+        $filter = array(
+            'cid' => $cid,
+        );
+
+        $filter = Model_Base::clean_data($filter);
+        $topic_list = Model_Topic::page($filter, $page, OJ::per_page);
+        $total = Model_Topic::count($filter);
+
+        $this->template_data['contest'] = $contest;
+        $this->template_data['cid'] = $cid;
+        $this->template_data['topic_list'] = $topic_list;
+        $this->template_data['total'] = ceil( $total / OJ::per_page);
+        $this->template_data['title'] = 'Discuss - Contest';
+    }
+
     public function action_show()
     {
         // init
@@ -107,7 +132,7 @@ class Controller_Contest extends Controller_Base
         $this->template_data['contest'] = $contest;
         $this->template_data['title'] = "Contest - {$contest['title']}";
         $this->template_data['cid'] = $cid;
-        $this->template_data['p'] = $problem;
+        $this->template_data['problem'] = $problem;
         $this->template_data['pid'] = $pid;
     }
 

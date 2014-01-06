@@ -1,9 +1,7 @@
 <?php
 /* @var Model_Contest $contest */
-
 ?>
-<?php echo(View::factory('contest/nav', array('title' => $title, 'cid' => $cid, 'contest' => $contest)));?>
-
+<?php echo(View::factory('contest/header', array('title' => $title, 'cid' => $cid, 'contest' => $contest)));?>
 <table style="width: 70%;float: left;" class="table table-striped">
 <thead>
     <tr>

@@ -78,8 +78,19 @@ class Controller_Solution extends Controller_Base
         $total = Model_Solution::count($filter);
 
         // view
-        $this->template_data['list']= $status;
-        $this->template_data['total']= ceil($total / $per_page);
         $this->template_data['title'] = 'STATUS';
+        $this->template_data['list']  = $status;
+        $this->template_data['total'] = ceil($total / $per_page);
+
+        if ( $cid )
+        {
+            $contest = Model_Contest::find_by_id($cid);
+            if ( ! $contest ) $this->redirect(Route::url('default'));
+
+            $this->template_data['cid']     = $cid;
+            $this->template_data['contest'] = $contest;
+            $this->template_data['title']   = "Contest Status - {$contest['title']}";
+        }
+
     }
 }

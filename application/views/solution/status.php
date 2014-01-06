@@ -1,3 +1,6 @@
+<?php if ( Request::$current->query('cid') ):?>
+    <?php echo(View::factory('contest/header', array('title' => $title, 'cid' => Request::$current->query('cid'), 'contest' => $contest)));?>
+<?php else:?>
 <form action="/status" method="GET" class="form-inline status-filter" role="form">
     <div class="form-group">
         <label class="sr-only" for="pid">Problem ID</label>
@@ -27,7 +30,7 @@
     </div>
     <input type="submit" value="Filter" class="btn">
 </form>
-
+<?php endif;?>
 <table class="table table-striped">
 	<thead>
 		<tr><th>Run ID</th><th>Problem</th><th>User ID</th><th>Result</th><th>Time</th><th>Memory</th><th>Language</th><th>Code Length</th><th>Submit Time</th></tr>

@@ -1,3 +1,4 @@
+<?php if ( ! isset($cid) ):?>
 <ul class="breadcrumb">
     <li><a href="/discuss/">Discuss</a> <span class="divider">/</span></li>
 </ul>
@@ -13,13 +14,19 @@
     <input type="submit" value="Filter" class="btn">
     <a href="/discuss/new" class="btn btn-info pull-right">New Topic</a>
 </form>
+<?php else:?>
+    <?php echo(View::factory('contest/header', array('title' => $title, 'cid' => Request::$current->query('cid'), 'contest' => $contest)));?>
+<div class="well">
+    <a href="/discuss/new?cid=<?php echo($cid);?>" class="btn btn-info">New Topic</a> <h4 style="display: inline-block">Topic for Contest <?php echo($contest->contest_id);?></h4>
+</div>
+<?php endif;?>
 <hr style="clear: both"/>
 <table class="table table-bordered">
     <thead>
     <tr>
-        <td></td>
+        <th class="col-sm-1"></th>
         <th>Title</th>
-        <th>Author</th>
+        <th class="col-sm-2">Author</th>
     </tr>
     </thead>
     <tbody>

@@ -4,6 +4,9 @@
         <div class="form-group">
             <label class="control-label col-sm-5" for="pid">Problem ID</label>
             <div class="col-sm-7">
+                <?php if ( Request::$current->query('cid') ):?>
+                <input name="cid" value="<?php echo(Request::$current->query('cid'));?>" type="hidden"/>
+                <?php endif;?>
                 <input class="form-control" type="text" class="input-xlarge span1" name="pid" id="pid"/>
             </div>
         </div>

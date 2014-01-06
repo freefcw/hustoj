@@ -22,12 +22,11 @@ class Model_Topic extends Model_Base
 
     public $tid;
     public $title;
-    public $status;
-    public $top_level;
+    public $status = 0;//  0, 2，啥意思
+    public $top_level = 0; // 是否置顶？0,1
     public $cid;
     public $pid;
     public $author_id;
-
 
     public function replies()
     {

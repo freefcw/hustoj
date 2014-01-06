@@ -1,7 +1,11 @@
 <?php /* @var Model_Topic $the_topic */?>
 <ul class="breadcrumb">
     <li><a href="/discuss/">Discuss</a> <span class="divider"></span></li>
+    <?php if ( $the_topic->cid ):?>
+    <li><a href="/contest/talk?cid=<?php echo($the_topic->cid);?>">Contest <?php echo($the_topic->cid);?></a> <span class="divider"></span></li>
+    <?php else:?>
     <li><a href="/discuss?pid=<?php echo($the_topic->pid);?>"><?php echo($the_topic->pid);?></a> <span class="divider"></span></li>
+    <?php endif;?>
     <li class="active"><?php echo($the_topic->title);?></li>
 </ul>
 <div class="topic">
