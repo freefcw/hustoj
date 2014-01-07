@@ -44,7 +44,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/admin">Admin Control</a></li>
+                        <li><a href="#">Message</a></li>
                         <li class="divider"></li>
                         <li><a href="/logout">Logout</a></li>
                     </ul>

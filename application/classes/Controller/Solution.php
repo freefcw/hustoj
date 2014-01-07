@@ -13,10 +13,11 @@ class Controller_Solution extends Controller_Base
         $user = $this->check_login('/');
 
         $sid = $this->request->param('id');
-        if ($sid)
+        $solution = Model_Solution::find_by_id($sid);
+
+        if ( $solution )
         {
-            $solution = Model_Solution::find_by_id($sid);
-            if ($solution AND $solution->allow_view_code($user))
+            if ($solution->allow_view_code($user))
             {
                 $this->template_data['title'] = 'Solution Code';
                 $this->template_data['solution'] = $solution;
@@ -25,11 +26,13 @@ class Controller_Solution extends Controller_Base
         }
         $this->redirect('/');
     }
+
     public function action_status()
     {
         // init
         $page = $this->get_query('page', 1);
         if ($page < 1) $page = 1;
+
         $pid = $this->get_query('pid', null);
         $uid = $this->get_query('uid', null);
         $cid = $this->get_query('cid', null);
@@ -37,26 +40,6 @@ class Controller_Solution extends Controller_Base
         $result = $this->get_query('result', null);
 
         $per_page = 20;
-
-        //		// validation
-        //		$validation = Validation::factory(array(
-        //			'pid' => $pid,
-        //			'uid' => $uid,
-        //			'language' => $language,
-        //			'result' => $result
-        //			));
-        //		$validation->rule('pid', 'numeric')
-        //			->rule('uid', 'regex', array(':value', '/^\w+$/'))
-        //			->rule('language', 'numeric')
-        //			->rule('result', 'numeric')
-        //            ->rule('cid', 'numeric');
-        //
-        //		if($validation->check())
-        //		{
-        //			// TODO: add more handler
-        //		} else {
-        //			echo "error";
-        //		}
 
         $filter = array(
             'problem_id' => $pid,
@@ -67,10 +50,8 @@ class Controller_Solution extends Controller_Base
         );
         // db
 
-        foreach($filter as $k => $v)
-        {
-            if (is_null($v) or $v === '' or $v == -1) unset($filter[$k]);
-        }
+        $filter = $this->clear_data($filter,  array(-1, '', null));
+
         $orderby = array(
             Model_Solution::$primary_key => Model_Base::ORDER_DESC
         );

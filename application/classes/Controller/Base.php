@@ -82,6 +82,26 @@ class Controller_Base extends Controller
         parent::after();
     }
 
+    /**
+     * 过滤无效的数据, '', 0
+     *
+     * @param       $data array
+     * @param array $filters
+     *
+     * @return array
+     */
+    protected function clear_data($data, $filters = array('', NULL))
+    {
+        $ret = array();
+        foreach($data as $key => $value)
+        {
+            if ( ! in_array($value, $filters) )
+                $ret[$key] = $value;
+        }
+
+        return $ret;
+    }
+
     protected function get_query($key, $default = NULL)
     {
         $value = $this->request->query($key);
