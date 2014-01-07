@@ -95,6 +95,20 @@ class OJ
     }
 
     /**
+     * 判断当前用户是否是管理员
+     *
+     * @return bool
+     */
+    public static function current_is_admin()
+    {
+        $user = Auth::instance()->get_user();
+        if ( $user )
+            return $user->is_admin();
+
+        return false;
+    }
+
+    /**
      * translate private code to human readable
      *
      * @param $value

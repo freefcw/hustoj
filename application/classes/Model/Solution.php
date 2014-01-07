@@ -65,7 +65,7 @@ class Model_Solution extends Model_Base
     public $result;
     public $language;
     public $ip;
-    public $contest_id;
+    public $contest_id = null;
     public $valid;
     public $num;
     public $code_length;

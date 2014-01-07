@@ -234,8 +234,7 @@ class Model_User extends Model_Base
      */
     public function can_view_code()
     {
-        if ( $this->has_permission(Model_Privilege::PERM_SOURCEVIEW)
-            OR $this->is_admin() )
+        if ( $this->is_admin() OR $this->has_permission(Model_Privilege::PERM_SOURCEVIEW) )
             return true;
         return false;
     }

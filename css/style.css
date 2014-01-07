@@ -17,7 +17,7 @@
 }
 
 /* content */
-.problem-search{
+.problem-search {
     width: 400px;
     float: right;
 }
@@ -40,13 +40,13 @@ div.err-notice {
     margin: auto;
 }
 
-.content-info {
+.contest-info {
     /*font-size: 16px;*/
     text-align: center;
     margin-bottom: 10px;
 }
 
-div.content-info p {
+div.contest-info p {
     margin-bottom: 3px !important;
 }
 
@@ -55,16 +55,24 @@ div.content-info p {
 }
 
 
-#detail dt {
+.detail dt {
     text-transform: uppercase;
     font-size: 18px;
 }
 
-#detail dd, .welcome, .thanks, .about {
+.detail dd, .welcome, .thanks, .about {
     margin: 1em 20px 1em;
     font-size: 1.465em;
     font-family: "minion-pro-1", "minion-pro-2", "Palatino", Georgia, "Times New Roman", serif;
     line-height: 1.7em;
+}
+
+ul.summary {
+    list-style-type: none;
+}
+
+ul.summary li{
+    margin: 5px auto 5px;
 }
 
 .welcome p {
@@ -103,66 +111,30 @@ div.content-info p {
 }
 
 /* faqs */
-#faqs dt.q {
+.faqs dt.q {
     font-size: larger;
     margin-bottom: 1em;
-    padding-left: 9px;
 }
 
-#faqs dt span, #faqs dd .sp-a {
+.faqs dt span, #faqs dd .sp-a {
     font-size: 18px;
     font-weight: bold;
 }
 
-/* summary */
-#summary dl {
-    font-size: 14px;
-    margin-top: 30px;
-    margin-left: 14px;
-    padding-right: 10px;
-    width: 200px;
-    float: left;
-}
-
-#summary dl dt {
-    outline: 1px #87ceeb dotted;
-    margin: 3px 0;
-    width: 150px;
-    height: 1.7em;
-    float: left;
-}
-
-#summary dl dd {
-    margin: 3px 5px;
-    outline: 1px #87ceeb dotted;
-    width: 40px;
-    height: 1.7em;
-    float: right;
-}
-
-table.best-solution {
-    width: 700px;
-}
 
 /*  footer  */
 
-#footer {
-    margin-top: 50px;
+.runtime-info{
+    display: none;
 }
-
-#footer ul {
-    margin: 0;
+.footer {
+    margin-top: 50px;
     text-align: center;
 }
 
-#footer ul li {
+.footer ul li {
     margin: 5px 10px;
     display: inline;
-    text-align: center;
-}
-
-#copyright {
-    margin: 8px auto 13px;
     text-align: center;
 }
 
@@ -215,15 +187,11 @@ div.user-stats li.count a {
 div.user-stats li.count-accept a {
     color: #32cd32;
 }
-.topic-content {
-    padding: 10px;
-    border: darkgray 1px inset;
-}
 
 .reply-content {
     margin-top: 5px;
     white-space: pre;
-    word-wrap: break-word;
+    word-wrap: break-word   ;
 }
 
 .reply-header {

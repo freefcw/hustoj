@@ -54,17 +54,9 @@ class Controller_Problem extends Controller_Base
             $cpid = $this->get_post('cpid', -1);
 
             // if no pid, then it should be contest
-            if ( $pid )
+            $problem = Model_Problem::find_by_id($pid);
+            if ( !$problem OR  !$problem->can_user_access($current_user) )
             {
-                $problem = Model_Problem::find_by_id($pid);
-                if ( !$problem OR !$problem->can_user_access($current_user))
-                {
-                    $this->redirect('/');
-                }
-            } else {
-                $cid = $this->get_post('cid');
-                $cpid = $this->get_post('cpid');
-
                 $contest = Model_Contest::find_by_id($cid);
                 if ( !$contest OR !$contest->can_user_access($current_user))
                 {
@@ -79,14 +71,17 @@ class Controller_Problem extends Controller_Base
             $solution->user_id = $current_user->user_id;
             $solution->problem_id = $problem->problem_id;
             $solution->code_length = strlen($code->source);
-            $solution->contest_id = $cid;
-            $solution->num = $cpid;
+            $solution->language = $this->get_post('language');
+            if ( $cid )
+            {
+                $solution->contest_id = $cid;
+                $solution->num = $cpid;
+            }
             $solution->ip = Request::$client_ip;
             $solution->save();
 
             $code->solution_id = $solution->solution_id;
             $code->save();
-
 
 //                $solution->problem_id = $c
 
@@ -98,7 +93,7 @@ class Controller_Problem extends Controller_Base
 
         $cid = $this->get_query('cid', null);
         $cpid = $this->get_query('pid', null);
-        if ($cid !== null) {
+        if ( $cid ) {
             $this->template_data['cid'] = OJ::clean_data($cid);
             $this->template_data['cpid'] = OJ::clean_data($cpid);
         }

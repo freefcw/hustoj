@@ -54,12 +54,12 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#">Message</a></li>
-                        <?php if (Auth::instance()->is_admin()): ?>
+                        <?php if ( OJ::current_is_admin() ): ?>
                             <li><a href="/admin">Admin Control</a></li>
                         <?php endif; ?>
                         <li class="divider"></li>
                         <li><a href="/logout">Logout</a></li>
-                        <?php endif; ?>
+                    <?php endif; ?>
                     </ul>
                 </li>
             </ul>

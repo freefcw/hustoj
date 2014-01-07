@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/ui-lightness/jquery-ui-1.10.3.custom.min.css">
-    <script type="text/javascript" src="/js/page.js"></script>
     <script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="/js/page.js"></script>
     <script type="text/javascript" src="/js/jquery-ui-1.10.3.custom.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <link rel="shortcut icon" href="favicon.ico"/>
@@ -66,7 +66,6 @@
             <?php echo($body); ?>
         </div>
     </div>
-    <div class="runtime-info" style="margin-top: 50px">{memory_usage}, {execution_time}</div>
     <?php echo(View::factory('footer')); ?>
 </div>
 </body>

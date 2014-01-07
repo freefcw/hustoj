@@ -20,7 +20,7 @@
     <a href="/discuss/new?cid=<?php echo($cid);?>" class="btn btn-info">New Topic</a> <h4 style="display: inline-block">Topic for Contest <?php echo($contest->contest_id);?></h4>
 </div>
 <?php endif;?>
-<hr style="clear: both"/>
+<hr class="clearfix"/>
 <table class="table table-bordered">
     <thead>
     <tr>

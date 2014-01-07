@@ -49,4 +49,3 @@
         </div>
     </div>
 </form>
-<br style="clear: both;"/>

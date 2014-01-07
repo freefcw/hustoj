@@ -26,4 +26,3 @@
     </fieldset>
     </form>
 </div>
-<br style="clear: both"/>

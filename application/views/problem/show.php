@@ -8,7 +8,7 @@ if (isset($cid)) {
     echo($problem['problem_id']);
 } ?>
     -- <?php echo($problem['title']); ?></h1>
-<div class="content-info">
+<div class="contest-info">
     <p>Time Limit: <span class="label label-warning"><?php echo($problem['time_limit']);?>S</span> Memory Limit: <span
             class="label label-danger"><?php echo($problem['memory_limit']);?>MB</span><br/>
     </p>
@@ -18,7 +18,7 @@ if (isset($cid)) {
         Solved: <?php echo($problem['accepted']);?>
     </div>
 </div>
-<dl id="detail">
+<dl class="detail">
     <dt>Desctiption</dt>
     <dd><?php echo($problem['description']);?></dd>
     <dt>Input</dt>

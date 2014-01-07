@@ -65,7 +65,7 @@ class Auth_Hoj extends Kohana_Auth
     /**
    	 * Forces a user to be logged in, without specifying a password.
    	 *
-   	 * @param   mixed    username
+   	 * @param   mixed   $username
    	 * @return  boolean
    	 */
    	public function force_login($username)
@@ -73,16 +73,6 @@ class Auth_Hoj extends Kohana_Auth
    		// Complete the login
    		return $this->complete_login($username);
    	}
-
-    public function is_admin()
-    {
-        /* @var Model_User $user */
-        $user = Auth::instance()->get_user();
-        if ( $user === null ) return false;
-        if ( $user->is_admin() ) return true;
-
-        return false;
-    }
 
     /**
      * @param Model_User $user
