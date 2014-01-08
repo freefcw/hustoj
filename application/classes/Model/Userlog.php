@@ -7,7 +7,12 @@
 
 class Model_Userlog extends Model_Save
 {
-    static $cols = array();
+    static $cols = array(
+        'user_id',
+        'password',
+        'ip',
+        'time',
+    );
 
     static $primary_key = 'user_id';
 

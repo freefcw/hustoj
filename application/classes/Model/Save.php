@@ -40,10 +40,8 @@ abstract class Model_Save extends Model_Base
         $keys   = array_keys($data);
         $values = array_values($data);
 
-        list($id, $affect_row) = DB::insert(static::$table, $keys)->values($values)->execute();
+        $query  = DB::insert(static::$table, $keys)->values($values);
 
-        $this->{static::$primary_key} = $id;
-
-        return $affect_row;
+        $query->execute();
     }
 }

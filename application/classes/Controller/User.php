@@ -106,7 +106,6 @@ class Controller_User extends Controller_Base
             $password = $this->get_post('pwd');
 
             if ( Auth::instance()->login($username, $password, true) ) {
-
                 // check user is valid
                 $user = Auth::instance()->get_user();
                 if ( $user->is_defunct() )
