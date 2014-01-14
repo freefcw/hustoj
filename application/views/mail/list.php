@@ -16,7 +16,7 @@
             <tbody>
             <?php /* @var Model_Mail $mlist */ foreach($mlist as $mail):?>
             <tr>
-                <td class="col-md-7"><a class="mail-title" href="/mail/view/<?php echo($mail->mail_id);?>"><?php echo($mail->title);?></a></td>
+                <td class="col-md-7"><a class="mail-title" href="/mail/view/<?php echo($mail->mail_id);?>"><?php echo(HTML::chars($mail->title));?></a></td>
                 <td class="col-md-3"><a class="mail-author" href="/u/<?php echo($mail->from_user);?>"><?php echo($mail->from_user);?></a></td>
                 <td ><?php echo($mail->in_date);?></td>
             </tr>

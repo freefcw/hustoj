@@ -7,14 +7,14 @@
         <div class="mail">
             <div class="panel panel-success meta">
                 <div class="panel-body">
-                    Title: <span><?php echo($mail->title);?></span><br />
+                    Title: <span><?php echo(HTML::chars($mail->title));?></span><br />
                     Sender: <?php echo($mail->from_user);?><br />
                     Time: <?php echo $mail->in_date;?>
                 </div>
             </div>
             <div class="panel panel-primary content">
                 <div class="panel-body">
-                    <?php echo($mail->content);?>
+                    <?php echo(HTML::chars($mail->content));?>
                 </div>
             </div>
         </div>
