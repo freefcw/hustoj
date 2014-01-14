@@ -138,6 +138,11 @@ ul.summary li{
     text-align: center;
 }
 
+/* mail list */
+.mail-item .mail-title{
+    font-size: 20px;
+}
+
 /*  admin */
 .capitalize {
     text-transform: capitalize;

@@ -32,8 +32,45 @@ class Model_Mail extends Model_Base
     public $in_date;
     public $defunct;
 
+    /**
+     * @param     $username
+     * @param int $page
+     * @param int $limit
+     *
+     * @return Model_Mail
+     */
+    public static function find_user_inbox($username, $page = 1, $limit =  20)
+    {
+        $filter = array(
+            'to_user' => $username,
+        );
+
+        return self::find($filter, $page, $limit);
+    }
+
+    /**
+     * @param     $username
+     * @param int $page
+     * @param int $limit
+     *
+     * @return Model_Mail
+     */
+    public static function find_user_outbox($username, $page = 1, $limit = 20)
+    {
+        $filter = array(
+            'from_user' => $username,
+        );
+
+        return self::find($filter, $page, $limit);
+    }
+
     protected function initial_data()
-    {}
+    {
+        $this->new_mail = 1;
+        $this->in_date = OJ::format_time();
+        $this->reply = 0;
+        $this->defunct = 'N';
+    }
 
     public function validate()
     {}

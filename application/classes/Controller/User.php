@@ -111,7 +111,8 @@ class Controller_User extends Controller_Base
                 if ( $user->is_defunct() )
                 {
                     Auth::instance()->logout();
-                    return $this->redirect('/user/disabled');
+                    $this->redirect('/user/disabled');
+                    return;
                 }
 
                 // go back url
