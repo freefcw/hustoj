@@ -51,7 +51,7 @@ class Controller_Contest extends Controller_Base
         $this->template_data['cid'] = $cid;
         $this->template_data['topic_list'] = $topic_list;
         $this->template_data['total'] = ceil( $total / OJ::per_page);
-        $this->template_data['title'] = 'Discuss - Contest';
+        $this->template_data['title'] = sprintf('%s - Discuss', $contest->title);
     }
 
     public function action_show()
@@ -68,7 +68,7 @@ class Controller_Contest extends Controller_Base
 
         $this->template_data['cid'] = $cid;
         $this->template_data['contest'] = $contest;
-        $this->template_data['title'] = "Contest - {$contest['title']}";
+        $this->template_data['title'] = "{$contest['title']}";
     }
 
     public function action_standing()
@@ -81,9 +81,9 @@ class Controller_Contest extends Controller_Base
         $contest = Model_Contest::find_by_id($cid);
         $this->check_permission($contest);
 
-        $this->template_data['cid'] = $cid;
+        $this->template_data['cid']     = $cid;
         $this->template_data['contest'] = $contest;
-        $this->template_data['title'] = "Contest - {$contest['title']} - Standing";
+        $this->template_data['title']   = "{$contest['title']} - Standing";
     }
 
     public function action_statistics()
@@ -101,7 +101,7 @@ class Controller_Contest extends Controller_Base
         $this->template_data['contest'] = $contest;
         $this->template_data['result'] = $ret['result'];
         $this->template_data['language'] = $ret['language'];
-        $this->template_data['title'] = "Contest - {$contest['title']} - Statistics";
+        $this->template_data['title'] = "{$contest['title']} - Statistics";
         $this->template_data['cid'] = $cid;
     }
 
@@ -122,18 +122,20 @@ class Controller_Contest extends Controller_Base
 
         if ($contest == null) {
             $error = 'No Such Contest';
+            $this->error_page($error);
         } else {
             if ( $contest->is_open() ) {
                 $problem = $contest->problem(intval($pid));
             } else {
                 $error = 'Contest is not Open';
+                $this->error_page($error);
             }
         }
         $this->template_data['contest'] = $contest;
-        $this->template_data['title'] = "Contest - {$contest['title']}";
-        $this->template_data['cid'] = $cid;
+        $this->template_data['title']   = "{$contest['title']}";
+        $this->template_data['cid']     = $cid;
         $this->template_data['problem'] = $problem;
-        $this->template_data['pid'] = $pid;
+        $this->template_data['pid']     = $pid;
     }
 
     /**

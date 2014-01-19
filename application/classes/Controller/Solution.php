@@ -70,7 +70,7 @@ class Controller_Solution extends Controller_Base
 
             $this->template_data['cid']     = $cid;
             $this->template_data['contest'] = $contest;
-            $this->template_data['title']   = "Contest Status - {$contest['title']}";
+            $this->template_data['title']   = "{$contest['title']} - Status";
         }
 
     }

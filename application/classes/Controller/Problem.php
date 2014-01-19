@@ -113,7 +113,6 @@ class Controller_Problem extends Controller_Base
         $this->template_data['summary'] = $problem->summary();
         $this->template_data['solutions'] = $problem->best_solution();
 
-
         $this->template_data['title'] = "Summary of {$problem_id}";
 
     }
