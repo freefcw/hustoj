@@ -40,8 +40,8 @@
 <?php foreach($list as $i): ?>
     <tr>
         <td><?php echo $i->solution_id;?></td>
-        <td><?php echo html::anchor("/problem/show/{$i->problem_id}", $i->problem_id);?></td>
-        <td><?php echo html::anchor("/u/{$i->user_id}", $i->user_id);?></td>
+        <td><?php echo HTML::anchor("/problem/show/{$i->problem_id}", $i->problem_id);?></td>
+        <td><?php echo HTML::anchor("/u/{$i->user_id}", $i->user_id);?></td>
         <td><?php echo OJ::jresult($i->result);?></td>
         <td><?php if($i->result == 4) echo $i->time, 'ms'; else echo('----');?></td>
         <td><?php if($i->result == 4) echo $i->memory, 'kb'; else echo('----');?></td>

@@ -250,7 +250,7 @@ Or if within a view, the preferable method is:
 
     Request::instance()->uri(array('action' => 'view', 'id' => $user_id));
 
-TODO: examples of using html::anchor in addition to the above examples
+TODO: examples of using HTML::anchor in addition to the above examples
 
 ## Testing routes
 
