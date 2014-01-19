@@ -149,6 +149,11 @@ class Controller_Contest extends Controller_Base
             return ;
         }
         //TODO: add more notice
-        $this->redirect('/contest');
+        if ( $current_user )
+            $message = '您没有权限访问该私有比赛';
+        else {
+            $message = '请先登录后再查看此比赛';
+        }
+        $this->error_page($message);
     }
 }

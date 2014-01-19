@@ -23,10 +23,8 @@ class Controller_Base extends Controller
      */
     public function error_page($msg = '', $page = 'error')
     {
-        $body = View::factory("common/{$page}");
-        $body->msg = $msg;
-
-        $this->view->body = $body;
+        $this->view = "common/{$page}";
+        $this->template_data['message'] = $msg;
     }
 
     /**
