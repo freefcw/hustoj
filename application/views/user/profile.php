@@ -6,7 +6,6 @@
     <div class="row">
         <div class="col-sm-8 user-card">
             <ul class="nav nav-pills nav-stacked">
-                <li><a><i class="glyphicon glyphicon-signal"></i> <?php echo sprintf('%.2f', $u->solved / $u->submit * 100);?>%( <?php echo $u->solved;?> / <?php echo $u->submit;?> )</a></li>
                 <li><a><i class="glyphicon glyphicon-home"></i> <?php echo $u['school'];?></a></li>
                 <li><a><i class="glyphicon glyphicon-envelope"></i> <?php echo str_replace('@', '##', $u['email']);?></a></li>
                 <li><a><i class="glyphicon glyphicon-time"></i> 出生于公元 <?php echo($u['reg_time']);?></a></li>
