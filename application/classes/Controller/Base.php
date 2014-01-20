@@ -118,7 +118,7 @@ class Controller_Base extends Controller
      * @param string $key
      * @param        $value
      *
-     * @return string
+     * @return string|array
      */
     protected function get_post($key, $value=NULL)
     {

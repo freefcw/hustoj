@@ -21,6 +21,9 @@
 </div>
 <?php endif;?>
 <hr class="clearfix"/>
+<?php if ( $current_user->is_admin()):?>
+<form action="/discuss/batch" method="post">
+<?php endif;?>
 <table class="table table-bordered">
     <thead>
     <tr>
@@ -32,6 +35,11 @@
     <tbody>
     <?php /* @var Model_Topic[] $topic_list */ foreach ($topic_list as $t): ?>
     <tr>
+        <?php if ( $current_user->is_admin()):?>
+        <td>
+            <input type="checkbox" name="tid[]" value="<?php echo($t->tid);?>">
+        </td>
+        <?php endif;?>
         <td>
             <?php if ($t->pid):?><a href="/problem/show/<?php echo($t->pid);?>" style="color: #000000"> <?php echo($t->pid);?> </a><?php endif;?></td>
         <td>
@@ -42,6 +50,10 @@
         <?php endforeach;?>
     </tbody>
 </table>
+<?php if ( $current_user->is_admin()):?>
+    <button name="action" value="deletetopic" class="btn btn-warning">Delete Topic</button> <button class="btn btn-danger" name="action" value="andblockuser">Delete And Block</button>
+    </form>
+<?php endif;?>
 <ul class="pager" style="margin-left: 15%; margin-right: 15%">
     <?php $page = Request::$current->query('page');?>
     <?php if ($page != 1):?>

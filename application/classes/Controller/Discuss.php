@@ -84,6 +84,33 @@ class Controller_Discuss extends Controller_Base
         $this->template_data['title'] = 'Discuss';
     }
 
+    public function action_batch()
+    {
+        var_dump($this->cleaned_post());
+
+        $topic_id_list = $this->get_post('tid');
+        $action = $this->get_post('action');
+
+        $need_block = false;
+        if ( $action == 'andblockuser' )
+            $need_block = true;
+
+        foreach($topic_id_list as $topic_id)
+        {
+            $topic = Model_Topic::find_by_id($topic_id);
+            if ( $topic )
+            {
+                if ( $need_block )
+                {
+                    $author = $topic->author();
+                    $author->disable();
+                }
+                $topic->destroy();
+            }
+        }
+        $this->redirect($this->request->referrer());
+    }
+
     public function action_new()
     {
         $cu = Auth::instance()->get_user();
