@@ -27,6 +27,9 @@
 <table class="table table-bordered">
     <thead>
     <tr>
+        <?php if ( $current_user->is_admin()):?>
+            <th><input type="checkbox" id="select-all-topic"></th>
+        <?php endif;?>
         <th class="col-sm-1"></th>
         <th>Title</th>
         <th class="col-sm-2">Author</th>
