@@ -28,12 +28,27 @@ class Model_Topic extends Model_Base
     public $pid;
     public $author_id;
 
+    protected $_author = NULL;
+
     public function replies()
     {
         $filter = array(
             'topic_id' => $this->tid,
         );
         return Model_Reply::find($filter);
+    }
+
+    /**
+     * 返回帖子创建泽
+     *
+     * @return Model_User
+     */
+    public function author()
+    {
+        if ( is_null($this->_author) )
+            $this->_author = Model_User::find_by_id($this->author_id);
+
+        return $this->_author;
     }
 
     /**
