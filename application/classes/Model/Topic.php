@@ -30,12 +30,16 @@ class Model_Topic extends Model_Base
 
     protected $_author = NULL;
 
-    public function replies()
+    public function replies($page = 1, $limit = 50)
     {
         $filter = array(
             'topic_id' => $this->tid,
         );
-        return Model_Reply::find($filter);
+        $orderby = array(
+            'time' => 'ASC'
+            # 'rid' => 'ASC' # is also ok, i think
+        );
+        return Model_Reply::find($filter, $page, $limit, $orderby);
     }
 
     /**
