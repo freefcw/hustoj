@@ -99,9 +99,9 @@ class Model_User extends Model_Base
      *
      * @return bool
      */
-    public static function is_old_password($str)
+    protected static function is_old_password($str)
     {
-        for ($i = strlen($str) - 1; $i >= 0; $i--)
+        for ( $i = strlen($str) - 1; $i >= 0; $i-- )
         {
             $c = $str[$i];
             if ('0'<=$c && $c<='9') continue;
