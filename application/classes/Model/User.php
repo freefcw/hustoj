@@ -212,6 +212,16 @@ class Model_User extends Model_Base
         $this->save();
     }
 
+    /**
+     * 用户是否被disable的
+     *
+     * @return bool
+     */
+    public function is_disabled()
+    {
+        return $this->defunct == self::DEFUNCT_YES;
+    }
+
     public function validate()
     {}
 
