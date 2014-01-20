@@ -13,7 +13,11 @@
 <?php if ( OJ::current_is_admin() ):?>
 <div class="admin-op">
     <a class="btn btn-danger make-sure" href="/discuss/removetopic/<?php echo $the_topic->tid;?>">DELETE TOPIC</a>
+    <?php if ( ! $the_topic->author()->is_disabled() ):?>
     <a class="btn btn-warning make-sure" href="/user/disable/<?php echo $the_topic->author_id;?>">DISABLE <?php echo($the_topic->author_id);?></a>
+    <?php else: ?>
+    <span class="label label-info">BLOCKED</span>
+    <?php endif;?>
 </div>
 <?php endif;?>
 
