@@ -208,6 +208,7 @@ class Model_User extends Model_Base
      */
     public function disable()
     {
+        if ( $this->is_disabled() ) return ;
         $this->defunct = self::DEFUNCT_YES;
         $this->save();
     }
