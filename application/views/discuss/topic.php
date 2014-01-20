@@ -27,7 +27,7 @@
         <a href="/u/<?php echo($r->author_id);?>"><?php echo($r->author_id);?></a> reply at <?php echo(OJ::timesince($r->time));?>
     <?php if ( OJ::current_is_admin() ):?> <a class="btn btn-warning" href="/discuss/removereply/<?php echo($r->rid);?>">DELETE reply</a> <?php endif;?>
     </div>
-    <div class="reply-content well"><?php echo($r->content);?></div>
+    <div class="reply-content well"><?php echo(HTML::chars($r->content));?></div>
 </div>
 <?php endforeach;?>
 

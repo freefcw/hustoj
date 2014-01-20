@@ -30,7 +30,7 @@ class Controller_Discuss extends Controller_Base
             $reply = new Model_Reply;
             $reply->author_id = $cu->user_id;
             $reply->topic_id = $topic_id;
-            $reply->content = $this->get_post('content');
+            $reply->content = $this->get_raw_post('content');
             $reply->save();
             $this->redirect(Request::current()->uri());
         }
@@ -98,7 +98,7 @@ class Controller_Discuss extends Controller_Base
 
             $reply = new Model_Reply;
             $reply->topic_id = $topic->tid;
-            $reply->content = $this->get_post('content');
+            $reply->content = $this->get_raw_post('content');
             $reply->author_id = $cu->user_id;
             $reply->save();
 
