@@ -22,7 +22,8 @@
         <div class="form-group">
             <label class="control-label col-sm-5">Current Password</label>
             <div class="col-sm-7">
-                <input class="form-control" data-content="You need input password" data-original-title="Notice" class="pop" id="password" name="password" type="password" value=""/>
+                <input class="form-control" data-content="You need input password" data-original-title=""
+                       data-container="body" data-placement="right"  data-toggle="popover" id="password" name="password" type="password" value=""/>
             </div>
         </div>
         <div class="form-group">
@@ -34,7 +35,7 @@
         <div class="form-group">
         <label class="control-label col-sm-5">Confirm Password</label>
             <div class="col-sm-7">
-                <input class="form-control" id="repwd" data-content="confirm password" data-original-title="Notice" class="pop" name="confirm" type="password" value=""/>
+                <input class="form-control" id="repwd" name="confirm" type="password" value=""/>
             </div>
         </div>
         <div class="form-group">
@@ -56,7 +57,7 @@
             </div>
         </div>
     </form>
-    <script type="text/javascript">
+    <script type="text/javascript" data-turbolinks-eval="true">
         $(function(){
            $("input.pop").popover({
                trigger: 'focus',
@@ -71,13 +72,12 @@
                     return false;
                 }
                 if ($('#newpwd').val() != $('#repwd').val()){
-                    //$('#newpwd').popover('show');
                     $('#repwd').popover({
+                        container: 'body',
                         content: 'password is not the same',
                         offset: 10,
                         trigger: 'focus'
                     }).popover('show');
-                    //$('#repwd').popover('show');
                     return false;
                 }
                 return true;
