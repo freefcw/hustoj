@@ -5,9 +5,9 @@
     <dd>
         <span class="sp-a">A:</span>
         <div class="a well">
-            <p>The online judge system is running on <a href="http://www.debian.org/">Debian Linux</a>. We are using <a
-                    href="http://gcc.gnu.org/">GNU GCC/G++</a> for C/C++ compile, <a href="http://www.freepascal.org">Free
-                    Pascal</a> for pascal compile and <a href="http://www.gnu-pascal.de">sun-java-jdk1.6</a> for Java.
+            <p>The online judge system is running on <a target="_blank" href="http://www.debian.org/">Debian Linux</a>. We are using <a target="_blank"
+                    href="http://gcc.gnu.org/">GNU GCC/G++</a> for C/C++ compile, <a target="_blank" href="http://www.freepascal.org">Free
+                    Pascal</a> for pascal compile and <a target="_blank" href="http://www.gnu-pascal.de">sun-java-jdk1.6</a> for Java.
                 The compile options are:</p>
             <table class="table table-bordered">
                 <tr>
@@ -176,7 +176,7 @@ public class Main{
         </div>
     </dd>
     <dt>
-        Any questions/suggestions please post to <a href="http://algorithm.byhh.net/">Algorithm@BYHH</a>
+        Any questions/suggestions please post to <a target="_blank" href="http://algorithm.byhh.net/">Algorithm@BYHH</a>, or post at our <a href="/discuss">FORUM</a>.
     </dt>
 </dl>
 
