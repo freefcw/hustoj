@@ -8,46 +8,46 @@
     <?php endif ?>
     <form action="/<?php echo(Request::current()->uri());?>" method="POST" class="form-horizontal" role="form">
         <div class="form-group">
-            <label class="control-label col-sm-5">User ID</label>
+            <label class="control-label col-sm-5" for="user_id">User ID</label>
             <div class="col-sm-7">
-                <input class="form-control" type="text" disabled="disabled" value="<?php print $userinfo['user_id'];?>"/>
+                <input class="form-control" type="text" id="user_id" disabled="disabled" value="<?php print $userinfo['user_id'];?>"/>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-5">Nick Name</label>
+            <label class="control-label col-sm-5" for="nick">Nick Name</label>
             <div class="col-sm-7">
-                <input class="form-control" name="nick" type="text" value="<?php print $userinfo['nick'];?>"/>
+                <input class="form-control" id="nick" name="nick" type="text" value="<?php print $userinfo['nick'];?>"/>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-5">Current Password</label>
+            <label class="control-label col-sm-5" for="password">Current Password</label>
             <div class="col-sm-7">
                 <input class="form-control" data-content="You need input password" data-original-title=""
                        data-container="body" data-placement="right"  data-toggle="popover" id="password" name="password" type="password" value=""/>
             </div>
         </div>
         <div class="form-group">
-        <label class="control-label col-sm-5">New Password</label>
+        <label class="control-label col-sm-5" for="newpwd">New Password</label>
             <div class="col-sm-7">
                 <input class="form-control" id="newpwd" name="newpassword" type="password" value=""/>
             </div>
         </div>
         <div class="form-group">
-        <label class="control-label col-sm-5">Confirm Password</label>
+        <label class="control-label col-sm-5" for="repwd">Confirm Password</label>
             <div class="col-sm-7">
                 <input class="form-control" id="repwd" name="confirm" type="password" value=""/>
             </div>
         </div>
         <div class="form-group">
-        <label class="control-label col-sm-5">School</label>
+        <label class="control-label col-sm-5" for="school">School</label>
             <div class="col-sm-7">
-                <input class="form-control" name="school" type="text" value="<?php print $userinfo['school'];?>"/>
+                <input class="form-control" name="school" id="school" type="text" value="<?php print $userinfo['school'];?>"/>
             </div>
         </div>
         <div class="form-group">
-        <label class="control-label col-sm-5">Email</label>
+        <label class="control-label col-sm-5" for="email">Email</label>
             <div class="col-sm-7">
-                <input class="form-control" name="email" type="email" value="<?php print $userinfo['email'];?>"/>
+                <input class="form-control" name="email" id="email" type="email" value="<?php print $userinfo['email'];?>"/>
             </div>
         </div>
         <div class="form-group">
@@ -66,7 +66,7 @@
         });
         $(function(){
             $('#submit').click(function(){
-                pwd = $('#password').val();
+                var pwd = $('#password').val();
                 if (pwd.length == 0) {
                     $('#password').popover('show');
                     return false;

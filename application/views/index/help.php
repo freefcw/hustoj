@@ -1,0 +1,1 @@
+if you lost password, please contract administrator, <?php echo(Model_Option::get_option('admin.email'));?>
