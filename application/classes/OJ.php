@@ -99,7 +99,7 @@ class OJ
      *
      * @return bool
      */
-    public static function current_is_admin()
+    public static function is_admin()
     {
         $user = Auth::instance()->get_user();
         if ( $user )

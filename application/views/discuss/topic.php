@@ -10,7 +10,7 @@
 </ul>
 <div class="topic">
 <h2><?php echo($the_topic->title);?></h2>
-<?php if ( OJ::current_is_admin() ):?>
+<?php if ( OJ::is_admin() ):?>
 <div class="admin-op">
     <a class="btn btn-danger make-sure" href="/discuss/removetopic/<?php echo $the_topic->tid;?>">DELETE TOPIC</a>
     <?php if ( ! $the_topic->author()->is_disabled() ):?>
@@ -25,7 +25,7 @@
 <div class="reply" id="reply-<?php echo($r->rid);?>">
     <div class="reply-header">
         <a href="/u/<?php echo($r->author_id);?>"><?php echo($r->author_id);?></a> reply at <?php echo(OJ::timesince($r->time));?>
-    <?php if ( OJ::current_is_admin() ):?> <a class="btn btn-warning" href="/discuss/removereply/<?php echo($r->rid);?>">DELETE reply</a> <?php endif;?>
+    <?php if ( OJ::is_admin() ):?> <a class="btn btn-warning" href="/discuss/removereply/<?php echo($r->rid);?>">DELETE reply</a> <?php endif;?>
     </div>
     <div class="reply-content well"><?php echo(HTML::chars($r->content));?></div>
 </div>

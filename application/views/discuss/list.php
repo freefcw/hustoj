@@ -21,13 +21,13 @@
 </div>
 <?php endif;?>
 <hr class="clearfix"/>
-<?php if ( $current_user->is_admin()):?>
+<?php if ( OJ::is_admin() ):?>
 <form action="/discuss/batch" method="post">
 <?php endif;?>
 <table class="table table-bordered">
     <thead>
     <tr>
-        <?php if ( $current_user->is_admin()):?>
+        <?php if ( OJ::is_admin() ):?>
             <th><input type="checkbox" id="select-all-topic"></th>
         <?php endif;?>
         <th class="col-sm-1"></th>
@@ -38,7 +38,7 @@
     <tbody>
     <?php /* @var Model_Topic[] $topic_list */ foreach ($topic_list as $t): ?>
     <tr>
-        <?php if ( $current_user->is_admin()):?>
+        <?php if ( OJ::is_admin() ):?>
         <td>
             <input type="checkbox" name="tid[]" value="<?php echo($t->tid);?>">
         </td>
@@ -53,7 +53,7 @@
         <?php endforeach;?>
     </tbody>
 </table>
-<?php if ( $current_user->is_admin()):?>
+<?php if ( OJ::is_admin() ):?>
     <button name="action" value="deletetopic" class="btn btn-warning">Delete Topic</button> <button class="btn btn-danger" name="action" value="andblockuser">Delete And Block</button>
     </form>
 <?php endif;?>
