@@ -12,9 +12,9 @@
 <h2><?php echo($the_topic->title);?></h2>
 <?php if ( OJ::is_admin() ):?>
 <div class="admin-op">
-    <a class="btn btn-danger make-sure" href="/discuss/removetopic/<?php echo $the_topic->tid;?>">DELETE TOPIC</a>
+    <a class="btn btn-danger make-sure" href="/discuss/removetopic/<?php echo $the_topic->tid;?>" data-no-turbolink>DELETE TOPIC</a>
     <?php if ( ! $the_topic->author()->is_disabled() ):?>
-    <a class="btn btn-warning make-sure" href="/user/disable/<?php echo $the_topic->author_id;?>">DISABLE <?php echo($the_topic->author_id);?></a>
+    <a class="btn btn-warning make-sure" href="/user/disable/<?php echo $the_topic->author_id;?>" data-no-turbolink>DISABLE <?php echo($the_topic->author_id);?></a>
     <?php else: ?>
     <span class="label label-info">BLOCKED</span>
     <?php endif;?>
@@ -25,7 +25,7 @@
 <div class="reply" id="reply-<?php echo($r->rid);?>">
     <div class="reply-header">
         <a href="/u/<?php echo($r->author_id);?>"><?php echo($r->author_id);?></a> reply at <?php echo(OJ::timesince($r->time));?>
-    <?php if ( OJ::is_admin() ):?> <a class="btn btn-warning" href="/discuss/removereply/<?php echo($r->rid);?>">DELETE reply</a> <?php endif;?>
+    <?php if ( OJ::is_admin() ):?> <a data-no-turbolink class="btn btn-warning" href="/discuss/removereply/<?php echo($r->rid);?>">DELETE reply</a> <?php endif;?>
     </div>
     <div class="reply-content well"><?php echo(HTML::chars($r->content));?></div>
 </div>

@@ -8,6 +8,12 @@ class Controller_Base extends Controller
 
     public function before()
     {
+        if ( $this->request->headers('x-xhr-referer') )
+        {
+            $referer = $this->request->headers('x-xhr-referer');
+            $this->request->referrer($referer);
+            $this->response->headers('X-XHR-Current-Location', $this->request->uri());
+        }
         $this->init();
     }
     /**
