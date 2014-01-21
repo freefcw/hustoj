@@ -93,7 +93,41 @@ class Controller_User extends Controller_Base
 
     public function action_register()
     {
-        $this->template_data['title'] = 'User Register';
+        if ( $this->request->is_post() )
+        {
+            $post = Validation::factory($this->cleaned_post())
+                              ->rule('username', 'not_empty')
+                              ->rule('username', 'min_length', array(':value', 4))
+                              ->rule('username', 'max_length', array(':value', 15))
+                              ->rule('username', 'alpha_numeric')
+                //->rule('username', 'User_Model::unique_username')
+                              ->rule('password', 'min_length', array(':value', 6))
+                              ->rule('password', 'matches', array(':validation', 'password', 'confirm'))
+                              ->rule('school', 'max_length', array(':value', 30))
+                              ->rule('email', 'max_length', array(':value', 30))
+                              ->rule('email', 'email');
+            $errors = $post->errors();
+            if ($post->check()) {
+                $user = Model_User::find_by_id($post['username']);
+                if ( ! $user )
+                {
+                    $user = new Model_User;
+                    $user->update($post->data());
+                    $user->user_id = $post['username'];
+                    $user->update_password($post['password']);
+                    $user->save(true);
+
+                    Auth::instance()->login($post['username'], $post['password'], true);
+                    $this->redirect(Route::url('default'));
+                } else {
+                    array_push($errors, 'User Id is existed!');
+                }
+                array_merge($errors, $post->errors());
+                $this->template_data['errors'] = $errors;
+            }
+        }
+
+        $this->template_data['title'] = "User Register";
     }
 
     public function action_login()
@@ -130,47 +164,6 @@ class Controller_User extends Controller_Base
         }
         $this->template_data['title'] = 'Welcome';
         $this->template_data['username'] = $this->get_post('username');
-    }
-    public function action_new()
-    {
-        if ( $this->request->is_get() ) {
-            $this->redirect(Route::url('default'));
-        }
-
-        $post = Validation::factory($this->cleaned_post())
-                          ->rule('username', 'not_empty')
-                          ->rule('username', 'min_length', array(':value', 4))
-                          ->rule('username', 'max_length', array(':value', 15))
-                          ->rule('username', 'alpha_numeric')
-            //->rule('username', 'User_Model::unique_username')
-                          ->rule('password', 'min_length', array(':value', 6))
-                          ->rule('password', 'matches', array(':validation', 'password', 'confirm'))
-                          ->rule('school', 'max_length', array(':value', 30))
-                          ->rule('email', 'max_length', array(':value', 30))
-                          ->rule('email', 'email');
-
-        $errors = array();
-        if ($post->check()) {
-            $user = Model_User::find_by_id($post['username']);
-            if ( ! $user )
-            {
-                $user = new Model_User;
-                $user->update($post->data());
-                $user->user_id = $post['username'];
-                $user->update_password($post['password']);
-                $user->save(true);
-
-                Auth::instance()->login($post['username'], $post['password'], true);
-                $this->redirect(Route::url('default'));
-            } else {
-                array_push($errors, 'User Id is existed!');
-            }
-
-        }
-        $this->template_data['title'] = "User Register";
-        array_merge($errors, $post->errors());
-        //TODO： add more error handle!
-        $this->response->body(Debug::dump($errors));
     }
 
     public function action_logout()

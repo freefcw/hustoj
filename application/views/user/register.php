@@ -6,7 +6,7 @@
         <?php endforeach;?>
     </ul>
 <?php endif;?>
-<form role="form" class="form-horizontal col-sm-6 col-sm-offset-2" action="/user/new" method="POST">
+<form role="form" class="form-horizontal col-sm-6 col-sm-offset-2" action="/user/register" method="POST">
     <div class="form-group">
         <label for="username" class="col-sm-5 control-label">User ID(3-15)*</label>
         <div class="col-sm-7">
