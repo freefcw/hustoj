@@ -23,6 +23,7 @@ class Model_Option extends Model_Base
     public $desc;
     public $value;
 
+    static $local_cache = null;
 
     /**
      * @param $name
@@ -31,13 +32,12 @@ class Model_Option extends Model_Base
      */
     public static function get_option($name)
     {
-        $query = DB::select()->from(static::$table)
-            ->where('name', '=', $name);
-
-        $result = $query->as_object(get_called_class())->execute();
-        $item = $result->current();
-        if ( $item )
-            return $item->value;
+        $options = self::all_options();
+        foreach($options as $option)
+        {
+            if ( $option->name == $name )
+                return $option->value;
+        }
         return null;
     }
 
@@ -45,21 +45,30 @@ class Model_Option extends Model_Base
     /**
      * 获取所有的选项
      *
-     * @return array
+     * @return Model_Option[]
      */
     public static function all_options()
     {
-        $query = DB::select()
-                   ->from(static::$table);
+        if ( is_null(self::$local_cache))
+        {
+            $query = DB::select()
+                       ->from(static::$table);
+            $result = $query->as_object(get_called_class())->execute();
+            self::$local_cache = $result->as_array();
+        }
 
-        $result = $query->execute();
-
-        return $result->as_array();
+        return self::$local_cache;
     }
 
     public function initial_data()
     {
 
+    }
+
+    public function save()
+    {
+        parent::save();
+        self::$local_cache = null;
     }
 
     public function validate()
