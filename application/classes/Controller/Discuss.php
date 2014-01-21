@@ -95,19 +95,23 @@ class Controller_Discuss extends Controller_Base
         if ( $action == 'andblockuser' )
             $need_block = true;
 
-        foreach($topic_id_list as $topic_id)
+        if (  $topic_id_list )
         {
-            $topic = Model_Topic::find_by_id($topic_id);
-            if ( $topic )
+            foreach($topic_id_list as $topic_id)
             {
-                if ( $need_block )
+                $topic = Model_Topic::find_by_id($topic_id);
+                if ( $topic )
                 {
-                    $author = $topic->author();
-                    $author->disable();
+                    if ( $need_block )
+                    {
+                        $author = $topic->author();
+                        $author->disable();
+                    }
+                    $topic->destroy();
                 }
-                $topic->destroy();
             }
         }
+
         $this->redirect($this->request->referrer());
     }
 
