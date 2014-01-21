@@ -10,3 +10,4 @@
     <div class="runtime-info">{memory_usage}, {execution_time}</div>
     <p id="copyright">Copyright © 2003-2011 <?php echo(HTML::anchor('http://acm.hust.edu.cn', 'HUST ACMICPC TEAM'));?>. All rights reserved.</p>
 </div>
+<?php echo View::factory('block/ga');?>

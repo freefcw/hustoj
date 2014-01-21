@@ -68,7 +68,7 @@
 </div>
 <div class="container">
     <?php echo($body); ?>
-    <?php echo(View::factory('footer')); ?>
 </div>
+<?php echo(View::factory('footer')); ?>
 </body>
 </html>
