@@ -58,7 +58,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="/mail">Message</a></li>
                         <?php if ( OJ::is_admin() ): ?>
-                            <li><a href="/admin">Admin Control</a></li>
+                            <li><a href="/admin" data-no-turbolink>Admin Control</a></li>
                         <?php endif; ?>
                         <li class="divider"></li>
                         <li><a href="/logout">Logout</a></li>
