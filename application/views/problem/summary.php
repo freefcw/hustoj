@@ -20,16 +20,16 @@
     </thead>
 	<tbody>
 		<?php $rank = 0;?>
-		<?php foreach($solutions as $s): ?>
+		<?php foreach($solutions as $item): ?>
 		<?php $rank = $rank + 1; ?>
 		<tr>
 			<td><?php print $rank; ?></td>
-			<td><?php print $s['solution_id'];?></td>
-            <td><?php print $s['memory'];?>KB</td>
-            <td><?php print $s['time'];?>MS</td>
-            <td><a href="/u/<?php print $s['user_id'];?>"><?php print $s['user_id'];?></a></td>
-            <td><?php print OJ::lang($s['language']);?></td>
-            <td><?php echo($s['in_date']);?></td>
+			<td><?php print $item['solution_id'];?></td>
+            <td><?php print $item['memory'];?>KB</td>
+            <td><?php print $item['time'];?>MS</td>
+            <td><a href="/u/<?php print $item['user_id'];?>"><?php print $item['user_id'];?></a></td>
+            <td><?php print OJ::lang($item['language']);?></td>
+            <td><?php echo($item['in_date']);?></td>
         </tr>
         <?php endforeach; ?>
     </tbody>
