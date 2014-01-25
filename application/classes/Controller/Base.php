@@ -30,6 +30,7 @@ class Controller_Base extends Controller
     public function error_page($msg = '', $page = 'error')
     {
         $this->view = "common/{$page}";
+        $this->template_data['title'] = 'Error !!';
         $this->template_data['message'] = $msg;
     }
 
