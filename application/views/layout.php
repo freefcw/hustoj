@@ -29,13 +29,13 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><!--class="active"--><a href="/">Home</a></li>
-                <li><a href="/problem/list">Problems</a></li>
-                <li><a href="/status">Status</a></li>
-                <li><a href="/rank/user">Rank</a></li>
-                <li><a href="/contest">Contest</a></li>
-                <li><a href="/faqs">Faqs</a></li>
-                <li><a href="/discuss">Discuss</a></li>
+                <li <?php if (Request::$current->controller() == 'Index' AND Request::$current->action() == 'index'):?>class="active" <?php endif;?>><a href="/">Home</a></li>
+                <li <?php if (Request::$current->controller() == 'Problem'):?>class="active" <?php endif;?>><a href="/problem/list">Problems</a></li>
+                <li <?php if (Request::$current->controller() == 'Solution' AND Request::$current->action() == 'status'):?>class="active" <?php endif;?>><a href="/status">Status</a></li>
+                <li <?php if (Request::$current->controller() == 'User' AND Request::$current->action() == 'list' ):?>class="active" <?php endif;?>><a href="/rank/user">Rank</a></li>
+                <li <?php if (Request::$current->controller() == 'Contest'):?>class="active" <?php endif;?>><a href="/contest">Contest</a></li>
+                <li <?php if (Request::$current->action() == 'faqs'):?>class="active" <?php endif;?>><a href="/faqs">Faqs</a></li>
+                <li <?php if (Request::$current->controller() == 'Discuss'):?>class="active" <?php endif;?>><a href="/discuss">Discuss</a></li>
             </ul>
 
             <ul class="nav navbar-nav pull-right">
@@ -43,9 +43,9 @@
                     <li><a href="/login">Login</a></li>
                     <li><a href="/user/register">Register</a></li>
                 <?php else: ?>
-                <li><a href="<?php echo(Route::url('profile', array('uid' => $cu->user_id)));?>"
+                <li <?php if (Request::$current->controller() == 'User' AND Request::$current->action() == 'profile' ):?>class="active" <?php endif;?>><a href="<?php echo(Route::url('profile', array('uid' => $cu->user_id)));?>"
                        title="<?php echo($cu->user_id);?>"><?php echo($cu->user_id);?></a></li>
-                <li><a href="/user/edit">Setting</a></li>
+                <li <?php if (Request::$current->controller() == 'User' AND Request::$current->action() == 'edit' ):?>class="active" <?php endif;?>><a href="/user/edit">Setting</a></li>
                 <li class="divider-vertical"></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <span class="caret"></span></a>

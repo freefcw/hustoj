@@ -24,12 +24,13 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><!--class="active"--><a href="/admin">Home</a></li>
-                <li><a href="/admin/problem">Problems</a></li>
-                <li><a href="/admin/user">Users</a></li>
-                <li><a href="/admin/contest">Contest</a></li>
-                <li><a href="/admin/setting">Configure</a></li>
-                <li><a href="#">Discuss</a></li>
+                <li <?php if (Request::$current->controller() == 'Index'):?>class="active" <?php endif;?>><a href="/admin">Home</a></li>
+                <li <?php if (Request::$current->controller() == 'Problem'):?>class="active" <?php endif;?>><a href="/admin/problem">Problems</a></li>
+                <li <?php if (Request::$current->controller() == 'User'):?>class="active" <?php endif;?>><a href="/admin/user">Users</a></li>
+                <li <?php if (Request::$current->controller() == 'Contest'):?>class="active" <?php endif;?>><a href="/admin/contest">Contest</a></li>
+                <li <?php if (Request::$current->controller() == 'News'):?>class="active" <?php endif;?>><a href="/admin/news">News</a></li>
+                <li <?php if (Request::$current->controller() == 'Setting'):?>class="active" <?php endif;?>><a href="/admin/setting">Configure</a></li>
+                <li <?php if (Request::$current->controller() == 'Discuss'):?>class="active" <?php endif;?>><a href="#">Discuss</a></li>
             </ul>
             <ul class="nav navbar-nav pull-right">
                 <li><a href="<?php echo(Route::url('profile', array('uid' => $current_user->user_id)));?>"
@@ -55,7 +56,7 @@
         <div class="col-md-11">
             <h3><?php echo $title;?></h3>
             <?php if (isset($message) && $message):?>
-                <?php echo View::factory('admin/message', $message);?>
+                <?php echo View::factory('admin/message', array('message' => $message ));?>
             <?php endif;?>
             <?php echo($body); ?>
         </div>
