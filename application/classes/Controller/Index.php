@@ -72,4 +72,19 @@ class Controller_Index extends Controller_Base
         $this->template_data['title'] = 'TERMS';
     }
 
+    public function action_news()
+    {
+        $id = $this->request->param('id');
+
+        $news = Model_News::find_by_id($id);
+        if ( $news AND $news->is_public() )
+        {
+            $this->template_data['title'] = $news->title;
+            $this->template_data['news'] = $news;
+        } else {
+            // [TODO: add more handle]
+            $this->redirect('/');
+        }
+    }
+
 } // End Index
