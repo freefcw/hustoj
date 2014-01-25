@@ -41,13 +41,13 @@ class Controller_Base extends Controller
     public function check_login($redirect = '')
     {
         $user = Auth::instance()->get_user();
-        if ( $user ) {
-            return $user;
-        } else {
+        if ( ! $user )
+        {
             $session = Session::instance();
             $session->set('return_url', $this->request->uri());
             $this->redirect('/login');
         }
+        return $user;
     }
 
     /**
@@ -56,11 +56,11 @@ class Controller_Base extends Controller
     public function check_admin()
     {
         $user = $this->check_login();
-        if ( $user->is_admin() )
+        if ( ! $user->is_admin() )
         {
-            return $user;
+            $this->redirect('/');
         }
-        $this->redirect('/');
+        return $user;
     }
 
     /**

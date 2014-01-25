@@ -2,6 +2,9 @@
 
 class Controller_Admin_Base extends Controller_Base {
     protected $layout = 'admin/layout';
+    /**
+     * @var Model_User
+     */
     protected $current_user = NULL;
 
 	public function before()
