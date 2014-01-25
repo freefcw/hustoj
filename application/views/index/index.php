@@ -1,16 +1,17 @@
+<div class="welcome readability">
+    <h3>Welcome to HUSTOJ</h3>
+    <p>Any problem, please see the contact information in contact page</p>
+</div>
 <div class="row index">
     <div class="news">
-        <h4>Recent News</h4>
-        <ol>
-        <?php foreach($rss as $item):?>
-<li><a href="<?php echo($item['link']);?>"><?php echo($item['title']);?></a></li>
+        <?php /* @var Model_News[] $news_list */foreach($news_list as $news):?>
+        <div class="news-item">
+            <h4><a href="/news/<?php echo($news->news_id);?>"><?php echo($news->title);?></a></h4>
+            <div class="news-content">
+                <?php echo($news->content);?>
+            </div>
+        </div>
         <?php endforeach;?>
-        </ol>
     </div>
-    <div class="welcome">
-<h3>Welcome to HUSTOJ</h3>
-<p>for the new user, please see the tutorials</p>
-<p>If you interested in Online Judge, please go the bitbucket</p>
-<p>Any problem, please see the contact information in contact page</p>
-    </div>
+
 </div>

@@ -10,20 +10,25 @@ class Controller_Index extends Controller_Base
             'rss' => array(),
         );
 
-//        $cache = Cache::instance();
-//        $rss = $cache->get('bitbucket-rss', null);
-//        if ($rss === null) {
-//            //$data = file_get_contents('https://bitbucket.org/freefcw/hustoj/rss');
-//            //$rss = Feed::parse($data);
-//            $rss = array(
-//                array('title' => '1000', 'link' => '/problem/show/1000'),
-//                array('title' => '1001', 'link' => '/problem/show/1001')
-//            );
-//            $cache->set('bitbucket-rss', $rss, 300);
-//        }
-
+        $page = $this->get_query('page', 1);
+        $this->template_data['news_list'] = $this->fetch_news($page);
 
         $this->add_view_data($template_data);
+    }
+
+    protected function fetch_news($page)
+    {
+        $key = 'news-page-'.$page;
+        $cache = Cache::instance();
+        $news_list = $cache->get($key);
+        if ( ! $news_list )
+        {
+            $news_list = Model_News::fetch_public_news($page);
+            $cache->set($key, $news_list, 60);
+        }
+
+        return $news_list;
+
     }
 
     public function action_home()
@@ -82,8 +87,7 @@ class Controller_Index extends Controller_Base
             $this->template_data['title'] = $news->title;
             $this->template_data['news'] = $news;
         } else {
-            // [TODO: add more handle]
-            $this->redirect('/');
+            $this->error_page('the news not found');
         }
     }
 

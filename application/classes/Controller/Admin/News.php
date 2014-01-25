@@ -10,9 +10,13 @@ class Controller_Admin_News extends Controller_Admin_Base {
     public function action_index()
     {
         $page = $this->get_query('page', 1);
-        $news_list = Model_News::find(array(), $page);
+        $limit = 50;
+        $orderby = array(
+            'news_id' => 'DESC',
+        );
+        $news_list = Model_News::find(array(), $page, $limit, $orderby);
 
-        $this->template_data['title'] = 'Mews List '.$page;
+        $this->template_data['title'] = 'News Page '.$page;
         $this->template_data['news_list'] = $news_list;
     }
 

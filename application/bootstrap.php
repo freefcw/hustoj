@@ -181,6 +181,14 @@ Route::set(
     )
 );
 
+Route::set('news', 'news/<id>',
+    array(
+        'id' => '\d+'
+    ))->defaults(array(
+          'controller' => 'index',
+          'action'     => 'news',
+));
+
 Route::set(
     'page', '<action>',
     array(
