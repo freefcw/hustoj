@@ -1,11 +1,11 @@
 <h3 class="page-title">About HUST Online Judge</h3>
-<div class="about">
+<div class="about readability">
     <h4>About</h4>
     <p>
         HUST Online Judge developer is a Online Judge system for ACM/ICPC.
     </p>
 </div>
-<div class="thanks">
+<div class="thanks readability">
     <h4>Thanks to</h4>
     <ul>
         <li>Magicd, who is the founder of initial version of HUSTOJ.</li>

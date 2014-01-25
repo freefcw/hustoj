@@ -60,11 +60,15 @@ div.contest-info p {
     font-size: 18px;
 }
 
-.detail dd, .welcome, .thanks, .about {
+.detail dd, .readability {
     margin: 1em 20px 1em;
     font-size: 1.465em;
     font-family: "minion-pro-1", "minion-pro-2", "Palatino", Georgia, "Times New Roman", serif;
     line-height: 1.7em;
+}
+
+.readability{
+    font-size: 1.3em;
 }
 
 ul.summary {
