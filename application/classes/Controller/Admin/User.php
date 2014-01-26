@@ -30,12 +30,14 @@ class Controller_Admin_User extends Controller_Admin_Base{
         {
             $safe_data = $this->cleaned_post();
 
-            if ($safe_data['password'] AND $safe_data['repassword'] == $safe_data['password'])
+            $password = $safe_data['password'];
+            if ($password AND $safe_data['repassword'] == $password )
             {
                 unset($safe_data['password']);
-                $safe_data['password'] = Auth::instance()->hash($safe_data['password']);
+                $safe_data['password'] = Auth::instance()->hash($password);
             }
             $user->update($safe_data);
+            $user->save();
         }
 
         $this->template_data['user'] = $user;
