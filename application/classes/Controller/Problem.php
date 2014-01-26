@@ -34,13 +34,15 @@ class Controller_Problem extends Controller_Base
         $pid = $this->request->param('id', null);
 
         $problem = Model_Problem::find_by_id($pid);
-        if ( ! $problem OR $problem->is_defunct() )
+        $current_user = Auth::instance()->get_user();
+        if ( $problem AND $problem->can_user_access($current_user) )
+        {
+            $this->template_data['title'] = $problem['title'];
+            $this->template_data['problem'] = $problem;
+        } else {
             $this->redirect('/problem/list');
-
-        $this->template_data['title'] = $problem['title'];
-        $this->template_data['problem'] = $problem;
+        }
     }
-
 
     public function action_submit()
     {
@@ -107,7 +109,9 @@ class Controller_Problem extends Controller_Base
         // init
         $problem_id = $this->request->param('id');
         $problem = Model_Problem::find_by_id($problem_id);
-        if ( ! $problem )
+
+        $current_user = Auth::instance()->get_user();
+        if ( ! $problem OR ! $problem->can_user_access($current_user) )
             $this->redirect(Route::url('default'));
 
         $this->template_data['summary'] = $problem->summary();

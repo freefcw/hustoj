@@ -192,7 +192,7 @@ Route::set('news', 'news/<id>',
 Route::set(
     'page', '<action>',
     array(
-         'action' => '(home|faqs|about|links|contact|help|terms)'
+         'action' => '(faqs|about|links|contact|help|terms)'
     ))->defaults(array(
          'controller' => 'index'
     )

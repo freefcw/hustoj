@@ -39,9 +39,18 @@ class Controller_Index extends Controller_Base
 
     }
 
-    public function action_home()
+    public function action_news()
     {
-        $this->action_index();
+        $id = $this->request->param('id');
+
+        $news = Model_News::find_by_id($id);
+        if ( $news AND $news->is_public() )
+        {
+            $this->template_data['title'] = $news->title;
+            $this->template_data['news'] = $news;
+        } else {
+            $this->error_page('the news not found');
+        }
     }
 
     public function action_faqs()
@@ -83,20 +92,6 @@ class Controller_Index extends Controller_Base
     public function action_terms()
     {
         $this->template_data['title'] = 'TERMS';
-    }
-
-    public function action_news()
-    {
-        $id = $this->request->param('id');
-
-        $news = Model_News::find_by_id($id);
-        if ( $news AND $news->is_public() )
-        {
-            $this->template_data['title'] = $news->title;
-            $this->template_data['news'] = $news;
-        } else {
-            $this->error_page('the news not found');
-        }
     }
 
 } // End Index

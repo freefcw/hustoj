@@ -82,6 +82,8 @@ class Controller_Mail extends Controller_Base
         $user = $this->check_login();
         $mail_id = $this->request->param('id');
         $mail = Model_Mail::find_by_id($mail_id);
+
+        // 检查权限
         if ( $mail->to_user == $user->user_id
             OR $mail->from_user == $user->user_id )
         {
