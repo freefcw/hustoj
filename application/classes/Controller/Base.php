@@ -64,14 +64,6 @@ class Controller_Base extends Controller
         return $user;
     }
 
-    /**
-     * @param array $data
-     */
-    public function add_view_data($data)
-    {
-        $this->template_data = array_merge($this->template_data, $data);
-    }
-
     public function after()
     {
         View::set_global('current_user', Auth::instance()->get_user());

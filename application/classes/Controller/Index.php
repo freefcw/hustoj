@@ -5,11 +5,6 @@ class Controller_Index extends Controller_Base
 
     public function action_index()
     {
-        $template_data = array(
-            'title' => 'Home',
-            'rss' => array(),
-        );
-
         $page = $this->get_query('page', 1);
         $this->template_data['news_list'] = $this->fetch_news($page);
 
