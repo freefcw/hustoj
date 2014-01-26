@@ -19,14 +19,29 @@ class Model_News extends Model_Base {
         'defunct',
     );
 
+    const NEWS_TYPE_TOP    = 1;
+    const NEWS_TYPE_NORMAL = 0;
+
     public $news_id;
     public $user_id;
     public $title;
     public $content;
     public $time;
-    public $importance;
+    public $importance; // 1 is top
     public $defunct;
 
+    public static function number_of_public_news()
+    {
+        $fileter = array(
+            'defunct' => Model_News::DEFUNCT_NO
+        );
+        return self::count($fileter);
+    }
+
+    public function is_top_news()
+    {
+        return self::NEWS_TYPE_TOP == $this->importance;
+    }
 
     public function is_public()
     {
@@ -38,12 +53,26 @@ class Model_News extends Model_Base {
     public static function fetch_public_news($page, $limit = 10)
     {
         $orderby = array(
-            'news_id' => 'DESC',
+            'news_id' => self::ORDER_DESC,
         );
         $fileter = array(
+            'importance' => 0,
             'defunct' => Model_News::DEFUNCT_NO
         );
         $news_list = Model_News::find($fileter, $page, $limit, $orderby);
+        return $news_list;
+    }
+
+    public static function top_news()
+    {
+        $orderby = array(
+            'news_id' => self::ORDER_DESC,
+        );
+        $fileter = array(
+            'importance' => 1,
+            'defunct' => Model_News::DEFUNCT_NO
+        );
+        $news_list = Model_News::find($fileter, 1, 10, $orderby);
         return $news_list;
     }
 

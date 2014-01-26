@@ -6,9 +6,22 @@ class Controller_Index extends Controller_Base
     public function action_index()
     {
         $page = $this->get_query('page', 1);
-        $this->template_data['news_list'] = $this->fetch_news($page);
 
-        $this->add_view_data($template_data);
+        $number_of_news = 10;
+
+        if ( $page == 1 )
+        {
+            $top_news = Model_News::top_news();
+            $number_of_news = $number_of_news - count($top_news);
+        }
+        $news_list = Model_News::fetch_public_news($page, $number_of_news);
+        if ( isset($top_news) )
+            $news_list = array_merge($top_news, $news_list);
+
+        $total_news = Model_News::number_of_public_news();
+        $this->template_data['total'] = ceil($total_news / $number_of_news);
+        $this->template_data['title'] = 'HUST ONLINE JUDGE';
+        $this->template_data['news_list'] = $news_list;
     }
 
     protected function fetch_news($page)

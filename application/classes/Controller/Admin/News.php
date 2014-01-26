@@ -56,6 +56,12 @@ class Controller_Admin_News extends Controller_Admin_Base {
             } else {
                 $post['defunct'] = 'N';
             }
+            if ( isset($post['top']) )
+            {
+                $news->importance = Model_News::NEWS_TYPE_TOP;
+            } else {
+                $news->importance = Model_News::NEWS_TYPE_NORMAL;
+            }
             var_dump($post);
             $news->update($post);
             if ( $news->save() )
