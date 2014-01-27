@@ -106,8 +106,8 @@ class Model_Problem extends Model_Base
      */
     public function can_user_access($user)
     {
-        if ($user->is_admin()) return true;
         if  ( ! $this->is_defunct() ) return true;
+        if ($user AND $user->is_admin()) return true;
         return false;
     }
 
