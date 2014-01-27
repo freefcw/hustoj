@@ -18,7 +18,7 @@
 <?php foreach($problemlist as $problem): ?>
     <tr>
     <?php if ($current_user):?>
-        <td><?php if ($current_user->resolved_problem($problem->problem_id)):?><span class="resolved-problem">Y</span><?php endif;?></td>
+        <td><?php if ($current_user->is_problem_resolved($problem->problem_id)):?><span class="resolved-problem">Y</span><?php endif;?></td>
     <?php endif;?>
         <td class="pid"><?php echo($problem->problem_id); ?></td>
         <td class="ptitle"><?php echo(HTML::anchor("/problem/show/{$problem->problem_id}", $problem->title));?></td>

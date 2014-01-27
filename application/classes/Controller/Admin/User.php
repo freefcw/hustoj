@@ -50,7 +50,7 @@ class Controller_Admin_User extends Controller_Admin_Base{
         $user_id = $this->request->param('id', null);
 
         $user = Model_User::find_by_id($user_id);
-        $user->defunct = 1;
+        $user->defunct = Model_User::DEFUNCT_YES;
 
         //TODO: use ajax
         $this->action_index();

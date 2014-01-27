@@ -32,7 +32,7 @@ class Controller_User extends Controller_Base
             $this->redirect(Route::url('default'));
 
         $this->template_data['title'] = "About {$uid}";
-        $this->template_data['u'] = $user;
+        $this->template_data['user'] = $user;
     }
 
     public function action_disable()

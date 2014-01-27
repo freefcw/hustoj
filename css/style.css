@@ -254,3 +254,7 @@ div.user-stats li.count-accept a {
 .readmore {
 
 }
+
+.solved_problems a{
+    margin: 10px;
+}
