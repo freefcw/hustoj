@@ -258,3 +258,7 @@ div.user-stats li.count-accept a {
 .solved_problems a{
     margin: 10px;
 }
+
+.navbar{
+    border-radius: 0 !important;
+}
