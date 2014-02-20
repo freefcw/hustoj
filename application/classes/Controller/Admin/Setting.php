@@ -15,7 +15,7 @@ class Controller_Admin_Setting extends Controller_Admin_Base{
             $option = Model_Option::find_by_id($id);
             $this->template_data['title'] = 'Modify Option';
             if ( ! $option )
-                $this->error_page('option not found');
+                return $this->error_page('option not found');
         } else {
             $option = new Model_Option;
             $this->template_data['title'] = 'Add Option';

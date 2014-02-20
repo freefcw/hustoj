@@ -49,7 +49,7 @@ class Controller_Index extends Controller_Base
             $this->template_data['title'] = $news->title;
             $this->template_data['news'] = $news;
         } else {
-            $this->error_page('the news not found');
+            return $this->error_page('the news not found');
         }
     }
 
