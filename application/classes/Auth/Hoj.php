@@ -45,13 +45,22 @@ class Auth_Hoj extends Kohana_Auth
     }
 
 
+    /**
+     * cause here can't detect password use origin password, so no use here.
+     * just proxy to Model_User->check_password.
+     *
+     * @param $password
+     * @return bool
+     */
     public function check_password($password)
     {
+        /* @var Model_User $user */
         $user = $this->get_user();
 
         if ( ! $user)
             return false;
-        return ($this->hash($password) === $user->password);
+
+        return $user->check_password($password);
     }
 
     public function logged_in($role = null)

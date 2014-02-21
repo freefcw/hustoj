@@ -57,16 +57,18 @@ class Controller_User extends Controller_Base
             $safe_data = $this->cleaned_post();
 
             // check user password
-            if ( Auth::instance()->check_password($safe_data['password']) ) {
+            if ( $user->check_password($safe_data['password']) ) {
                 // if change password
                 unset($safe_data['password']);
-                if (strlen($safe_data['newpassword']) > 6
-                    AND ($safe_data['newpassword'] === $safe_data['confirm'])
-                ) {
+                if ($safe_data['newpassword'] AND ($safe_data['newpassword'] === $safe_data['confirm']) )
+                {
+                    if ( strlen($safe_data['newpassword']) < 6)
+                    {
+                        $error = 'new password is less than 4 chars or not same';
+                    }
                     $user->password = Auth::instance()->hash($safe_data['newpassword']);
-                } else {
-                    $error = 'new password is less than 4 chars or not same';
                 }
+
                 if ( !isset($error))
                 {
                     $user->update($safe_data);

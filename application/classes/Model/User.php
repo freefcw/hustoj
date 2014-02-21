@@ -65,41 +65,59 @@ class Model_User extends Model_Base
     public static function authenticate($username, $password)
     {
         $user = self::find_by_id($username);
-        if ( $user )
+        if ( $user and $user->check_password($password, true) )
         {
-            if ( self::is_old_password($user->password))
-            {
-                if ($user->password == md5($password))
-                {
-                    $user->log_login($password);
-                    // update old password
-                    $user->update_password($password);
-                    $user->save();
                     return $user;
                 }
                 return false;
             }
-            $origin_hash = base64_decode($user->password);
-            $salt = substr($origin_hash, 20);
-            $hash = Auth::instance()->hash($password, $salt);
-            $user->log_login($hash);
-            if ( $user->password == $hash ) return $user;
-        }
-        return false;
-    }
 
     /**
-     * record user login info
+     * record user login info into database
      *
-     * @param string $login_passwd
+     * @param string $user_id
+     * @param string $password the password user try to login
      */
-    public function log_login($login_passwd)
+    public static function log_login($user_id, $password)
     {
         $record = new Model_Userlog;
-        $record->user_id = $this->user_id;
-        $record->password = $login_passwd;
+        $record->user_id = $user_id;
+        $record->password = $password;
 
         $record->save();
+    }
+
+    public function check_password($password, $log_to_database=false)
+    {
+        if ( self::is_old_password($this->password))
+        {
+            $hashed_password = md5($password);
+            if ($this->password == $hashed_password)
+            {
+                if ( $log_to_database )
+                {
+                    $this->log_login($this->user_id, $hashed_password);
+                }
+                // update old password
+                $this->update_password($password);
+                $this->save();
+                return true;
+            }
+            return false;
+        }
+
+        // new style password
+        $origin_hash = base64_decode($this->password);
+        $salt = substr($origin_hash, 20);
+
+        $hashed_password = Auth::instance()->hash($password, $salt);
+
+        if ( $log_to_database )
+        {
+            $this->log_login($this->user_id, $hashed_password);
+        }
+
+        return $this->password == $hashed_password;
     }
 
     /**
