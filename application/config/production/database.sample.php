@@ -1,5 +1,8 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
+/**
+ * notice, this is the sample file, please cp this to databse.php as a normal configure file
+ */
 return array
 (
     'default' => array

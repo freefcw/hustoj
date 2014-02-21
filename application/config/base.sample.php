@@ -6,5 +6,5 @@
  */
 
 return array(
-    'domain' => 'a.hust.edu.cn',
+    'domain' => 'acm.hust.edu.cn',
 );
