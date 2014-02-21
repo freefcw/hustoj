@@ -74,7 +74,11 @@ abstract class Kohana_Controller {
 		// If the action doesn't exist, it's a 404
 		if ( ! method_exists($this, $action))
 		{
-            $this->missing_action();
+            throw HTTP_Exception::factory(
+                404,
+                'The requested URL :uri was not found on this server.',
+                array( ':uri' => $this->request->uri() )
+            )->request($this->request);
 		} else {
             // Execute the action itself
             $this->{$action}();
@@ -86,21 +90,6 @@ abstract class Kohana_Controller {
 		// Return the response
 		return $this->response;
 	}
-
-    /**
-     *
-     * 不存在action的时候会自动调用这个，subcontroller could replace with self action..
-     *
-     * @throws Kohana_HTTP_Exception
-     * @return null|mixed
-     */
-    public function missing_action()
-    {
-        throw HTTP_Exception::factory(404,
-            'The requested URL :uri was not found on this server.',
-            array(':uri' => $this->request->uri())
-        )->request($this->request);
-    }
 
 	/**
 	 * Automatically executed before the controller action. Can be used to set
