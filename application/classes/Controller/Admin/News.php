@@ -10,7 +10,8 @@ class Controller_Admin_News extends Controller_Admin_Base {
     public function action_index()
     {
         $page = $this->get_query('page', 1);
-        $limit = 50;
+        $limit = $this->get_query('limit', 50);
+
         $orderby = array(
             'news_id' => 'DESC',
         );
@@ -38,7 +39,7 @@ class Controller_Admin_News extends Controller_Admin_Base {
         {
             throw new Exception_Base('not found this news');
         }
-        $this->template_data['title'] = 'Edit - '.$news->title;
+        $this->template_data['title'] = 'Edit '.$news->title;
 
         if ( $this->request->is_post() )
         {

@@ -31,14 +31,12 @@ class Controller_Contest extends Controller_Base
 
     public function action_talk()
     {
-        $this->view = 'discuss/list';
-        $page = $this->get_query('page', 1);
         $cid = $this->get_query('cid');
-
         $contest = Model_Contest::find_by_id($cid);
 
         $this->check_permission($contest);
 
+        $page = $this->get_query('page', 1);
         $filter = array(
             'cid' => $cid,
         );
@@ -46,6 +44,8 @@ class Controller_Contest extends Controller_Base
         $filter = Model_Base::clean_data($filter);
         $topic_list = Model_Topic::page($filter, $page, OJ::per_page);
         $total = Model_Topic::count($filter);
+
+        $this->view = 'discuss/list';
 
         $this->template_data['contest'] = $contest;
         $this->template_data['cid'] = $cid;
@@ -59,24 +59,17 @@ class Controller_Contest extends Controller_Base
         // init
         $cid = $this->request->param('id', null);
 
-        if (is_null($cid)) {
-            $this->redirect(Route::url('default'));
-        }
-
         $contest = Model_Contest::find_by_id($cid);
         $this->check_permission($contest);
 
         $this->template_data['cid'] = $cid;
         $this->template_data['contest'] = $contest;
-        $this->template_data['title'] = "{$contest['title']}";
+        $this->template_data['title'] = $contest['title'];
     }
 
     public function action_standing()
     {
         $cid = $this->request->param('id', null);
-        if ($cid === null) {
-            $this->redirect(Route::url('default'));
-        }
 
         $contest = Model_Contest::find_by_id($cid);
         $this->check_permission($contest);
@@ -90,11 +83,8 @@ class Controller_Contest extends Controller_Base
     {
         // init
         $cid = $this->request->param('id', null);
-        if ($cid === null) {
-            $this->redirect(Route::url('default'));
-        }
-        $contest = Model_Contest::find_by_id($cid);
 
+        $contest = Model_Contest::find_by_id($cid);
         $this->check_permission($contest);
 
         $ret = $contest->statistics();
@@ -107,7 +97,6 @@ class Controller_Contest extends Controller_Base
 
     public function action_problem()
     {
-        //TODO: check
         $this->view = 'problem/show';
         $pid = $this->request->param('pid', null);
         $cid = $this->request->param('cid', null);
@@ -120,17 +109,13 @@ class Controller_Contest extends Controller_Base
         $contest = Model_Contest::find_by_id($cid);
         $this->check_permission($contest);
 
-        if ($contest == null) {
-            $error = 'No Such Contest';
-            throw new Exception_Base($error);
-        } else {
+
             if ( $contest->is_open() ) {
                 $problem = $contest->problem(intval($pid));
             } else {
                 $error = 'Contest is not Open';
                 throw new Exception_Base($error);
             }
-        }
         $this->template_data['contest'] = $contest;
         $this->template_data['title']   = "{$contest['title']}";
         $this->template_data['cid']     = $cid;
@@ -140,6 +125,7 @@ class Controller_Contest extends Controller_Base
 
     /**
      * @param Model_Contest $contest
+     * @throws Exception_Base
      */
     protected function check_permission($contest)
     {

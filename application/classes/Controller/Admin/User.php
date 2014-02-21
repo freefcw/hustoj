@@ -4,12 +4,12 @@ class Controller_Admin_User extends Controller_Admin_Base{
 
     public function action_index()
     {
+        $this->view = 'admin/user/list';
         $this->action_list();
     }
 
     public function action_list()
     {
-        $this->view = 'admin/user/list';
         $page = $this->get_query('page', 1);
 
     	$user_list = Model_User::find(array(), $page);
@@ -24,7 +24,8 @@ class Controller_Admin_User extends Controller_Admin_Base{
         $user_id = $this->request->param('id', null);
 
         $user = Model_User::find_by_id($user_id);
-        if ( !$user ) $this->redirect('/admin');
+        if ( !$user )
+            throw new Exception_Base('User Not Found');
 
         if ( $this->request->is_post() )
         {
@@ -51,6 +52,7 @@ class Controller_Admin_User extends Controller_Admin_Base{
 
         $user = Model_User::find_by_id($user_id);
         $user->defunct = Model_User::DEFUNCT_YES;
+        $user->save();
 
         //TODO: use ajax
         $this->action_index();

@@ -73,6 +73,9 @@ class Controller_Mail extends Controller_Base
                 $mail->save();
                 var_dump($mail);
                 $this->redirect('/mail/outbox');
+            } else {
+                $message = sprintf('Reciver "%s" is not Exist', $user_id);
+                throw new Exception_Base($message);
             }
         }
     }
@@ -82,6 +85,8 @@ class Controller_Mail extends Controller_Base
         $user = $this->check_login();
         $mail_id = $this->request->param('id');
         $mail = Model_Mail::find_by_id($mail_id);
+        if ( !$mail )
+            throw new Exception_Base('Mail not exist');
 
         // 检查权限
         if ( $mail->to_user == $user->user_id

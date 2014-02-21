@@ -13,16 +13,15 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
         $this->action_list();
     }
 
-    public function action_edit()
+    public function action_edit($pid = null)
     {
-        $pid = $this->request->param('id', null);
+        if ( ! $pid )
+            $pid = $this->request->param('id', null);
 
-        if ( $pid )
-        {
-            $problem = Model_Problem::find_by_id($pid);
-        } else {
-            $problem = new Model_Problem;
-        }
+        $problem = Model_Problem::find_by_id($pid);
+        if ( ! $problem )
+            throw new Exception_Base('Problem Not Found');
+
 
         if ( $this->request->is_post() )
         {
@@ -34,8 +33,8 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
                 $problem->spj = 1;
             $problem->save();
         }
-        $this->template_data['problem'] = $problem;
         $this->template_data['title'] = 'Edit '. $problem['problem_id']. ' -- '. $problem['title'];
+        $this->template_data['problem'] = $problem;
     }
 
     public function action_save()
@@ -55,27 +54,29 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
     {
         $pid = $this->get_query('problem_id');
 
-        if ($pid)
+        $problem = Model_Problem::find_by_id($pid);
+
+        if ( !$problem )
         {
-            $problem = Model_Problem::find_by_id($pid);
-            if ( $problem->defunct == Model_Base::DEFUNCT_NO )
-            {
-                $problem->defunct = Model_Base::DEFUNCT_YES;
-                $data = Model_Base::DEFUNCT_YES;
-            } else {
-                $problem->defunct = Model_Base::DEFUNCT_NO;
-                $data = Model_Base::DEFUNCT_NO;
-            }
-            $problem->save();
-            $ret = new JPackage();
-            $ret->result = $data;
-            $this->response->body($ret->tojson());
-        } else {
             $ret = new JPackage();
             $ret->code = 0;
             $ret->message = 'Not Found';
             $this->response->body($ret->tojson());
         }
+
+        if ( $problem->defunct == Model_Base::DEFUNCT_NO )
+        {
+            $problem->defunct = Model_Base::DEFUNCT_YES;
+            $data = Model_Base::DEFUNCT_YES;
+        } else {
+            $problem->defunct = Model_Base::DEFUNCT_NO;
+            $data = Model_Base::DEFUNCT_NO;
+        }
+        $problem->save();
+        $ret = new JPackage();
+        $ret->result = $data;
+        $this->response->body($ret->tojson());
+
     }
 
     public function action_search()

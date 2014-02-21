@@ -9,13 +9,13 @@ class Controller_Admin_Setting extends Controller_Admin_Base{
 
     public function action_edit()
     {
-        $id = $this->request->param('id');
+        $id = $this->request->param('id', null);
         if ( $id )
         {
             $option = Model_Option::find_by_id($id);
-            $this->template_data['title'] = 'Modify Option';
             if ( ! $option )
                 throw new Exception_Base('option not found');
+            $this->template_data['title'] = 'Modify Option';
         } else {
             $option = new Model_Option;
             $this->template_data['title'] = 'Add Option';

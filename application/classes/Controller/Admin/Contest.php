@@ -29,9 +29,10 @@ class Controller_Admin_Contest extends Controller_Admin_Base
     {
         $cid = $this->request->param('id', null);
         if ($cid)
+        {
             $contest = Model_Contest::find_by_id($cid);
-        else
-            $contest = new Model_Contest;
+            $this->template_data['title'] = 'Edit Contest ' . $contest['contest_id'];
+        }
 
         if ( $this->request->is_post() )
         {
@@ -45,7 +46,7 @@ class Controller_Admin_Contest extends Controller_Admin_Base
         }
 
         $this->template_data['contest'] = $contest;
-        $this->template_data['title'] = 'Edit Contest ' . $contest['contest_id'];
+
     }
 
     public function action_new()

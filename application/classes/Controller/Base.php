@@ -17,7 +17,7 @@ class Controller_Base extends Controller
         $this->init();
     }
     /**
-     * 初始化controller
+     * initialize controller
      */
     protected function init()
     {
@@ -83,7 +83,7 @@ class Controller_Base extends Controller
     }
 
     /**
-     * 过滤无效的数据, '', 0
+     * flter data such as '', 0
      *
      * @param       $data array
      * @param array $filters
@@ -102,6 +102,13 @@ class Controller_Base extends Controller
         return $ret;
     }
 
+    /**
+     * get the query param in url
+     *
+     * @param $key
+     * @param null $default
+     * @return mixed|null
+     */
     protected function get_query($key, $default = NULL)
     {
         $value = $this->request->query($key);
@@ -115,7 +122,7 @@ class Controller_Base extends Controller
     }
 
     /**
-     * 获取单个干净的POST数据
+     * get post data via key
      *
      * @param string $key
      * @param        $value
@@ -130,7 +137,6 @@ class Controller_Base extends Controller
     }
 
     /**
-     * 获取干净的POST数据集
      * record flashed message
      *
      * @param $message
@@ -166,16 +172,20 @@ class Controller_Base extends Controller
     }
 
     /**
-     * 必须是post才能访问的助手函数
+     * the method is helper for make sure request is post
+     *
+     * @param string $url will redirect to the url, if null will redirect to the default home page
+     *
      */
     protected function need_post($url = NULL)
     {
         if ( $this->request->is_post() )
-            return TRUE;
-        if ( $url )
-            $this->redirect($url);
-        else
-            return FALSE;
+            return;
+
+        if ( is_null($url) )
+            $url = Route::url('default');
+
+        $this->redirect($url);
     }
 
 
@@ -209,7 +219,7 @@ class Controller_Base extends Controller
 
     /**
      *
-     * 不存在action的时候会自动调用这个，subcontroller could replace with self action..
+     * if action is not exist then call method, subclass should implement it when use it.
      *
      * @throws Kohana_HTTP_Exception
      * @return null|mixed

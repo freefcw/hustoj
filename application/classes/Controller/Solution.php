@@ -48,7 +48,6 @@ class Controller_Solution extends Controller_Base
             'language' => $language,
             'result' => $result,
         );
-        // db
 
         $filter = $this->clear_data($filter,  array(-1, '', null));
 

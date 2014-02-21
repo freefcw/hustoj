@@ -46,12 +46,15 @@ class Controller_Discuss extends Controller_Base
     {
         $this->check_admin();
         $topic_id = $this->request->param('id');
-        if (  ! $topic_id )
-            $this->redirect('/');
 
         $topic = Model_Topic::find_by_id($topic_id);
-        $topic->destroy();
-        $this->redirect('/discuss');
+        if ( $topic )
+        {
+            $topic->destroy();
+            $this->redirect('/discuss');
+        } else {
+            throw new Exception_Base('Topic Not found');
+        }
     }
 
     public function action_removereply()
