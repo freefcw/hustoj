@@ -5,7 +5,13 @@
  * Time: 2:16 PM
  */
 
-class Model_Compileinfo extends Model_Save
+/**
+ *
+ * Class for Complie Info notice
+ *
+ * Class Model_CInfo
+ */
+class Model_CInfo extends Model_Save
 {
     static $cols = array(
         'solution_id',
@@ -22,7 +28,7 @@ class Model_Compileinfo extends Model_Save
     /**
      * @param string $id
      *
-     * @return Model_Compileinfo
+     * @return Model_CInfo
      */
     public static function for_solution($id)
     {
