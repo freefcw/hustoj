@@ -25,8 +25,8 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li <?php if (Request::$current->controller() == 'Index'):?>class="active" <?php endif;?>><a href="/admin">Home</a></li>
-                <li <?php if (Request::$current->controller() == 'Problem'):?>class="active" <?php endif;?>><a href="/admin/problem">Problems</a></li>
-                <li <?php if (Request::$current->controller() == 'User'):?>class="active" <?php endif;?>><a href="/admin/user">Users</a></li>
+                <li <?php if (Request::$current->controller() == 'Problem'):?>class="active" <?php endif;?>><a href="/admin/problem">Problem</a></li>
+                <li <?php if (Request::$current->controller() == 'User'):?>class="active" <?php endif;?>><a href="/admin/user">User</a></li>
                 <li <?php if (Request::$current->controller() == 'Contest'):?>class="active" <?php endif;?>><a href="/admin/contest">Contest</a></li>
                 <li <?php if (Request::$current->controller() == 'News'):?>class="active" <?php endif;?>><a href="/admin/news">News</a></li>
                 <li <?php if (Request::$current->controller() == 'Setting'):?>class="active" <?php endif;?>><a href="/admin/setting">Configure</a></li>
@@ -57,6 +57,9 @@
             <h3><?php echo $title;?></h3>
             <?php if (isset($message) && $message):?>
                 <?php echo View::factory('admin/message', array('message' => $message ));?>
+            <?php endif;?>
+            <?php if (Session::instance()->get('flashed_message')):?>
+                <?php echo View::factory('admin/message', array('message' => Session::instance()->get_once('flashed_message') ));?>
             <?php endif;?>
             <?php echo($body); ?>
         </div>

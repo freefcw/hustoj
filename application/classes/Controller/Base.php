@@ -131,6 +131,20 @@ class Controller_Base extends Controller
 
     /**
      * 获取干净的POST数据集
+     * record flashed message
+     *
+     * @param $message
+     */
+    protected function flash_message($message)
+    {
+        $sess = Session::instance();
+        $messages = $sess->get('flashed_message', array());
+        array_push($messages, $message);
+        $sess->set('flashed_message', $messages);
+    }
+
+    /**
+     * all post data
      *
      * @return array
      */

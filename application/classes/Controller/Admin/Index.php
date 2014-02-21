@@ -5,7 +5,7 @@ class Controller_Admin_Index extends Controller_Admin_Base
 
     public function action_index()
     {
-        $this->template_data['title'] = 'Admin Control Panel';
+        $this->template_data['title'] = 'Admin Control Dashboard';
     }
 
     public function action_rejudge()
@@ -16,10 +16,20 @@ class Controller_Admin_Index extends Controller_Admin_Base
 
             if ($type == 'PROBLEM') {
                 $problem = Model_Problem::find_by_id($id);
-                $problem->rejudge();
+                if ( $problem )
+                {
+                    $problem->rejudge();
+                    $message = sprintf('The solution of problem %d is rejudging', $problem->problem_id);
+                    $this->flash_message($message);
+                }
             } else if ($type == 'SOLUTION') {
                 $solution = Model_Solution::find_by_id($id);
-                $solution->rejudge();
+                if ( $solution )
+                {
+                    $solution->rejudge();
+                    $message = sprintf('Solution %d is rejudging', $solution->solution_id);
+                    $this->flash_message($message);
+                }
             }
         }
         $this->redirect('/admin/');

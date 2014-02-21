@@ -30,7 +30,7 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li <?php if (Request::$current->controller() == 'Index' AND Request::$current->action() == 'index'):?>class="active" <?php endif;?>><a href="/">Home</a></li>
-                <li <?php if (Request::$current->controller() == 'Problem'):?>class="active" <?php endif;?>><a href="/problem/list">Problems</a></li>
+                <li <?php if (Request::$current->controller() == 'Problem'):?>class="active" <?php endif;?>><a href="/problem/list">Problem</a></li>
                 <li <?php if (Request::$current->controller() == 'Solution' AND Request::$current->action() == 'status'):?>class="active" <?php endif;?>><a href="/status">Status</a></li>
                 <li <?php if (Request::$current->controller() == 'User' AND Request::$current->action() == 'list' ):?>class="active" <?php endif;?>><a href="/rank/user">Rank</a></li>
                 <li <?php if (Request::$current->controller() == 'Contest'):?>class="active" <?php endif;?>><a href="/contest">Contest</a></li>
