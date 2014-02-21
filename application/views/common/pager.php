@@ -8,7 +8,7 @@ function gen_url($base_url, $page)
     return $base_url. '/'. URL::query($params);
 }
 ?>
-<ul class="pager" style="margin-left: 15%; margin-right: 15%">
+<ul class="pager double-side-pager">
     <?php if ($page != 1):?>
         <li class="previous"><a href="<?php echo gen_url($base_url, $page - 1);?>">&larr; Newer</a></li>
     <?php endif;?>

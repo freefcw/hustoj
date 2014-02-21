@@ -32,12 +32,12 @@
 <?php endforeach;?>
 
 <?php if (Auth::instance()->get_user()):?>
-<form action="/discuss/topic/<?php echo($the_topic->tid);?>" method="POST" class="form">
+<form class="add-reply" action="/discuss/topic/<?php echo($the_topic->tid);?>" method="POST" class="form">
     <fieldset>
         <legend>add reply</legend>
         <div class="form-group">
             <div>
-                <textarea class="form-control" rows="8" id="content" name="content" cols="80" style="width: 500px"></textarea>
+                <textarea class="form-control" rows="8" id="content" name="content" cols="80"></textarea>
             </div>
         </div>
     </fieldset>

@@ -2,7 +2,7 @@
 /* @var Model_Contest $contest */
 ?>
 <?php echo(View::factory('contest/header', array('title' => $title, 'cid' => $cid, 'contest' => $contest)));?>
-<table style="width: 70%;float: left;" class="table table-striped">
+<table class="table table-striped statics-problem">
 <thead>
     <tr>
         <th></th><?php foreach(OJ::$result as $rt) echo("<th>{$rt}</th>");?><th>TOTAL</th>
@@ -42,7 +42,7 @@
     </tr>
     </tbody>
 </table>
-<table style="width: 25%;border-left: silver solid 1px" class="table table-striped">
+<table class="table table-striped statics-lang">
 <thead>
     <tr>
         <?php foreach(OJ::$language as $lang) echo("<th>{$lang}</th>");?>

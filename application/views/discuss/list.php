@@ -57,7 +57,7 @@
     <button name="action" value="deletetopic" class="btn btn-warning">Delete Topic</button> <button class="btn btn-danger" name="action" value="andblockuser">Delete And Block</button>
     </form>
 <?php endif;?>
-<ul class="pager" style="margin-left: 15%; margin-right: 15%">
+<ul class="pager double-side-pager">
     <?php $page = Request::$current->query('page');?>
     <?php if ($page != 1):?>
         <?php

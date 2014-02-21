@@ -1,5 +1,3 @@
-
-
 /* navigation  */
 .edit-userinfo {
     width: 450px;
@@ -22,7 +20,7 @@
     float: right;
 }
 
-.status-filter .form-group{
+.status-filter .form-group {
     margin-right: 20px;
 }
 
@@ -50,10 +48,9 @@ div.contest-info p {
     margin-bottom: 3px !important;
 }
 
-.solution-info{
+.solution-info {
     vertical-align: top;
 }
-
 
 .detail dt {
     text-transform: uppercase;
@@ -67,7 +64,7 @@ div.contest-info p {
     line-height: 1.7em;
 }
 
-.readability{
+.readability {
     font-size: 1.3em;
 }
 
@@ -75,7 +72,7 @@ ul.summary {
     list-style-type: none;
 }
 
-ul.summary li{
+ul.summary li {
     margin: 5px auto 5px;
 }
 
@@ -125,12 +122,12 @@ ul.summary li{
     font-weight: bold;
 }
 
-
 /*  footer  */
 
-.runtime-info{
+.runtime-info {
     display: none;
 }
+
 .footer {
     margin-top: 50px;
     text-align: center;
@@ -143,7 +140,7 @@ ul.summary li{
 }
 
 /* mail list */
-.mail-item .mail-title{
+.mail-item .mail-title {
     font-size: 20px;
 }
 
@@ -176,10 +173,11 @@ ul.summary li{
     margin-right: 10px;
 }
 
-.topic h2{
+.topic h2 {
     display: inline-block;
 }
-.admin-op{
+
+.admin-op {
     float: right;
     margin-top: 30px;
     vertical-align: bottom;
@@ -200,7 +198,7 @@ div.user-stats li.count-accept a {
 .reply-content {
     margin-top: 5px;
     white-space: pre;
-    word-wrap: break-word   ;
+    word-wrap: break-word;
 }
 
 .reply-header {
@@ -209,16 +207,16 @@ div.user-stats li.count-accept a {
     padding-bottom: 7px;
 }
 
-.rank-pager li{
+.rank-pager li {
     margin-right: 50px;
 }
 
-.rank-pager .reflesh a{
+.rank-pager .reflesh a {
     background-color: cornflowerblue;
     color: #ffffff;
 }
 
-.rank-pager .reflesh a:hover{
+.rank-pager .reflesh a:hover {
     color: #2a6496;
 }
 
@@ -255,10 +253,44 @@ div.user-stats li.count-accept a {
 
 }
 
-.solved_problems a{
+.solved_problems a {
     margin: 10px;
 }
 
-.navbar{
+.navbar {
     border-radius: 0 !important;
+}
+
+.double-side-pager {
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.title-contest-problem {
+    margin: 20px auto 10px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.add-reply textarea {
+    width: 500px;
+}
+
+.topic-new {
+    width: 800px;
+}
+
+.statics-lang {
+    width: 25%;
+    border-left: silver solid 1px;
+}
+
+.statics-problem{
+    width: 70%;
+    float: left;
+}
+
+#edit-problem-list a{
+    float: right;
+    cursor: pointer;
 }

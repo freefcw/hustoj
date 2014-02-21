@@ -82,7 +82,7 @@
 
                         $("#edit-problem-list").append('<li class="ui-state-default" data-value="' + pid
                                 + '"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>' + ptitle
-                                + '<a style="float:right;">[x]</a></li>');
+                                + '<a>[x]</a></li>');
                         resort_problems();
                         bind_delete_event();
                         $('#problem-new').val('');
@@ -137,8 +137,7 @@
                 <ul id="edit-problem-list">
                     <?php foreach ($contest->problem() as $pr): ?>
                     <li class="ui-state-default" data-value="<?php echo $pr->problem_id;?>"><span
-                            class="ui-icon ui-icon-arrowthick-2-n-s"></span><?php echo $pr->title();?><a
-                            style="float:right;">[x]</a></li>
+                            class="ui-icon ui-icon-arrowthick-2-n-s"></span><?php echo $pr->title();?><a>[x]</a></li>
                     <?php endforeach;?>
                 </ul>
                 <script>

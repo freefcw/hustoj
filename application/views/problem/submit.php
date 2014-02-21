@@ -4,7 +4,7 @@
 <?php if (isset($cid) AND isset($cpid)):?>
     <input type="hidden" value="<?php echo($cid);?>" name="cid"/>
     <input type="hidden" value="<?php echo($cpid);?>" name="cpid"/>
-    <div style="margin: 20px auto 10px; font-size: 14px; text-align: center;">
+    <div class="title-contest-problem">
         <h3>Problem <span class="label label-danger"><?php echo(OJ::contest_pid($cpid));?></span>  Of Contest <span class="label label-primary"><?php echo($cid); ?></span></h3>
     </div>
 <?php else: ?>
