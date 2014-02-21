@@ -45,6 +45,16 @@ class Model_User extends Model_Base
 
 
     /**
+     * proxy to find_by_id
+     *
+     * @param $user_id
+     * @return Model_User
+     */
+    public static function find_by_username($user_id)
+    {
+        return self::find_by_id($user_id);
+    }
+    /**
      * 判断用户登录信息是否正确
      *
      * @param string $username
