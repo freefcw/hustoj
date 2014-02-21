@@ -6,5 +6,7 @@
  */
 
 return array(
-    'domain' => 'acm.hust.edu.cn',
+    'domain'   => 'acm.hust.edu.cn',
+    'base_url' => '/',
+    'salt'     => 'hustoj',
 );

@@ -89,7 +89,7 @@ if (defined('Kohana::'.strtoupper($env)) === false)
  * - boolean  caching     enable or disable internal caching                 FALSE
  */
 Kohana::init(array(
-     'base_url'  => '/', //Kohana::$config->load('init.base_url', '/'),
+     'base_url'  => '/',
      'index_file' => FALSE,
      'profile'    => Kohana::$environment !== Kohana::PRODUCTION,
      'caching'    => Kohana::$environment === Kohana::PRODUCTION,
@@ -105,6 +105,9 @@ Kohana::$log->attach(new Log_File(APPPATH . 'logs'));
 Kohana::$config->attach(new Config_File);
 Kohana::$config->attach(new Config_File('config/'.$env));
 
+$config = Kohana::$config->load('base');
+
+Kohana::$base_url = $config->get('base_url', '/');
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
@@ -113,8 +116,8 @@ Kohana::modules(Kohana::$config->load('modules')->as_array());
 /**
  * set Cookie config
  */
-Cookie::$salt = 'hustoj';
-Cookie::$domain = Kohana::$config->load('base.domain');
+Cookie::$salt = $config->get('salt', 'hustoj');
+Cookie::$domain = $config->get('domain');
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of

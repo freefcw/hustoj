@@ -6,3 +6,5 @@ application/logs/
 
 # cache
 application/cache/
+application/config/base.php
+application/config/development/database.php
