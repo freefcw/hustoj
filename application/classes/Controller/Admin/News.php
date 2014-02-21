@@ -33,18 +33,12 @@ class Controller_Admin_News extends Controller_Admin_Base {
     {
         $id = $this->request->param('id', null);
 
-        if ( is_null($id) ) {
-            $news = new Model_News;
-            $news->user_id = $this->current_user->user_id;
-            $this->template_data['title'] = 'New News';
-        } else {
-            $news = Model_News::find_by_id($id);
-            if ( is_null($news) )
-            {
-                return $this->error_page('not found this news');
-            }
-            $this->template_data['title'] = 'Edit - '.$news->title;
+        $news = Model_News::find_by_id($id);
+        if ( is_null($news) )
+        {
+            throw new Exception_Base('not found this news');
         }
+        $this->template_data['title'] = 'Edit - '.$news->title;
 
         if ( $this->request->is_post() )
         {

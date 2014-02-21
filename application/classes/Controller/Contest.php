@@ -122,13 +122,13 @@ class Controller_Contest extends Controller_Base
 
         if ($contest == null) {
             $error = 'No Such Contest';
-            return $this->error_page($error);
+            throw new Exception_Base($error);
         } else {
             if ( $contest->is_open() ) {
                 $problem = $contest->problem(intval($pid));
             } else {
                 $error = 'Contest is not Open';
-                return $this->error_page($error);
+                throw new Exception_Base($error);
             }
         }
         $this->template_data['contest'] = $contest;
@@ -154,6 +154,6 @@ class Controller_Contest extends Controller_Base
         else {
             $message = '请先登录后再查看此比赛';
         }
-        return $this->error_page($message);
+        throw new Exception_Base($message);
     }
 }

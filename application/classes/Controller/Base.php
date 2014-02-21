@@ -23,15 +23,18 @@ class Controller_Base extends Controller
     {
         $this->view = strtolower($this->request->controller()). '/'. $this->request->action();
     }
+
     /**
-     * @param string $msg
-     * @param string $page
+     * @param Exception_Base $e
+     *
+     * @throws Exception_Base
+     * @return $this
      */
-    public function error_page($msg = '', $page = 'error')
+    public function error_page($e)
     {
-        $this->view = "common/{$page}";
+        $this->view = $e->getTemplate();
         $this->template_data['title'] = 'Error !!';
-        $this->template_data['message'] = $msg;
+        $this->template_data['message'] = $e->getMessage();
     }
 
     /**
@@ -161,4 +164,47 @@ class Controller_Base extends Controller
             return FALSE;
     }
 
+
+    public function execute()
+    {
+        // Execute the "before action" method
+        $this->before();
+
+        // Determine the action to use
+        $action = 'action_'.$this->request->action();
+
+        // If the action doesn't exist, it's a 404
+        if ( ! method_exists($this, $action))
+        {
+            $this->missing_action();
+        } else {
+            // Execute the action itself
+            try {
+                $this->{$action}();
+            } catch (Exception_Base $e) {
+                $this->error_page($e);
+            }
+        }
+
+        // Execute the "after action" method
+        $this->after();
+
+        // Return the response
+        return $this->response;
+    }
+
+    /**
+     *
+     * 不存在action的时候会自动调用这个，subcontroller could replace with self action..
+     *
+     * @throws Kohana_HTTP_Exception
+     * @return null|mixed
+     */
+    public function missing_action()
+    {
+        throw HTTP_Exception::factory(404,
+                                      'The requested URL :uri was not found on this server.',
+                                      array(':uri' => $this->request->uri())
+        )->request($this->request);
+    }
 } // End Welcome
