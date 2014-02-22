@@ -64,6 +64,19 @@ class Model_Mail extends Model_Base
         return self::find($filter, $page, $limit);
     }
 
+    /**
+     *  is the user is the sender or the receiver
+     *
+     * @param Model_User $user
+     *
+     * @return bool
+     */
+    public function is_owner($user)
+    {
+        return $this->to_user == $user->user_id
+            OR $this->from_user == $user->user_id;
+    }
+
     protected function initial_data()
     {
         $this->new_mail = 1;

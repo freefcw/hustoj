@@ -35,12 +35,13 @@ class Controller_Problem extends Controller_Base
 
         $problem = Model_Problem::find_by_id($pid);
         $current_user = Auth::instance()->get_user();
+
         if ( $problem AND $problem->can_user_access($current_user) )
         {
             $this->template_data['title'] = $problem['title'];
             $this->template_data['problem'] = $problem;
         } else {
-            $this->redirect('/problem/list');
+            throw new Exception_Base('Not found the problem');
         }
     }
 
@@ -48,24 +49,37 @@ class Controller_Problem extends Controller_Base
     {
         $current_user = $this->check_login();
 
-        $pid = $this->request->param('id', '');
-
         if ( $this->request->is_post() ) {
             $pid = $this->get_post('pid');
             $cid = $this->get_post('cid', null);
             $cpid = $this->get_post('cpid', -1);
 
             // if no pid, then it should be contest
-            $problem = Model_Problem::find_by_id($pid);
-            if ( !$problem OR  !$problem->can_user_access($current_user) )
+
+            // if contest id set, then this submit a contest problem
+            if ( $cid AND $cpid !== -1)
             {
                 $contest = Model_Contest::find_by_id($cid);
-                if ( !$contest OR !$contest->can_user_access($current_user))
+                if ( $contest AND $contest->can_user_access($current_user) )
                 {
-                    $this->redirect('/');
+                    $problem = $contest->problem($cpid);
+                    if ( !$problem )
+                    {
+                        throw new Exception_Base('Not Found this problem');
+                    }
+                } else {
+                    throw new Exception_Base('Not Found this contest');
                 }
-                $problem = $contest->problem($cpid);
+            } else {
+                // so is normal submit
+                $problem = Model_Problem::find_by_id($pid);
+
+                if ( ! $problem OR !$problem->can_user_access($current_user) )
+                {
+                    throw new Exception_Base('Not Found this problem');
+                }
             }
+
             $code = new Model_Code;
             $code->source = $this->get_raw_post('source');
 
@@ -74,8 +88,10 @@ class Controller_Problem extends Controller_Base
             $solution->problem_id = $problem->problem_id;
             $solution->code_length = strlen($code->source);
             $solution->language = $this->get_post('language');
+
             if ( $cid )
             {
+                // set contest info
                 $solution->contest_id = $cid;
                 $solution->num = $cpid;
             }
@@ -85,23 +101,17 @@ class Controller_Problem extends Controller_Base
             $code->solution_id = $solution->solution_id;
             $code->save();
 
-//                $solution->problem_id = $c
-
             $this->redirect('/status');
             return;
+        } else {
+            $pid = $this->request->param('id', '');
+            $this->template_data['pid'] = OJ::clean_data($pid);
         }
 
-        $this->template_data['pid'] = OJ::clean_data($pid);
+        $this->template_data['cid'] = $this->get_query('cid', null);
+        $this->template_data['cpid'] = $this->get_query('pid', null);
 
-        $cid = $this->get_query('cid', null);
-        $cpid = $this->get_query('pid', null);
-        if ( $cid ) {
-            $this->template_data['cid'] = OJ::clean_data($cid);
-            $this->template_data['cpid'] = OJ::clean_data($cpid);
-        }
-
-        $this->template_data['title'] = 'Subtmit';
-
+        $this->template_data['title'] = 'Submit';
     }
 
     public function action_summary()
@@ -112,7 +122,7 @@ class Controller_Problem extends Controller_Base
 
         $current_user = Auth::instance()->get_user();
         if ( ! $problem OR ! $problem->can_user_access($current_user) )
-            $this->redirect(Route::url('default'));
+            throw new Exception_Base('Not found the problem');
 
         $this->template_data['summary'] = $problem->summary();
         $this->template_data['solutions'] = $problem->best_solution();
@@ -133,7 +143,6 @@ class Controller_Problem extends Controller_Base
         }
 
         // TODO: validation
-
         $list = Model_Problem::search($text, $area);
 
         $this->template_data['area'] = $area;

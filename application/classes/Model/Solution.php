@@ -71,6 +71,17 @@ class Model_Solution extends Model_Base
     public $code_length;
     public $judgetime;
 
+
+    /**
+     * @param string $id
+     *
+     * @return Model_Solution
+     */
+    public static function find_by_id($id)
+    {
+        return self::find_by_id($id);
+    }
+
     public static function summary_for_problem($problem_id)
     {
         $filter = array(

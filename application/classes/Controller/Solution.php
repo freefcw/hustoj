@@ -15,16 +15,13 @@ class Controller_Solution extends Controller_Base
         $sid = $this->request->param('id');
         $solution = Model_Solution::find_by_id($sid);
 
-        if ( $solution )
+        if ( $solution and $solution->allow_view_code($user) )
         {
-            if ($solution->allow_view_code($user))
-            {
-                $this->template_data['title'] = 'Solution Code';
-                $this->template_data['solution'] = $solution;
-                return;
-            }
+            $this->template_data['title'] = 'Solution Code';
+            $this->template_data['solution'] = $solution;
+        } else {
+            throw new Exception_Base('Not found the problem');
         }
-        $this->redirect('/');
     }
 
     public function action_status()

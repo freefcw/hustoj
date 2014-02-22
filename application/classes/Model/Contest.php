@@ -249,7 +249,6 @@ class Model_Contest extends Model_Base
         );
         $perm = Model_Privilege::find($filter);
 
-        var_dump($perm);
         foreach($perm as $item)
         {
             $item->defunct = 1;

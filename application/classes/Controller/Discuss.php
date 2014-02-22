@@ -89,8 +89,6 @@ class Controller_Discuss extends Controller_Base
 
     public function action_batch()
     {
-        var_dump($this->cleaned_post());
-
         $topic_id_list = $this->get_post('tid');
         $action = $this->get_post('action');
 
