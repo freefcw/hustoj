@@ -111,8 +111,15 @@ class Controller_Base extends Controller
      */
     protected function get_query($key, $default = NULL)
     {
+        $value = $this->get_raw_query($key, $default);
+
+        return OJ::clean_data($value);
+    }
+
+    protected function get_raw_query($key, $default = null)
+    {
         $value = $this->request->query($key);
-        if ( !$value and $default )
+        if ( $value === null and $default )
         {
             $value = $default;
             // set to default value
