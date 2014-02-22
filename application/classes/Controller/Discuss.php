@@ -17,13 +17,13 @@ class Controller_Discuss extends Controller_Base
         // init
         $topic_id = intval($this->request->param('id'));
 
-        if ($topic_id == NULL) {
+        if ( $topic_id == NULL ) {
             $this->action_index();
         }
 
         $topic = Model_Topic::find_by_id($topic_id);
         if ( ! $topic)
-            $this->redirect('/discuss');
+            throw new Exception_Base('Not found the topic');
 
         $cu = Auth::instance()->get_user();
         if ( $this->request->is_post() ) {
@@ -45,6 +45,7 @@ class Controller_Discuss extends Controller_Base
     public function action_removetopic()
     {
         $this->check_admin();
+
         $topic_id = $this->request->param('id');
 
         $topic = Model_Topic::find_by_id($topic_id);
@@ -60,6 +61,7 @@ class Controller_Discuss extends Controller_Base
     public function action_removereply()
     {
         $this->check_admin();
+
         $reply_id = $this->request->param('id');
         if (  ! $reply_id )
             $this->redirect('/');
@@ -89,6 +91,8 @@ class Controller_Discuss extends Controller_Base
 
     public function action_batch()
     {
+        $this->check_admin();
+
         $topic_id_list = $this->get_post('tid');
         $action = $this->get_post('action');
 

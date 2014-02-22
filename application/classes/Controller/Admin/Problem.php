@@ -22,7 +22,6 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
         if ( ! $problem )
             throw new Exception_Base('Problem Not Found');
 
-
         if ( $this->request->is_post() )
         {
             $post = $this->cleaned_post();
@@ -56,52 +55,49 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
 
         $problem = Model_Problem::find_by_id($pid);
 
-        if ( !$problem )
-        {
-            $ret = new JPackage();
-            $ret->code = 0;
-            $ret->message = 'Not Found';
-            $this->response->body($ret->tojson());
-        }
-
-        if ( $problem->defunct == Model_Base::DEFUNCT_NO )
-        {
-            $problem->defunct = Model_Base::DEFUNCT_YES;
-            $data = Model_Base::DEFUNCT_YES;
-        } else {
-            $problem->defunct = Model_Base::DEFUNCT_NO;
-            $data = Model_Base::DEFUNCT_NO;
-        }
-        $problem->save();
         $ret = new JPackage();
-        $ret->result = $data;
-        $this->response->body($ret->tojson());
+        $ret->code = 0;
 
+        if ( $problem )
+        {
+            if ( $problem->defunct == Model_Base::DEFUNCT_NO )
+            {
+                $problem->defunct = Model_Base::DEFUNCT_YES;
+            } else {
+                $problem->defunct = Model_Base::DEFUNCT_NO;
+            }
+            $ret->result = $problem->defunct;
+            $problem->save();
+
+        } else {
+            $ret->message = 'Not Found';
+        }
+
+        $this->response->body($ret->tojson());
     }
 
     public function action_search()
     {
-        $text = $this->request->query('term', null);
-        if ( $text == null)
-        {
-            $this->response->body('');
-            return;
-        }
-
-        $order_by = array();
-        $show_all = true;
-        $result = Model_Problem::search($text, 'title', $order_by, $show_all);
+        $text = trim($this->get_query('term', ''));
 
         $json = array();
-        foreach($result as $item)
+        if ( $text )
         {
-            $tmp = array(
-                'id' => $item->problem_id,
-                'title' => $item['title'],
+            $order_by = array(
+                'problem_id' => Model_Base::ORDER_DESC
             );
-            $json[] = $tmp;
-        }
 
+            $result = Model_Problem::search($text, 'title', $order_by, $show_all=true);
+
+            foreach($result as $item)
+            {
+                $tmp = array(
+                    'id' => $item->problem_id,
+                    'title' => $item['title'],
+                );
+                array_push($json, $tmp);
+            }
+        }
         $this->response->body(json_encode($json));
     }
 

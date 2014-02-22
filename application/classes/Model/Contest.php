@@ -81,10 +81,10 @@ class Model_Contest extends Model_Base
      */
     public function can_user_access($user)
     {
-        // 如果是公开的比赛就无所谓
-        if ( ! $this->is_private()) return true;
+        // if contest if public is ok
+        if ( $this->is_public() ) return true;
 
-        // 否则用户必须登录以后才行
+        // or user must login before try to access the contest
         if ( ! $user ) return false;
         if ( $user->is_admin() ) return true;
         $permission = 'c'. $this->contest_id;
@@ -219,6 +219,11 @@ class Model_Contest extends Model_Base
     public function is_private()
     {
         return intval($this->private) == 1;
+    }
+
+    public function is_public()
+    {
+        return ! $this->is_private();
     }
 
     /**
