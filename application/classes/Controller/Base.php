@@ -162,7 +162,7 @@ class Controller_Base extends Controller
     protected function get_raw_post($key, $default = NULL)
     {
         $value = $this->request->post($key);
-        if ( !$value and $default )
+        if ( $value === null and $default )
         {
             $value = $default;
             // set to default value
