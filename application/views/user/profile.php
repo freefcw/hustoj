@@ -18,7 +18,7 @@
                 <li class="failed" value="<?php echo $user['submit'] - $user['solved'];?>"><?php echo $user['submit'] - $user['solved'];?></li>
                 <li class="submit" value="<?php echo $user['submit'];?>"><?php echo $user['submit'];?></li>
             </ul>
-            <script type="application/javascript">
+            <script type="text/javascript">
                 $('div.user-stats li').mouseenter(function(e){
                     var ele = $(this);
                     ele.text(ele.attr('class'));

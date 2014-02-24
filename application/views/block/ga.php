@@ -1,6 +1,6 @@
 <?php $gacode = Model_Option::get_option('ga_code');
 if ( isset($gacode) ):?>
-<script>
+<script type="text/javascript">
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();
         var scripts = s.getElementsByTagName(o);
@@ -19,6 +19,5 @@ if ( isset($gacode) ):?>
 
     ga('create', 'UA-6733942-1', 'hust.edu.cn');
     ga('send', 'pageview');
-
 </script>
 <?php endif;?>
