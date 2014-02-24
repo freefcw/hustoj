@@ -4,15 +4,13 @@ HUSTOJ is a Open Source Online Judge System for ACM/ICPC, use for [HUST ACM Team
 
 User can register and read the problem description, submit their code to server, the server will compile and run the code, judge the output is right.
 
-This is a new version based on [hustoj](http://code.google.com/p/hustoj/), which created by [Sempr](https://github.com/sempr), maintained by zhblue. Sempr and me think [hustoj](http://code.google.com/p/hustoj/) is too stupid, so I decide refactor the application.
+This version is rewrite the web for http://acm.hust.edu.cn, which have a open source version at google code http://code.google.com/p/hustoj/. We will not async the function with the open source version, but we will accept the pull request, welcome to contribute code :).
 
 ## Features
 
-* Use PHP 5, [Kohana](http://kohanaframework.org/)
+* Use PHP 5, [Kohana 3.3](http://kohanaframework.org/)
 * Use [twitter bootstrap](http://twitter.github.com/bootstrap)
-* Use [MongoDB](http://www.mongodb.org)
 * Full function for administrator
-* Atom feed output
 
 ## Installation
 
@@ -22,5 +20,4 @@ To be coninuted.
 
  Er...GPL:)
 
-Copyright (c) 2012, He Jun
-All rights reserved.
+2014, He Jun
