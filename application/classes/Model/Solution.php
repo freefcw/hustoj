@@ -183,22 +183,30 @@ class Model_Solution extends Model_Base
         return $result->as_array();
     }
 
-    public static function user_resolved($user_id)
+    public static function user_resolved_problem($user_id)
     {
-        $query = DB::select()->from(self::$table)
+        $query = DB::select(DB::expr('distinct(problem_id)'))->from(self::$table)
             ->where('user_id', '=', $user_id)
             ->where('result', '=', self::STATUS_AC);
 
-        $result = $query->as_object(get_called_class())->execute();
-        /* @var Model_Solution[] $result */
-        $problem_list = array();
-        foreach($result as $solution)
-        {
-            if ( ! in_array($solution->problem_id, $problem_list))
-                array_push($problem_list, $solution->problem_id);
-        }
+        $plist = $query->execute()->as_array();
 
-        return $problem_list;
+        $rlist = array();
+        foreach($plist as $p) array_push($rlist, $p['problem_id']);
+        return $rlist;
+    }
+
+    public static function user_tried_problem($user_id)
+    {
+        $query = DB::select()->from(self::$table)
+            ->where('user_id', '=', $user_id)
+            ->group_by('problem_id')
+            ->having('result', '!=', self::STATUS_AC);
+
+        $plist = $query->execute()->as_array();
+        $rlist = array();
+        foreach($plist as $p) array_push($rlist, $p['problem_id']);
+        return $rlist;
     }
 
     /**

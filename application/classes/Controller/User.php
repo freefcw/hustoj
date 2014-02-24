@@ -41,11 +41,11 @@ class Controller_User extends Controller_Base
 
         $uid = $this->request->param('id');
         $user = Model_User::find_by_id($uid);
+        if ( ! $user )
+            throw new Exception_Base('User not found!');
 
-        if ( $user )
-        {
-            $user->disable();
-        }
+        $user->disable();
+
         $this->redirect($this->request->referrer());
     }
 

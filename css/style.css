@@ -95,17 +95,17 @@ ul.summary li {
     margin: 0 auto 18px;
 }
 
-.submit {
+form.submit {
     width: 600px;
     margin: 10px auto 50px;
 }
 
-.submit fieldset {
+form.submit fieldset {
     width: 70%;
     margin: auto;
 }
 
-.submit textarea {
+form.submit textarea {
     display: block;
     width: 590px;
     height: 400px;
@@ -183,17 +183,25 @@ ul.summary li {
     vertical-align: bottom;
 }
 
-div.user-stats li.count a {
+div.user-stats li {
+    background-color: #428bca;
+    border-radius: 4px;
     padding: 20px;
     height: 100px;
     margin: 20px 5px 5px 5px;
     text-align: center;
     font-size: 40px;
+    color: #ffffff;
 }
 
-div.user-stats li.count-accept a {
+div.user-stats li.accept{
     color: #32cd32;
 }
+
+div.user-stats li.failed{
+    color: #f0ad4e;
+}
+
 
 .reply-content {
     margin-top: 5px;
@@ -253,7 +261,7 @@ div.user-stats li.count-accept a {
 
 }
 
-.solved_problems a {
+.solved_problems a, .tried_problems a{
     margin: 10px;
 }
 

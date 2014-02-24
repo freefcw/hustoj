@@ -278,7 +278,7 @@ class Model_User extends Model_Base
     public function is_problem_resolved($problem_id)
     {
         if ( ! $this->resolved_problem_list )
-            $this->resolved_problem_list = Model_Solution::user_resolved($this->user_id);
+            $this->resolved_problem_list = Model_Solution::user_resolved_problem($this->user_id);
         return in_array($problem_id, $this->resolved_problem_list);
     }
 
@@ -289,7 +289,17 @@ class Model_User extends Model_Base
      */
     public function problems_resolved()
     {
-        return Model_Solution::user_resolved($this->user_id);
+        return Model_Solution::user_resolved_problem($this->user_id);
+    }
+
+    /**
+     * the problem id list for user tried
+     *
+     * @return array
+     */
+    public function problems_tried()
+    {
+        return Model_Solution::user_tried_problem($this->user_id);
     }
 
     /**
