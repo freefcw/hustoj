@@ -25,3 +25,4 @@
         </table>
     </div>
 </div>
+<?php echo(View::factory('common/pager', array('base_url' => $base_url, 'total' => $total)));?>

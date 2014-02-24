@@ -12,6 +12,9 @@ class Controller_Mail extends Controller_Base
     /* @var Model_User */
     protected $current_user = NULL;
 
+    /* how many mail in one page */
+    protected $per_page = 20;
+
     public function before()
     {
         parent::before();
@@ -34,18 +37,24 @@ class Controller_Mail extends Controller_Base
     public function action_inbox()
     {
         $page = $this->get_query('page', 1);
-        $mail_list = Model_Mail::find_user_inbox($this->current_user->user_id, $page);
+        $mail_list = Model_Mail::find_user_inbox($this->current_user->user_id, $page, $this->per_page);
+        $total = Model_Mail::count_user_inbox($this->current_user->user_id);
 
         $this->template_data['title'] = 'Inbox';
+        $this->template_data['base_url'] = '/mail/inbox';
+        $this->template_data['total'] = ceil($total / $this->per_page);;
         $this->action_list($mail_list);
     }
 
     public function action_outbox()
     {
         $page = $this->get_query('page', 1);
-        $mail_list = Model_Mail::find_user_outbox($this->current_user->user_id, $page);
+        $mail_list = Model_Mail::find_user_outbox($this->current_user->user_id, $page, $this->per_page);
+        $total = Model_Mail::count_user_outbox($this->current_user->user_id);
 
         $this->template_data['title'] = 'Outbox';
+        $this->template_data['base_url'] = '/mail/outbox';
+        $this->template_data['total'] = ceil($total / $this->per_page);;
         $this->action_list($mail_list);
     }
 

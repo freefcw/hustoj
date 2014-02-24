@@ -65,6 +65,36 @@ class Model_Mail extends Model_Base
     }
 
     /**
+     * fetch user send mail
+     *
+     * @param $username
+     *
+     * @return int
+     */
+    public static function count_user_outbox($username)
+    {
+        $filter = array(
+            'from_user' => $username,
+        );
+
+        return self::count($filter);
+    }
+
+    /**
+     * @param $username
+     *
+     * @return int
+     */
+    public static function count_user_inbox($username)
+    {
+        $filter = array(
+            'to_user' => $username,
+        );
+
+        return self::count($filter);
+    }
+
+    /**
      *  is the user is the sender or the receiver
      *
      * @param Model_User $user
