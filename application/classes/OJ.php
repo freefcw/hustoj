@@ -28,6 +28,20 @@ class OJ
             "3"  => "Running &amp; Judging"
         );
 
+    protected static $email_confuse_term = array(
+        '@#',
+        '$#',
+        '$$',
+        '||',
+        '&&',
+        'AT',
+        '@@',
+        '^@^',
+        '*.*',
+        '&.&',
+        '-.-'
+    );
+
     /**
      * @var array result code to human language short
      */
@@ -267,5 +281,16 @@ class OJ
         }
 
         return $value;
+    }
+
+    public static function anti_mail_crawler($email)
+    {
+        if ( $email )
+        {
+            $term = self::$email_confuse_term[rand(0, count(self::$email_confuse_term) - 1)];
+            return str_replace('@', $term, $email);
+        } else {
+            return '@.@';
+        }
     }
 }
