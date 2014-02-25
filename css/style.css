@@ -84,6 +84,14 @@ ul.summary li {
     font-size: 14px;
 }
 
+.user-profile .basic-info {
+    margin-bottom: 20px;
+}
+
+.basic-info i {
+    margin-right: 7px;
+}
+
 .thanks ul li {
     height: 1.7em;
 }
