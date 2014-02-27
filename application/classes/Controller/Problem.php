@@ -104,7 +104,7 @@ class Controller_Problem extends Controller_Base
             $this->redirect('/status');
             return;
         } else {
-            $pid = $this->request->param('id', '');
+            $pid = $this->request->param('id', null);
             $this->template_data['pid'] = OJ::clean_data($pid);
         }
 

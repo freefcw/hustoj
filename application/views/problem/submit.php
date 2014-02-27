@@ -1,7 +1,7 @@
 <?php echo Form::open('/problem/submit', array('class'=>'form-horizontal submit'));?>
 <form role="form" class="form-horizontal submit" action="/problem/submit" method="POST">
 <fieldset>
-<?php if (isset($cid) AND isset($cpid)):?>
+<?php if ( $cid ):?>
     <input type="hidden" value="<?php echo($cid);?>" name="cid"/>
     <input type="hidden" value="<?php echo($cpid);?>" name="cpid"/>
     <div class="title-contest-problem">
