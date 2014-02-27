@@ -142,27 +142,6 @@ class Model_User extends Model_Base
 
     /**
      *
-     * this is new
-     *
-     * @param $username
-     * @param $password
-     *
-     * @return mixed
-     */
-    protected static function auth($username, $password)
-    {
-        $query = DB::select()
-                   ->from(self::$table)
-                   ->where('user_id', '=', $username)
-                   ->where('password', '=', $password)
-                   ->as_object(get_called_class());
-
-        $result = $query->execute();
-        return $result->current();
-    }
-
-    /**
-     *
      * @param     $filters
      * @param int $page
      * @param int $limit
