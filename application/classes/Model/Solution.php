@@ -44,7 +44,6 @@ class Model_Solution extends Model_Base
         'time',
         'memory',
         'in_date',
-        'className',
         'result',
         'language',
         'ip',
@@ -61,7 +60,6 @@ class Model_Solution extends Model_Base
     public $time;
     public $memory;
     public $in_date;
-    public $className;
     public $result;
     public $language;
     public $ip;
@@ -263,7 +261,6 @@ class Model_Solution extends Model_Base
         $this->time   = 0;
         $this->memory = 0;
         $this->in_date = OJ::format_time();
-        $this->className = '';
         $this->result = self::STATUS_PENDING;
         $this->valid = 1;
         $this->num = -1;
