@@ -77,7 +77,7 @@ class Model_Solution extends Model_Base
      */
     public static function find_by_id($id)
     {
-        return self::find_by_id($id);
+        return parent::find_by_id($id);
     }
 
     public static function summary_for_problem($problem_id)
