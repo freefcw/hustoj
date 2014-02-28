@@ -270,6 +270,7 @@ class Model_Solution extends Model_Base
         $this->result = self::STATUS_PENDING;
         $this->valid = 1;
         $this->num = -1;
+        $this->pass_rate = 0;
     }
 
     public function validate()
