@@ -22,6 +22,8 @@ class OJ
             "9"  => "Output Limit Exceed",
             "10" => "Runtime Error",
             "11" => "Compile Error",
+            "12" => "Compile OK",
+            "13" => "Test Running Done",
             "0"  => "Pending",
             "1"  => "Pending Rejudging",
             "2"  => "Compiling",
