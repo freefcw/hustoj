@@ -55,7 +55,7 @@ class Controller_Solution extends Controller_Base
         $total = Model_Solution::count($filter);
 
         // view
-        $this->template_data['title'] = 'STATUS';
+        $this->template_data['title'] = 'Status';
         $this->template_data['list']  = $status;
         $this->template_data['total'] = ceil($total / $per_page);
 
