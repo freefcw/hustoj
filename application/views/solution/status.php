@@ -38,11 +38,16 @@
 	<tbody>
 <?php /* @var Model_Solution[] $list */?>
 <?php foreach($list as $i): ?>
+    <?php if ($i->problem_id != 0 || ($current_user AND $i->allow_view_code($current_user))): ?>
     <tr>
         <td><?php echo $i->solution_id;?></td>
         <td><?php echo HTML::anchor("/problem/show/{$i->problem_id}", $i->problem_id);?></td>
         <td><?php echo HTML::anchor("/u/{$i->user_id}", $i->user_id);?></td>
-        <td><?php echo OJ::jresult($i->result);?></td>
+        <td><?php echo OJ::jresult($i->result);?>
+            <?php if (Kohana::$config->load('base')->get('oi_mode', false) == true): ?>
+                (<?php echo ($i->pass_rate > .98 ? 1 : $i->pass_rate) * 100; ?>)
+            <?php endif; ?>
+        </td>
         <td><?php if($i->result == 4) echo $i->time, 'ms'; else echo('----');?></td>
         <td><?php if($i->result == 4) echo $i->memory, 'kb'; else echo('----');?></td>
         <td><?php echo OJ::lang($i->language);?></td>
@@ -53,6 +58,7 @@
         <?php endif;?></td>
         <td><?php echo($i->in_date);?></td>
     </tr>
+    <?php endif; ?>
 <?php endforeach;?>
 </tbody>
 </table>

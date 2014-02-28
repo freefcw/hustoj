@@ -56,6 +56,7 @@ class Model_Solution extends Model_Base
         'num',
         'code_length',
         'judgetime',
+        'pass_rate',
     );
 
     public $solution_id;
@@ -72,6 +73,7 @@ class Model_Solution extends Model_Base
     public $num;
     public $code_length;
     public $judgetime;
+    public $pass_rate;
 
 
     /**
