@@ -21,6 +21,8 @@ class Model_Solution extends Model_Base
     const STATUS_OLE             = 9;
     const STATUS_RE              = 10;
     const STATUS_CE              = 11;
+    const STATUS_COMPILE_OK      = 12;
+    const STATUS_TEST_RUN        = 13;
 
     public static $status = array(
             4  => "Accepted",
@@ -31,6 +33,8 @@ class Model_Solution extends Model_Base
             9  => "Output Limit Exceed",
             10 => "Runtime Error",
             11 => "Compile Error",
+            12 => "Compile OK",
+            13 => "Test Running Done",
             0  => "Pending",
             1  => "Pending Rejudging",
             2  => "Compiling",
