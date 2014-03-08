@@ -29,6 +29,12 @@
 <pre class="prettyprint linenums solution-code col-sm-10">
 <?php echo(htmlentities($solution->code()));?>
 </pre>
+<?php if ($cinfo): ?>
+    <pre class="col-sm-12 linenums"><?php echo($cinfo->error); ?></pre>
+<?php endif; ?>
+<?php if ($rinfo): ?>
+    <pre class="col-sm-12 linenums"><?php echo($rinfo->error); ?></pre>
+<?php endif; ?>
 </div>
 <script type="text/javascript">
     $(prettyPrint());
