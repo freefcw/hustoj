@@ -42,7 +42,10 @@
         <td><?php echo $i->solution_id;?></td>
         <td><?php echo HTML::anchor("/problem/show/{$i->problem_id}", $i->problem_id);?></td>
         <td><?php echo HTML::anchor("/u/{$i->user_id}", $i->user_id);?></td>
-        <td><?php echo OJ::jresult($i->result);?></td>
+        <td>
+            <?php echo OJ::jresult($i->result);?>
+            <?php if (OJ::is_io_mode()) echo $i->display_pass_rate(); ?>
+        </td>
         <td><?php if($i->result == 4) echo $i->time, 'ms'; else echo('----');?></td>
         <td><?php if($i->result == 4) echo $i->memory, 'kb'; else echo('----');?></td>
         <td><?php echo OJ::lang($i->language);?></td>

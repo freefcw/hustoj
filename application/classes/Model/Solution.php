@@ -52,6 +52,7 @@ class Model_Solution extends Model_Base
         'num',
         'code_length',
         'judgetime',
+        'pass_rate',
     );
 
     public $solution_id;
@@ -68,6 +69,7 @@ class Model_Solution extends Model_Base
     public $num;
     public $code_length;
     public $judgetime;
+    public $pass_rate;
 
 
     /**
@@ -132,6 +134,13 @@ class Model_Solution extends Model_Base
     public function display_language()
     {
         return OJ::lang($this->language);
+    }
+
+    public function display_pass_rate()
+    {
+        return ($this->pass_rate > .98 ? 1 : $this->pass_rate) * 100;
+        // for legacy reason, in Google Code version,
+        // accepted will be recorded about .99
     }
 
     /**
@@ -264,6 +273,7 @@ class Model_Solution extends Model_Base
         $this->result = self::STATUS_PENDING;
         $this->valid = 1;
         $this->num = -1;
+        $this->pass_rate = 0;
     }
 
     public function validate()
