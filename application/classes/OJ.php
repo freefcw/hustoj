@@ -295,4 +295,9 @@ class OJ
             return '@.@';
         }
     }
+
+    public static function is_io_mode()
+    {
+        return Kohana::$config->load('base')->get('oi_mode', false);
+    }
 }
