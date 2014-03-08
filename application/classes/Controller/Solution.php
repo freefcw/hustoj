@@ -14,11 +14,15 @@ class Controller_Solution extends Controller_Base
 
         $sid = $this->request->param('id');
         $solution = Model_Solution::find_by_id($sid);
+        $cinfo = Model_CInfo::for_solution($sid);
+        $rinfo = Model_RInfo::for_solution($sid);
 
         if ( $solution and $solution->allow_view_code($user) )
         {
             $this->template_data['title'] = 'Solution Code';
             $this->template_data['solution'] = $solution;
+            $this->template_data['cinfo'] = $cinfo;
+            $this->template_data['rinfo'] = $rinfo;
         } else {
             throw new Exception_Base('Not found the problem');
         }
