@@ -8,7 +8,7 @@
         <td><?php echo($news->news_id);?></td>
         <td><?php echo($news->title);?></td>
         <td><?php echo($news->time);?></td>
-        <td><a href="/admin/news/edit/<?php echo($news->news_id);?>">[Edit]</a></td>
+        <td><a href="<?php e::url("/admin/news/edit/{$news->news_id}");?>">[Edit]</a></td>
     </tr>
     <?php endforeach;?>
 </tbody>

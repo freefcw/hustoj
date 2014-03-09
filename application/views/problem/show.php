@@ -47,7 +47,7 @@ if (isset($cid)) {
 }
 ?>
 <ul id="fn-nav" class="nav nav-pills">
-    <li><?php echo(HTML::anchor($submit_url, 'Submit'));?></li>
-    <li><?php echo(HTML::anchor("/problem/summary/{$problem['problem_id']}", 'Summary'));?></li>
-    <li><?php echo(HTML::anchor("/discuss?pid={$problem['problem_id']}", 'Discuss'));?></li>
+    <li><?php e::anchor($submit_url, 'Submit');?></li>
+    <li><?php e::anchor("/problem/summary/{$problem['problem_id']}", 'Summary');?></li>
+    <li><?php e::anchor("/discuss?pid={$problem['problem_id']}", 'Discuss');?></li>
 </ul>

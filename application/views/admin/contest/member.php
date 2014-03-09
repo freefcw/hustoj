@@ -22,7 +22,7 @@
         var cid = <?php echo $contest['contest_id'];?>;
         $.ajax({
             type: 'post',
-            url: '/admin/contest/removeuser/',
+            url: '<?php e::url('/admin/contest/removeuser/');?>',
             data: {'cid': cid, 'uid': uid},
             success: function (data, textStatus, jqXHR){
                 alert(data.ok);
@@ -35,7 +35,7 @@
         $("table  td a.x").click(removeUser);
     })
 </script>
-<form action="/admin/contest/member/<?php echo $contest['contest_id'];?>" method="post" class="form-horizontal">
+<form action="<?php e::url("/admin/contest/member/{$contest['contest_id']}");?>" method="post" class="form-horizontal">
     <fieldset>
         <legend>Add Member</legend>
         <div class="form-group">

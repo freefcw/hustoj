@@ -4,7 +4,7 @@
     </div>
     <div class="col-md-10">
         <h3><?php echo $title;?></h3>
-        <form role="form" class="form-horizontal" method="post" action="/mail/send">
+        <form role="form" class="form-horizontal" method="post" action="<?php e::url('/mail/send');?>">
             <div class="form-group">
                 <label class="control-label col-sm-1" for="recevier">Recevier</label>
                 <div class="col-sm-10">

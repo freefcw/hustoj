@@ -1,5 +1,4 @@
-<?php echo Form::open('/problem/submit', array('class'=>'form-horizontal submit'));?>
-<form role="form" class="form-horizontal submit" action="/problem/submit" method="POST">
+<form role="form" class="form-horizontal submit" action="<?php e::url('/problem/submit');?>" method="POST">
 <fieldset>
 <?php if ( $cid ):?>
     <input type="hidden" value="<?php echo($cid);?>" name="cid"/>

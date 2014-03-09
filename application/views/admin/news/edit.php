@@ -2,7 +2,7 @@
 $suffix = 'edit';
 if ( $news->news_id ) $suffix = $suffix.'/'.$news->news_id;
 ?>
-<form class="form-horizontal" method="POST" action="/admin/news/edit/<?php echo $news->news_id;?>">
+<form class="form-horizontal" method="POST" action="<?php e::url("/admin/news/edit/{$news->news_id}");?>">
     <fieldset>
         <div class="form-group">
             <label class="control-label col-sm-2" for="title">Title</label>

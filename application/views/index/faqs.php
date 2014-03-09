@@ -172,11 +172,11 @@ public class Main{
         <div class="a well">
             <p> Can you submit programs for any practice problems on this Online Judge?
                 If you can, then that is the account you use in an online contest.
-                If you can't, then please <a href=/user/register>register</a> an id with password first.</p>
+                If you can't, then please <a href="<?php e::url('/user/register');?>">register</a> an id with password first.</p>
         </div>
     </dd>
     <dt>
-        Any questions/suggestions please post to <a target="_blank" href="http://algorithm.byhh.net/">Algorithm@BYHH</a>, or post at our <a href="/discuss">FORUM</a>.
+        Any questions/suggestions please post to <a target="_blank" href="http://algorithm.byhh.net/">Algorithm@BYHH</a>, or post at our <a href="<?php e::url('/discuss');?>">FORUM</a>.
     </dt>
 </dl>
 

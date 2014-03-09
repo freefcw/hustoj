@@ -5,7 +5,7 @@
     <tbody>
     <?php foreach($user_list as $u):?>
         <tr>
-            <td><?php echo HTML::anchor("/u/{$u['user_id']}", $u['user_id']); ?></td>
+            <td><?php e::anchor("/u/{$u['user_id']}", $u['user_id']); ?></td>
             <td><?php echo HTML::chars($u['nick']); ?></td>
             <td><?php echo $u['solved']; ?></td>
             <td><?php echo $u['submit']; ?></td>
@@ -15,7 +15,7 @@
             <?php echo sprintf( "%.02lf%%", $u['solved']/$u['submit'] * 100); ?>
             <?php endif; ?>
             </td>
-            <td><a class="edit-link" href="/admin/user/edit/<?php echo $u['user_id'];?>">[Edit]</a></td>
+            <td><a class="edit-link" href="<?php e::url("/admin/user/edit/{$u['user_id']}");?>">[Edit]</a></td>
         </tr>
     <?php endforeach; ?>
     </tbody>

@@ -1,8 +1,8 @@
 <?php if ( ! isset($cid) ):?>
 <ul class="breadcrumb">
-    <li><a href="/discuss/">Discuss</a> <span class="divider">/</span></li>
+    <li><a href="<?php e::url('/discuss/');?>">Discuss</a> <span class="divider">/</span></li>
 </ul>
-<form class="form-inline well" role="form" action="/discuss" method="GET">
+<form class="form-inline well" role="form" action="<?php e::url('/discuss');?>" method="GET">
     <div class="form-group">
         <label class="sr-only" for="pid">Problem Id</label>
         <input placeholder="Problem Id" name="pid" id="pid" class="form-control"/>
@@ -12,23 +12,23 @@
         <input placeholder="User Id" name="uid" id="uid" class="form-control"/>
     </div>
     <input type="submit" value="Filter" class="btn">
-    <a href="/discuss/new" class="btn btn-info pull-right">New Topic</a>
+    <a href="<?php e::url('/discuss/new');?>" class="btn btn-info pull-right">New Topic</a>
 </form>
 <?php else:?>
     <?php echo(View::factory('contest/header', array('title' => $title, 'cid' => Request::$current->query('cid'), 'contest' => $contest)));?>
 <div class="well">
-    <a href="/discuss/new?cid=<?php echo($cid);?>" class="btn btn-info">New Topic</a>
+    <a href="<?php e::url('/discuss/new?cid=<?php echo($cid);?>');?>" class="btn btn-info">New Topic</a>
 </div>
 <?php endif;?>
 <hr class="clearfix"/>
 <?php if ( OJ::is_admin() ):?>
-<form action="/discuss/batch" method="post">
+<form action="<?php e::url('discuss/batch');?>" method="post">
 <?php endif;?>
 <table class="table table-bordered">
     <thead>
     <tr>
         <?php if ( OJ::is_admin() ):?>
-            <th><input type="checkbox" id="select-all-topic"></th>
+            <th><input type="checkbox" id="select-all-topic"/></th>
         <?php endif;?>
         <th class="col-sm-1"></th>
         <th>Title</th>
@@ -40,13 +40,13 @@
     <tr>
         <?php if ( OJ::is_admin() ):?>
         <td>
-            <input type="checkbox" name="tid[]" value="<?php echo($t->tid);?>">
+            <input type="checkbox" name="tid[]" value="<?php echo($t->tid);?>"/>
         </td>
         <?php endif;?>
         <td>
-            <?php if ($t->pid):?><a href="/problem/show/<?php echo($t->pid);?>" style="color: #000000"> <?php echo($t->pid);?> </a><?php endif;?></td>
+            <?php if ($t->pid):?><a href="<?php e::url("problem/show/{$t->pid}");?>" style="color: #000000"> <?php echo($t->pid);?> </a><?php endif;?></td>
         <td>
-            <a href="/t/<?php echo($t->tid);?>"><strong><?php echo($t->title);?></strong></a>
+            <a href="<?php e::url("t/{$t->tid}");?>"><strong><?php echo($t->title);?></strong></a>
         </td>
         <td><a href="<?php echo(Route::url('profile', array('uid' => $t->author_id)));?>"><?php echo($t->author_id);?></a></td>
     </tr>
@@ -65,13 +65,13 @@
         $params['page'] = $page - 1;
         $query_param = URL::query($params);
         ?>
-        <li class="previous"><?php echo HTML::anchor("/discuss/{$query_param}", '&larr; Newer');?></li>
+        <li class="previous"><?php e::anchor("discuss/{$query_param}", '&larr; Newer');?></li>
     <?php endif;?>
     <?php if ($page < $total): ?>
         <?php
         $params['page'] = $page + 1;
         $query_param = URL::query($params);
         ?>
-        <li class="next"><?php echo HTML::anchor("/discuss/{$query_param}", 'Older &rarr;');?></li>
+        <li class="next"><?php e::anchor("discuss/{$query_param}", 'Older &rarr;');?></li>
     <?php endif;?>
 </ul>

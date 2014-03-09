@@ -19,7 +19,7 @@
             </div>
         </div>
         <?php if ($mail->from_user != $current_user->user_id):?>
-        <form role="form" class="form-horizontal" method="post" action="/mail/send">
+        <form role="form" class="form-horizontal" method="post" action="<?php e::url('/mail/send');?>">
             <input class="hidden" type="hidden" name="recevier" value="<?php echo($mail->from_user);?>">
             <div class="form-group">
                 <label class="control-label col-sm-1" for="title">Title</label>

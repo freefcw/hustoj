@@ -1,4 +1,4 @@
-<form class="form-inline well" role="form" action="/problem/search" method="GET">
+<form class="form-inline well" role="form" action="<?php e::url('/problem/search');?>" method="GET">
     <div class="form-group">
         <label class="sr-only" for="text">Search Text</label>
         <input placeholder="Search" name="text" id="text" class="form-control"/>

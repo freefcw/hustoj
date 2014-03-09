@@ -1,5 +1,5 @@
 <div class="dashboard-widget row">
-    <form role="form" action="/admin/index/rejudge" method="post" class="form-horizontal col-sm-4">
+    <form role="form" action="<?php e::url('/admin/index/rejudge');?>" method="post" class="form-horizontal col-sm-4">
     <fieldset>
         <legend>Rejudge</legend>
         <div class="form-group">

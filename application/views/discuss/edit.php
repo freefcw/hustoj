@@ -1,5 +1,5 @@
 <h3 class="page-title">New Topic</h3>
-<form class="new-topic"action="/discuss/new" method="POST" class="form-horizontal">
+<form class="new-topic form-horizontal" action="<?php e::url('discuss/new');?>" method="POST" >
     <div class="form-group">
         <label class="control-label col-sm-5" for="pid">Problem ID</label>
         <div class="col-sm-7">

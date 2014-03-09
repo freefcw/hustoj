@@ -27,7 +27,7 @@
 			<td><?php print $item['solution_id'];?></td>
             <td><?php print $item['memory'];?>KB</td>
             <td><?php print $item['time'];?>MS</td>
-            <td><a href="/u/<?php print $item['user_id'];?>"><?php print $item['user_id'];?></a></td>
+            <td><a href="<?php e::url("/u/{$item['user_id']}");?>"><?php echo $item['user_id'];?></a></td>
             <td><?php print OJ::lang($item['language']);?></td>
             <td><?php echo($item['in_date']);?></td>
         </tr>

@@ -1,5 +1,5 @@
-<?php foreach($message as $message):?>
+<?php foreach($message as $msg):?>
 <div class="alert alert-info">
-    <?php echo($message);?>
+    <?php echo($msg);?>
 </div>
 <?php endforeach;?>

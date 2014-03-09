@@ -1,5 +1,5 @@
 <?php /* @var Model_Contest $contest */ ?>
-<form class="form-horizontal" method="POST" action="/admin/contest/edit/<?php echo $contest->contest_id; ?>">
+<form class="form-horizontal" method="POST" action="<?php e::url("/admin/contest/edit/{$contest->contest_id}"); ?>">
     <fieldset>
         <legend>Basic Information</legend>
         <div class="form-group">
@@ -93,7 +93,7 @@
                         var cache = {};
                         $("#add-problem").click(add_problem_event);
                         $("#problem-new").keypress(function (e) {
-                            code = (e.keyCode ? e.keyCode : e.which);
+                            var code = (e.keyCode ? e.keyCode : e.which);
                             if (code == 13) return false;
                         });
 

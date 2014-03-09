@@ -1,6 +1,6 @@
 <ul class="pagination problem-pagination">
     <?php for($i = 1; $i <= $pages; $i++): ?>
-        <li<?php if($i == Request::$current->param('id')):?> class="active"<?php endif;?>><a href="/admin/problem/list/<?php echo($i);?>"><?php echo($i);?></a></li>
+        <li<?php if($i == Request::$current->param('id')):?> class="active"<?php endif;?>><a href="<?php e::url("/admin/problem/list/{$i}");?>"><?php echo($i);?></a></li>
     <?php endfor;?>
 </ul>
 <table class="table table-striped">
@@ -13,7 +13,7 @@
 <td><?php echo $p->title;?></td>
 <td><?php echo($p->in_date);?></td>
 <td><a id="defunct-<?php echo($p->problem_id);?>" class="dp btn" data-value="<?php echo $p->problem_id;?>"><?php echo($p->defunct);?></a></td>
-<td><a class="edit-link" href="/admin/problem/edit/<?php echo $p->problem_id;?>">[Edit]</a></td>
+<td><a class="edit-link" href="<?php e::url("/admin/problem/edit/{$p->problem_id}");?>">[Edit]</a></td>
 </tr>
 <?php endforeach;?>
 </table>

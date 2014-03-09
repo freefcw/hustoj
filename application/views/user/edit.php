@@ -6,7 +6,7 @@
     <?php if (isset($tip) AND ($tip != null)): ?>
     <div class="alert-success alert"><p><?php echo $tip; ?></p></div>
     <?php endif ?>
-    <form action="/<?php echo(Request::current()->uri());?>" method="POST" class="form-horizontal" role="form">
+    <form action="<?php e::url(Request::current()->uri());?>" method="POST" class="form-horizontal" role="form">
         <div class="form-group">
             <label class="control-label col-sm-5" for="user_id">User ID</label>
             <div class="col-sm-7">

@@ -1,7 +1,7 @@
 <?php /* @var Model_User $user */?>
 <div class="row">
     <div class="col-sm-8">
-        <form class="form-horizontal" action="/admin/user/edit/<?php echo $user['user_id']; ?>" method="POST">
+        <form class="form-horizontal" action="<?php e::url("/admin/user/edit/{$user['user_id']}"); ?>" method="POST">
             <fieldset>
                 <legend>Basic Information</legend>
                 <div class="form-group">

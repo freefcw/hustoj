@@ -3,7 +3,7 @@ $suffix = '';
 if ( isset($option['option_id']) )
     $suffix = '/'. $option['option_id'];
 ?>
-<form class="form-horizontal" role="form" method="post" action="/admin/setting/edit<?php echo($suffix);?>">
+<form class="form-horizontal" role="form" method="post" action="<?php e::url("/admin/setting/edit{$suffix}");?>">
     <div class="form-group">
         <label for="name" class="col-sm-1 control-label">Name</label>
         <div class="col-sm-8">

@@ -11,7 +11,7 @@
 ?>
     <tr>
         <td><?php echo($p->display_order());?></td>
-        <td><a href="<?php echo($url);?>"><?php echo($p->title());?></a></td>
+        <td><a href="<?php e::url($url);?>"><?php echo($p->title());?></a></td>
     </tr>
 <?php endforeach;?>
 </tbody>

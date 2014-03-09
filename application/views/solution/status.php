@@ -1,7 +1,7 @@
 <?php if ( Request::$current->query('cid') ):?>
     <?php echo(View::factory('contest/header', array('title' => $title, 'cid' => Request::$current->query('cid'), 'contest' => $contest)));?>
 <?php else:?>
-<form action="/status" method="GET" class="form-inline status-filter" role="form">
+<form action="<?php e::url('/status');?>" method="GET" class="form-inline status-filter" role="form">
     <div class="form-group">
         <label class="sr-only" for="pid">Problem ID</label>
         <input placeholder="Problem ID" name="pid" id="pid" class="form-control"/>
@@ -40,8 +40,8 @@
 <?php foreach($list as $i): ?>
     <tr>
         <td><?php echo $i->solution_id;?></td>
-        <td><?php echo HTML::anchor("/problem/show/{$i->problem_id}", $i->problem_id);?></td>
-        <td><?php echo HTML::anchor("/u/{$i->user_id}", $i->user_id);?></td>
+        <td><?php e::anchor("/problem/show/{$i->problem_id}", $i->problem_id);?></td>
+        <td><?php e::anchor("/u/{$i->user_id}", $i->user_id);?></td>
         <td>
             <?php echo OJ::jresult($i->result);?>
             <?php if (OJ::is_io_mode()) echo $i->display_pass_rate(); ?>
@@ -50,7 +50,7 @@
         <td><?php if($i->result == 4) echo $i->memory, 'kb'; else echo('----');?></td>
         <td><?php echo OJ::lang($i->language);?></td>
         <td><?php if ( $current_user AND $i->allow_view_code($current_user)):?>
-        <a href="/solution/source/<?php echo($i->solution_id);?>" title="click view source"><?php echo $i->code_length;?>B</a>
+        <a href="<?php e::url("/solution/source/{$i->solution_id}");?>" title="click view source"><?php echo $i->code_length;?>B</a>
         <?php else:?>
         <?php echo $i->code_length;?>B
         <?php endif;?></td>

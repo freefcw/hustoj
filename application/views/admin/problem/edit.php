@@ -1,5 +1,5 @@
 <?php /* @var Model_Problem $problem */?>
-<form class="form-horizontal" method="POST" action="/admin/problem/edit/<?php echo $problem->problem_id;?>">
+<form class="form-horizontal" method="POST" action="<?php e::url("/admin/problem/edit/{$problem->problem_id}");?>">
 <fieldset>
     <legend>Basic Information</legend>
     <div class="form-group">

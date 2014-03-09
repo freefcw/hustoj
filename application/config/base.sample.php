@@ -7,7 +7,7 @@
 
 return array(
     'domain'   => 'acm.hust.edu.cn',
-    'base_url' => '/',
+    'base_url' => '/', // should ends with /
     'salt'     => 'hustoj',
     'oi_mode'  => false,
 );

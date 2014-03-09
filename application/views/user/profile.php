@@ -37,7 +37,7 @@
             <div class="panel-heading">Problem Solved</div>
             <div class="panel-body">
                 <?php foreach ( $user->problems_resolved() as $pid ): ?>
-                    <a class="btn btn-success" href="/problem/show/<?php echo($pid); ?>"
+                    <a class="btn btn-success" href="<?php e::url("/problem/show/{$pid}");?>"
                        style="font-size: <?php echo(rand(10, 25)); ?>px"><?php echo($pid); ?></a>
                 <?php endforeach; ?>
             </div>
@@ -46,7 +46,7 @@
             <div class="panel-heading">Problem Tried</div>
             <div class="panel-body">
                 <?php foreach ( $user->problems_tried() as $pid ): ?>
-                    <a class="btn btn-warning" href="/problem/show/<?php echo($pid); ?>"
+                    <a class="btn btn-warning" href="<?php e::url("/problem/show/{$pid}");?>"
                        style="font-size: <?php echo(rand(10, 25)); ?>px"><?php echo($pid); ?></a>
                 <?php endforeach; ?>
             </div>
