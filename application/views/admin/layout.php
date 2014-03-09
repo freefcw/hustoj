@@ -13,7 +13,7 @@
     <script type="text/javascript" src="<?php e::url('js/page.js');?>"></script>
     <script type="text/javascript" src="<?php e::url('js/jquery-ui-1.10.3.custom.js');?>"></script>
     <script type="text/javascript" src="<?php e::url('js/bootstrap.min.js');?>"></script>
-    <link rel="shortcut icon" href="<?php e::favicon();?>"/>
+    <link rel="shortcut icon" href="<?php e::url('favicon.ico');?>"/>
 </head>
 <body>
 

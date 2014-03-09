@@ -3,7 +3,7 @@ if (isset($cid)) {
     echo(View::factory('contest/header', array('title' => $title, 'contest' => $contest, 'cid'=>$cid)));
 } ?>
 <h1 class="page-title"><?php if (isset($cid)) {
-    echo(OJ::contest_pid($pid));
+    echo(e::contest_pid($pid));
 } else {
     echo($problem['problem_id']);
 } ?>

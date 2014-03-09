@@ -116,10 +116,10 @@ class Model_Contest extends Model_Base
         {
             $data[$index] = array();
             $lang[$index] = array();
-            foreach(OJ::$result as $key => $display)
+            foreach( OJ::$result as $key => $display)
                 $data[$index][$key] = 0;
 //            $data[$pnum] = 0;
-            foreach(OJ::$language as $key => $display)
+            foreach( OJ::$language as $key => $display)
             {
                 $lang[$index][$key] = 0;
             }
@@ -132,7 +132,7 @@ class Model_Contest extends Model_Base
             $lang[$item->num][$item->language]++;
         }
 
-        foreach(OJ::$result as $key => $display)
+        foreach( OJ::$result as $key => $display)
         {
             $data['total'][$key] = 0;
             for($index = 0; $index < $this->number_of_problems(); $index++ )
@@ -141,7 +141,7 @@ class Model_Contest extends Model_Base
             }
         }
 
-        foreach(OJ::$language as $key => $display)
+        foreach( OJ::$language as $key => $display)
         {
             $lang['total'][$key] = 0;
             for($index = 0; $index < $this->number_of_problems(); $index++ )

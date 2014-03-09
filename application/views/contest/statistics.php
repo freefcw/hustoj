@@ -5,7 +5,7 @@
 <table class="table table-striped statics-problem">
 <thead>
     <tr>
-        <th></th><?php foreach(OJ::$result as $rt) echo("<th>{$rt}</th>");?><th>TOTAL</th>
+        <th></th><?php foreach( OJ::$result as $rt) echo("<th>{$rt}</th>");?><th>TOTAL</th>
     </tr>
 </thead>
 <tbody>
@@ -15,7 +15,7 @@
     $total = 0;
 ?>
     <tr>
-        <td><?php echo(OJ::contest_pid($index));?></td>
+        <td><?php echo(e::contest_pid($index));?></td>
     <?php foreach(array_keys(OJ::$result) as $result_type):?>
         <td><?php
             if ($result[$index][$result_type])
@@ -45,7 +45,7 @@
 <table class="table table-striped statics-lang">
 <thead>
     <tr>
-        <?php foreach(OJ::$language as $lang) echo("<th>{$lang}</th>");?>
+        <?php foreach( OJ::$language as $lang) echo("<th>{$lang}</th>");?>
     </tr>
 </thead>
 <tbody>

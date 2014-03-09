@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Description of news
  *
@@ -79,7 +80,7 @@ class Model_News extends Model_Base {
     protected function initial_data()
     {
         $this->defunct = self::DEFUNCT_NO;
-        $this->time = OJ::format_time();
+        $this->time = e::format_time();
         $this->importance = 0;
     }
 

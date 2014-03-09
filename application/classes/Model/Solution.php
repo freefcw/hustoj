@@ -1,4 +1,5 @@
 <?php
+
 /**
  * User: freefcw
  * Date: 12-1-10
@@ -132,12 +133,12 @@ class Model_Solution extends Model_Base
 
     public function display_result()
     {
-        return OJ::jresult($this->result);
+        return e::jresult($this->result);
     }
 
     public function display_language()
     {
-        return OJ::lang($this->language);
+        return e::lang($this->language);
     }
 
     public function display_pass_rate()
@@ -273,7 +274,7 @@ class Model_Solution extends Model_Base
     {
         $this->time   = 0;
         $this->memory = 0;
-        $this->in_date = OJ::format_time();
+        $this->in_date = e::format_time();
         $this->result = self::STATUS_PENDING;
         $this->valid = 1;
         $this->num = -1;

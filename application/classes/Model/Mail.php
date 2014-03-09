@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author: freefcw
  * Date: 12/28/13
@@ -110,7 +111,7 @@ class Model_Mail extends Model_Base
     protected function initial_data()
     {
         $this->new_mail = 1;
-        $this->in_date = OJ::format_time();
+        $this->in_date = e::format_time();
         $this->reply = 0;
         $this->defunct = 'N';
     }

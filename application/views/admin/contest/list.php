@@ -3,7 +3,8 @@
     <tr><th>ID</th><th>Title</th><th>Status</th><th>Private</th><th>OP</th></tr>
 </thead>
 <tbody>
-<?php /* @var Model_Contest[] $contest_list */ foreach($contest_list as $contest):?>
+<?php /* @var Model_Contest[] $contest_list */
+foreach($contest_list as $contest):?>
     <tr>
         <td><?php echo $contest['contest_id'];?></td>
         <td><a href="<?php e::url("/contest/show/{$contest->contest_id}");?>" title="view"><?php echo($contest->title);?></a></td>
@@ -12,7 +13,7 @@
             <?php if ($contest->is_private()):?>
                 <a href="<?php e::url("/admin/contest/member/{$contest->contest_id}");?>">Member</a>
             <?php else:?>
-                <?php echo OJ::private_value($contest['private']);?>
+                <?php echo e::private_value($contest['private']);?>
             <?php endif;?>
         </td>
         <td><a class="edit-link" href="<?php e::url("/admin/contest/edit/{$contest['contest_id']}");?>">[Edit]</a></td>

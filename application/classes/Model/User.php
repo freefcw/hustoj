@@ -235,7 +235,7 @@ class Model_User extends Model_Base
 
     protected function initial_data()
     {
-        $now = OJ::format_time();
+        $now = e::format_time();
 
         $this->reg_time    = $now;
         $this->solved      = 0;

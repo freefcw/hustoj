@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author: freefcw
  * Date: 12/28/13
@@ -25,7 +26,7 @@ class Model_Userlog extends Model_Save
 
     protected function initial_data()
     {
-        $this->time = OJ::format_time();
+        $this->time = e::format_time();
         $this->ip = Request::$client_ip;
     }
 

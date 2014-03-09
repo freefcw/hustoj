@@ -4,7 +4,7 @@
     <input type="hidden" value="<?php echo($cid);?>" name="cid"/>
     <input type="hidden" value="<?php echo($cpid);?>" name="cpid"/>
     <div class="title-contest-problem">
-        <h3>Problem <span class="label label-danger"><?php echo(OJ::contest_pid($cpid));?></span>  Of Contest <span class="label label-primary"><?php echo($cid); ?></span></h3>
+        <h3>Problem <span class="label label-danger"><?php echo(e::contest_pid($cpid));?></span>  Of Contest <span class="label label-primary"><?php echo($cid); ?></span></h3>
     </div>
 <?php else: ?>
 <div class="form-group">
@@ -18,7 +18,7 @@
     <label for="language" class="control-label col-sm-3">Language</label>
     <div class="col-sm-9">
         <select name="language" class="form-control">
-        <?php foreach(OJ::$language as $key => $lang):?>
+        <?php foreach( OJ::$language as $key => $lang):?>
             <option value="<?php echo($key);?>"><?php echo($lang);?></option>
         <?php endforeach;?>
         </select>

@@ -1,4 +1,5 @@
-<?php /* @var Model_Contest $contest */?>
+<?php /* @var Model_Contest $contest */
+?>
 <?php echo(View::factory('contest/header', array('title' => $title, 'cid' => $cid, 'contest' => $contest)));?>
 <table class="table table-striped">
 <thead>
@@ -17,11 +18,11 @@
         <td><?php echo($rank);?></td>
         <td><?php echo($team->user_id);?></td>
         <td><?php echo($team->solved);?></td>
-        <td><?php echo(OJ::contest_time($team->time));?></td>
+        <td><?php e::the_contest_time($team->time);?></td>
         <?php for($i = 0; $i < $contest->number_of_problems(); $i++): $pdata = $team->problem_status($i)?>
         <td>
             <?php if ($pdata['accept_at']):?>
-                <?php echo(OJ::contest_time($pdata['accept_at']));?>
+                <?php e::the_contest_time($pdata['accept_at']);?>
                 <?php if ($pdata['wa_count']):?>
                     (-<?php echo($pdata['wa_count']);?>)
                 <?php endif; ?>

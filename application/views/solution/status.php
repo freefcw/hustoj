@@ -14,8 +14,8 @@
         <label class="sr-only" for="language">Language</label>
         <select name="language" class="form-control">
             <option value="-1" selected="selected">Language</option>
-        <?php foreach(OJ::$language as $key=>$lang):?>
-            <option value="<?php echo $key; ?>"><?php echo OJ::lang($key);?></option>
+        <?php foreach( OJ::$language as $key=>$lang):?>
+            <option value="<?php echo $key; ?>"><?php echo e::lang($key);?></option>
         <?php endforeach;?>
         </select>
     </div>
@@ -23,8 +23,8 @@
         <label class="sr-only" for="result">Result</label>
         <select name="result" class="form-control">
             <option value="-1" selected="selected">Result</option>
-        <?php foreach(OJ::$status as $key=>$lang):?>
-            <option value="<?php echo $key; ?>"><?php echo OJ::jresult($key);?></option>
+        <?php foreach( OJ::$status as $key=>$lang):?>
+            <option value="<?php echo $key; ?>"><?php echo e::jresult($key);?></option>
         <?php endforeach;?>
         </select>
     </div>
@@ -43,12 +43,12 @@
         <td><?php e::anchor("/problem/show/{$i->problem_id}", $i->problem_id);?></td>
         <td><?php e::anchor("/u/{$i->user_id}", $i->user_id);?></td>
         <td>
-            <?php echo OJ::jresult($i->result);?>
+            <?php echo e::jresult($i->result);?>
             <?php if (OJ::is_io_mode()) echo $i->display_pass_rate(); ?>
         </td>
         <td><?php if($i->result == 4) echo $i->time, 'ms'; else echo('----');?></td>
         <td><?php if($i->result == 4) echo $i->memory, 'kb'; else echo('----');?></td>
-        <td><?php echo OJ::lang($i->language);?></td>
+        <td><?php echo e::lang($i->language);?></td>
         <td><?php if ( $current_user AND $i->allow_view_code($current_user)):?>
         <a href="<?php e::url("/solution/source/{$i->solution_id}");?>" title="click view source"><?php echo $i->code_length;?>B</a>
         <?php else:?>

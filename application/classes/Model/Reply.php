@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author: freefcw
  * Date: 12/28/13
@@ -30,7 +31,7 @@ class Model_Reply extends Model_Base
 
     protected function initial_data()
     {
-        $this->time = OJ::format_time();
+        $this->time = e::format_time();
         $this->status = 0;
         $this->ip = Request::$client_ip;
     }

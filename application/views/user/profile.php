@@ -1,14 +1,15 @@
 <div class="user-profile">
     <div class="span8">
         <!--<img src="#userimage" alt="user image"/>-->
-        <h2><?php /* @var Model_User $user */ echo $user['user_id'], ' - ', $user['nick']; ?></h2>
+        <h2><?php /* @var Model_User $user */
+            echo $user['user_id'], ' - ', $user['nick']; ?></h2>
     </div>
     <div class="row basic-info">
         <div class="col-sm-7 user-card">
             <ul class="nav nav-pills nav-stacked">
                 <li><a><i class="glyphicon glyphicon-home"></i> <?php echo $user['school']; ?></a></li>
                 <?php if ($current_user):?>
-                <li><a><i class="glyphicon glyphicon-envelope"></i> <?php echo OJ::anti_mail_crawler($user['email']) ?></a></li>
+                <li><a><i class="glyphicon glyphicon-envelope"></i> <?php echo e::anti_mail_crawler($user['email']) ?></a></li>
                 <?php endif;?>
                 <li><a><i class="glyphicon glyphicon-time"></i> 出生于公元 <?php echo($user['reg_time']); ?></a></li>
                 <li><a><i class="glyphicon glyphicon-time"></i> 上次访问时间 <?php echo($user['accesstime']); ?></a></li>

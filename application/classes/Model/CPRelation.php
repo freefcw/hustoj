@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author: freefcw
  * Date: 12/28/13
@@ -63,7 +64,7 @@ class Model_CPRelation extends Model_Save
 
     public function display_order()
     {
-        return OJ::contest_pid($this->num);
+        return e::contest_pid($this->num);
     }
 
     public function validate()

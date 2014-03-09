@@ -123,7 +123,7 @@ class Model_Problem extends Model_Base
 
     protected function initial_data()
     {
-        $this->in_date = OJ::format_time();
+        $this->in_date = e::format_time();
     }
 
     public function validate()

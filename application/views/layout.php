@@ -19,7 +19,7 @@
     <script type="text/javascript" src="<?php e::url('js/jquery-ui-1.10.3.custom.js');?>"></script>
     <script type="text/javascript" src="<?php e::url('js/turbolinks.js');?>"></script>
     <script type="text/javascript" src="<?php e::url('js/nprogress.js');?>"></script>
-    <link rel="shortcut icon" href="<?php e::favicon();?>"/>
+    <link rel="shortcut icon" href="<?php e::url('favicon.ico');?>"/>
 </head>
 <body>
 <div class="navbar navbar-inverse" role="navigation">
