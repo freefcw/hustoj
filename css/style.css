@@ -310,3 +310,7 @@ div.user-stats li.failed{
     float: right;
     cursor: pointer;
 }
+
+.footer > ul {
+    padding-left: 0;
+}
