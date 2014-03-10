@@ -157,7 +157,12 @@ class Controller_Base extends Controller
     {
         $sess = Session::instance();
         $messages = $sess->get('flashed_message', array());
-        array_push($messages, $message);
+        if ( is_array($message) )
+        {
+            $messages = array_merge($messages, $message);
+        } else {
+            array_push($messages, $message);
+        }
         $sess->set('flashed_message', $messages);
     }
 
