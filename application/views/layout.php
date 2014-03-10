@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="keyword" content="<?php echo(e::get_website_keyword()); ?>"/>
@@ -19,6 +19,8 @@
     <script type="text/javascript" src="<?php e::url('js/jquery-ui-1.10.3.custom.js');?>"></script>
     <script type="text/javascript" src="<?php e::url('js/turbolinks.js');?>"></script>
     <script type="text/javascript" src="<?php e::url('js/nprogress.js');?>"></script>
+    <script type="text/javascript" src="<?php e::url('js/respond.js');?>"></script>
+    <script type="text/javascript" src="<?php e::url('js/jquery.html5-placeholder-shim.js');?>"></script>
     <?php if (OJ::is_admin()):?>
     <script type="text/javascript" src="<?php e::url('js/front-admin.js');?>"></script>
     <?php endif;?>
@@ -29,8 +31,14 @@
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="<?php e::home();?>"><?php echo(e::get_website_name()); ?></a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
         </div>
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
             <ul class="nav navbar-nav">
                 <li <?php if (Request::$current->controller() == 'Index' AND Request::$current->action() == 'index'):?>class="active" <?php endif;?>><a href="<?php e::home();?>">Home</a></li>
                 <li <?php if (Request::$current->controller() == 'Problem'):?>class="active" <?php endif;?>><a href="<?php e::url('problem/list');?>">Problem</a></li>
