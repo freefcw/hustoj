@@ -95,7 +95,7 @@ class Controller_User extends Controller_Base
 
     public function action_register()
     {
-        if ( $this->request->is_post() )
+        if ( $this->request->is_post() and $this->check_recaptcha() )
         {
             $post = Validation::factory($this->cleaned_post())
                               ->rule('username', 'not_empty')
@@ -126,9 +126,11 @@ class Controller_User extends Controller_Base
                 }
                 array_merge($errors, $post->errors());
                 $this->template_data['errors'] = $errors;
+                $this->flash_message($errors);
             }
         }
 
+        $this->gen_recaptcha();
         $this->template_data['title'] = "User Register";
     }
 
@@ -137,7 +139,7 @@ class Controller_User extends Controller_Base
         if (Auth::instance()->get_user()) {
             $this->go_home();
         }
-        if ( $this->request->is_post() ) {
+        if ( $this->request->is_post() and $this->check_recaptcha() ) {
             $username = $this->get_post('username');
             $password = $this->get_post('pwd');
 
@@ -162,14 +164,48 @@ class Controller_User extends Controller_Base
                 }
             }
 
-            $error = 'Username or password error, please try again.';
+            $this->flash_message('Username or password error, please try again.');
         }
-        // view
-        if (isset($error)) {
-            $this->template_data['error'] = $error;
-        }
+
         $this->template_data['title'] = 'Welcome';
         $this->template_data['username'] = $this->get_post('username');
+        $this->gen_recaptcha();
+    }
+
+    protected function gen_recaptcha()
+    {
+        $public_key = Kohana::$config->load('base')->get('captcha_public_key', false);
+
+        if ( $public_key )
+        {
+            $path = Kohana::find_file('vendor', 'recaptcha-php-1.11/recaptchalib');
+            require_once $path;
+
+            $this->template_data['captcha'] = recaptcha_get_html($public_key);
+        }
+    }
+
+    protected function check_recaptcha()
+    {
+        $private_key = Kohana::$config->load('base')->get('captcha_private_key', false);
+
+        if ( $private_key )
+        {
+            $path = Kohana::find_file('vendor', 'recaptcha-php-1.11/recaptchalib');
+            require_once $path;
+
+            $challenge = Arr::get($_POST, 'recaptcha_challenge_field');
+            $response = Arr::get($_POST, 'recaptcha_response_field');
+
+            $resp = recaptcha_check_answer($private_key, $_SERVER["REMOTE_ADDR"], $challenge, $response);
+
+            if (!$resp->is_valid) {
+                $this->flash_message($resp->error);
+
+                return false;
+            }
+        }
+        return true;
     }
 
     public function action_logout()

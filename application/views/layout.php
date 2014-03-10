@@ -51,8 +51,8 @@
 
             <ul class="nav navbar-nav pull-right">
                 <?php $cu = Auth::instance()->get_user(); if ( $cu == null): ?>
-                    <li><a href="<?php e::url('login');?>">Login</a></li>
-                    <li><a href="<?php e::url('user/register');?>">Register</a></li>
+                    <li><a href="<?php e::url('user/login');?>" data-no-turbolink>Login</a></li>
+                    <li><a href="<?php e::url('user/register');?>" data-no-turbolink>Register</a></li>
                 <?php else: ?>
                 <li <?php if (Request::$current->controller() == 'User' AND Request::$current->action() == 'profile' ):?>class="active" <?php endif;?>><a href="<?php echo(Route::url('profile', array('uid' => $cu->user_id)));?>"
                        title="<?php echo($cu->user_id);?>"><?php echo($cu->user_id);?></a></li>
@@ -75,6 +75,14 @@
     </div>
 </div>
 <div class="container">
+
+    <?php if (isset($message) && $message):?>
+        <?php echo View::factory('admin/message', array('message' => $message ));?>
+    <?php endif;?>
+    <?php if (Session::instance()->get('flashed_message')):?>
+        <?php echo View::factory('admin/message', array('message' => Session::instance()->get_once('flashed_message') ));?>
+    <?php endif;?>
+
     <?php echo($body); ?>
 </div>
 <?php echo(View::factory('footer')); ?>
