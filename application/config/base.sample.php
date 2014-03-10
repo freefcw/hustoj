@@ -6,6 +6,10 @@
  */
 
 return array(
+    'name'     => 'HUSTOJ',
+    'team'     => 'HUST ACMICPC TEAM',
+    'desc'     => '华中科技大学ACM组织',
+    'keyword'  => '华中科技大学, ACM, freefcw, sempr, online judge, 计算机竞赛, 编程, ICPC',
     'domain'   => 'acm.hust.edu.cn',
     'base_url' => '/', // should ends with /
     'salt'     => 'hustoj',

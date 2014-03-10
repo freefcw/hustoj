@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="keyword" content="HUST, 华中科技大学, ACM, freefcw, sempr, online judge, 计算机竞赛, 编程, ICPC"/>
-    <meta name="description" content="HUST ACM - 华中科技大学ACM组织"/>
+    <meta name="keyword" content="<?php echo(e::get_website_keyword()); ?>"/>
+    <meta name="description" content="<?php echo(e::get_website_desc()); ?>"/>
     <meta name="robots" content="index,follow"/>
     <title><?php echo($title); ?></title>
     <link rel="stylesheet" href="<?php e::url('css/bootstrap.css');?>">
@@ -28,7 +28,7 @@
 <div class="navbar navbar-inverse" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="<?php e::home();?>">HUSTACM</a>
+            <a class="navbar-brand" href="<?php e::home();?>"><?php echo(e::get_website_name()); ?></a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
