@@ -44,7 +44,7 @@
         <td><?php e::anchor("/u/{$i->user_id}", $i->user_id);?></td>
         <td>
             <?php echo e::jresult($i->result);?>
-            <?php if (OJ::is_io_mode()) echo $i->display_pass_rate(); ?>
+            <?php if (OJ::is_oi_mode()) echo $i->display_pass_rate(); ?>
         </td>
         <td><?php if($i->result == 4) echo $i->time, 'ms'; else echo('----');?></td>
         <td><?php if($i->result == 4) echo $i->memory, 'kb'; else echo('----');?></td>
