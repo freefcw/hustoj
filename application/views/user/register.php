@@ -35,11 +35,13 @@
             <input class="form-control" name="email" id="email" type="text" />
         </div>
     </div>
-    <?php if ( OJ::is_captcha_enabled() ):?>
+    <?php if ( $mode = OJ::is_captcha_enabled() ):?>
     <div class="form-group">
         <label class="col-sm-5 control-label">Captcha *</label>
         <div class="col-sm-7">
-        <?php echo $captcha;?>
+            <div class="col-sm-7">
+                <?php echo View::factory('captcha/'. $mode);?>
+            </div>
         </div>
     </div>
     <?php endif;?>

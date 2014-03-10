@@ -106,6 +106,6 @@ class OJ
 
     public static function is_captcha_enabled()
     {
-        return Kohana::$config->load('base')->get('captcha_public_key', false);
+        return Kohana::$config->load('base')->get('captcha_mode', false);
     }
 }

@@ -95,7 +95,7 @@ class Controller_User extends Controller_Base
 
     public function action_register()
     {
-        if ( $this->request->is_post() and $this->check_recaptcha() )
+        if ( $this->request->is_post() and $this->check_captcha() )
         {
             $post = Validation::factory($this->cleaned_post())
                               ->rule('username', 'not_empty')
@@ -130,7 +130,6 @@ class Controller_User extends Controller_Base
             }
         }
 
-        $this->gen_recaptcha();
         $this->template_data['title'] = "User Register";
     }
 
@@ -139,7 +138,7 @@ class Controller_User extends Controller_Base
         if (Auth::instance()->get_user()) {
             $this->go_home();
         }
-        if ( $this->request->is_post() and $this->check_recaptcha() ) {
+        if ( $this->request->is_post() and $this->check_captcha() ) {
             $username = $this->get_post('username');
             $password = $this->get_post('pwd');
 
@@ -169,28 +168,18 @@ class Controller_User extends Controller_Base
 
         $this->template_data['title'] = 'Welcome';
         $this->template_data['username'] = $this->get_post('username');
-        $this->gen_recaptcha();
     }
 
-    protected function gen_recaptcha()
+
+    protected function check_captcha()
     {
-        $public_key = Kohana::$config->load('base')->get('captcha_public_key', false);
+        $captcha_mode = Kohana::$config->load('base')->get('captcha_mode', false);
 
-        if ( $public_key )
+        if ( $captcha_mode == false ) return true;
+
+        if ( $captcha_mode == 'recaptcha' )
         {
-            $path = Kohana::find_file('vendor', 'recaptcha-php-1.11/recaptchalib');
-            require_once $path;
-
-            $this->template_data['captcha'] = recaptcha_get_html($public_key);
-        }
-    }
-
-    protected function check_recaptcha()
-    {
-        $private_key = Kohana::$config->load('base')->get('captcha_private_key', false);
-
-        if ( $private_key )
-        {
+            $private_key = Kohana::$config->load('base')->get('captcha_private_key', false);
             $path = Kohana::find_file('vendor', 'recaptcha-php-1.11/recaptchalib');
             require_once $path;
 
@@ -199,11 +188,23 @@ class Controller_User extends Controller_Base
 
             $resp = recaptcha_check_answer($private_key, $_SERVER["REMOTE_ADDR"], $challenge, $response);
 
-            if (!$resp->is_valid) {
-                $this->flash_message($resp->error);
-
-                return false;
+            if ( $resp->is_valid ) {
+                return true;
             }
+            $this->flash_message($resp->error);
+            return false;
+        }
+        if ( $captcha_mode == 'local')
+        {
+            $challenge = Arr::get($_POST, 'code', false);
+            $code = Session::instance()->get('captcha');
+
+            if ( strtolower($code) == strtolower($challenge) )
+            {
+                return true;
+            }
+            $this->flash_message('Error Captcha Code');
+            return false;
         }
         return true;
     }

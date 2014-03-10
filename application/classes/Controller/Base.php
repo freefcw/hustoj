@@ -49,7 +49,7 @@ class Controller_Base extends Controller
         {
             $session = Session::instance();
             $session->set('return_url', $this->request->uri());
-            $this->redirect('/login');
+            $this->redirect('/user/login');
         }
         return $user;
     }
