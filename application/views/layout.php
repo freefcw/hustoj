@@ -19,6 +19,9 @@
     <script type="text/javascript" src="<?php e::url('js/jquery-ui-1.10.3.custom.js');?>"></script>
     <script type="text/javascript" src="<?php e::url('js/turbolinks.js');?>"></script>
     <script type="text/javascript" src="<?php e::url('js/nprogress.js');?>"></script>
+    <?php if (OJ::is_admin()):?>
+    <script type="text/javascript" src="<?php e::url('js/front-admin.js');?>"></script>
+    <?php endif;?>
     <link rel="shortcut icon" href="<?php e::url('favicon.ico');?>"/>
 </head>
 <body>
