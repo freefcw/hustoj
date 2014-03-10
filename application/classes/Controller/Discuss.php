@@ -64,7 +64,7 @@ class Controller_Discuss extends Controller_Base
 
         $reply_id = $this->request->param('id');
         if (  ! $reply_id )
-            $this->redirect('/');
+            $this->go_home();
 
         $reply = Model_Reply::find_by_id($reply_id);
         $reply->destroy();

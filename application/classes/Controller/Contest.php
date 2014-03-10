@@ -103,7 +103,7 @@ class Controller_Contest extends Controller_Base
 
         if (is_null($pid) or is_null($cid)) {
             // wrong url
-            $this->redirect(Route::url('default'));
+            $this->go_home();
         }
 
         $contest = Model_Contest::find_by_id($cid);

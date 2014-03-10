@@ -54,6 +54,11 @@ class Controller_Base extends Controller
         return $user;
     }
 
+    public function go_home()
+    {
+        $this->redirect('/');
+    }
+
     /**
      * check current user is admin
      */
@@ -62,7 +67,7 @@ class Controller_Base extends Controller
         $user = $this->check_login();
         if ( ! $user->is_admin() )
         {
-            $this->redirect('/');
+            $this->go_home();
         }
         return $user;
     }
@@ -190,9 +195,9 @@ class Controller_Base extends Controller
             return;
 
         if ( is_null($url) )
-            $url = Route::url('default');
-
-        $this->redirect($url);
+            $this->go_home();
+        else
+            $this->redirect($url);
     }
 
 

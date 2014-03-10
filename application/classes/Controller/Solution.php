@@ -62,7 +62,10 @@ class Controller_Solution extends Controller_Base
         if ( $cid )
         {
             $contest = Model_Contest::find_by_id($cid);
-            if ( ! $contest ) $this->redirect(Route::url('default'));
+            if ( ! $contest )
+            {
+                $this->go_home();
+            }
 
             $this->template_data['cid']     = $cid;
             $this->template_data['contest'] = $contest;

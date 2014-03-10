@@ -29,7 +29,7 @@ class Controller_User extends Controller_Base
         $user = Model_User::find_by_id($uid);
 
         if ( ! $user )
-            $this->redirect(Route::url('default'));
+            $this->go_home();
 
         $this->template_data['title'] = "About {$uid}";
         $this->template_data['user'] = $user;
@@ -120,7 +120,7 @@ class Controller_User extends Controller_Base
                     $user->save(true);
 
                     Auth::instance()->login($post['username'], $post['password'], true);
-                    $this->redirect(Route::url('default'));
+                    $this->go_home();
                 } else {
                     array_push($errors, 'User Id is existed!');
                 }
@@ -135,7 +135,7 @@ class Controller_User extends Controller_Base
     public function action_login()
     {
         if (Auth::instance()->get_user()) {
-            $this->redirect(Route::url('default'));
+            $this->go_home();
         }
         if ( $this->request->is_post() ) {
             $username = $this->get_post('username');
@@ -154,8 +154,12 @@ class Controller_User extends Controller_Base
                 // go back url
                 $session = Session::instance();
                 $url = $session->get_once('return_url');
-                if ( ! $url ) $url = Route::url('default');
-                $this->redirect($url);
+                if ( ! $url )
+                {
+                    $this->go_home();
+                } else {
+                    $this->redirect($url);
+                }
             }
 
             $error = 'Username or password error, please try again.';
@@ -172,6 +176,6 @@ class Controller_User extends Controller_Base
     {
         Auth::instance()->logout();
 
-        $this->redirect(Route::url('default'));
+        $this->go_home();
     }
 }
