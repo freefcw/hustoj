@@ -5,10 +5,11 @@
  * Date: 3/8/14
  * Time: 12:46 AM
  *
- * functions with helper about html
- *
  */
 
+/**
+ * static helper for html
+ */
 class e
 {
     const time_format = 'Y-m-d h:i:s';
@@ -236,6 +237,13 @@ class e
         return array( $start, $end );
     }
 
+    /**
+     * mix the email address
+     *
+     * @param string $email
+     *
+     * @return string
+     */
     public static function anti_mail_crawler($email)
     {
         if ( $email )

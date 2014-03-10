@@ -1,8 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-/**
- * static helper for html
- */
+
 class OJ
 {
     const per_page = 50;
@@ -96,7 +94,12 @@ class OJ
         return $value;
     }
 
-    public static function is_io_mode()
+    /**
+     * test is oi mode enableds
+     *
+     * @return bool
+     */
+    public static function is_oi_mode()
     {
         return Kohana::$config->load('base')->get('oi_mode', false);
     }
