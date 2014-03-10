@@ -247,4 +247,57 @@ class e
             return '@.@';
         }
     }
+
+    /**
+     * get base config
+     *
+     * @param string $key
+     * @param return_type $default
+     *
+     * @return return_type
+     */
+    protected static function get_base_config($key, $default)
+    {
+        return Kohana::$config->load('base')->get($key, $default);
+    }
+
+    /**
+     * get website name
+     *
+     * @return string
+     */
+    public static function get_website_name()
+    {
+        return e::get_base_config('name', 'HUSTOJ');
+    }
+
+    /**
+     * get website support team
+     *
+     * @return string
+     */
+    public static function get_website_team()
+    {
+        return e::get_base_config('team', 'HUST ACMICPC TEAM');
+    }
+
+    /**
+     * get website description 
+     *
+     * @return string
+     */
+    public static function get_website_desc()
+    {
+        return e::get_base_config('desc', '');
+    }
+
+    /**
+     * get website keyword
+     *
+     * @return string
+     */
+    public static function get_website_keyword()
+    {
+        return e::get_base_config('keyword', '');
+    }
 }

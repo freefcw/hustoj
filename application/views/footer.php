@@ -8,6 +8,7 @@
         <li><?php echo HTML::anchor('terms', 'Terms of Service');?></li>
     </ul>
     <div class="runtime-info">{memory_usage}, {execution_time}</div>
-    <p id="copyright">Copyright © 2003 - <?php echo(date('Y'));?> <?php echo HTML::anchor('http://acm.hust.edu.cn', 'HUST ACMICPC TEAM');?>. All rights reserved.</p>
+    <p id="copyright">Copyright &copy; <?php echo(date('Y'));?> <?php echo(e::get_website_team()); ?>. All rights reserved.</p>
+    <p id="copyright">Powered by <?php echo(HTML::anchor('https://github.com/freefcw/hustoj', 'HUSTOJ'));?> Project.</p>
 </div>
 <?php echo View::factory('block/ga');?>

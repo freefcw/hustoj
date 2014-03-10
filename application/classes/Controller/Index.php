@@ -20,7 +20,7 @@ class Controller_Index extends Controller_Base
 
         $total_news = Model_News::number_of_public_news();
         $this->template_data['total'] = ceil($total_news / $number_of_news);
-        $this->template_data['title'] = 'HUST ONLINE JUDGE';
+        $this->template_data['title'] = e::get_website_name();
         $this->template_data['news_list'] = $news_list;
     }
 

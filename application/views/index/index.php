@@ -1,6 +1,6 @@
 <?php if (Request::$current->query('page') == 1):?>
 <div class="welcome readability">
-    <h3>Welcome to HUSTOJ</h3>
+    <h3>Welcome to <?php echo(e::get_website_name()); ?></h3>
     <p>Any problem, please see the contact information in contact page</p>
 </div>
 <?php endif;?>
