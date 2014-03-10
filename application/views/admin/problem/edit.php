@@ -65,7 +65,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-sm-2" for="source">source</label>
+        <label class="control-label col-sm-2" for="source">Source</label>
         <div class="col-sm-10">
             <textarea cols="50" rows="2" id="source" class="form-control" name="source"><?php echo $problem->source;?></textarea>
         </div>
