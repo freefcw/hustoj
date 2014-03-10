@@ -40,8 +40,8 @@
 <?php foreach($list as $i): ?>
     <tr>
         <td><?php echo $i->solution_id;?></td>
-        <td><?php e::anchor("/problem/show/{$i->problem_id}", $i->problem_id);?></td>
-        <td><?php e::anchor("/u/{$i->user_id}", $i->user_id);?></td>
+        <td><?php echo HTML::anchor("/problem/show/{$i->problem_id}", $i->problem_id);?></td>
+        <td><?php echo HTML::anchor("/u/{$i->user_id}", $i->user_id);?></td>
         <td>
             <?php echo e::jresult($i->result);?>
             <?php if (OJ::is_oi_mode()) echo $i->display_pass_rate(); ?>

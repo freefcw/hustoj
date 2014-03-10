@@ -65,13 +65,13 @@
         $params['page'] = $page - 1;
         $query_param = URL::query($params);
         ?>
-        <li class="previous"><?php e::anchor("discuss/{$query_param}", '&larr; Newer');?></li>
+        <li class="previous"><?php echo HTML::anchor("discuss/{$query_param}", '&larr; Newer');?></li>
     <?php endif;?>
     <?php if ($page < $total): ?>
         <?php
         $params['page'] = $page + 1;
         $query_param = URL::query($params);
         ?>
-        <li class="next"><?php e::anchor("discuss/{$query_param}", 'Older &rarr;');?></li>
+        <li class="next"><?php echo HTML::anchor("discuss/{$query_param}", 'Older &rarr;');?></li>
     <?php endif;?>
 </ul>

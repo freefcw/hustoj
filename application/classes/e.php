@@ -31,31 +31,22 @@ class e
 
     public static function url($uri)
     {
-        echo e::get_url($uri);
-    }
-
-    public static function get_url($uri)
-    {
-        $uri = ltrim( $uri, '/');
-        return Kohana::$base_url. $uri;
+        echo URL::site($uri);
     }
 
     public static function gen_pager_url($base_url, $page)
     {
         $params = Request::$current->query();
         $params['page'] = $page;
-        echo e::get_url($base_url. '/'. URL::query($params));
+        $uri = $base_url. '/'. URL::query($params);
+        echo URL::site($uri);
     }
 
     public static function home()
     {
-        echo Kohana::$base_url;
+        echo URL::base();
     }
 
-    public static function anchor($url, $title)
-    {
-        echo HTML::anchor(e::get_url( $url ), $title );
-    }
 
     /**
      * @static

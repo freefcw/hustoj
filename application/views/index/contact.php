@@ -11,5 +11,5 @@
 
 <div id="join">
 	if you interested in ACM/ICPC, 
-	<?php e::anchor('/joinus', 'Join us!');?>
+	<?php echo HTML::anchor('/joinus', 'Join us!');?>
 </div>

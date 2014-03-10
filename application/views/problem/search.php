@@ -10,7 +10,7 @@
 <?php foreach($problemlist as $problem): ?>
     <tr>
         <td class="pid"><?php echo($problem->problem_id); ?></td>
-        <td class="ptitle"><?php e::anchor("/problem/show/{$problem->problem_id}", $problem->title);?>
+        <td class="ptitle"><?php echo HTML::anchor("/problem/show/{$problem->problem_id}", $problem->title);?>
         <?php if ($problem->source != ''): ?>
             <span> - <?php echo($problem->source);?></span>
         <?php endif;?>
