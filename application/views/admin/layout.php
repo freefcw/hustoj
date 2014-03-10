@@ -8,11 +8,17 @@
     <title><?php echo($title); ?></title>
     <link rel="stylesheet" href="<?php e::url('css/bootstrap.css');?>">
     <link rel="stylesheet" href="<?php e::url('css/style.css');?>">
+    <link rel="stylesheet" href="<?php e::url('css/nprogress.css');?>">
+    <link rel="stylesheet" href="<?php e::url('js/code/prettify.css');?>">
     <link rel="stylesheet" href="<?php e::url('css/ui-lightness/jquery-ui-1.10.3.custom.min.css');?>">
     <script type="text/javascript" src="<?php e::url('js/jquery-1.9.1.js');?>"></script>
     <script type="text/javascript" src="<?php e::url('js/page.js');?>"></script>
     <script type="text/javascript" src="<?php e::url('js/jquery-ui-1.10.3.custom.js');?>"></script>
     <script type="text/javascript" src="<?php e::url('js/bootstrap.min.js');?>"></script>
+    <script type="text/javascript" src="<?php e::url('js/turbolinks.js');?>"></script>
+    <script type="text/javascript" src="<?php e::url('js/nprogress.js');?>"></script>
+    <script type="text/javascript" src="<?php e::url('js/respond.js');?>"></script>
+    <script type="text/javascript" src="<?php e::url('js/jquery.html5-placeholder-shim.js');?>"></script>
     <script type="text/javascript" src="<?php e::url('js/tinymce/tinymce.min.js');?>"></script>
     <link rel="shortcut icon" href="<?php e::url('favicon.ico');?>"/>
 </head>
@@ -22,8 +28,14 @@
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="<?php e::url('admin');?>">ADMIN</a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
         </div>
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
             <ul class="nav navbar-nav">
                 <li <?php if (Request::$current->controller() == 'Index'):?>class="active" <?php endif;?>><a href="<?php e::url('admin');?>">Home</a></li>
                 <li <?php if (Request::$current->controller() == 'Problem'):?>class="active" <?php endif;?>><a href="<?php e::url('admin/problem');?>">Problem</a></li>
@@ -69,7 +81,11 @@
 </div>
 <script type="text/javascript">
     tinymce.init({
-        selector: ".tinymce"
+        plugins: "image link code",
+        selector: ".tinymce",
+        menubar: false,
+        toolbar: "undo redo | styleselect fontselect | bold italic | bullist numlist | link image | code",
+        statusbar: false,
     });
 </script>
 </body>
