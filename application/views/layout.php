@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="keyword" content="HUST, 华中科技大学, ACM, freefcw, sempr, online judge, 计算机竞赛, 编程, ICPC"/>
@@ -19,6 +19,7 @@
     <script type="text/javascript" src="<?php e::url('js/jquery-ui-1.10.3.custom.js');?>"></script>
     <script type="text/javascript" src="<?php e::url('js/turbolinks.js');?>"></script>
     <script type="text/javascript" src="<?php e::url('js/nprogress.js');?>"></script>
+    <script type="text/javascript" src="<?php e::url('js/respond.js');?>"></script>
     <link rel="shortcut icon" href="<?php e::url('favicon.ico');?>"/>
 </head>
 <body>
