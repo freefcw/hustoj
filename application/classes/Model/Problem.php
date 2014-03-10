@@ -18,19 +18,13 @@ class Model_Problem extends Model_Base
         'spj',
         'hint',
         'source',
-        'sample_Program',
         'in_date',
         'time_limit',
         'memory_limit',
         'defunct',
         'accepted',
         'submit',
-        'ratio',
-        'error',
-        'difficulty',
-        'submit_user',
         'solved',
-        'case_time_limit',
     );
 
     static $primary_key = 'problem_id';
@@ -47,19 +41,13 @@ class Model_Problem extends Model_Base
     public $spj;
     public $hint;
     public $source = '';
-    public $sample_Program;
     public $in_date;
     public $time_limit;
     public $memory_limit;
     public $defunct = self::DEFUNCT_YES;
     public $accepted;
     public $submit = 0;
-    public $ratio = 0;
-    public $error;
-    public $difficulty = 0;
-    public $submit_user;
     public $solved = 0;
-    public $case_time_limit = 0;
 
     /**
      * @param       $text
