@@ -18,9 +18,15 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
         if ( ! $pid )
             $pid = $this->request->param('id', null);
 
-        $problem = Model_Problem::find_by_id($pid);
-        if ( ! $problem )
-            throw new Exception_Base('Problem Not Found');
+        if ( $pid != '' )
+        {
+            $problem = Model_Problem::find_by_id($pid);
+            if ( ! $problem )
+                throw new Exception_Base('Problem Not Found');
+        } else {
+            $problem = new Model_Problem;
+        }
+
 
         if ( $this->request->is_post() )
         {
@@ -34,19 +40,6 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
         }
         $this->template_data['title'] = 'Edit '. $problem['problem_id']. ' -- '. $problem['title'];
         $this->template_data['problem'] = $problem;
-    }
-
-    public function action_save()
-    {
-        if ( $this->request->is_post() )
-        {
-            $safe_data = $this->cleaned_post();
-            $problem = new Model_Problem;
-            $problem->update($safe_data);
-            $problem->save();
-            $this->action_edit($problem->problem_id);
-        }
-        $this->redirect('/admin/');
     }
 
     public function action_defunct()
