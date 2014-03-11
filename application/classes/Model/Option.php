@@ -23,22 +23,47 @@ class Model_Option extends Model_Base
     public $desc;
     public $value;
 
-    static $local_cache = null;
+    protected static $local_cache = null;
+    protected static $config_defaults = null;
+
+    public function __construct($db=null)
+    {
+        parent::__construct($db);
+    }
+
+    public static function defaults()
+    {
+        if ( is_null(self::$config_defaults) )
+        {
+            self::$config_defaults = Kohana::$config->load('base')->as_array();
+        }
+        return self::$config_defaults;
+    }
 
     /**
-     * @param $name
+     * @param      $name
+     *
+     * @param null $default
      *
      * @return mixed
      */
-    public static function get_option($name)
+    public static function get_option($name, $default=null)
     {
         $options = self::all_options();
-        foreach($options as $option)
+
+        foreach( $options as $option)
         {
-            if ( $option->name == $name )
+            if ( $option->name == $name)
                 return $option->value;
         }
-        return null;
+
+        $defaults = self::defaults();
+        if ( array_key_exists($name, $defaults) )
+        {
+            return $defaults[$name];
+        }
+
+        return $default;
     }
 
 
@@ -54,6 +79,7 @@ class Model_Option extends Model_Base
             $query = DB::select()
                        ->from(static::$table);
             $result = $query->as_object(get_called_class())->execute();
+
             self::$local_cache = $result->as_array();
         }
 

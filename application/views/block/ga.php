@@ -1,4 +1,4 @@
-<?php $gacode = Model_Option::get_option('ga_code');
+<?php $gacode = Model_Option::get_option('ga_code', 'UA-6733942-1');
 if ( isset($gacode) ):?>
 <script type="text/javascript">
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -17,7 +17,7 @@ if ( isset($gacode) ):?>
         }
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-6733942-1', 'hust.edu.cn');
+    ga('create', '<?php echo $gacode;?>', '<?php echo Model_Option::get_option('domain');?>';
     ga('send', 'pageview');
 </script>
 <?php endif;?>
