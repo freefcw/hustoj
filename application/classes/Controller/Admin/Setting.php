@@ -22,7 +22,7 @@ class Controller_Admin_Setting extends Controller_Admin_Base{
             if ( $value )
             {
                 $option->name = $id;
-                $option->value = $value->value;
+                $option->value = $value;
             }
             $this->template_data['title'] = 'Add Option';
         }
