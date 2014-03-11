@@ -71,6 +71,15 @@ class OJ
         return false;
     }
 
+    public static function is_backend()
+    {
+        if ( Request::current()->directory() == 'Admin')
+        {
+            return true;
+        }
+        return false;
+    }
+
 
     /**
      * 过滤数据，包括tag和special chars
@@ -102,5 +111,10 @@ class OJ
     public static function is_oi_mode()
     {
         return Kohana::$config->load('base')->get('oi_mode', false);
+    }
+
+    public static function is_captcha_enabled()
+    {
+        return Kohana::$config->load('base')->get('captcha_mode', false);
     }
 }

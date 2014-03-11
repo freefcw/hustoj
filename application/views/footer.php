@@ -12,3 +12,14 @@
     <p id="copyright">Powered by <?php echo(HTML::anchor('https://github.com/freefcw/hustoj', 'HUSTOJ'));?> Project.</p>
 </div>
 <?php echo View::factory('block/ga');?>
+<?php if (OJ::is_backend()):?>
+<script type="text/javascript">
+    tinymce.init({
+        plugins: "image link code",
+        selector: ".tinymce",
+        menubar: false,
+        toolbar: "undo redo | styleselect fontselect | bold italic | bullist numlist | link image | code",
+        statusbar: false,
+    });
+</script>
+<?php endif;?>

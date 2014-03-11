@@ -94,4 +94,42 @@ class Controller_Index extends Controller_Base
         $this->template_data['title'] = 'TERMS';
     }
 
+    public function action_captcha()
+    {
+        Session::instance();
+
+        $path = Kohana::find_file('vendor', 'cool-php-captcha-0.3.1/captcha');
+        require_once $path;
+
+        $captcha = new SimpleCaptcha();
+        // OPTIONAL Change configuration...
+        $captcha->wordsFile = 'words/en.php';
+        $captcha->session_var = 'captcha';
+        $captcha->imageFormat = 'png';
+        $captcha->lineWidth = 3;
+        //$captcha->scale = 3; $captcha->blur = true;
+        $captcha->resourcesPath = APPPATH. "vendor/cool-php-captcha-0.3.1/resources";
+
+
+        // OPTIONAL Simple autodetect language example
+        /*
+        if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            $langs = array('en', 'es');
+            $lang  = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+            if (in_array($lang, $langs)) {
+                $captcha->wordsFile = "words/$lang.php";
+            }
+        }
+        */
+
+        // Image generation
+        ob_start();
+        $captcha->CreateImage();
+        $content = ob_get_contents();
+        ob_end_clean();
+        $this->response->headers('Content-type', 'image/png');
+        $this->response->send_headers();
+        $this->response->body($content);
+    }
+
 } // End Index

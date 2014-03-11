@@ -34,12 +34,13 @@ class Controller_Admin_News extends Controller_Admin_Base {
     {
         $id = $this->request->param('id', null);
 
-        $news = Model_News::find_by_id($id);
-        if ( is_null($news) )
+        if ( $id )
         {
-            throw new Exception_Base('not found this news');
+            $news = Model_News::find_by_id($id);
+        } else {
+            $news = new Model_News;
         }
-        $this->template_data['title'] = 'Edit '.$news->title;
+
 
         if ( $this->request->is_post() )
         {
@@ -56,6 +57,7 @@ class Controller_Admin_News extends Controller_Admin_Base {
             } else {
                 $news->importance = Model_News::NEWS_TYPE_NORMAL;
             }
+            $news->user_id = $this->current_user->user_id;
 
             $news->update($post);
             $news->content = $this->get_raw_post('content');
@@ -64,9 +66,11 @@ class Controller_Admin_News extends Controller_Admin_Base {
             {
                 $this->redirect('/admin/news');
             } else {
-                $this->template_data['message'] = array('save failed');
+                $this->flash_message('Save Failed');
             }
         }
+
+        $this->template_data['title'] = 'Edit '.$news->title;
         $this->template_data['news'] = $news;
     }
 }

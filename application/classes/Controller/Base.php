@@ -34,7 +34,7 @@ class Controller_Base extends Controller
     {
         $this->view = $e->getTemplate();
         $this->template_data['title'] = 'Error !!';
-        $this->template_data['message'] = $e->getMessage();
+        $this->flash_message($e->getMessage());
     }
 
     /**
@@ -49,7 +49,7 @@ class Controller_Base extends Controller
         {
             $session = Session::instance();
             $session->set('return_url', $this->request->uri());
-            $this->redirect('/login');
+            $this->redirect('/user/login');
         }
         return $user;
     }
@@ -157,7 +157,12 @@ class Controller_Base extends Controller
     {
         $sess = Session::instance();
         $messages = $sess->get('flashed_message', array());
-        array_push($messages, $message);
+        if ( is_array($message) )
+        {
+            $messages = array_merge($messages, $message);
+        } else {
+            array_push($messages, $message);
+        }
         $sess->set('flashed_message', $messages);
     }
 
