@@ -8,8 +8,8 @@
 <?php $rank = $rank + 1;?>
     <tr>
         <td class="rank"><?php echo($rank) ?></td>
-        <td><?php echo HTML::anchor("/u/{$u['user_id']}", $u['user_id']); ?></td>
-        <td><?php HTML::chars($u['nick']); ?></td>
+        <td><?php echo HTML::anchor("/u/{$u->user_id}", $u->user_id); ?></td>
+        <td><?php echo HTML::chars($u->nick); ?></td>
         <td><?php echo($u->solved); ?></td>
         <td><?php echo($u->submit); ?></td>
         <td><?php echo($u->ratio_of_accept()) ?></td>
