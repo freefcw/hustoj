@@ -17,7 +17,7 @@ if ( isset($gacode) ):?>
         }
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    ga('create', '<?php echo $gacode;?>', '<?php echo Model_Option::get_option('domain');?>';
+    ga('create', '<?php echo $gacode;?>', '<?php echo Model_Option::get_option('domain');?>');
     ga('send', 'pageview');
 </script>
 <?php endif;?>
