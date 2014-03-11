@@ -1,5 +1,5 @@
 <ul class="nav navbar-nav">
-    <li <?php if (Request::$current->controller() == 'Index'):?>class="active" <?php endif;?>><a href="<?php e::url('admin');?>">Home</a></li>
+    <li class="home <?php if (Request::$current->controller() == 'Index'):?>active<?php endif;?>" ><a href="<?php e::url('admin');?>">Home</a></li>
     <li <?php if (Request::$current->controller() == 'Problem'):?>class="active" <?php endif;?>><a href="<?php e::url('admin/problem');?>">Problem</a></li>
     <li <?php if (Request::$current->controller() == 'User'):?>class="active" <?php endif;?>><a href="<?php e::url('admin/user');?>">User</a></li>
     <li <?php if (Request::$current->controller() == 'Contest'):?>class="active" <?php endif;?>><a href="<?php e::url('admin/contest');?>">Contest</a></li>
