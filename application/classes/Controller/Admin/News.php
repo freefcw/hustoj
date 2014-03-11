@@ -64,7 +64,7 @@ class Controller_Admin_News extends Controller_Admin_Base {
             {
                 $this->redirect('/admin/news');
             } else {
-                $this->template_data['message'] = array('save failed');
+                $this->flash_message('Save Failed');
             }
         }
         $this->template_data['news'] = $news;

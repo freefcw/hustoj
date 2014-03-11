@@ -67,11 +67,8 @@
         </div>
         <div class="col-md-11">
             <h3><?php echo $title;?></h3>
-            <?php if (isset($message) && $message):?>
-                <?php echo View::factory('admin/message', array('message' => $message ));?>
-            <?php endif;?>
             <?php if (Session::instance()->get('flashed_message')):?>
-                <?php echo View::factory('admin/message', array('message' => Session::instance()->get_once('flashed_message') ));?>
+                <?php echo View::factory('admin/message', array('messages' => Session::instance()->get_once('flashed_message') ));?>
             <?php endif;?>
             <?php echo($body); ?>
         </div>
