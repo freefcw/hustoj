@@ -17,7 +17,7 @@ if ( $news->news_id ) $suffix = $suffix.'/'.$news->news_id;
         <div class="form-group ">
             <label class="control-label col-sm-2" for="content">Description</label>
             <div class="col-sm-10">
-                <textarea cols="50" rows="13" id="content" class="form-control" name="content"><?php echo $news->content;?></textarea>
+                <textarea cols="50" rows="13" id="content" class="form-control tinymce" name="content"><?php echo $news->content;?></textarea>
             </div>
         </div>
         <div class="form-group">

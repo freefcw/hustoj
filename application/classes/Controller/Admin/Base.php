@@ -21,4 +21,14 @@ class Controller_Admin_Base extends Controller_Base {
         $this->view = 'admin/'.strtolower($this->request->controller()). '/'. $this->request->action();
     }
 
+    /**
+     * all post data
+     *
+     * @return array
+     */
+    protected function cleaned_post()
+    {
+        return $this->request->post();
+        // trust admin
+    }
 } // End Welcome

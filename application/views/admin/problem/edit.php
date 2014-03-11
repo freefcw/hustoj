@@ -31,19 +31,19 @@
     <div class="form-group">
         <label class="control-label col-sm-2" for="description">Description</label>
         <div class="col-sm-10">
-            <textarea cols="50" rows="13" id="description" class="form-control" name="description"><?php echo $problem->description;?></textarea>
+            <textarea cols="50" rows="13" id="description" class="form-control tinymce" name="description"><?php echo $problem->description;?></textarea>
         </div>
     </div>
     <div class="form-group">
         <label class="control-label col-sm-2" for="input">Input</label>
         <div class="col-sm-10">
-            <textarea cols="50" rows="13" id="input" class="form-control" name="input"><?php echo $problem->input;?></textarea>
+            <textarea cols="50" rows="13" id="input" class="form-control tinymce" name="input"><?php echo $problem->input;?></textarea>
         </div>
     </div>
     <div class="form-group">
         <label class="control-label col-sm-2" for="output">Output</label>
         <div class="col-sm-10">
-            <textarea cols="50" rows="7" id="output" class="form-control" name="output"><?php echo $problem->output;?></textarea>
+            <textarea cols="50" rows="7" id="output" class="form-control tinymce" name="output"><?php echo $problem->output;?></textarea>
         </div>
     </div>
     <div class="form-group">
@@ -61,11 +61,11 @@
     <div class="form-group">
         <label class="control-label col-sm-2" for="hint">Hint</label>
         <div class="col-sm-10">
-            <textarea cols="50" rows="3" id="hint" class="form-control" name="hint"><?php echo $problem->hint;?></textarea>
+            <textarea cols="50" rows="3" id="hint" class="form-control tinymce" name="hint"><?php echo $problem->hint;?></textarea>
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-sm-2" for="source">source</label>
+        <label class="control-label col-sm-2" for="source">Source</label>
         <div class="col-sm-10">
             <textarea cols="50" rows="2" id="source" class="form-control" name="source"><?php echo $problem->source;?></textarea>
         </div>
