@@ -107,7 +107,10 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
         $page = $this->request->param('id', 1);
 
         $filter = array();
-        $problem_list = Model_Problem::find($filter, $page);
+        $orderby = array(
+            Model_Problem::$primary_key => Model_Base::ORDER_ASC
+        );
+        $problem_list = Model_Problem::find($filter, $page, OJ::per_page, $orderby);
 
         $this->template_data['pages'] = ceil(intval(Model_Problem::count($filter)) / OJ::per_page);
         $this->template_data['problem_list'] = $problem_list;
