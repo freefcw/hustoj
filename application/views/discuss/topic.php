@@ -26,7 +26,7 @@
 <div class="reply" id="reply-<?php echo($r->rid);?>">
     <div class="reply-header">
         <a href="<?php e::url("/u/{$r->author_id}");?>"><?php echo($r->author_id);?></a> reply at <?php echo(e::timesince($r->time));?>
-    <?php if ( OJ::is_admin() ):?> <a data-no-turbolink class="btn btn-warning" href="<?php e::url('/discuss/removereply/<?php echo($r->rid);?>');?>">DELETE reply</a> <?php endif;?>
+    <?php if ( OJ::is_admin() ):?> <a data-no-turbolink class="btn btn-warning" href="<?php e::url("/discuss/removereply/{$r->rid}");?>">DELETE reply</a> <?php endif;?>
     </div>
     <div class="reply-content well"><?php echo(HTML::chars($r->content));?></div>
 </div>

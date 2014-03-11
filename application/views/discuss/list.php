@@ -17,7 +17,7 @@
 <?php else:?>
     <?php echo(View::factory('contest/header', array('title' => $title, 'cid' => Request::$current->query('cid'), 'contest' => $contest)));?>
 <div class="well">
-    <a href="<?php e::url('/discuss/new?cid=<?php echo($cid);?>');?>" class="btn btn-info">New Topic</a>
+    <a href="<?php e::url("/discuss/new?cid={$cid}");?>" class="btn btn-info">New Topic</a>
 </div>
 <?php endif;?>
 <hr class="clearfix"/>
