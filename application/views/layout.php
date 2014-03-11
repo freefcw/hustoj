@@ -6,7 +6,7 @@
     <meta name="description" content="<?php echo(e::get_website_desc()); ?>"/>
     <meta name="robots" content="index,follow"/>
     <title><?php echo($title); ?></title>
-    <?php echo View::factory('block/header');?>
+    <?php echo View::factory('block/head');?>
 </head>
 <body>
 <div class="navbar navbar-inverse" role="navigation">

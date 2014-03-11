@@ -16,7 +16,6 @@
 <script type="text/javascript" src="<?php e::url('js/nprogress.js');?>"></script>
 <script type="text/javascript" src="<?php e::url('js/respond.js');?>"></script>
 <script type="text/javascript" src="<?php e::url('js/jquery.html5-placeholder-shim.js');?>"></script>
-<?php if (OJ::is_admin()):?>
-<script type="text/javascript" src="<?php e::url('js/front-admin.js');?>"></script>
 <?php endif;?>
-<?php endif;?>
+<script type="text/javascript" src="<?php e::url('js/jquery.bs.js');?>"></script>
+<script type="text/javascript" src="<?php e::url('js/site.js');?>"></script>
