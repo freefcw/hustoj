@@ -7,7 +7,7 @@
     <li <?php if (Request::$current->controller() == 'Setting'):?>class="active" <?php endif;?>><a href="<?php e::url('admin/setting');?>">Configure</a></li>
     <li <?php if (Request::$current->controller() == 'Discuss'):?>class="active" <?php endif;?>><a href="#">Discuss</a></li>
 </ul>
-<ul class="nav navbar-nav pull-right">
+<ul class="nav navbar-nav pull-right nav-controls">
     <li><a href="<?php echo(Route::url('profile', array('uid' => $current_user->user_id)));?>"
            title="<?php echo($current_user->user_id);?>"><?php echo($current_user->user_id);?></a></li>
     <li class="divider-vertical"></li>
