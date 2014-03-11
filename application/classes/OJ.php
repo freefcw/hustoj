@@ -71,6 +71,15 @@ class OJ
         return false;
     }
 
+    public static function is_backend()
+    {
+        if ( Request::current()->directory() == 'Admin')
+        {
+            return true;
+        }
+        return false;
+    }
+
 
     /**
      * 过滤数据，包括tag和special chars

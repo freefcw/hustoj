@@ -34,7 +34,7 @@ class Controller_Base extends Controller
     {
         $this->view = $e->getTemplate();
         $this->template_data['title'] = 'Error !!';
-        $this->template_data['message'] = $e->getMessage();
+        $this->flash_message($e->getMessage());
     }
 
     /**
