@@ -195,7 +195,7 @@ Route::set('news', 'news/<id>',
 Route::set(
     'page', '<action>',
     array(
-         'action' => '(faqs|about|links|contact|help|terms)'
+         'action' => '(faqs|about|links|contact|help|terms|captcha)'
     ))->defaults(array(
          'controller' => 'index'
     )
