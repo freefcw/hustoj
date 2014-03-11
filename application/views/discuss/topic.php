@@ -31,7 +31,6 @@
     <div class="reply-content well"><?php echo(HTML::chars($r->content));?></div>
 </div>
 <?php endforeach;?>
-
 <?php if (Auth::instance()->get_user()):?>
 <form class="add-reply form" action="<?php e::url("/discuss/topic/{$the_topic->tid}");?>" method="POST">
     <fieldset>
