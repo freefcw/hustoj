@@ -173,13 +173,13 @@ class Controller_User extends Controller_Base
 
     protected function check_captcha()
     {
-        $captcha_mode = Kohana::$config->load('base')->get('captcha_mode', false);
+        $captcha_mode = Model_Option::get_option('captcha_mode', false);
 
         if ( $captcha_mode == false ) return true;
 
         if ( $captcha_mode == 'recaptcha' )
         {
-            $private_key = Kohana::$config->load('base')->get('captcha_private_key', false);
+            $private_key = Model_Option::get_option('captcha_private_key', false);
             $path = Kohana::find_file('vendor', 'recaptcha-php-1.11/recaptchalib');
             require_once $path;
 
