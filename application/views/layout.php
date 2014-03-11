@@ -51,7 +51,7 @@
     <?php endif;?>
     <?php echo($body); ?>
 <?php endif;?>
-    <?php echo(View::factory('footer')); ?>
 </div>
+<?php echo(View::factory('footer')); ?>
 </body>
 </html>
