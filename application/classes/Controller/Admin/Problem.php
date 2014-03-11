@@ -18,7 +18,7 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
         if ( ! $pid )
             $pid = $this->request->param('id', null);
 
-        if ( $pid != '' )
+        if ( $pid )
         {
             $problem = Model_Problem::find_by_id($pid);
             if ( ! $problem )

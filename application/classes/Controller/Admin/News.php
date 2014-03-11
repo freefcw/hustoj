@@ -34,14 +34,13 @@ class Controller_Admin_News extends Controller_Admin_Base {
     {
         $id = $this->request->param('id', null);
 
-        if ( is_null($id) )
+        if ( $id )
         {
-            $news = new Model_News;
-        } else {
             $news = Model_News::find_by_id($id);
-            throw new Exception_Base('not found this news');
+        } else {
+            $news = new Model_News;
         }
-        $this->template_data['title'] = 'Edit '.$news->title;
+
 
         if ( $this->request->is_post() )
         {
@@ -70,6 +69,8 @@ class Controller_Admin_News extends Controller_Admin_Base {
                 $this->flash_message('Save Failed');
             }
         }
+
+        $this->template_data['title'] = 'Edit '.$news->title;
         $this->template_data['news'] = $news;
     }
 }

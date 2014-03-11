@@ -31,7 +31,6 @@ class Controller_Admin_Contest extends Controller_Admin_Base
         if ($cid)
         {
             $contest = Model_Contest::find_by_id($cid);
-            $this->template_data['title'] = 'Edit Contest ' . $contest['contest_id'];
         } else {
             $contest = new Model_Contest;
         }
@@ -47,7 +46,7 @@ class Controller_Admin_Contest extends Controller_Admin_Base
             $contest->arrange_problem($orderlist);
         }
 
-        $this->template_data['title'] = $contest->title;
+        $this->template_data['title'] = 'Edit Contest ' . $contest['contest_id'];
         $this->template_data['contest'] = $contest;
 
     }
