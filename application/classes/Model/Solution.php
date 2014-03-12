@@ -159,8 +159,8 @@ class Model_Solution extends Model_Base
         {
             $user = Model_User::find_by_id($user);
         }
-        if ( $user->user_id == $this->user_id ) return true;
-        if ( $user->can_view_code() ) return true;
+//        if ( $user->user_id == $this->user_id ) return true;
+        if ( $user->can_view_code($this) ) return true;
 
         return false;
     }

@@ -24,7 +24,7 @@ class Controller_Solution extends Controller_Base
             $this->template_data['cinfo'] = $cinfo;
             $this->template_data['rinfo'] = $rinfo;
         } else {
-            throw new Exception_Base('Not found the problem');
+            throw new Exception_Base('Not found the source of solution');
         }
     }
 

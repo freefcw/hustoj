@@ -24,7 +24,21 @@
 		<?php $rank = $rank + 1; ?>
 		<tr>
 			<td><?php print $rank; ?></td>
-			<td><?php print $item['solution_id'];?></td>
+			<td><?php if ( intval($item['att']) > 1 ):
+                    $params = array(
+                        'uid' => $item['user_id'],
+                        'result' => Model_Solution::STATUS_AC,
+                        'pid' => $item['problem_id'],
+                    );?>
+                <a href="<?php e::url('/status'. URL::query($params));?>"><?php print $item['solution_id'];?>(<?php print $item['att'];?>)</a>
+                <?php else:?>
+                <?php if ($current_user AND $current_user->can_view_code($item)):?>
+                <a href="<?php e::url('/solution/source/'. $item['solution_id']);?>"><?php echo $item['solution_id'];?></a>
+                <?php else:?>
+                <?php echo $item['solution_id'];?>
+                <?php endif;?>
+                <?php endif;?>
+            </td>
             <td><?php print $item['memory'];?>KB</td>
             <td><?php print $item['time'];?>MS</td>
             <td><a href="<?php e::url("/u/{$item['user_id']}");?>"><?php echo $item['user_id'];?></a></td>

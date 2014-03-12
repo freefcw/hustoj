@@ -284,10 +284,17 @@ class Model_User extends Model_Base
     /**
      * check user has permission view all code
      *
+     * @param Model_Solution|array $solution
+     *
      * @return bool
      */
-    public function can_view_code()
+    public function can_view_code( $solution=null)
     {
+        // use solution as array
+        if ( $solution AND $solution['user_id'] == $this->user_id)
+        {
+            return true;
+        }
         if ( $this->is_admin() OR $this->has_permission(Model_Privilege::PERM_SOURCEVIEW) )
             return true;
         return false;
