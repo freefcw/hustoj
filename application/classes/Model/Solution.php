@@ -182,15 +182,21 @@ class Model_Solution extends Model_Base
     {
         $start = $page * $limit;
 
-        $sql = "SELECT solution_id, count(*) att, user_id, language, memory, time, min(10000000000000000000 + time * 100000000000 + memory * 100000 + code_length) score, in_date
+        $sql = 'SELECT solution_id, problem_id, count(*) AS att, user_id, language, memory, time, min(10000000000000000000 + time * 100000000000 + memory * 100000 + code_length) AS score, in_date
                 FROM solution
-                WHERE result = 4
-                AND problem_id = {$problem_id}
+                WHERE result = :status
+                AND problem_id = :problem_id
                 GROUP BY user_id
                 ORDER BY score, in_date
-                LIMIT {$start}, {$limit}";
+                LIMIT :start, :limit';
 
-        $result = DB::query(Database::SELECT, $sql)->execute();
+        $query = DB::query(Database::SELECT, $sql)
+            ->param(':status', self::STATUS_AC)
+            ->param(':problem_id', $problem_id)
+            ->param(':start', $start)
+            ->param(':limit', $limit);
+
+        $result = $query->execute();
 
         return $result->as_array();
     }
