@@ -42,6 +42,7 @@ class Model_User extends Model_Base
 
     protected $permission_list = null;
     protected $resolved_problem_list = null;
+    protected $trying_problem_list = null;
 
 
     /**
@@ -259,6 +260,13 @@ class Model_User extends Model_Base
         if ( ! $this->resolved_problem_list )
             $this->resolved_problem_list = Model_Solution::user_resolved_problem($this->user_id);
         return in_array($problem_id, $this->resolved_problem_list);
+    }
+
+    public function is_problem_trying($problem_id)
+    {
+        if ( ! $this->trying_problem_list )
+            $this->trying_problem_list = Model_Solution::user_tried_problem($this->user_id);
+        return in_array($problem_id, $this->trying_problem_list);
     }
 
     /**
