@@ -1,22 +1,26 @@
 /* navigation  */
 .edit-userinfo {
-    width: 450px;
+    width: 100%;
+    max-width: 450px;
     margin: auto;
 }
 
 .problem-pagination {
-    width: 600px; /* will ok in pagination less than 15, if larger than 15, make li a padding less, or other ui*/
+    width: 100%;
+    max-width: 600px; /* will ok in pagination less than 15, if larger than 15, make li a padding less, or other ui*/
     float: left;
 }
 
 .contest-nav {
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     margin: 10px auto 30px !important;
 }
 
 /* content */
 .problem-search {
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     float: right;
 }
 
@@ -28,13 +32,19 @@
     margin: 30px 10px;
 }
 
+.table,
+.news-content {
+    overflow: hidden;
+}
+
 .page-title {
     text-align: center;
     margin: 10px 0 30px !important;
 }
 
 div.err-notice {
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
     margin: auto;
 }
 
@@ -99,12 +109,14 @@ ul.summary li {
 #fn-nav {
     text-align: center;
     font-size: 14px;
-    width: 250px;
+    width: 100%;
+    max-width: 250px;
     margin: 0 auto 18px;
 }
 
 form.submit {
-    width: 600px;
+    width: 100%;
+    max-width: 600px;
     margin: 10px auto 50px;
 }
 
@@ -289,11 +301,13 @@ div.user-stats li.failed{
 }
 
 .add-reply textarea {
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
 }
 
 .new-topic {
-    width: 800px;
+    width: 100%;
+    max-width: 800px;
 }
 
 .statics-lang {
