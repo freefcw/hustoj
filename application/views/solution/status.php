@@ -39,7 +39,11 @@
 <?php /* @var Model_Solution[] $list */?>
 <?php foreach($list as $i): ?>
     <tr>
-        <td><?php echo $i->solution_id;?></td>
+        <td><?php if ( $current_user AND $i->allow_view_code($current_user)):?>
+        <a href="<?php e::url("/solution/source/{$i->solution_id}");?>" title="click view details"><?php echo $i->solution_id;?></a>
+        <?php else:?>
+        <?php echo $i->solution_id;?>
+        <?php endif;?></td>
         <td><?php echo HTML::anchor("/problem/show/{$i->problem_id}", $i->problem_id);?></td>
         <td><?php echo HTML::anchor("/u/{$i->user_id}", $i->user_id);?></td>
         <td>
@@ -50,7 +54,7 @@
         <td><?php if($i->result == 4) echo $i->memory, 'kb'; else echo('----');?></td>
         <td><?php echo e::lang($i->language);?></td>
         <td><?php if ( $current_user AND $i->allow_view_code($current_user)):?>
-        <a href="<?php e::url("/solution/source/{$i->solution_id}");?>" title="click view source"><?php echo $i->code_length;?>B</a>
+        <a href="<?php e::url("/solution/source/{$i->solution_id}");?>" title="click view details"><?php echo $i->code_length;?>B</a>
         <?php else:?>
         <?php echo $i->code_length;?>B
         <?php endif;?></td>
