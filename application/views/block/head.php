@@ -1,3 +1,6 @@
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <link rel="stylesheet" href="<?php e::url('css/bootstrap.css');?>">
 <link rel="stylesheet" href="<?php e::url('css/style.css');?>">
 <link rel="stylesheet" href="<?php e::url('css/ui-lightness/jquery-ui-1.10.3.custom.min.css');?>">
