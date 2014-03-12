@@ -104,7 +104,7 @@
                                 response(cache[term]);
                                 return;
                             }
-                            $.getJSON('/admin/problem/search', request, function(data, status, xhr){
+                            $.getJSON('<?php e::url("/admin/problem/search"); ?>', request, function(data, status, xhr){
                                 cache[ term ] = data;
                                 response( data );
                             })
