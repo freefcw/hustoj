@@ -328,3 +328,14 @@ div.user-stats li.failed{
 .footer > ul {
     padding-left: 0;
 }
+
+
+.passed{
+    color: white;
+    background-color: #4cae4c !important;
+}
+
+.trying{
+    color: white;
+    background-color: #eea236 !important;
+}

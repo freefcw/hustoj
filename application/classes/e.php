@@ -308,9 +308,9 @@ class e
         if ( $cu )
         {
             if ( $cu->is_problem_resolved($problem->problem_id))
-                return 'alert-success';
+                return 'passed';
             if ( $cu->is_problem_trying($problem->problem_id) )
-                return 'alert-warning';
+                return 'trying';
         }
         return '';
     }
