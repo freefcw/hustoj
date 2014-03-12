@@ -17,4 +17,6 @@ return array(
     'top_frontend.logout' => '登出',
     'top_frontend.register' => '注册',
     
+    'index.welcome_to_:name' => '欢迎来到:name',
+    'index.any_problem' => '如有任何问题，请参见“联系”页的信息',
 );
