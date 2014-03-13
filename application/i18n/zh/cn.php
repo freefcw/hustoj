@@ -65,7 +65,33 @@ return array(
     'problem.submit.submit' => '提交',
     'problem.submit.reset' => '清空',
 
+    'solution.status.problem_id' => '题号',
+    'solution.status.user_id' => '用户',
+    'solution.status.language' => '语言',
+    'solution.status.result' => '结果',
+    'solution.status.filter' => '筛选',
+    'solution.status.runid' => '编号',
+    'solution.status.time' => '耗时',
+    'solution.status.memory' => '内存',
+    'solution.status.code_length' => '长度',
+    'solution.status.submit_time' => '时间',
+
     'title' => '标题',
     'source' => '来源',
+
+    'Accepted' => '正确答案',
+    'Presentation Error' => '表达错误',
+    'Wrong Answer' => '错误答案',
+    'Time Limit Exceed' => '时间超限',
+    'Memory Limit Exceed' => '内存超限',
+    'Output Limit Exceed' => '输出超限',
+    'Runtime Error' => '运行错误',
+    'Compile Error' => '编译错误',
+    'Compile OK' => '编译成功',
+    'Test Running Done' => '测试运行',
+    'Pending' => '等待评测',
+    'Pending Rejudging' => '等待重测',
+    'Compiling' => '正在编译',
+    'Running &amp; Judging' => '正在运行',
 
 );
