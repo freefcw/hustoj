@@ -68,6 +68,17 @@ return array(
     'problem.submit.submit' => '提交',
     'problem.submit.reset' => '清空',
 
+    'problem.summary.total' => '提交次数',
+    'problem.summary.submit_user' => '提交人数',
+    'problem.summary.solved_user' => '通过人数',
+    'problem.summary.rank' => '名次',
+    'problem.summary.runid' => '编号',
+    'problem.summary.memory' => '内存',
+    'problem.summary.time' => '耗时',
+    'problem.summary.user' => '用户',
+    'problem.summary.language' => '语言',
+    'problem.summary.submit_time' => '时间',
+
     'solution.status.problem_id' => '题号',
     'solution.status.user_id' => '用户',
     'solution.status.language' => '语言',
