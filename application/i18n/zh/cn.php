@@ -91,6 +91,11 @@ return array(
     'user.list.last' => '最后页',
     'user.list.refresh' => '刷新',
 
+    'contest.list.id' => '编号',
+    'contest.list.title' => '比赛名称',
+    'contest.list.endtime' => '结束时间',
+    'contest.list.type' => '类型',
+
     'title' => '标题',
     'source' => '来源',
 
@@ -108,5 +113,8 @@ return array(
     'Pending Rejudging' => '等待重测',
     'Compiling' => '正在编译',
     'Running &amp; Judging' => '正在运行',
+
+    'private' => '私有',
+    'public' => '公开',
 
 );
