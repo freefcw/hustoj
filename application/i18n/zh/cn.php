@@ -79,6 +79,18 @@ return array(
     'solution.status.code_length' => '长度',
     'solution.status.submit_time' => '时间',
 
+    'user.list.rank' => '排名',
+    'user.list.user_id' => '用户名',
+    'user.list.nick' => '签名',
+    'user.list.solved' => '解决',
+    'user.list.submit' => '提交',
+    'user.list.ratio' => '比率',
+    'user.list.prev' => '上一页',
+    'user.list.next' => '下一页',
+    'user.list.top' => '第一页',
+    'user.list.last' => '最后页',
+    'user.list.refresh' => '刷新',
+
     'title' => '标题',
     'source' => '来源',
 
