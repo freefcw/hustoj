@@ -124,6 +124,14 @@ return array(
     'user.register.captcha' => '验证码',
     'user.register.register' => '注册',
 
+    'user.profile.register_:time' => '注册时间 :time',
+    'user.profile.last_access_:time' => '最后登录 :time',
+    'user.profile.accept' => '通过',
+    'user.profile.failed' => '失败',
+    'user.profile.submit' => '提交',
+    'user.profile.problem_solved' => '解决的问题',
+    'user.profile.problem_tried' => '尝试的问题',
+
     'contest.list.id' => '编号',
     'contest.list.title' => '比赛名称',
     'contest.list.endtime' => '结束时间',
