@@ -30,8 +30,7 @@
 </div>
 <div class="form-group">
     <div class="col-sm-offset-4">
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <button type="reset" class="btn">Cancel</button>
+        <button type="submit" class="btn btn-primary col-sm-4">Submit</button>
     </div>
 </div>
 </form>
