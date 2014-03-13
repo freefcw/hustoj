@@ -39,5 +39,8 @@ return array(
     'problem.searchform.title' => '标题',
     'problem.searchform.source' => '来源',
     'problem.searchform.go' => '搜索',
+    'problem.search.search_:text_in_:area' => '在:area中搜索“:text”',
+    'title' => '标题',
+    'source' => '来源',
 
 );
