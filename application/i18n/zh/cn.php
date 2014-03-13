@@ -59,6 +59,12 @@ return array(
     'problem.show.summary' => '统计',
     'problem.show.discuss' => '讨论',
 
+    'problem.submit.problem_id' => '题号',
+    'problem.submit.problem_:cpid_of_:cid' => '比赛 :cid 的题 :cpid',
+    'problem.submit.language' => '语言',
+    'problem.submit.submit' => '提交',
+    'problem.submit.reset' => '清空',
+
     'title' => '标题',
     'source' => '来源',
 
