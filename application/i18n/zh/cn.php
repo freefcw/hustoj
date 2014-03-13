@@ -32,4 +32,12 @@ return array(
     'problem.list.id' => '题号',
     'problem.list.title' => '标题',
     'problem.list.ratio_ac_submit' => '正确/提交',
+    'problem.searchform.search_text' => '搜索文本',
+    'problem.searchform.search' => '搜索',
+    'problem.searchform.type' => '类型',
+    'problem.searchform.problem_id' => '题号',
+    'problem.searchform.title' => '标题',
+    'problem.searchform.source' => '来源',
+    'problem.searchform.go' => '搜索',
+
 );
