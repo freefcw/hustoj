@@ -4,7 +4,10 @@
 <table class="table table-striped">
 <thead>
     <tr>
-        <th>Rank</th><th>User</th><th>Solved</th><th>Penalty</th>
+        <th><?php echo(__('contest.standing.rank')); ?></th>
+        <th><?php echo(__('contest.standing.user')); ?></th>
+        <th><?php echo(__('contest.standing.solved')); ?></th>
+        <th><?php echo(__('contest.standing.penalty')); ?></th>
         <?php foreach($contest->problem() as $problem): ?>
         <th><?php echo($problem->display_order());?></th>
         <?php endforeach; ?>

@@ -90,7 +90,7 @@ return array(
     'solution.status.code_length' => '长度',
     'solution.status.submit_time' => '时间',
 
-    'user.list.rank' => '排名',
+    'user.list.rank' => '名次',
     'user.list.user_id' => '用户名',
     'user.list.nick' => '签名',
     'user.list.solved' => '解决',
@@ -118,6 +118,11 @@ return array(
     'contest.header.clarification' => '答疑',
     'contest.show.id' => '题号',
     'contest.show.title' => '题目标题',
+
+    'contest.standing.rank' => '#',
+    'contest.standing.user' => '用户',
+    'contest.standing.solved' => '题',
+    'contest.standing.penalty' => '罚时',
 
     'title' => '标题',
     'source' => '来源',
