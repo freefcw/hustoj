@@ -90,6 +90,13 @@ return array(
     'solution.status.code_length' => '长度',
     'solution.status.submit_time' => '时间',
 
+    'solution.source.problem_id' => '题号',
+    'solution.source.user' => '用户',
+    'solution.source.language' => '语言',
+    'solution.source.result' => '结果',
+    'solution.source.time' => '耗时',
+    'solution.source.memory' => '内存',
+
     'user.list.rank' => '名次',
     'user.list.user_id' => '用户名',
     'user.list.nick' => '签名',
