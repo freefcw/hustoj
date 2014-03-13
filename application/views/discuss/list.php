@@ -1,23 +1,23 @@
 <?php if ( ! isset($cid) ):?>
 <ul class="breadcrumb">
-    <li><a href="<?php e::url('/discuss/');?>">Discuss</a> <span class="divider">/</span></li>
+<li><a href="<?php e::url('/discuss/');?>"><?php echo(__('discuss.list.discuss')); ?></a> <span class="divider">/</span></li>
 </ul>
 <form class="form-inline well" role="form" action="<?php e::url('/discuss');?>" method="GET">
     <div class="form-group">
-        <label class="sr-only" for="pid">Problem Id</label>
-        <input placeholder="Problem Id" name="pid" id="pid" class="form-control"/>
+        <label class="sr-only" for="pid"><?php echo(__('discuss.list.problem_id')); ?></label>
+        <input placeholder="<?php echo(__('discuss.list.problem_id')); ?>" name="pid" id="pid" class="form-control"/>
     </div>
     <div class="form-group">
-        <label class="sr-only" for="uid">User Id</label>
-        <input placeholder="User Id" name="uid" id="uid" class="form-control"/>
+        <label class="sr-only" for="uid"><?php echo(__('discuss.list.user_id')); ?></label>
+        <input placeholder="<?php echo(__('discuss.list.user_id')); ?>" name="uid" id="uid" class="form-control"/>
     </div>
-    <input type="submit" value="Filter" class="btn">
-    <a href="<?php e::url('/discuss/new');?>" class="btn btn-info pull-right">New Topic</a>
+    <input type="submit" value="<?php echo(__('discuss.list.filter')); ?>" class="btn">
+    <a href="<?php e::url('/discuss/new');?>" class="btn btn-info pull-right"><?php echo(__('discuss.list.new_topic')); ?></a>
 </form>
 <?php else:?>
     <?php echo(View::factory('contest/header', array('title' => $title, 'cid' => Request::$current->query('cid'), 'contest' => $contest)));?>
 <div class="well">
-    <a href="<?php e::url("/discuss/new?cid={$cid}");?>" class="btn btn-info">New Topic</a>
+    <a href="<?php e::url("/discuss/new?cid={$cid}");?>" class="btn btn-info"><?php echo(__('discuss.list.new_topic')); ?></a>
 </div>
 <?php endif;?>
 <hr class="clearfix"/>
@@ -30,9 +30,9 @@
         <?php if ( OJ::is_admin() ):?>
             <th><input type="checkbox" id="select-all-topic"/></th>
         <?php endif;?>
-        <th class="col-sm-1"></th>
-        <th>Title</th>
-        <th class="col-sm-2">Author</th>
+        <th class="col-sm-1"><?php echo(__('discuss.list.problem_id')); ?></th>
+        <th><?php echo(__('discuss.list.title')); ?></th>
+        <th class="col-sm-2"><?php echo(__('discuss.list.author')); ?></th>
     </tr>
     </thead>
     <tbody>
@@ -54,7 +54,8 @@
     </tbody>
 </table>
 <?php if ( OJ::is_admin() ):?>
-    <button name="action" value="deletetopic" class="btn btn-warning">Delete Topic</button> <button class="btn btn-danger" name="action" value="andblockuser">Delete And Block</button>
+    <button name="action" value="deletetopic" class="btn btn-warning"><?php echo(__('discuss.list.delete')); ?></button>
+    <button class="btn btn-danger" name="action" value="andblockuser"><?php echo(__('discuss.list.delete_block')); ?></button>
     </form>
 <?php endif;?>
 <ul class="pager double-side-pager">
@@ -65,13 +66,13 @@
         $params['page'] = $page - 1;
         $query_param = URL::query($params);
         ?>
-        <li class="previous"><?php echo HTML::anchor("discuss/{$query_param}", '&larr; Newer');?></li>
+        <li class="previous"><?php echo HTML::anchor("discuss/{$query_param}", __('pager.newer'));?></li>
     <?php endif;?>
     <?php if ($page < $total): ?>
         <?php
         $params['page'] = $page + 1;
         $query_param = URL::query($params);
         ?>
-        <li class="next"><?php echo HTML::anchor("discuss/{$query_param}", 'Older &rarr;');?></li>
+        <li class="next"><?php echo HTML::anchor("discuss/{$query_param}", __('pager.older'));?></li>
     <?php endif;?>
 </ul>

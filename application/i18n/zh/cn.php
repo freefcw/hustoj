@@ -124,6 +124,16 @@ return array(
     'contest.standing.solved' => '题',
     'contest.standing.penalty' => '罚时',
 
+    'discuss.list.discuss' => '讨论',
+    'discuss.list.problem_id' => '题号',
+    'discuss.list.user_id' => '用户',
+    'discuss.list.filter' => '筛选',
+    'discuss.list.new_topic' => '发帖',
+    'discuss.list.title' => '标题',
+    'discuss.list.author' => '作者',
+    'discuss.list.delete' => '删除主题',
+    'discuss.list.delete_block' => '删除并禁止',
+
     'title' => '标题',
     'source' => '来源',
 
