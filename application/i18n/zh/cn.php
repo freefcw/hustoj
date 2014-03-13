@@ -161,6 +161,11 @@ return array(
     'discuss.show.reply_:time_before' => '回复于 :time 前',
     'discuss.show.delete_reply' => '删除回复',
     'discuss.show.reply' => '回复',
+    'discuss.edit.new_topic' => '主题',
+    'discuss.edit.problem_id' => '题号',
+    'discuss.edit.title' => '标题',
+    'discuss.edit.content' => '内容',
+    'discuss.edit.submit' => '提交',
 
     'title' => '标题',
     'source' => '来源',
