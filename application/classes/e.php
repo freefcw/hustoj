@@ -252,9 +252,9 @@ class e
      * get base config
      *
      * @param string $key
-     * @param return_type $default
+     * @param string $default
      *
-     * @return return_type
+     * @return string
      */
     protected static function get_base_config($key, $default)
     {
