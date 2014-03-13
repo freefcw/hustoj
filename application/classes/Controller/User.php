@@ -64,7 +64,7 @@ class Controller_User extends Controller_Base
                 {
                     if ( strlen($safe_data['newpassword']) < 6)
                     {
-                        $error = 'new password is less than 4 chars or not same';
+                        $error = __('user.edit.error_too_short');
                     }
                     $user->password = Auth::instance()->hash($safe_data['newpassword']);
                 }
@@ -73,10 +73,10 @@ class Controller_User extends Controller_Base
                 {
                     $user->update($safe_data);
                     $user->save();
-                    $tip = 'Update Success';
+                    $tip = __('user.edit.edit_done');
                 }
             } else {
-                $error = 'Password Wrong';
+                $error = __('user.edit.error_password');
             }
         }
 
