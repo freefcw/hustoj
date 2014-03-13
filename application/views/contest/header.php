@@ -3,7 +3,7 @@
     <?php echo(__('contest.header.start')); ?><span class="label label-success"><?php echo($contest->start_time);?></span>
     <?php echo(__('contest.header.end')); ?><span class="label label-danger"><?php echo($contest->end_time);?></span>
     <?php echo(__('contest.header.now')); ?><span class="label label-warning"><?php echo(date('Y-m-d H:i:s'));?></span>
-    <?php echo(__('contest.header.type')); ?><span class="label label-info"><?php echo(e::private_value($contest['private']));?></span>
+    <?php echo(__('contest.header.type')); ?><span class="label label-info"><?php echo(__(e::private_value($contest['private'])));?></span>
 </div>
 <ul class="nav nav-pills contest-nav">
     <li <?php if (Request::$current->action() == 'show'):?> class="active" <?php endif;?>><?php echo HTML::anchor("/contest/show/{$cid}", __('contest.header.problems'));?></li>
