@@ -2,7 +2,10 @@
 <?php echo(View::factory('contest/header', array('title' => $title, 'cid' => $cid, 'contest' => $contest)));?>
 <table class="table table-striped">
 <thead>
-    <tr><th>ID</th><th>Title</th></tr>
+    <tr>
+        <th><?php echo(__('contest.show.id')); ?></th>
+        <th><?php echo(__('contest.show.title')); ?></th>
+    </tr>
 </thead>
 <tbody>
 <?php foreach($contest->problem() as $p):?>

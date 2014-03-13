@@ -96,6 +96,18 @@ return array(
     'contest.list.endtime' => '结束时间',
     'contest.list.type' => '类型',
 
+    'contest.header.start' => '开始于：',
+    'contest.header.end' => '结束于：',
+    'contest.header.now' => '刷新时间：',
+    'contest.header.type' => '',
+    'contest.header.problems' => '题目',
+    'contest.header.standing' => '排名',
+    'contest.header.statistics' => '统计',
+    'contest.header.status' => '状态',
+    'contest.header.clarification' => '答疑',
+    'contest.show.id' => '题号',
+    'contest.show.title' => '题目标题',
+
     'title' => '标题',
     'source' => '来源',
 
