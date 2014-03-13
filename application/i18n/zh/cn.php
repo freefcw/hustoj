@@ -26,6 +26,9 @@ return array(
     'footer.copyright_:year_:team_reserved' => '版权所有 &copy; :year :team. 保留所有权利',
     'footer.power_by_:hustoj' => '基于 :hustoj 项目',
 
+    'pager.newer' => '&larr; 上一页',
+    'pager.older' => '下一页 &rarr;',
+
     'index.welcome_to_:name' => '欢迎来到:name',
     'index.any_problem' => '如有任何问题，请参见“联系”页的信息',
 
