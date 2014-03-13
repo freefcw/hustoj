@@ -1,15 +1,15 @@
 <div class="footer center-block">
     <ul>
-        <li><?php echo HTML::anchor('about', 'About');?></li>
-        <li><?php echo HTML::anchor('links', 'Links');?></li>
-        <li><?php echo HTML::anchor('status', 'Status');?></li>
-        <li><?php echo HTML::anchor('contact', 'Contact');?></li>
-        <li><?php echo HTML::anchor('help', 'Help');?></li>
-        <li><?php echo HTML::anchor('terms', 'Terms of Service');?></li>
+        <li><?php echo HTML::anchor('about', __('footer.about'));?></li>
+        <li><?php echo HTML::anchor('links', __('footer.links'));?></li>
+        <li><?php echo HTML::anchor('status', __('footer.status'));?></li>
+        <li><?php echo HTML::anchor('contact', __('footer.contact'));?></li>
+        <li><?php echo HTML::anchor('help', __('footer.help'));?></li>
+        <li><?php echo HTML::anchor('terms', __('footer.terms'));?></li>
     </ul>
     <div class="runtime-info">{memory_usage}, {execution_time}</div>
-    <p id="copyright">Copyright &copy; <?php echo(date('Y'));?> <?php echo(e::get_website_team()); ?>. All rights reserved.</p>
-    <p id="copyright">Powered by <?php echo(HTML::anchor('https://github.com/freefcw/hustoj', 'HUSTOJ'));?> Project.</p>
+    <p id="copyright"><?php echo(__('footer.copyright_:year_:team_reserved', array(':year'=>date('Y'), ':team'=>e::get_website_team()))); ?></p>
+    <p id="copyright"><?php echo(__('footer.power_by_:hustoj', array(':hustoj'=>HTML::anchor('https://github.com/freefcw/hustoj', 'HUSTOJ')))); ?></p>
 </div>
 <?php echo View::factory('block/ga');?>
 <?php if (OJ::is_backend()):?>

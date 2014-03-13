@@ -17,6 +17,15 @@ return array(
     'top_frontend.logout' => '登出',
     'top_frontend.register' => '注册',
     
+    'footer.about' => '关于',
+    'footer.links' => '链接',
+    'footer.status' => '状态',
+    'footer.contact' => '联系',
+    'footer.help' => '帮助',
+    'footer.terms' => '条约',
+    'footer.copyright_:year_:team_reserved' => '版权所有 &copy; :year :team. 保留所有权利',
+    'footer.power_by_:hustoj' => '基于 :hustoj 项目',
+
     'index.welcome_to_:name' => '欢迎来到:name',
     'index.any_problem' => '如有任何问题，请参见“联系”页的信息',
 );
