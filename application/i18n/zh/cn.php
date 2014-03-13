@@ -28,4 +28,8 @@ return array(
 
     'index.welcome_to_:name' => '欢迎来到:name',
     'index.any_problem' => '如有任何问题，请参见“联系”页的信息',
+
+    'problem.list.id' => '题号',
+    'problem.list.title' => '标题',
+    'problem.list.ratio_ac_submit' => '正确/提交',
 );

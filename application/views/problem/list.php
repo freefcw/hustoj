@@ -10,7 +10,9 @@
 <thead>
     <tr>
         <?php /* @var Model_User $current_user */if ($current_user):?><th></th><?php endif;?>
-        <th>ID</th><th>TITLE</th><th>Ratio(AC/Submit)</th>
+        <th><?php echo(__('problem.list.id')); ?></th>
+        <th><?php echo(__('problem.list.title')); ?></th>
+        <th><?php echo(__('problem.list.ratio_ac_submit')); ?></th>
     </tr>
 </thead>
 <tbody>
