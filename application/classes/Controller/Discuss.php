@@ -27,6 +27,12 @@ class Controller_Discuss extends Controller_Base
 
         $cu = Auth::instance()->get_user();
         if ( $this->request->is_post() ) {
+
+            if ( $cu->submit < 1 )
+            {
+                throw new Exception_Base('Please Submit a problem before give a topic');
+            }
+
             $reply = new Model_Reply;
             $reply->author_id = $cu->user_id;
             $reply->topic_id = $topic_id;
@@ -122,9 +128,16 @@ class Controller_Discuss extends Controller_Base
 
     public function action_new()
     {
+        /* @var Model_User $cu */
         $cu = Auth::instance()->get_user();
 
+        if ( $cu->submit < 1 )
+        {
+            throw new Exception_Base('Please Submit a problem before give a topic');
+        }
+
         if ( $this->request->is_post() ) {
+
             $topic = new Model_Topic;
             $topic->title = $this->get_post('title');
             $topic->author_id = $cu->user_id;
