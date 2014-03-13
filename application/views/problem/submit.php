@@ -28,9 +28,9 @@
 <div class="form-group">
     <textarea class="form-control" cols="50" rows="20" name="source"></textarea>
 </div>
-<div class="form-group">
-    <div class="col-sm-offset-4">
-        <button type="submit" class="btn btn-primary col-sm-4">Submit</button>
+<div class="form-group" id="fn-nav">
+    <div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </div>
 </form>
