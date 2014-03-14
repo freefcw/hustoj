@@ -286,4 +286,12 @@ return array(
     'private' => '私有',
     'public' => '公开',
 
+    '1 year|%d years' => '1 年|%d 年',
+    '1 week|%d weeks' => '1 周|%d 周',
+    '1 day|%d days'   => '1 天|%d 天',
+    '1 hour|%d hours' => '1 小时|%d 小时',
+    '1 min|%d mins'   => '1 分钟|%d 分钟',
+    '1 sec|%d secs'   => '1 秒|%d 秒',
+    'Just now'        => '不久'
+
 );
