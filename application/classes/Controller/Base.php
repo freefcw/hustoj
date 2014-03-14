@@ -33,7 +33,7 @@ class Controller_Base extends Controller
     public function error_page($e)
     {
         $this->view = $e->getTemplate();
-        $this->template_data['title'] = 'Error !!';
+        $this->template_data['title'] = __('common.error');
         $this->flash_message($e->getMessage());
     }
 

@@ -23,7 +23,7 @@ class Controller_Problem extends Controller_Base
         //TODO: add check permission of contest
         $total = Model_Problem::count($filter);
 
-        $title = 'Problem Set ' . $page;
+        $title = __('problem.list.problem_set_:id', array(':id' => $page));
         $this->template_data['pages'] = ceil(intval($total) / OJ::per_page);
         $this->template_data['title'] = $title;
     }
@@ -111,7 +111,7 @@ class Controller_Problem extends Controller_Base
         $this->template_data['cid'] = $this->get_query('cid', null);
         $this->template_data['cpid'] = $this->get_query('pid', null);
 
-        $this->template_data['title'] = 'Submit';
+        $this->template_data['title'] = __('problem.submit.submit_code');
     }
 
     public function action_summary()
@@ -127,7 +127,8 @@ class Controller_Problem extends Controller_Base
         $this->template_data['summary'] = $problem->summary();
         $this->template_data['solutions'] = $problem->best_solution();
 
-        $this->template_data['title'] = "Summary of {$problem_id}";
+        $this->template_data['title']
+            = __('problem.summary.summary_of_:id', array(':id' => $problem_id));
 
     }
 
@@ -148,7 +149,8 @@ class Controller_Problem extends Controller_Base
         $this->template_data['area'] = $area;
         $this->template_data['search_text'] = $text;
         $this->template_data['problemlist'] = $list;
-        $this->template_data['title'] = "{$text} search result";
+        $this->template_data['title']
+            = __(':text_search_result', array(':text' => $text));
     }
 
 } // End Welcome

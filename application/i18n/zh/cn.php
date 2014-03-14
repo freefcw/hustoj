@@ -32,6 +32,7 @@ return array(
     'index.welcome_to_:name' => '欢迎来到:name',
     'index.any_problem' => '如有任何问题，请参见“联系”页的信息',
 
+    'problem.list.problem_set_:id' => '题目列表 :id',
     'problem.list.id' => '题号',
     'problem.list.title' => '标题',
     'problem.list.ratio_ac_submit' => '正确/提交',
@@ -42,6 +43,7 @@ return array(
     'problem.searchform.title' => '标题',
     'problem.searchform.source' => '来源',
     'problem.searchform.go' => '搜索',
+    'problem.search.:text_search_result' => ':text的搜索结果',
     'problem.search.search_:text_in_:area' => '在:area中搜索“:text”',
 
     'problem.show.time_limit' => '时间限制：',
@@ -62,12 +64,14 @@ return array(
     'problem.show.summary' => '统计',
     'problem.show.discuss' => '讨论',
 
+    'problem.submit.submit_code' => '提交代码',
     'problem.submit.problem_id' => '题号',
     'problem.submit.problem_:cpid_of_:cid' => '比赛 :cid 的题 :cpid',
     'problem.submit.language' => '语言',
     'problem.submit.submit' => '提交',
     'problem.submit.reset' => '清空',
 
+    'problem.summary.summary_of_:id' => '题 :id 的统计',
     'problem.summary.total' => '提交次数',
     'problem.summary.submit_user' => '提交人数',
     'problem.summary.solved_user' => '通过人数',
@@ -79,6 +83,7 @@ return array(
     'problem.summary.language' => '语言',
     'problem.summary.submit_time' => '时间',
 
+    'solution.status.status' => '评测状态',
     'solution.status.problem_id' => '题号',
     'solution.status.user_id' => '用户',
     'solution.status.language' => '语言',
@@ -90,6 +95,7 @@ return array(
     'solution.status.code_length' => '长度',
     'solution.status.submit_time' => '时间',
 
+    'solution.source.solution_detail' => '评测详情',
     'solution.source.problem_id' => '题号',
     'solution.source.user' => '用户',
     'solution.source.language' => '语言',
@@ -97,6 +103,7 @@ return array(
     'solution.source.time' => '耗时',
     'solution.source.memory' => '内存',
 
+    'user.list.user_rank' => '用户排名',
     'user.list.rank' => '名次',
     'user.list.user_id' => '用户名',
     'user.list.nick' => '签名',
@@ -130,6 +137,7 @@ return array(
     'user.register.1_to_30' => '30 字以下，必填',
     'user.register.captcha' => '验证码',
     'user.register.register' => '注册',
+
     'user.edit.user_edit' => '用户修改',
     'user.edit.current_password' => '当前密码',
     'user.edit.new_password' => '修改密码',
@@ -140,6 +148,7 @@ return array(
     'user.edit.error_too_short' => '新密码过短',
     'user.edit.edit_done' => '成功修改信息',
 
+    'user.profile.about_:name' => '关于:name',
     'user.profile.register_:time' => '注册时间 :time',
     'user.profile.last_access_:time' => '最后登录 :time',
     'user.profile.accept' => '通过',
@@ -148,6 +157,7 @@ return array(
     'user.profile.problem_solved' => '解决的问题',
     'user.profile.problem_tried' => '尝试的问题',
 
+    'contest.list.contest_list' => '比赛列表',
     'contest.list.id' => '编号',
     'contest.list.title' => '比赛名称',
     'contest.list.endtime' => '结束时间',
@@ -185,7 +195,7 @@ return array(
     'discuss.show.reply_:time_before' => '回复于 :time 前',
     'discuss.show.delete_reply' => '删除回复',
     'discuss.show.reply' => '回复',
-    'discuss.edit.new_topic' => '主题',
+    'discuss.edit.new_topic' => '新主题',
     'discuss.edit.problem_id' => '题号',
     'discuss.edit.title' => '标题',
     'discuss.edit.content' => '内容',
@@ -207,6 +217,7 @@ return array(
     'mail.view.time' => '时间：',
 
     'common.error' => '糟糕！出错了。',
+    'common.user_disabled_title' => '用户被禁用',
     'common.user_disabled' => '您的用户已被禁用，请联系管理员',
 
     'title' => '标题',

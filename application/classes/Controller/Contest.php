@@ -26,7 +26,7 @@ class Controller_Contest extends Controller_Base
         // view
         $this->template_data['total'] = ceil($total / OJ::per_page);
         $this->template_data['list']  = $contest_list;
-        $this->template_data['title'] = "Contest List";
+        $this->template_data['title'] = __('contest.list.contest_list');
     }
 
     public function action_talk()

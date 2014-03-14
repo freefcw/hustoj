@@ -86,7 +86,7 @@ class Controller_Discuss extends Controller_Base
 
         $this->template_data['topic_list'] = $topic_list;
         $this->template_data['total'] = ceil( $total / OJ::per_page);
-        $this->template_data['title'] = 'Discuss';
+        $this->template_data['title'] = __('discuss.list.discuss');
     }
 
     public function action_batch()
@@ -143,6 +143,6 @@ class Controller_Discuss extends Controller_Base
 
         $this->view = 'discuss/edit';
 
-        $this->template_data['title'] = 'New Topic';
+        $this->template_data['title'] = __('discuss.edit.new_topic');
     }
 }

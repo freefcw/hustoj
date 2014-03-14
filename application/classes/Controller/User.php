@@ -13,7 +13,7 @@ class Controller_User extends Controller_Base
 
         // views
         $total = Model_User::count($filter);
-        $this->template_data['title'] = "User Rank";
+        $this->template_data['title'] = __('user.list.user_rank');
         $this->template_data['users'] = $users;
         $this->template_data['page'] = $page;
         $this->template_data['total'] = $total;
@@ -31,7 +31,8 @@ class Controller_User extends Controller_Base
         if ( ! $user )
             $this->go_home();
 
-        $this->template_data['title'] = "About {$uid}";
+        $this->template_data['title']
+            = __('user.profile.about_:name', array(':name' => $uid));
         $this->template_data['user'] = $user;
     }
 
@@ -84,13 +85,13 @@ class Controller_User extends Controller_Base
         $this->template_data['error'] = isset($error) ? $error : null;
         $this->template_data['tip'] = isset($tip) ? $tip : null;
 
-        $this->template_data['title'] = "Update Imformation";
+        $this->template_data['title'] = __('user.edit.user_edit');
     }
 
     public function action_disabled()
     {
         //TODO: more detail
-        $this->template_data['title'] = 'ACCOUNT DISABLED';
+        $this->template_data['title'] = __('common.user_disabled_title');
     }
 
     public function action_register()
@@ -130,7 +131,7 @@ class Controller_User extends Controller_Base
             }
         }
 
-        $this->template_data['title'] = "User Register";
+        $this->template_data['title'] = __('user.register.user_register');
     }
 
     public function action_login()
@@ -166,7 +167,7 @@ class Controller_User extends Controller_Base
             $this->flash_message('Username or password error, please try again.');
         }
 
-        $this->template_data['title'] = 'Welcome';
+        $this->template_data['title'] = __('user.login.user_login');
         $this->template_data['username'] = $this->get_post('username');
     }
 
