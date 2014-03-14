@@ -7,6 +7,9 @@
 
 class Auth_Hoj extends Kohana_Auth
 {
+
+    public $current_user = NULL;
+
     protected function _login($user, $password, $remember)
     {
         if (! is_object($user)) {
@@ -98,5 +101,24 @@ class Auth_Hoj extends Kohana_Auth
             $user->save();
         }
         return parent::complete_login($user);
+    }
+
+    /**
+     * @param null $default
+     *
+     * @return mixed|Model_User
+     */
+    public function get_user($default = NULL)
+    {
+        if ( ! $this->current_user )
+        {
+            $user = parent::get_user($default = NULL);
+            if ( $user )
+            {
+                $this->current_user = Model_User::find_by_username($user->user_id);
+            }
+        }
+
+        return $this->current_user;
     }
 }
