@@ -206,6 +206,9 @@ return array(
     'mail.view.sender' => '发件人：',
     'mail.view.time' => '时间：',
 
+    'common.error' => '糟糕！出错了。',
+    'common.user_disabled' => '您的用户已被禁用，请联系管理员',
+
     'title' => '标题',
     'source' => '来源',
 

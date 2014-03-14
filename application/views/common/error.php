@@ -1,4 +1,2 @@
 <hr />
-
-this is a error page, You mus kidding me for this error!
-
+<h2><?php echo(__('common.error')); ?>
