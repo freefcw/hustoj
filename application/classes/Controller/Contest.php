@@ -113,7 +113,7 @@ class Controller_Contest extends Controller_Base
             if ( $contest->is_open() ) {
                 $problem = $contest->problem(intval($pid));
             } else {
-                $error = 'Contest is not Open';
+                $error = __('common.contest_not_open');
                 throw new Exception_Base($error);
             }
         $this->template_data['contest'] = $contest;
@@ -136,9 +136,9 @@ class Controller_Contest extends Controller_Base
         }
         //TODO: add more notice
         if ( $current_user )
-            $message = '您没有权限访问该私有比赛';
+            $message = __('common.contest_private');
         else {
-            $message = '请先登录后再查看此比赛';
+            $message = __('common.contest_login_first');
         }
         throw new Exception_Base($message);
     }

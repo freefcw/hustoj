@@ -23,7 +23,7 @@ class Controller_Discuss extends Controller_Base
 
         $topic = Model_Topic::find_by_id($topic_id);
         if ( ! $topic)
-            throw new Exception_Base('Not found the topic');
+            throw new Exception_Base(__('common.discuss_not_found'));
 
         $cu = Auth::instance()->get_user();
         if ( $this->request->is_post() ) {
@@ -54,7 +54,7 @@ class Controller_Discuss extends Controller_Base
             $topic->destroy();
             $this->redirect('/discuss');
         } else {
-            throw new Exception_Base('Topic Not found');
+            throw new Exception_Base(__('common.discuss_not_found'));
         }
     }
 

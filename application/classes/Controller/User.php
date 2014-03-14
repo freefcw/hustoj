@@ -43,7 +43,7 @@ class Controller_User extends Controller_Base
         $uid = $this->request->param('id');
         $user = Model_User::find_by_id($uid);
         if ( ! $user )
-            throw new Exception_Base('User not found!');
+            throw new Exception_Base(__('common.user_not_found'));
 
         $user->disable();
 
@@ -123,7 +123,7 @@ class Controller_User extends Controller_Base
                     Auth::instance()->login($post['username'], $post['password'], true);
                     $this->go_home();
                 } else {
-                    array_push($errors, 'User Id is existed!');
+                    array_push($errors, __('common.user_exist'));
                 }
                 array_merge($errors, $post->errors());
                 $this->template_data['errors'] = $errors;
@@ -164,7 +164,7 @@ class Controller_User extends Controller_Base
                 }
             }
 
-            $this->flash_message('Username or password error, please try again.');
+            $this->flash_message(__('common.login_error'));
         }
 
         $this->template_data['title'] = __('user.login.user_login');
@@ -204,7 +204,7 @@ class Controller_User extends Controller_Base
             {
                 return true;
             }
-            $this->flash_message('Error Captcha Code');
+            $this->flash_message(__('common.captcha_error'));
             return false;
         }
         return true;

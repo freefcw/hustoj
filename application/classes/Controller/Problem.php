@@ -41,7 +41,7 @@ class Controller_Problem extends Controller_Base
             $this->template_data['title'] = $problem['title'];
             $this->template_data['problem'] = $problem;
         } else {
-            throw new Exception_Base('Not found the problem');
+            throw new Exception_Base(__('common.problem_not_found'));
         }
     }
 
@@ -65,10 +65,10 @@ class Controller_Problem extends Controller_Base
                     $problem = $contest->problem($cpid);
                     if ( !$problem )
                     {
-                        throw new Exception_Base('Not Found this problem');
+                        throw new Exception_Base(__('common.problem_not_found'));
                     }
                 } else {
-                    throw new Exception_Base('Not Found this contest');
+                    throw new Exception_Base(__('common.contest_not_found'));
                 }
             } else {
                 // so is normal submit
@@ -76,7 +76,7 @@ class Controller_Problem extends Controller_Base
 
                 if ( ! $problem OR !$problem->can_user_access($current_user) )
                 {
-                    throw new Exception_Base('Not Found this problem');
+                    throw new Exception_Base(__('common.problem_not_found'));
                 }
             }
 
@@ -122,7 +122,7 @@ class Controller_Problem extends Controller_Base
 
         $current_user = Auth::instance()->get_user();
         if ( ! $problem OR ! $problem->can_user_access($current_user) )
-            throw new Exception_Base('Not found the problem');
+            throw new Exception_Base(__('common.problem_not_found'));
 
         $this->template_data['summary'] = $problem->summary();
         $this->template_data['solutions'] = $problem->best_solution();
