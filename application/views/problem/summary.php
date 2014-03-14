@@ -1,12 +1,12 @@
 <div class="row">
 <div class="col-sm-3">
 <ul class="nav nav-pills nav-stacked">
-    <li><a>Total Submissions<span class="badge pull-right"><?php echo($summary['total']);?></span></a></li>
-    <li><a>Submitted Users<span class="badge pull-right"><?php echo($summary['submit_user']);?></span></a></li>
-    <li><a>Solved User<span class="badge pull-right"><?php echo($summary['ac_user']);?></span></a></li>
+    <li><a><?php echo(__('problem.summary.total')); ?><span class="badge pull-right"><?php echo($summary['total']);?></span></a></li>
+    <li><a><?php echo(__('problem.summary.submit_user')); ?><span class="badge pull-right"><?php echo($summary['submit_user']);?></span></a></li>
+    <li><a><?php echo(__('problem.summary.solved_user')); ?><span class="badge pull-right"><?php echo($summary['ac_user']);?></span></a></li>
     <?php foreach($summary['more'] as $key=>$value):?>
         <li>
-            <a><?php print OJ::$status[$key];?><span class="badge pull-right"><?php print $value;?></span></a>
+            <a><?php print __(OJ::$status[$key]);?><span class="badge pull-right"><?php print $value;?></span></a>
         </li>
     <?php endforeach;?>
 </ul>
@@ -15,7 +15,13 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th>Rank</th><th>RunID</th><th>Momery</th><th>Time</th><th>User</th><th>Language</th><th>Submit Time</th>
+            <th><?php echo(__('problem.summary.rank')); ?></th>
+            <th><?php echo(__('problem.summary.runid')); ?></th>
+            <th><?php echo(__('problem.summary.memory')); ?></th>
+            <th><?php echo(__('problem.summary.time')); ?></th>
+            <th><?php echo(__('problem.summary.user')); ?></th>
+            <th><?php echo(__('problem.summary.language')); ?></th>
+            <th><?php echo(__('problem.summary.submit_time')); ?></th>
 		</tr>
     </thead>
 	<tbody>

@@ -9,7 +9,9 @@
 <table class="table table-striped">
 <thead>
     <tr>
-        <th>ID</th><th>TITLE</th><th>Ratio(AC/Submit)</th>
+        <th><?php echo(__('problem.list.id')); ?></th>
+        <th><?php echo(__('problem.list.title')); ?></th>
+        <th><?php echo(__('problem.list.ratio_ac_submit')); ?></th>
     </tr>
 </thead>
 <tbody>

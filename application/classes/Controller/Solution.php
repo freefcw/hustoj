@@ -19,12 +19,12 @@ class Controller_Solution extends Controller_Base
 
         if ( $solution and $solution->allow_view_code($user) )
         {
-            $this->template_data['title'] = 'Solution Code';
+            $this->template_data['title'] = __('solution.source.solution_detail');
             $this->template_data['solution'] = $solution;
             $this->template_data['cinfo'] = $cinfo;
             $this->template_data['rinfo'] = $rinfo;
         } else {
-            throw new Exception_Base('Not found the source of solution');
+            throw new Exception_Base(__('common.solution_detail_not_found'));
         }
     }
 
@@ -59,7 +59,7 @@ class Controller_Solution extends Controller_Base
         $total = Model_Solution::count($filter);
 
         // view
-        $this->template_data['title'] = 'Status';
+        $this->template_data['title'] = __('solution.status.status');
         $this->template_data['list']  = $status;
         $this->template_data['total'] = ceil($total / $per_page);
 

@@ -23,7 +23,7 @@ class Controller_Discuss extends Controller_Base
 
         $topic = Model_Topic::find_by_id($topic_id);
         if ( ! $topic)
-            throw new Exception_Base('Not found the topic');
+            throw new Exception_Base(__('common.discuss_not_found'));
 
         $cu = Auth::instance()->get_user();
         if ( $this->request->is_post() ) {
@@ -60,7 +60,7 @@ class Controller_Discuss extends Controller_Base
             $topic->destroy();
             $this->redirect('/discuss');
         } else {
-            throw new Exception_Base('Topic Not found');
+            throw new Exception_Base(__('common.discuss_not_found'));
         }
     }
 
@@ -92,7 +92,7 @@ class Controller_Discuss extends Controller_Base
 
         $this->template_data['topic_list'] = $topic_list;
         $this->template_data['total'] = ceil( $total / OJ::per_page);
-        $this->template_data['title'] = 'Discuss';
+        $this->template_data['title'] = __('discuss.list.discuss');
     }
 
     public function action_batch()
@@ -156,6 +156,6 @@ class Controller_Discuss extends Controller_Base
 
         $this->view = 'discuss/edit';
 
-        $this->template_data['title'] = 'New Topic';
+        $this->template_data['title'] = __('discuss.edit.new_topic');
     }
 }

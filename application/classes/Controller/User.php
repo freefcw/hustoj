@@ -13,7 +13,7 @@ class Controller_User extends Controller_Base
 
         // views
         $total = Model_User::count($filter);
-        $this->template_data['title'] = "User Rank";
+        $this->template_data['title'] = __('user.list.user_rank');
         $this->template_data['users'] = $users;
         $this->template_data['page'] = $page;
         $this->template_data['total'] = $total;
@@ -31,7 +31,8 @@ class Controller_User extends Controller_Base
         if ( ! $user )
             $this->go_home();
 
-        $this->template_data['title'] = "About {$uid}";
+        $this->template_data['title']
+            = __('user.profile.about_:name', array(':name' => $uid));
         $this->template_data['user'] = $user;
     }
 
@@ -42,7 +43,7 @@ class Controller_User extends Controller_Base
         $uid = $this->request->param('id');
         $user = Model_User::find_by_id($uid);
         if ( ! $user )
-            throw new Exception_Base('User not found!');
+            throw new Exception_Base(__('common.user_not_found'));
 
         $user->disable();
 
@@ -64,7 +65,7 @@ class Controller_User extends Controller_Base
                 {
                     if ( strlen($safe_data['newpassword']) < 6)
                     {
-                        $error = 'new password is less than 4 chars or not same';
+                        $error = __('user.edit.error_too_short');
                     }
                     $user->password = Auth::instance()->hash($safe_data['newpassword']);
                 }
@@ -73,10 +74,10 @@ class Controller_User extends Controller_Base
                 {
                     $user->update($safe_data);
                     $user->save();
-                    $tip = 'Update Success';
+                    $tip = __('user.edit.edit_done');
                 }
             } else {
-                $error = 'Password Wrong';
+                $error = __('user.edit.error_password');
             }
         }
 
@@ -84,13 +85,13 @@ class Controller_User extends Controller_Base
         $this->template_data['error'] = isset($error) ? $error : null;
         $this->template_data['tip'] = isset($tip) ? $tip : null;
 
-        $this->template_data['title'] = "Update Imformation";
+        $this->template_data['title'] = __('user.edit.user_edit');
     }
 
     public function action_disabled()
     {
         //TODO: more detail
-        $this->template_data['title'] = 'ACCOUNT DISABLED';
+        $this->template_data['title'] = __('common.user_disabled_title');
     }
 
     public function action_register()
@@ -123,14 +124,14 @@ class Controller_User extends Controller_Base
                     Auth::instance()->login($post['username'], $post['password'], true);
                     $this->go_home();
                 } else {
-                    $this->flash_message(array('User Id existed!'));
+                    $this->flash_message(array(__('common.user_exist')));
                 }
             }
             $errors = $post->errors("User");
             $this->flash_message($errors);
         }
 
-        $this->template_data['title'] = "User Register";
+        $this->template_data['title'] = __('user.register.user_register');
     }
 
     public function action_login()
@@ -163,10 +164,10 @@ class Controller_User extends Controller_Base
                 }
             }
 
-            $this->flash_message('Username or password error, please try again.');
+            $this->flash_message(__('common.login_error'));
         }
 
-        $this->template_data['title'] = 'Welcome';
+        $this->template_data['title'] = __('user.login.user_login');
         $this->template_data['username'] = $this->get_post('username');
     }
 
@@ -203,7 +204,7 @@ class Controller_User extends Controller_Base
             {
                 return true;
             }
-            $this->flash_message('Error Captcha Code');
+            $this->flash_message(__('common.captcha_error'));
             return false;
         }
         return true;

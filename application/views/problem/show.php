@@ -7,35 +7,36 @@ if (isset($cid)) {
 } else {
     echo($problem['problem_id']);
 } ?>
-    -- <?php echo($problem['title']); ?></h1>
+    - <?php echo($problem['title']); ?></h1>
 <div class="contest-info">
-    <p>Time Limit: <span class="label label-warning"><?php echo($problem['time_limit']);?>S</span> Memory Limit: <span
-            class="label label-danger"><?php echo($problem['memory_limit']);?>MB</span><br/>
+    <p>
+        <?php echo(__('problem.show.time_limit')); ?><span class="label label-warning"><?php echo($problem['time_limit']);?><?php echo(__('problem.show.second')); ?></span>
+        <?php echo(__('problem.show.memory_limit')); ?><span class="label label-danger"><?php echo($problem['memory_limit']);?><?php echo(__('problem.show.MB')); ?></span><br/>
     </p>
     <div>
-        <?php if ($problem->is_special_judge()):?><span class="label label-danger">Special Judge</span><?php endif;?>
-        Submissions: <?php echo($problem['submit']);?>
-        Solved: <?php echo($problem['accepted']);?>
+        <?php if ($problem->is_special_judge()):?><span class="label label-danger"><?php echo(__('problem.show.spj'));?></span><?php endif;?>
+        <?php echo(__('problem.show.submissions_:count', array(':count' => $problem['submit'])));?>
+        <?php echo(__('problem.show.solved_:count', array(':count' => $problem['accepted'])));?>
     </div>
 </div>
 <dl class="detail">
-    <dt>Desctiption</dt>
+    <dt><?php echo(__('problem.show.description')); ?></dt>
     <dd><?php echo($problem['description']);?></dd>
-    <dt>Input</dt>
+    <dt><?php echo(__('problem.show.input')); ?></dt>
     <dd><?php echo($problem['input']);?></dd>
-    <dt>Output</dt>
+    <dt><?php echo(__('problem.show.output')); ?></dt>
     <dd><?php echo($problem['output']);?></dd>
-    <dt>Sample Input</dt>
+    <dt><?php echo(__('problem.show.sample_input')); ?></dt>
     <dd>
         <pre><?php echo($problem['sample_input']);?></pre>
     </dd>
-    <dt>Sample Output</dt>
+    <dt><?php echo(__('problem.show.sample_output')); ?></dt>
     <dd>
         <pre><?php echo($problem['sample_output']);?></pre>
     </dd>
-    <dt>Hint</dt>
+    <dt><?php echo(__('problem.show.hint')); ?></dt>
     <dd><?php echo($problem['hint']); ?></dd>
-    <dt>Source</dt>
+    <dt><?php echo(__('problem.show.source')); ?></dt>
     <dd><?php echo($problem['source']); ?></dd>
 </dl>
 
@@ -47,7 +48,7 @@ if (isset($cid)) {
 }
 ?>
 <ul id="fn-nav" class="nav nav-pills">
-    <li><?php echo HTML::anchor($submit_url, 'Submit');?></li>
-    <li><?php echo HTML::anchor("/problem/summary/{$problem['problem_id']}", 'Summary');?></li>
-    <li><?php echo HTML::anchor("/discuss?pid={$problem['problem_id']}", 'Discuss');?></li>
+    <li><?php echo HTML::anchor($submit_url, __('problem.show.submit'));?></li>
+    <li><?php echo HTML::anchor("/problem/summary/{$problem['problem_id']}", __('problem.show.summary'));?></li>
+    <li><?php echo HTML::anchor("/discuss?pid={$problem['problem_id']}", __('problem.show.discuss'));?></li>
 </ul>

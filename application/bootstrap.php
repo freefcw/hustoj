@@ -50,11 +50,6 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
 
 // -- Configuration and initialization -----------------------------------------
 
-/**
- * Set the default language
- */
-I18n::lang('zh_CN');
-
 if (isset($_SERVER['SERVER_PROTOCOL']))
 {
     // Replace the default protocol.
@@ -112,6 +107,11 @@ Kohana::$base_url = $config->get('base_url', '/');
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(Kohana::$config->load('modules')->as_array());
+
+/**
+ * Set the default language
+ */
+I18n::lang($config->get('language', 'en'));
 
 /**
  * set Cookie config

@@ -1,6 +1,11 @@
 <table class="table table-striped">
 	<thead>
-		<tr><th>ID</th><th>Title</th><th>Status</th><th>Private</th></tr>
+	<tr>
+		<th><?php echo(__('contest.list.id')); ?></th>
+		<th><?php echo(__('contest.list.title')); ?></th>
+		<th><?php echo(__('contest.list.endtime')); ?></th>
+		<th><?php echo(__('contest.list.type')); ?></th>
+	</tr>
 	</thead>
 	<tbody>
 <?php foreach($list as $c): ?>
@@ -8,7 +13,7 @@
 <td><?php echo($c['contest_id']);?></td>
 <td><?php echo HTML::anchor("/contest/show/{$c['contest_id']}", $c['title']);?></td>
 <td><?php echo($c['end_time']);?></td>
-<td><?php echo(e::private_value($c['private']));?></td>
+<td><?php echo(__(e::private_value($c['private'])));?></td>
 </tr>
 <?php endforeach; ?>
 </tbody>

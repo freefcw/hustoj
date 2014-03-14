@@ -40,7 +40,7 @@ class Controller_Mail extends Controller_Base
         $mail_list = Model_Mail::find_user_inbox($this->current_user->user_id, $page, $this->per_page);
         $total = Model_Mail::count_user_inbox($this->current_user->user_id);
 
-        $this->template_data['title'] = 'Inbox';
+        $this->template_data['title'] = __('mail.inbox');
         $this->template_data['base_url'] = '/mail/inbox';
         $this->template_data['total'] = ceil($total / $this->per_page);;
         $this->action_list($mail_list);
@@ -52,7 +52,7 @@ class Controller_Mail extends Controller_Base
         $mail_list = Model_Mail::find_user_outbox($this->current_user->user_id, $page, $this->per_page);
         $total = Model_Mail::count_user_outbox($this->current_user->user_id);
 
-        $this->template_data['title'] = 'Outbox';
+        $this->template_data['title'] = __('mail.outbox');
         $this->template_data['base_url'] = '/mail/outbox';
         $this->template_data['total'] = ceil($total / $this->per_page);;
         $this->action_list($mail_list);
@@ -60,14 +60,14 @@ class Controller_Mail extends Controller_Base
 
     public function action_new()
     {
-        $this->template_data['title'] = 'New Mail';
+        $this->template_data['title'] = __('mail.new_mail');
     }
 
     public function action_send()
     {
         if ( $this->request->is_post() )
         {
-            $user_id = $this->get_post('recevier', null);
+            $user_id = $this->get_post('receiver', null);
 
             $receiver = Model_User::find_by_id($user_id);
 
@@ -85,7 +85,7 @@ class Controller_Mail extends Controller_Base
                 $mail->save();
                 $this->redirect('/mail/outbox');
             } else {
-                $message = sprintf('Reciver "%s" is not Exist', $user_id);
+                $message = __('common.:user_not_found', array(':user' => $user_id));
                 throw new Exception_Base($message);
             }
         }
@@ -96,7 +96,7 @@ class Controller_Mail extends Controller_Base
         $mail_id = $this->request->param('id');
         $mail = Model_Mail::find_by_id($mail_id);
         if ( !$mail )
-            throw new Exception_Base('Mail not exist');
+            throw new Exception_Base(__('common.mail_not_found'));
 
         // 检查权限
         if ( $mail->is_owner($this->current_user) OR $this->current_user->is_admin() )

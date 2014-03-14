@@ -3,27 +3,27 @@
 <ul class="list-group solution-info col-sm-2">
     <li class="list-group-item">
         <span class="badge"><?php echo($solution->problem_id);?></span>
-        Problem
+        <?php echo(__('solution.source.problem_id')); ?>
     </li>
     <li class="list-group-item">
         <span class="badge"><?php echo($solution->user_id);?></span>
-        User
+        <?php echo(__('solution.source.user')); ?>
     </li>
     <li class="list-group-item">
         <span class="badge"><?php echo($solution->display_language());?></span>
-        Language
+        <?php echo(__('solution.source.language')); ?>
     </li>
     <li class="list-group-item">
         <span class="badge"><?php echo($solution->display_result());?></span>
-        Result
+        <?php echo(__('solution.source.result')); ?>
     </li>
     <li class="list-group-item">
         <span class="badge"><?php echo($solution->time);?>ms</span>
-        Time
+        <?php echo(__('solution.source.time')); ?>
     </li>
     <li class="list-group-item">
         <span class="badge"><?php echo($solution->memory);?>kb</span>
-        Memory
+        <?php echo(__('solution.source.memory')); ?>
     </li>
 </ul>
 <pre class="prettyprint linenums solution-code col-sm-10">

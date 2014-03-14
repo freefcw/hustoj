@@ -1,6 +1,13 @@
 <table class="table table-striped">
 	<thead>
-		<tr><th>Rank</th><th>User ID</th><th>Nick</th><th>Solved</th><th>Submit</th><th>Ratio</th></tr>
+	<tr>
+		<th><?php echo(__('user.list.rank')); ?></th>
+		<th><?php echo(__('user.list.user_id')); ?></th>
+		<th><?php echo(__('user.list.nick')); ?></th>
+		<th><?php echo(__('user.list.solved')); ?></th>
+		<th><?php echo(__('user.list.submit')); ?></th>
+		<th><?php echo(__('user.list.ratio')); ?></th>
+	</tr>
 	</thead>
 	<tbody>
 <?php $rank = ($page - 1) * $per_page; /* @var Model_User[] $users */ ?>
@@ -27,12 +34,12 @@ function gen_url($page=NULL)
 }?>
 <ul class="pager rank-pager">
     <?php if ($page != 1): ?>
-        <li><?php echo HTML::anchor(gen_url(), 'Top');?></li>
-        <li><?php echo HTML::anchor(gen_url($page - 1), 'Previous');?></li>
+        <li><?php echo HTML::anchor(gen_url(), __('user.list.top'));?></li>
+        <li><?php echo HTML::anchor(gen_url($page - 1), __('user.list.prev'));?></li>
     <?php endif; ?>
-    <li class="reflesh"><?php echo HTML::anchor(gen_url($page), 'Reflesh');?></li>
+    <li class="reflesh"><?php echo HTML::anchor(gen_url($page), __('user.list.refresh'));?></li>
     <?php if ($page != $total_page): ?>
-        <li><?php echo HTML::anchor(gen_url($page + 1), 'Next');?></li>
-        <li><?php echo HTML::anchor(gen_url($total_page), 'Last');?></li>
+        <li><?php echo HTML::anchor(gen_url($page + 1), __('user.list.next'));?></li>
+        <li><?php echo HTML::anchor(gen_url($total_page), __('user.list.last'));?></li>
     <?php endif; ?>
 </ul>

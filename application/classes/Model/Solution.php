@@ -156,7 +156,7 @@ class Model_Solution extends Model_Base
 
     public function display_result()
     {
-        return e::jresult($this->result);
+        return __(e::jresult($this->result));
     }
 
     public function display_language()
