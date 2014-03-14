@@ -97,18 +97,19 @@ class Controller_User extends Controller_Base
     {
         if ( $this->request->is_post() and $this->check_captcha() )
         {
+            // TODO: cleaned_post() caused password 'fo<ob>ar' problem
             $post = Validation::factory($this->cleaned_post())
                               ->rule('username', 'not_empty')
                               ->rule('username', 'min_length', array(':value', 4))
                               ->rule('username', 'max_length', array(':value', 15))
                               ->rule('username', 'alpha_numeric')
-                //->rule('username', 'User_Model::unique_username')
+                              ->rule('password', 'not_empty')
                               ->rule('password', 'min_length', array(':value', 6))
                               ->rule('password', 'matches', array(':validation', 'password', 'confirm'))
                               ->rule('school', 'max_length', array(':value', 30))
+                              ->rule('email', 'not_empty')
                               ->rule('email', 'max_length', array(':value', 30))
                               ->rule('email', 'email');
-            $errors = $post->errors();
             if ($post->check()) {
                 $user = Model_User::find_by_id($post['username']);
                 if ( ! $user )
@@ -122,12 +123,11 @@ class Controller_User extends Controller_Base
                     Auth::instance()->login($post['username'], $post['password'], true);
                     $this->go_home();
                 } else {
-                    array_push($errors, 'User Id is existed!');
+                    $this->flash_message(array('User Id existed!'));
                 }
-                array_merge($errors, $post->errors());
-                $this->template_data['errors'] = $errors;
-                $this->flash_message($errors);
             }
+            $errors = $post->errors("User");
+            $this->flash_message($errors);
         }
 
         $this->template_data['title'] = "User Register";
