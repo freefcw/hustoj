@@ -233,6 +233,7 @@ return array(
     'common.contest_not_found' => 'Contest not available',
     'common.solution_detail_not_found' => 'Solution details not available',
     'common.:user_not_found' => 'User :user not found',
+    'common.submit_before_topic' => 'Submit code for one problem before taking part in discuss',
 
     'username' => 'Username',
     'nick' => 'Nick',

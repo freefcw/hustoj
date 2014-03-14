@@ -233,6 +233,7 @@ return array(
     'common.contest_not_found' => '比赛不可用',
     'common.solution_detail_not_found' => '此解的详情不可用',
     'common.:user_not_found' => '未找到用户:user',
+    'common.submit_before_topic' => '在发帖前，请先至少提交一个题库问题',
 
     ':field must contain only letters' => ':field只应包含字母',
     ':field must contain only numbers, letters and dashes' => ':field只应包含数字，字母和横杠',
