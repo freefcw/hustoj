@@ -70,7 +70,7 @@ class Model_Problem extends Model_Base
         }
 
         if ( ! $show_all )
-            $query->where('defunct', '=', 'N');
+            $query->where('defunct', '=', self::DEFUNCT_NO);
 
         $ret = $query->as_object(get_called_class())->execute();
 

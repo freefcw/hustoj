@@ -266,7 +266,7 @@ class Model_Contest extends Model_Base
         $this->title       = '';
         $this->start_time  = '';
         $this->end_time    = '';
-        $this->defunct     = 'N';
+        $this->defunct     = self::DEFUNCT_NO;
         $this->description = '';
         $this->private     = 1;
     }

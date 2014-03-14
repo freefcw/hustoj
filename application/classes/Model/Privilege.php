@@ -38,11 +38,16 @@ class Model_Privilege extends Model_Save
         return $data;
     }
 
+    /**
+     * @param $contest_id
+     *
+     * @return array
+     */
     public static function member_of_contest($contest_id)
     {
         $filter = array(
             'rightstr' => 'c'.$contest_id,
-            'defunct'  => 'N',
+            'defunct'  => self::DEFUNCT_NO,
         );
         $result = array();
         foreach(Model_Privilege::find($filter) as $item)
@@ -54,7 +59,7 @@ class Model_Privilege extends Model_Save
 
     protected function initial_data()
     {
-        $this->defunct = 'N';
+        $this->defunct = self::DEFUNCT_NO;
     }
 
     public function validate()
