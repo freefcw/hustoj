@@ -192,7 +192,7 @@ return array(
     'discuss.list.delete_block' => '删除并禁止',
     'discuss.list.block_:user' => '禁用用户:user',
     'discuss.list.blocked' => '用户已禁用',
-    'discuss.show.reply_:time_before' => '回复于 :time 前',
+    'discuss.show.reply_:time_before' => '回复于 :time前',
     'discuss.show.delete_reply' => '删除回复',
     'discuss.show.reply' => '回复',
     'discuss.edit.new_topic' => '新主题',
