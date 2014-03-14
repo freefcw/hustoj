@@ -142,12 +142,12 @@ class e
     {
         $timestamp = time() - strtotime($timestamp);
         $units     = array(
-            '1 year|%d years' => 31536000,
-            '1 week|%d weeks' => 604800,
-            '1 day|%d days'   => 86400,
-            '1 hour|%d hours' => 3600,
-            '1 min|%d mins'   => 60,
-            '1 sec|%d secs'   => 1
+            __('1 year|%d years') => 31536000,
+            __('1 week|%d weeks') => 604800,
+            __('1 day|%d days')   => 86400,
+            __('1 hour|%d hours') => 3600,
+            __('1 min|%d mins')   => 60,
+            __('1 sec|%d secs')   => 1
         );
         $output    = '';
         foreach ( $units as $key => $value )
@@ -168,7 +168,7 @@ class e
             }
         }
 
-        return $output ? $output : "Just now";
+        return $output ? $output : __("Just now");
     }
 
     /**
