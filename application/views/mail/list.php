@@ -8,7 +8,7 @@
             <tr>
                 <th><?php echo(__('mail.list.title')); ?></th>
                 <?php if (Request::current()->action() == 'outbox'):?>
-                <th><?php echo(__('mail.list.recevier')); ?></th>
+                <th><?php echo(__('mail.list.receiver')); ?></th>
                 <?php else:?>
                 <th><?php echo(__('mail.list.sender')); ?></th>
                 <?php endif;?>

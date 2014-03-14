@@ -67,7 +67,7 @@ class Controller_Mail extends Controller_Base
     {
         if ( $this->request->is_post() )
         {
-            $user_id = $this->get_post('recevier', null);
+            $user_id = $this->get_post('receiver', null);
 
             $receiver = Model_User::find_by_id($user_id);
 

@@ -192,7 +192,7 @@ return array(
     'discuss.edit.submit' => '提交',
 
     'mail.list.title' => '标题',
-    'mail.list.recevier' => '收件人',
+    'mail.list.receiver' => '收件人',
     'mail.list.sender' => '发件人',
     'mail.list.time' => '时间',
     'mail.inbox' => '收件箱',

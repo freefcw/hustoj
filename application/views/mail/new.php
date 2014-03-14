@@ -6,9 +6,9 @@
         <h3><?php echo $title;?></h3>
         <form role="form" class="form-horizontal" method="post" action="<?php e::url('/mail/send');?>">
             <div class="form-group">
-                <label class="control-label col-sm-1" for="recevier"><?php echo(__('mail.new.receiver')); ?></label>
+                <label class="control-label col-sm-1" for="receiver"><?php echo(__('mail.new.receiver')); ?></label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" name="recevier"/>
+                    <input class="form-control" type="text" name="receiver"/>
                 </div>
             </div>
             <div class="form-group">
