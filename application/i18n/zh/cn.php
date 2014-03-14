@@ -226,7 +226,7 @@ return array(
     'common.user_not_found' => '未找到此用户',
     'common.user_exist' => '用户已存在',
     'common.login_error' => '用户名或密码错误，请重试',
-    'common.captcha_error' => '验证吗错误',
+    'common.captcha_error' => '验证码错误',
     'common.news_not_found' => '未找到新闻',
     'common.mail_not_found' => '未找到邮件',
     'common.problem_not_found' => '题目不可用',
