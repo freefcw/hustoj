@@ -80,14 +80,10 @@ class Controller_Problem extends Controller_Base
                 }
             }
 
-            $code = new Model_Code;
-            $code->source = $this->get_raw_post('source');
+            $source_code = $this->get_raw_post('source');
+            $lang = $this->get_post('language');
 
-            $solution = new Model_Solution();
-            $solution->user_id = $current_user->user_id;
-            $solution->problem_id = $problem->problem_id;
-            $solution->code_length = strlen($code->source);
-            $solution->language = $this->get_post('language');
+            $solution = Model_Solution::create($current_user, $problem, $source_code, $lang);
 
             if ( $cid )
             {
@@ -95,9 +91,10 @@ class Controller_Problem extends Controller_Base
                 $solution->contest_id = $cid;
                 $solution->num = $cpid;
             }
-            $solution->ip = Request::$client_ip;
             $solution->save();
 
+            $code = new Model_Code;
+            $code->source = $source_code;
             $code->solution_id = $solution->solution_id;
             $code->save();
 

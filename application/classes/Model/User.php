@@ -66,12 +66,13 @@ class Model_User extends Model_Base
     public static function authenticate($username, $password)
     {
         $user = self::find_by_id($username);
-        if ( $user and $user->check_password($password, true) )
+        if ($user and $user->check_password($password, true))
         {
-                    return $user;
-                }
-                return false;
-            }
+            return $user;
+        }
+
+        return false;
+    }
 
     /**
      * record user login info into database
@@ -233,6 +234,14 @@ class Model_User extends Model_Base
 
     public function validate()
     {}
+
+    public function take_new_submit()
+    {
+        $this->submit = $this->submit + 1;
+        $this->resolved_problem_list = null;
+        $this->trying_problem_list = null;
+        $this->save();
+    }
 
     protected function initial_data()
     {

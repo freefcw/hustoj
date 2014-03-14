@@ -109,6 +109,12 @@ class Model_Problem extends Model_Base
         return Model_Solution::solution_by_rank($this->problem_id, $page, $limit);
     }
 
+    public function have_new_solution()
+    {
+        $this->submit = $this->submit + 1;
+        $this->save();
+    }
+
     protected function initial_data()
     {
         $this->in_date = e::format_time();
