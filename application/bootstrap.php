@@ -111,7 +111,7 @@ Kohana::modules(Kohana::$config->load('modules')->as_array());
 /**
  * Set the default language
  */
-I18n::lang($config->get('language', 'en-us'));
+I18n::lang($config->get('language', 'en'));
 
 /**
  * set Cookie config
