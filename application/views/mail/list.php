@@ -6,11 +6,13 @@
         <table class="table table-striped">
             <thead>
             <tr>
+                <th><?php echo(__('mail.list.title')); ?></th>
                 <?php if (Request::current()->action() == 'outbox'):?>
-                <th>Title</th><th>Recevier</th><th>Time</th>
+                <th><?php echo(__('mail.list.recevier')); ?></th>
                 <?php else:?>
-                <th>Title</th><th>Sender</th><th>Time</th>
+                <th><?php echo(__('mail.list.sender')); ?></th>
                 <?php endif;?>
+                <th><?php echo(__('mail.list.time')); ?></th>
             </tr>
             </thead>
             <tbody>

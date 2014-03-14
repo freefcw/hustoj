@@ -191,6 +191,21 @@ return array(
     'discuss.edit.content' => '内容',
     'discuss.edit.submit' => '提交',
 
+    'mail.list.title' => '标题',
+    'mail.list.recevier' => '收件人',
+    'mail.list.sender' => '发件人',
+    'mail.list.time' => '时间',
+    'mail.inbox' => '收件箱',
+    'mail.outbox' => '发件箱',
+    'mail.new_mail' => '发邮件',
+    'mail.new.receiver' => '收件人',
+    'mail.new.title' => '标题',
+    'mail.new.content' => '内容',
+    'mail.new.send' => '发送',
+    'mail.view.title' => '标题：',
+    'mail.view.sender' => '发件人：',
+    'mail.view.time' => '时间：',
+
     'title' => '标题',
     'source' => '来源',
 
