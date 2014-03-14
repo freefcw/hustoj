@@ -27,6 +27,7 @@ class Model_Privilege extends Model_Save
     {
         $filter = array(
             'user_id' => $user_id,
+            'defunct' => 'N',
         );
         $result = self::find($filter);
         $data = array();
@@ -41,7 +42,7 @@ class Model_Privilege extends Model_Save
     {
         $filter = array(
             'rightstr' => 'c'.$contest_id,
-            'defunct'  => 0,
+            'defunct'  => 'N',
         );
         $result = array();
         foreach(Model_Privilege::find($filter) as $item)
