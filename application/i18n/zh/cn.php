@@ -219,6 +219,7 @@ return array(
     'common.error' => '糟糕！出错了。',
     'common.user_disabled_title' => '用户被禁用',
     'common.user_disabled' => '您的用户已被禁用，请联系管理员',
+    'common.user_forget_password' => '如果你忘记了密码，请联系管理员',
     'common.contest_not_open' => '比赛未开放',
     'common.contest_private' => '您没有权限访问该私有比赛',
     'common.contest_login_first' => '请先登录后再查看此比赛',
