@@ -80,6 +80,16 @@ class OJ
         return false;
     }
 
+    /**
+     * proxy for permissions
+     *
+     * @return array
+     */
+    public static function permission_list()
+    {
+        return Model_Privilege::permission_list();
+    }
+
 
     /**
      * 过滤数据，包括tag和special chars

@@ -40,6 +40,7 @@ class Model_User extends Model_Base
     public $nick;
     public $school;
 
+    /* @var Model_Privilege[] $permission_list */
     protected $permission_list = null;
     protected $resolved_problem_list = null;
     protected $trying_problem_list = null;
@@ -72,6 +73,42 @@ class Model_User extends Model_Base
         }
 
         return false;
+    }
+
+    public function add_permission($permission)
+    {
+        $privilege = new Model_Privilege;
+        $privilege->user_id = $this->user_id;
+        $privilege->rightstr = $permission;
+        $privilege->save();
+
+        $this->permission_list = null;
+    }
+
+    public function set_permission($plist)
+    {
+        // clean all permission before
+        $this->permission_list = null;
+        Model_Privilege::clean_user_admin_permision($this->user_id);
+
+        if ( ! is_array($plist)) return;
+
+        foreach($plist as $permission)
+        {
+            $p = $this->has_permission($permission, true);
+            if ( $p )
+            {
+                // if exist update the defunct status
+                if ( $p->is_defunct() )
+                {
+                    $p->defunct = self::DEFUNCT_NO;
+                    $p->save();
+                }
+            } else {
+                // add new permission
+                $this->add_permission($permission);
+            }
+        }
     }
 
     /**
@@ -190,16 +227,29 @@ class Model_User extends Model_Base
 
     /**
      * 判断用户是否有某项权限
-     * @param $permission
      *
-     * @return array|bool
+     * @param      $permission
+     * @param bool $needit
+     *
+     * @return array|bool|Model_Privilege
      */
-    public function has_permission($permission)
+    public function has_permission($permission, $needit = false)
     {
         if ( ! $this->permission_list )
+        {
             $this->permission_list = Model_Privilege::permission_of_user($this->user_id);
+        }
 
-        return in_array($permission, $this->permission_list);
+        foreach($this->permission_list as $p)
+        {
+            if ( $p->rightstr == $permission )
+            {
+                if ( $needit ) return $p;
+                if ( $p->is_defunct() ) return false;
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

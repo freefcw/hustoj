@@ -27,15 +27,31 @@ class Model_Privilege extends Model_Save
     {
         $filter = array(
             'user_id' => $user_id,
-            'defunct' => 'N',
         );
         $result = self::find($filter);
-        $data = array();
-        foreach($result as $item)
+        return $result;
+    }
+
+    public static function permission_list()
+    {
+        $cls = new ReflectionClass(get_called_class());
+        $constants = $cls->getConstants();
+        $permission_list = array();
+        foreach($constants as $key => $value)
         {
-            array_push($data, $item->rightstr);
+            if ( strpos($key, 'PERM') === 0 )
+                array_push($permission_list, $value);
         }
-        return $data;
+        return $permission_list;
+    }
+
+    public static function clean_user_admin_permision($user_id)
+    {
+        $query = DB::delete(static::$table);
+        $query->where('user_id', '=', $user_id)
+            ->and_where('rightstr', 'IN', self::permission_list());
+
+        return $query->execute();
     }
 
     /**

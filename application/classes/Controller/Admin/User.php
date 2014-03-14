@@ -37,6 +37,7 @@ class Controller_Admin_User extends Controller_Admin_Base{
                 unset($safe_data['password']);
                 $safe_data['password'] = Auth::instance()->hash($password);
             }
+            $user->set_permission($this->get_post('permission'));
             $user->update($safe_data);
             $user->save();
         }

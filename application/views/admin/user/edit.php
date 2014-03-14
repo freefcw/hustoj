@@ -46,8 +46,7 @@
                     <label for="textarea" class="control-label col-sm-2">Introduce</label>
 
                     <div class="col-sm-10">
-                        <textarea cols="50" rows="3" id="textarea" class="form-control" name="intro">
-                            <?php echo($user['intro']);?></textarea>
+                        <textarea cols="50" rows="3" id="textarea" class="form-control" name="intro"><?php echo($user['intro']);?></textarea>
                     </div>
                 </div>
                 <legend>Other Information</legend>
@@ -67,6 +66,18 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <?php foreach(OJ::permission_list() as $permission):?>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="permission[]" value="<?php echo $permission;?>" <?php if ($user->has_permission($permission)):?>checked="checked" <?php endif;?>/> <?php echo $permission;?>
+                            </label>
+                        </div>
+                        <?php endforeach;?>
+                    </div>
+                </div>
+
+                <div class="form-group form-actions">
                     <div class="col-sm-10 col-sm-offset-2">
                         <button class="btn btn-primary" type="submit">Save changes</button>
                         <button class="btn" onclick="history.back()" type="reset">Cancel</button>
