@@ -70,7 +70,7 @@ class Model_Problem extends Model_Base
         }
 
         if ( ! $show_all )
-            $query->where('defunct', '=', 'N');
+            $query->where('defunct', '=', self::DEFUNCT_NO);
 
         $ret = $query->as_object(get_called_class())->execute();
 
@@ -107,6 +107,12 @@ class Model_Problem extends Model_Base
     public function best_solution($page=0, $limit=50)
     {
         return Model_Solution::solution_by_rank($this->problem_id, $page, $limit);
+    }
+
+    public function have_new_solution()
+    {
+        $this->submit = $this->submit + 1;
+        $this->save();
     }
 
     protected function initial_data()

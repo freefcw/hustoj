@@ -28,10 +28,9 @@
 <div class="form-group">
     <textarea class="form-control" cols="50" rows="20" name="source"></textarea>
 </div>
-<div class="form-group">
-    <div class="col-sm-offset-4">
+<div class="form-group" id="fn-nav">
+    <div>
         <button type="submit" class="btn btn-primary"><?php echo(__('problem.submit.submit')); ?></button>
-        <button type="reset" class="btn"><?php echo(__('problem.submit.reset')); ?></button>
     </div>
 </div>
 </form>

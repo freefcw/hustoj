@@ -252,9 +252,9 @@ class e
      * get base config
      *
      * @param string $key
-     * @param return_type $default
+     * @param string $default
      *
-     * @return return_type
+     * @return string
      */
     protected static function get_base_config($key, $default)
     {
@@ -299,5 +299,19 @@ class e
     public static function get_website_keyword()
     {
         return e::get_base_config('keyword', '');
+    }
+
+    public static function pass_status(Model_Problem $problem)
+    {
+        /* @var Model_User $cu */
+        $cu = Auth::instance()->get_user();
+        if ( $cu )
+        {
+            if ( $cu->is_problem_resolved($problem->problem_id))
+                return 'passed';
+            if ( $cu->is_problem_trying($problem->problem_id) )
+                return 'trying';
+        }
+        return '';
     }
 }

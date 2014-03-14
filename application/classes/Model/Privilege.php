@@ -29,19 +29,41 @@ class Model_Privilege extends Model_Save
             'user_id' => $user_id,
         );
         $result = self::find($filter);
-        $data = array();
-        foreach($result as $item)
-        {
-            array_push($data, $item->rightstr);
-        }
-        return $data;
+        return $result;
     }
 
+    public static function permission_list()
+    {
+        $cls = new ReflectionClass(get_called_class());
+        $constants = $cls->getConstants();
+        $permission_list = array();
+        foreach($constants as $key => $value)
+        {
+            if ( strpos($key, 'PERM') === 0 )
+                array_push($permission_list, $value);
+        }
+        return $permission_list;
+    }
+
+    public static function clean_user_admin_permision($user_id)
+    {
+        $query = DB::delete(static::$table);
+        $query->where('user_id', '=', $user_id)
+            ->and_where('rightstr', 'IN', self::permission_list());
+
+        return $query->execute();
+    }
+
+    /**
+     * @param $contest_id
+     *
+     * @return array
+     */
     public static function member_of_contest($contest_id)
     {
         $filter = array(
             'rightstr' => 'c'.$contest_id,
-            'defunct'  => 0,
+            'defunct'  => self::DEFUNCT_NO,
         );
         $result = array();
         foreach(Model_Privilege::find($filter) as $item)
@@ -53,7 +75,7 @@ class Model_Privilege extends Model_Save
 
     protected function initial_data()
     {
-        $this->defunct = 'N';
+        $this->defunct = self::DEFUNCT_NO;
     }
 
     public function validate()

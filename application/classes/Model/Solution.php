@@ -131,6 +131,29 @@ class Model_Solution extends Model_Base
         return $result['total'];
     }
 
+    /**
+     * @param Model_User $user
+     * @param Model_Problem $problem
+     * @param string $source_code
+     * @param int $language
+     *
+     * @return Model_Solution
+     */
+    public static function create($user, $problem, $source_code, $language)
+    {
+        $solution = new Model_Solution();
+        $solution->user_id = $user->user_id;
+        $solution->problem_id = $problem->problem_id;
+        $solution->language = $language;
+        $solution->code_length = strlen($source_code);
+        $solution->ip = Request::$client_ip;
+
+        $problem->have_new_solution();
+        $user->take_new_submit();
+
+        return $solution;
+    }
+
     public function display_result()
     {
         return __(e::jresult($this->result));

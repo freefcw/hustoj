@@ -109,9 +109,14 @@ ul.summary li {
 #fn-nav {
     text-align: center;
     font-size: 14px;
-    width: 100%;
-    max-width: 250px;
     margin: 0 auto 18px;
+}
+
+#fn-nav li {
+    float: none;
+    display: inline-block;
+    *display: inline; /* for ie7 */
+    *zoom: 1; /* for ie7 */
 }
 
 form.submit {
@@ -127,7 +132,7 @@ form.submit fieldset {
 
 form.submit textarea {
     display: block;
-    width: 590px;
+    width: 100%;
     height: 400px;
 }
 
@@ -327,4 +332,15 @@ div.user-stats li.failed{
 
 .footer > ul {
     padding-left: 0;
+}
+
+
+.passed{
+    color: white;
+    background-color: #4cae4c !important;
+}
+
+.trying{
+    color: white;
+    background-color: #eea236 !important;
 }

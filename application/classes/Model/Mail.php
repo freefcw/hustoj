@@ -113,7 +113,7 @@ class Model_Mail extends Model_Base
         $this->new_mail = 1;
         $this->in_date = e::format_time();
         $this->reply = 0;
-        $this->defunct = 'N';
+        $this->defunct = self::DEFUNCT_NO;
     }
 
     public function validate()
