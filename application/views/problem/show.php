@@ -21,7 +21,7 @@ if (isset($cid)) {
 </div>
 <dl class="detail">
     <dt><?php echo(__('problem.show.description')); ?></dt>
-    <dd><?php echo($problem['description']);?></dd>
+    <dd id="problem-desc"><?php echo($problem['description']);?></dd>
     <dt><?php echo(__('problem.show.input')); ?></dt>
     <dd><?php echo($problem['input']);?></dd>
     <dt><?php echo(__('problem.show.output')); ?></dt>
