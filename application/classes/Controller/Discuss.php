@@ -30,7 +30,7 @@ class Controller_Discuss extends Controller_Base
 
             if ( $cu->submit < 1 )
             {
-                throw new Exception_Base('Please Submit a problem before give a topic');
+                throw new Exception_Base(__('common.submit_before_topic'));
             }
 
             $reply = new Model_Reply;
@@ -133,7 +133,7 @@ class Controller_Discuss extends Controller_Base
 
         if ( $cu->submit < 1 )
         {
-            throw new Exception_Base('Please Submit a problem before give a topic');
+            throw new Exception_Base(__('common.submit_before_topic'));
         }
 
         if ( $this->request->is_post() ) {

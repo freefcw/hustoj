@@ -218,7 +218,8 @@ return array(
 
     'common.error' => 'Oops! Error.',
     'common.user_disabled_title' => 'User Disabled',
-    'common.user_disabled' => 'Your account has been disabled. Please Contact Administrator.',
+    'common.user_disabled' => 'Your account has been disabled. Please contact administrator.',
+    'common.user_forget_password' => 'If you forget your password, please contact administrator.',
     'common.contest_not_open' => 'Contest not open',
     'common.contest_private' => 'You cannot access this private contest',
     'common.contest_login_first' => 'Please login first',
@@ -233,6 +234,7 @@ return array(
     'common.contest_not_found' => 'Contest not available',
     'common.solution_detail_not_found' => 'Solution details not available',
     'common.:user_not_found' => 'User :user not found',
+    'common.submit_before_topic' => 'Submit code for one problem before taking part in discuss',
 
     'username' => 'Username',
     'nick' => 'Nick',
