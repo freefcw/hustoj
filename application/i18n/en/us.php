@@ -30,7 +30,7 @@ return array(
     'pager.older' => 'Older &rarr;',
 
     'index.welcome_to_:name' => 'Welcome to :name',
-    'index.any_problem' => 'Welcome to HUSTOJ',
+    'index.any_problem' => 'Any problem, please see the contact information in contact page',
 
     'problem.list.problem_set_:id' => 'Problem Set :id',
     'problem.list.id' => 'ID',
