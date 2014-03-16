@@ -14,7 +14,6 @@ return array(
     'base_url'            => '/', // should ends with /, for example '/oj/'
     'salt'                => 'hustoj',
     'oi_mode'             => false,
-    'language'            => 'en-us', // 'en-us', 'zh-cn'
     'captcha_mode'        => false, // false, 'local', 'recaptcha'
     'captcha_public_key'  => 'YOUR-RECAPTCHA-PUBLIC-KEY',
     'captcha_private_key' => 'YOUR-RECAPTCHA-PRIVATE-KEY',

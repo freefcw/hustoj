@@ -25,12 +25,13 @@ else
 date_default_timezone_set('Asia/Shanghai');
 
 /**
- * Set the default locale.
+ * Set the system default locale.
+ * Muti-language settings in config/multilang.php
  *
  * @see  http://kohanaframework.org/guide/using.configuration
  * @see  http://php.net/setlocale
  */
-setlocale(LC_ALL, 'zh_CN.utf-8');
+setlocale(LC_ALL, 'en_US.utf-8');
 
 /**
  * Enable the Kohana auto-loader.
@@ -109,9 +110,10 @@ Kohana::$base_url = $config->get('base_url', '/');
 Kohana::modules(Kohana::$config->load('modules')->as_array());
 
 /**
- * Set the default language
+ * Set the system default language
+ * Muti-language settings in config/multilang.php
  */
-I18n::lang($config->get('language', 'en-us'));
+I18n::lang('en-us');
 
 /**
  * set Cookie config
