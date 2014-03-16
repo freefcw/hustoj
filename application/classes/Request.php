@@ -4,9 +4,9 @@ class Request extends Kohana_Request {
     /**
      * Get user lang from session
      * 
-     * @param array $lang_supported
+     * @param array $lang_supported language supported
      *
-     * @return string language
+     * @return string language got from session or NULL
      */
     private static function get_user_lang($lang_supported) {
         // Get session language, TODO: use user settings instead
@@ -16,9 +16,9 @@ class Request extends Kohana_Request {
     }
 
     /**
-     * Get user lang from session
+     * Set user lang to session
      * 
-     * @param string $lang_current
+     * @param string $lang_current language to set
      */
     private static function set_user_lang($lang_current) {
         // Set session default, TODO: user instead
@@ -29,9 +29,9 @@ class Request extends Kohana_Request {
     /**
      * Get user lang from Accepted-Language
      * 
-     * @param array $lang_supported
+     * @param array $lang_supported language supported
      *
-     * @return string language
+     * @return string language got from Accepted-Language or NULL
      */
     private static function get_browser_lang($lang_supported) {
         // Get lang from Request::accept_lang().
@@ -74,7 +74,7 @@ class Request extends Kohana_Request {
     /**
      * Extend the factory method to force the presence of the lang identifier.
      *
-     * @return  Request
+     * @return Request
      */
     public static function factory($uri = TRUE, $client_params = array(), $allow_external = TRUE, $injected_routes = array())
     {
