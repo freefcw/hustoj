@@ -56,16 +56,15 @@ class I18n extends Kohana_I18n {
      */
     private static function get_browser_lang($lang_supported) {
         // Get lang from Request::accept_lang().
-        $lang_current = NULL;
         foreach (Request::accept_lang() as $key => $val)
         {
-            if (in_array($key, $lang_supported))
+            foreach ($lang_supported as $lang)
             {
-                $lang_current = $key;
-                break;
+                if (substr($key, 0, strlen($lang)) === $lang)
+                    return $lang;
             }
         }
-        return $lang_current;
+        return NULL;
     }
 
     /**
@@ -97,7 +96,7 @@ class I18n extends Kohana_I18n {
 
         // Set request language and locale
         $lang_config = $lang_settings['supported'][$lang_current];
-        if (i18n::lang() != $lang_config['code']) {
+        if (i18n::lang() !== $lang_config['code']) {
             i18n::lang($lang_config['code']);
             setlocale(LC_ALL, $lang_config['locale']);
         }
