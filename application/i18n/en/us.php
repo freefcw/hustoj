@@ -10,7 +10,7 @@ return array(
     'top_frontend.faqs' => 'FAQ',
     'top_frontend.discuss' => 'Discuss',
     'top_frontend.more' => 'More',
-    'top_frontend.useredit' => 'Edit',
+    'top_frontend.useredit' => 'Edit Profile',
     'top_frontend.mail' => 'Mail',
     'top_frontend.adminctl' => 'Admin',
     'top_frontend.login' => 'Login',
@@ -145,7 +145,7 @@ return array(
     'user.edit.need_password' => 'Old password required',
     'user.edit.save_changes' => 'Save Changes',
     'user.edit.error_not_same' => 'Password not the same',
-    'user.edit.error_password' => 'Wrong old password',
+    'user.edit.error_password' => 'Password Wrong',
     'user.edit.error_too_short' => 'New password too short',
     'user.edit.edit_done' => 'Successful',
 
