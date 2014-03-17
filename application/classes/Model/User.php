@@ -182,31 +182,6 @@ class Model_User extends Model_Base
     }
 
     /**
-     *
-     * @param     $filters
-     * @param int $page
-     * @param int $limit
-     *
-     * @return mixed
-     */
-    public static function find_by_solved($filters, $page = 1, $limit = 50)
-    {
-        $query = DB::select()->from(static::$table);
-        foreach($filters as $col => $value)
-        {
-            $query->where($col, '=', $value);
-        }
-        if ( $limit ) $query->limit($limit);
-        if ( $page ) $query->offset( $limit * ($page - 1));
-
-        $query->order_by('solved',  'DESC');
-
-        $result = $query->as_object(get_called_class())->execute();
-
-        return $result->as_array();
-    }
-
-    /**
      * update password
      *
      * @param $password

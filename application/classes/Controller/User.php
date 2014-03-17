@@ -8,8 +8,12 @@ class Controller_User extends Controller_Base
         // initial
         $page = $this->request->param('id', 1);
 
+        $orderby = array(
+            'solved' => Model_Base::ORDER_DESC,
+        );
         $filter = array();
-        $users = Model_User::find_by_solved($filter, $page, OJ::per_page);
+        // user order by resolved problems
+        $users = Model_User::find($filter, $page, OJ::per_page, $orderby);
 
         // views
         $total = Model_User::count($filter);
