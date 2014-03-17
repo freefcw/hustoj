@@ -5,10 +5,12 @@ if ( isset($gacode) ):?>
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();
         var scripts = s.getElementsByTagName(o);
         var already_have = false;
-        for(item in scripts)
+        for (var index = 0; index < scripts.length; index++)
         {
-            try{
-                if ( scripts[item].src.indexOf(g) >= 0 ) already_have = true;
+            try {
+                if ( scripts[index].src.indexOf(g) >= 0 ) {
+                    already_have = true;
+                }
             } catch (e){}
         }
         if ( ! already_have )
