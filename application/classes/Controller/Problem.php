@@ -98,6 +98,10 @@ class Controller_Problem extends Controller_Base
             $code->solution_id = $solution->solution_id;
             $code->save();
 
+            // set user favorite language
+            $current_user->language = $lang;
+            $current_user->save();
+
             $this->redirect('/status');
             return;
         } else {
@@ -107,6 +111,8 @@ class Controller_Problem extends Controller_Base
 
         $this->template_data['cid'] = $this->get_query('cid', null);
         $this->template_data['cpid'] = $this->get_query('pid', null);
+
+        $this->template_data['default_lang'] = $current_user->language;
 
         $this->template_data['title'] = __('problem.submit.submit_code');
     }

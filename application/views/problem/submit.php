@@ -19,7 +19,9 @@
     <div class="col-sm-9">
         <select name="language" class="form-control">
         <?php foreach( OJ::$language as $key => $lang):?>
-            <option value="<?php echo($key);?>"><?php echo($lang);?></option>
+            <option value="<?php echo($key);?>" <?php if ($key == $default_lang) echo('selected'); ?>>
+                <?php echo($lang);?>
+            </option>
         <?php endforeach;?>
         </select>
     </div>
