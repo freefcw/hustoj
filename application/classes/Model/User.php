@@ -20,6 +20,7 @@ class Model_User extends Model_Base
         'reg_time',
         'nick',
         'school',
+        'locale',
     );
 
     static $primary_key = 'user_id';
@@ -39,6 +40,7 @@ class Model_User extends Model_Base
     public $reg_time;
     public $nick;
     public $school;
+    public $locale;
 
     /* @var Model_Privilege[] $permission_list */
     protected $permission_list = null;
