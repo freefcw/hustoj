@@ -69,6 +69,16 @@ class I18n extends Kohana_I18n {
     }
 
     /**
+     * Get supported language
+     *
+     * @return array supported language
+     */
+    public static function supported_lang() {
+        $lang_settings = Kohana::$config->load('multilang')->get('languages', array());
+        return $lang_settings['supported'];
+    }
+
+    /**
      * Initialize internationalization
      * for current request
      */

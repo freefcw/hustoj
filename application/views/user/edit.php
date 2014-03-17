@@ -51,6 +51,19 @@
             </div>
         </div>
         <div class="form-group">
+        <label class="control-label col-sm-5" for="locale"><?php echo(__('user.register.locale')); ?></label>
+            <div class="col-sm-7">
+                <select class="form-control" name="locale" id="locale" type="locale">
+                <?php $selected = $userinfo['locale']; ?>
+                <?php foreach(I18n::supported_lang() as $value => $info): ?>
+                    <option value="<?php echo($value);?>" <?php if ($selected==$value) echo('selected'); ?>>
+                        <?php echo($info['name']);?>
+                    </option>
+                <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
             <div class="col-sm-offset-5 col-sm-7">
                 <input type="submit" value="<?php echo(__('user.edit.save_changes')); ?>" class="btn-primary btn" id='submit'/>
             </div>

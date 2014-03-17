@@ -74,6 +74,7 @@ class Controller_User extends Controller_Base
                 {
                     $user->update($safe_data);
                     $user->save();
+                    I18n::init_i18n(); // locale setting may be updated
                     $tip = __('user.edit.edit_done');
                 }
             } else {
