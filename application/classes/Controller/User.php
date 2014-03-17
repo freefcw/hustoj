@@ -75,17 +75,14 @@ class Controller_User extends Controller_Base
                     $user->update($safe_data);
                     $user->save();
                     I18n::init_i18n(); // locale setting may be updated
-                    $tip = __('user.edit.edit_done');
+                    $this->flash_info(__('user.edit.edit_done'));
                 }
             } else {
-                $error = __('user.edit.error_password');
+                $this->flash_error(__('user.edit.error_password'));
             }
         }
 
         $this->template_data['userinfo'] = $user;
-        $this->template_data['error'] = isset($error) ? $error : null;
-        $this->template_data['tip'] = isset($tip) ? $tip : null;
-
         $this->template_data['title'] = __('user.edit.user_edit');
     }
 
@@ -125,11 +122,11 @@ class Controller_User extends Controller_Base
                     Auth::instance()->login($post['username'], $post['password'], true);
                     $this->go_home();
                 } else {
-                    $this->flash_message(array(__('common.user_exist')));
+                    $this->flash_error(array(__('common.user_exist')));
                 }
             }
             $errors = $post->errors("User");
-            $this->flash_message($errors);
+            $this->flash_error($errors);
         }
 
         $this->template_data['title'] = __('user.register.user_register');
@@ -165,7 +162,7 @@ class Controller_User extends Controller_Base
                 }
             }
 
-            $this->flash_message(__('common.login_error'));
+            $this->flash_error(__('common.login_error'));
         }
 
         $this->template_data['title'] = __('user.login.user_login');
@@ -193,7 +190,7 @@ class Controller_User extends Controller_Base
             if ( $resp->is_valid ) {
                 return true;
             }
-            $this->flash_message($resp->error);
+            $this->flash_error($resp->error);
             return false;
         }
         if ( $captcha_mode == 'local')
@@ -205,7 +202,7 @@ class Controller_User extends Controller_Base
             {
                 return true;
             }
-            $this->flash_message(__('common.captcha_error'));
+            $this->flash_error(__('common.captcha_error'));
             return false;
         }
         return true;

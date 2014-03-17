@@ -39,16 +39,12 @@
         </div>
         <div class="col-md-11">
             <h3><?php echo $title;?></h3>
-            <?php if (Session::instance()->get('flashed_message')):?>
-                <?php echo View::factory('common/message', array('messages' => Session::instance()->get_once('flashed_message') ));?>
-            <?php endif;?>
+            <?php echo View::factory('common/message');?>
             <?php echo($body); ?>
         </div>
     </div>
 <?php else:?>
-    <?php $messages = Session::instance()->get_once('flashed_message');if ( $messages ):?>
-        <?php echo View::factory('common/message', array('messages' => $messages ));?>
-    <?php endif;?>
+    <?php echo View::factory('common/message');?>
     <?php echo($body); ?>
 <?php endif;?>
 </div>

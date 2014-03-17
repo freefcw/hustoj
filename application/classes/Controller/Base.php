@@ -35,7 +35,7 @@ class Controller_Base extends Controller
     {
         $this->view = $e->getTemplate();
         $this->template_data['title'] = __('common.error');
-        $this->flash_message($e->getMessage());
+        $this->flash_error($e->getMessage());
     }
 
     /**
@@ -154,17 +154,27 @@ class Controller_Base extends Controller
      *
      * @param $message
      */
-    protected function flash_message($message)
+    protected function flash_info($message)
+    {
+        $this->flash_message('info', $message);
+    }
+
+    private function flash_message($type, $message)
     {
         $sess = Session::instance();
-        $messages = $sess->get('flashed_message', array());
+        $messages = $sess->get($type, array());
         if ( is_array($message) )
         {
             $messages = array_merge($messages, $message);
         } else {
             array_push($messages, $message);
         }
-        $sess->set('flashed_message', $messages);
+        $sess->set($type, $messages);
+    }
+
+    protected function flash_error($message)
+    {
+        $this->flash_message('error', $message);
     }
 
     /**

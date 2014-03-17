@@ -1,11 +1,5 @@
 <div class="edit-userinfo">
 <h3 class="page-title"><?php echo(__('user.edit.user_edit')); ?></h3>
-    <?php if (isset($error) AND ($error != null)): ?>
-    <div class="alert-error alert"><p><?php echo $error; ?></p></div>
-    <?php endif ?>
-    <?php if (isset($tip) AND ($tip != null)): ?>
-    <div class="alert-success alert"><p><?php echo $tip; ?></p></div>
-    <?php endif ?>
     <form action="<?php e::url(Request::current()->uri());?>" method="POST" class="form-horizontal" role="form">
         <div class="form-group">
             <label class="control-label col-sm-5" for="user_id"><?php echo(__('user.register.username')); ?></label>
