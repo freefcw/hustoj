@@ -135,6 +135,7 @@ return array(
     'user.register.max_30' => 'max length: 30',
     'user.register.email' => 'Email',
     'user.register.1_to_30' => 'max length: 30, required',
+    'user.register.locale' => 'Language',
     'user.register.captcha' => 'Captcha',
     'user.register.register' => 'Register',
 
