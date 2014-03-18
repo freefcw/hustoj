@@ -44,6 +44,20 @@ $(document).ready(function () {
             // complicated JavaScript here for large screens
         },
     });
+    $(".submit textarea").keydown(function(e) {
+        var $this, end, start;
+        var tabcode = 9;
+        if (e.keyCode === tabcode) {
+            start = this.selectionStart;
+            $this = $(this);
+            $this.val($this.val().substring(0, start) + "\t" + $this.val().substring(start));
+            this.selectionStart = this.selectionEnd = start + 1;
+            if(e.preventDefault) {
+                e.preventDefault();
+            }
+            return false;
+        }
+    });
 });
 
 $(function(){

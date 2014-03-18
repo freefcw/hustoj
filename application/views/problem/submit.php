@@ -28,7 +28,7 @@
 </div>
 </fieldset>
 <div class="form-group">
-    <textarea class="form-control" cols="50" rows="20" name="source"></textarea>
+    <textarea class="form-control" cols="50" rows="20" name="source" spellcheck="false"></textarea>
 </div>
 <div class="form-group" id="fn-nav">
     <div>
