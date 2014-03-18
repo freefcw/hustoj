@@ -49,10 +49,10 @@ $(document).ready(function () {
 $(function(){
     $('#problem-desc img').each(function(){
         var elem = $(this);
+        var origin_src = elem.attr('src');
 
-        if ( base_url != '/' )
+        if ( origin_src[0] == '/' && base_url != '/' )
         {
-            var origin_src = elem.attr('src');
             var new_src = base_url + origin_src.substring(1);
             elem.attr('src', new_src);
         }
