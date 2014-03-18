@@ -11,6 +11,12 @@
     float: left;
 }
 
+.forget-password {
+    display: inline-block;
+    margin-left: 30px;
+    padding: 8px 12px 4px;
+}
+
 .contest-nav {
     width: 100%;
     max-width: 500px;

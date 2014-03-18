@@ -39,15 +39,13 @@
     <div class="form-group">
         <label class="col-sm-5 control-label"><?php echo(__('user.register.captcha')); ?></label>
         <div class="col-sm-7">
-            <div class="col-sm-7">
-                <?php echo View::factory('captcha/'. $mode);?>
-            </div>
+        <?php echo View::factory('captcha/'. $mode);?>
         </div>
     </div>
     <?php endif;?>
     <div class="form-group">
-        <div class="col-sm-offset-5">
-            <input type="submit" class="btn btn-primary" value="<?php echo(__('user.register.register')); ?>"/>
+        <div class="col-sm-offset-5 col-sm-7">
+            <input type="submit" class="btn btn-primary col-sm-8" value="<?php echo(__('user.register.register')); ?>"/>
         </div>
     </div>
 </form>

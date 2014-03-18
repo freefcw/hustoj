@@ -22,7 +22,7 @@
     <?php endif;?>
     <div class="form-group">
         <div class="col-sm-offset-4 col-sm-8">
-            <button type="submit" class="btn btn-default"><?php echo(__('user.login.login'));?></button> <a href="<?php e::url('/help');?>" class="forget-password"><?php echo(__('user.login.forget'));?></a>
+            <button type="submit" class="btn btn-primary col-sm-4"><?php echo(__('user.login.login'));?></button><a href="<?php e::url('/help');?>" class="forget-password"><?php echo(__('user.login.forget'));?></a>
         </div>
     </div>
 </form>
