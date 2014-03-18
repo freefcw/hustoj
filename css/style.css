@@ -350,3 +350,8 @@ div.user-stats li.failed{
     color: white;
     background-color: #eea236 !important;
 }
+
+.submit textarea {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    -moz-tab-size: 4; -o-tab-size: 4; tab-size: 4;
+}
