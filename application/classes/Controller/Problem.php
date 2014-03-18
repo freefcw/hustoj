@@ -10,21 +10,39 @@ class Controller_Problem extends Controller_Base
 
     public function action_list()
     {
-        $page = $this->request->param('id', 1);
+        $default_page = 1;
+
+        $current_user = Auth::instance()->get_user();
+        if ($current_user) $default_page = $current_user->volume;
+
+        $page = $this->request->param('id', $default_page);
 
         $filter = array(
             'defunct' => Model_Base::DEFUNCT_NO
         );
-
         $orderby = array(
             Model_Problem::$primary_key => Model_Base::ORDER_ASC
         );
-        $this->template_data['problemlist'] = Model_Problem::find($filter, $page, OJ::per_page, $orderby);
-        //TODO: add check permission of contest
+
         $total = Model_Problem::count($filter);
+        $page_count = ceil(intval($total) / OJ::per_page);
+
+        // error page fallback code
+        if ($page < 1) $page = 1;
+        if ($page > $page_count) $page = $page_count;
+
+        // save current volume
+        if ($current_user) {
+            $current_user->volume = $page;
+            $current_user->save();
+        }
+
+        //TODO: add check permission of contest
+        $this->template_data['problemlist'] = Model_Problem::find($filter, $page, OJ::per_page, $orderby);
 
         $title = __('problem.list.problem_set_:id', array(':id' => $page));
-        $this->template_data['pages'] = ceil(intval($total) / OJ::per_page);
+        $this->template_data['page'] = $page;
+        $this->template_data['pages'] = $page_count;
         $this->template_data['title'] = $title;
     }
 
