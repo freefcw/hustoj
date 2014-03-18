@@ -293,16 +293,14 @@ class Model_User extends Model_Base
      */
     public function is_problem_resolved($problem_id)
     {
-        if ( ! $this->resolved_problem_list )
-            $this->resolved_problem_list = Model_Solution::user_resolved_problem($this->user_id);
-        return in_array($problem_id, $this->resolved_problem_list);
+        $resolved_problems = $this->problems_resolved();
+        return in_array($problem_id, $resolved_problems);
     }
 
     public function is_problem_trying($problem_id)
     {
-        if ( ! $this->trying_problem_list )
-            $this->trying_problem_list = Model_Solution::user_tried_problem($this->user_id);
-        return in_array($problem_id, $this->trying_problem_list);
+        $trying_problems = $this->problems_tried();
+        return in_array($problem_id, $trying_problems);
     }
 
     /**
@@ -312,7 +310,11 @@ class Model_User extends Model_Base
      */
     public function problems_resolved()
     {
-        return Model_Solution::user_resolved_problem($this->user_id);
+        if ( ! $this->resolved_problem_list )
+        {
+            $this->resolved_problem_list = Model_Solution::user_resolved_problem($this->user_id);
+        }
+        return $this->resolved_problem_list;
     }
 
     /**
@@ -322,7 +324,13 @@ class Model_User extends Model_Base
      */
     public function problems_tried()
     {
-        return Model_Solution::user_tried_problem($this->user_id);
+        if ( ! $this->trying_problem_list )
+        {
+            $all_tried = Model_Solution::user_tried_problem($this->user_id);
+            $resolved_problem = $this->problems_resolved();
+            $this->trying_problem_list = array_diff($all_tried, $resolved_problem);
+        }
+        return $this->trying_problem_list;
     }
 
     /**

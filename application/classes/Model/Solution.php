@@ -239,10 +239,13 @@ class Model_Solution extends Model_Base
 
     public static function user_tried_problem($user_id)
     {
-        $query = DB::select()->from(self::$table)
-            ->where('user_id', '=', $user_id)
-            ->group_by('problem_id')
-            ->having('result', '!=', self::STATUS_AC);
+//        $query = DB::select()->from(self::$table)
+//            ->where('user_id', '=', $user_id)
+//            ->group_by('problem_id')
+//            ->having('result', '!=', self::STATUS_AC);
+        $query = DB::select(DB::expr('DISTINCT(problem_id)'))
+            ->from(self::$table)
+            ->where('user_id', '=', $user_id);
 
         $plist = $query->execute()->as_array();
         $rlist = array();
