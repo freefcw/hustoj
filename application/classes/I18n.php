@@ -1,6 +1,9 @@
 <?php defined('SYSPATH') OR die('No direct script access.');
 
 class I18n extends Kohana_I18n {
+
+    /* @var array $languages */
+    static $languages = NULL;
     /**
      * @param string $text text to translate
      * @param string $lang
@@ -39,11 +42,13 @@ class I18n extends Kohana_I18n {
      *
      * @param string $lang_current language to set
      */
-    private static function set_user_lang($lang_current) {
+    private static function set_user_lang($lang_current)
+    {
         $user = Auth::instance()->get_user();
-        if ($user AND ($user->locale != $lang_current)) {
-            $user->locale = $lang_current;
-            $user->save();
+
+        if ( $user )
+        {
+            $user->set_locale($lang_current);
         }
     }
 
@@ -54,17 +59,23 @@ class I18n extends Kohana_I18n {
      *
      * @return string language got from Accepted-Language or NULL
      */
-    private static function get_browser_lang($lang_supported) {
-        // Get lang from Request::accept_lang().
-        foreach (Request::accept_lang() as $key => $val)
+    private static function get_browser_lang($lang_supported)
+    {
+        $best_lang = NULL;
+        $max_quality = 0;
+
+        $header = Request::current()->headers();
+        foreach( $lang_supported as $lang)
         {
-            foreach ($lang_supported as $lang)
+            $current_quality = $header->accepts_language_at_quality($lang);
+            if ( $current_quality > $max_quality )
             {
-                if (substr($key, 0, strlen($lang)) === $lang)
-                    return $lang;
+                $best_lang = $lang;
+                $max_quality = $current_quality;
             }
         }
-        return NULL;
+
+        return $best_lang;
     }
 
     /**
@@ -73,23 +84,39 @@ class I18n extends Kohana_I18n {
      * @return array supported language
      */
     public static function supported_lang() {
-        $lang_settings = Kohana::$config->load('multilang')->get('languages', array());
+        $lang_settings = self::get_language();
         return $lang_settings['supported'];
+    }
+
+    public static function get_language()
+    {
+        if ( is_null(self::$languages) )
+        {
+            self::$languages = Kohana::$config->load('multilang')->get('languages', array());
+        }
+        return self::$languages;
     }
 
     /**
      * Initialize internationalization
      * for current request
      */
-    public static function init_i18n() {
+    public static function setup() {
         // Get language config variables
-        $lang_settings = Kohana::$config->load('multilang')->get('languages', array());
+        $lang_settings = self::get_language();
+
         $lang_supported = array_keys($lang_settings['supported']);
 
         // Get language
         $lang_current = self::get_user_lang($lang_supported);
-        if (! $lang_current) $lang_current = self::get_browser_lang($lang_supported);
-        if (! $lang_current) $lang_current = $lang_settings['default'];
+
+        // if user language is not set
+        if ( is_null($lang_current) )
+            $lang_current = self::get_browser_lang($lang_supported);
+
+        // if get browser language failed
+        if ( is_null($lang_current) )
+            $lang_current = $lang_settings['default'];
 
         // Set user language
         self::set_user_lang($lang_current);

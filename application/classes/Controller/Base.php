@@ -15,7 +15,7 @@ class Controller_Base extends Controller
             $this->response->headers('X-XHR-Current-Location', $this->request->uri());
         }
         $this->init();
-        I18n::init_i18n();
+        I18n::setup();
     }
     /**
      * initialize controller

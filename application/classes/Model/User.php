@@ -58,6 +58,15 @@ class Model_User extends Model_Base
     {
         return self::find_by_id($user_id);
     }
+
+    public function set_locale($lang)
+    {
+        if ( $this->locale != $lang )
+        {
+            $this->locale = $lang;
+            $this->save();
+        }
+    }
     /**
      * 判断用户登录信息是否正确
      *
@@ -79,6 +88,7 @@ class Model_User extends Model_Base
     }
 
     /**
+     * get last volume, user visited
      *
      * @return mixed
      */
