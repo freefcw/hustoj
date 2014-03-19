@@ -92,9 +92,11 @@ class Model_User extends Model_Base
      *
      * @return mixed
      */
-    public function get_last_volume()
+    public function get_last_volume( $default = 1)
     {
-        return $this->volume;
+        if ( $this->volume > 0)
+            return $this->volume;
+        return $default;
     }
 
     public function add_permission($permission)

@@ -10,15 +10,12 @@ class Controller_Problem extends Controller_Base
 
     public function action_list()
     {
-        $default_page = 1;
-
+        $default_page = Session::instance()->get('volume', 1);
         // get user last volume
         $current_user = $this->get_current_user();
         if ( $current_user )
         {
             $default_page = $current_user->get_last_volume();
-        } else {
-            $default_page = Session::instance()->get('volume', 1);
         }
 
         $page = $this->request->param('id', $default_page);
@@ -53,7 +50,7 @@ class Controller_Problem extends Controller_Base
 
         if ( $problem AND $problem->can_user_access($current_user) )
         {
-            //TODO: is defucnt problem can access?
+            //TODO: is defunct problem can access?
             $this->template_data['title'] = $problem['title'];
             $this->template_data['problem'] = $problem;
         } else {
