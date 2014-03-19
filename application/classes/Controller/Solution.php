@@ -10,7 +10,7 @@ class Controller_Solution extends Controller_Base
 
     public function action_source()
     {
-        $user = $this->check_login('/');
+        $user = $this->check_login();
 
         $sid = $this->request->param('id');
         $solution = Model_Solution::find_by_id($sid);

@@ -19,7 +19,7 @@ class Controller_Mail extends Controller_Base
     {
         parent::before();
 
-        $this->current_user = $this->check_login(e::LOGIN_URL);
+        $this->current_user = $this->check_login();
     }
     public function action_index()
     {

@@ -43,14 +43,14 @@ class Controller_Base extends Controller
      *
      * @return Model_User|null
      */
-    public function check_login($redirect = '')
+    public function check_login($redirect = e::LOGIN_URL)
     {
         $user = $this->get_current_user();
         if ( ! $user )
         {
             $session = Session::instance();
             $session->set('return_url', $this->request->uri());
-            $this->redirect(e::LOGIN_URL);
+            $this->redirect($redirect);
         }
         return $user;
     }
