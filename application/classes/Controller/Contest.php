@@ -129,7 +129,7 @@ class Controller_Contest extends Controller_Base
      */
     protected function check_permission($contest)
     {
-        $current_user = Auth::instance()->get_user();
+        $current_user = $this->get_current_user();
         if ( $contest AND $contest->can_user_access($current_user))
         {
             return ;

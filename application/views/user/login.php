@@ -1,5 +1,5 @@
 <h2 class="page-title"><?php echo(__('user.login.user_login'));?></h2>
-<form action="<?php e::url('/user/login');?>" role="form" method="post" class="form-horizontal col-sm-6 col-sm-offset-2">
+<form action="<?php e::url(e::LOGIN_URL);?>" role="form" method="post" class="form-horizontal col-sm-6 col-sm-offset-2">
     <div class="form-group">
         <label for="username" class="control-label col-sm-4"><?php echo(__('user.login.username'));?></label>
         <div class="col-sm-8">

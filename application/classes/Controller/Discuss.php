@@ -25,7 +25,7 @@ class Controller_Discuss extends Controller_Base
         if ( ! $topic)
             throw new Exception_Base(__('common.discuss_not_found'));
 
-        $cu = Auth::instance()->get_user();
+        $cu = $this->get_current_user();
         if ( $this->request->is_post() ) {
 
             if ( $cu->submit < 1 )
@@ -129,7 +129,7 @@ class Controller_Discuss extends Controller_Base
     public function action_new()
     {
         /* @var Model_User $cu */
-        $cu = Auth::instance()->get_user();
+        $cu = $this->get_current_user();
 
         if ( $cu->submit < 1 )
         {

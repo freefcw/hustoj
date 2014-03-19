@@ -138,7 +138,7 @@ class Controller_User extends Controller_Base
 
     public function action_login()
     {
-        if (Auth::instance()->get_user()) {
+        if ( $this->get_current_user() ) {
             $this->go_home();
         }
         if ( $this->request->is_post() and $this->check_captcha() ) {
@@ -146,15 +146,6 @@ class Controller_User extends Controller_Base
             $password = $this->get_post('pwd');
 
             if ( Auth::instance()->login($username, $password, true) ) {
-                // check user is valid
-                $user = Auth::instance()->get_user();
-                if ( $user->is_defunct() )
-                {
-                    Auth::instance()->logout();
-                    $this->redirect('/user/disabled');
-                    return;
-                }
-
                 // go back url
                 $session = Session::instance();
                 $url = $session->get_once('return_url');

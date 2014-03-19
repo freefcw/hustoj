@@ -12,7 +12,7 @@ class Controller_Problem extends Controller_Base
     {
         $default_page = 1;
 
-        $current_user = Auth::instance()->get_user();
+        $current_user = $this->get_current_user();
         if ($current_user) $default_page = $current_user->volume;
 
         $page = $this->request->param('id', $default_page);
@@ -52,7 +52,7 @@ class Controller_Problem extends Controller_Base
         $pid = $this->request->param('id', null);
 
         $problem = Model_Problem::find_by_id($pid);
-        $current_user = Auth::instance()->get_user();
+        $current_user = $this->get_current_user();
 
         if ( $problem AND $problem->can_user_access($current_user) )
         {
@@ -141,7 +141,8 @@ class Controller_Problem extends Controller_Base
         $problem_id = $this->request->param('id');
         $problem = Model_Problem::find_by_id($problem_id);
 
-        $current_user = Auth::instance()->get_user();
+        $current_user = $this->get_current_user();
+
         if ( ! $problem OR ! $problem->can_user_access($current_user) )
             throw new Exception_Base(__('common.problem_not_found'));
 

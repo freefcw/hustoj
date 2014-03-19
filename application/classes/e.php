@@ -12,6 +12,11 @@
  */
 class e
 {
+
+    const LOGIN_URL = '/user/login';
+    const LOGOUT_URL = '/user/logout';
+    const DISABLED_URL = '/user/disabled';
+
     const time_format = 'Y-m-d h:i:s';
 
     protected static $email_confuse_term

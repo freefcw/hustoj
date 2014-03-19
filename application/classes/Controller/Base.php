@@ -45,13 +45,32 @@ class Controller_Base extends Controller
      */
     public function check_login($redirect = '')
     {
-        $user = Auth::instance()->get_user();
+        $user = $this->get_current_user();
         if ( ! $user )
         {
             $session = Session::instance();
             $session->set('return_url', $this->request->uri());
-            $this->redirect('/user/login');
+            $this->redirect(e::LOGIN_URL);
         }
+        return $user;
+    }
+
+    /**
+     * return current user or null
+     *
+     * @return Model_User|null
+     */
+    public function get_current_user()
+    {
+        $user = Auth::instance()->get_user();
+
+        // check user is valid
+        if ( $user and $user->is_defunct() )
+        {
+            Auth::instance()->logout();
+            return $this->redirect(e::DISABLED_URL);
+        }
+
         return $user;
     }
 
@@ -75,7 +94,7 @@ class Controller_Base extends Controller
 
     public function after()
     {
-        View::set_global('current_user', Auth::instance()->get_user());
+        View::set_global('current_user', $this->get_current_user());
         if ( ! $this->response->body())
         {
             $layout = View::factory($this->layout, $this->template_data);
