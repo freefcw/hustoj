@@ -21,6 +21,7 @@ class Model_User extends Model_Base
         'nick',
         'school',
         'locale',
+        'theme',
     );
 
     static $primary_key = 'user_id';
@@ -41,6 +42,7 @@ class Model_User extends Model_Base
     public $nick;
     public $school;
     public $locale;
+    public $theme;
 
     /* @var Model_Privilege[] $permission_list */
     protected $permission_list = null;

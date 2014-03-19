@@ -136,6 +136,7 @@ return array(
     'user.register.email' => 'Email',
     'user.register.1_to_30' => 'max length: 30, required',
     'user.register.locale' => 'Language',
+    'user.register.theme' => 'Theme',
     'user.register.captcha' => 'Captcha',
     'user.register.register' => 'Register',
 

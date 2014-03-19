@@ -58,6 +58,19 @@
             </div>
         </div>
         <div class="form-group">
+        <label class="control-label col-sm-5" for="theme"><?php echo(__('user.register.theme')); ?></label>
+            <div class="col-sm-7">
+                <select class="form-control" name="theme" id="theme" type="theme">
+                <?php $selected = $userinfo['theme']; ?>
+                <?php foreach(Theme::supported_themes() as $value => $name): ?>
+                    <option value="<?php echo($value);?>" <?php if ($selected==$value) echo('selected'); ?>>
+                        <?php echo($name);?>
+                    </option>
+                <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
             <div class="col-sm-offset-5 col-sm-7">
                 <input type="submit" value="<?php echo(__('user.edit.save_changes')); ?>" class="btn-primary btn" id='submit'/>
             </div>

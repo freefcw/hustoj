@@ -136,6 +136,7 @@ return array(
     'user.register.email' => '邮箱',
     'user.register.1_to_30' => '30 字以下，必填',
     'user.register.locale' => '语言',
+    'user.register.theme' => '主题',
     'user.register.captcha' => '验证码',
     'user.register.register' => '注册',
 
