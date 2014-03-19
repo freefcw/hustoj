@@ -15,13 +15,19 @@ class Controller_Problem extends Controller_Base
         // get user last volume
         $current_user = $this->get_current_user();
         if ( $current_user )
+        {
             $default_page = $current_user->get_last_volume();
+        } else {
+            $default_page = Session::instance()->get('volume', 1);
+        }
 
         $page = $this->request->param('id', $default_page);
         // save current volume
         if ( $current_user ) {
             $current_user->volume = $page;
             $current_user->save();
+        } else {
+            Session::instance()->set('volume', $page);
         }
 
         $total_volumes = Model_Problem::number_of_volume();
