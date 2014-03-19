@@ -10,5 +10,5 @@
             <option value="source"><?php echo(__('problem.searchform.source')); ?></option>
         </select>
     </div>
-    <input type="submit" value="<?php echo(__('problem.searchform.go')); ?>" class="btn">
+    <input type="submit" value="<?php echo(__('problem.searchform.go')); ?>" class="btn btn-default">
 </form>

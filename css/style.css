@@ -25,9 +25,13 @@
 
 /* content */
 .problem-search {
-    width: 100%;
-    max-width: 400px;
     float: right;
+}
+
+@media(max-width:751px) {
+  .problem-search {
+    width: 100%;
+  }
 }
 
 .status-filter .form-group {
