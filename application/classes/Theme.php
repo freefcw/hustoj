@@ -33,7 +33,7 @@ class Theme {
      * @return string theme name
      */
     public static function get_theme() {
-        // Get themeuage config variables
+        // Get theme config variables
         $theme_settings = Kohana::$config->load('themes')->get('themes', array());
         $theme_supported = array_keys($theme_settings['supported']);
 
@@ -41,7 +41,6 @@ class Theme {
         $theme_current = self::get_user_theme($theme_supported);
         if (! $theme_current) $theme_current = $theme_settings['default'];
 
-        // Set user theme
         return $theme_current;
     }
 }
