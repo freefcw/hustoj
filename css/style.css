@@ -28,7 +28,7 @@
     float: right;
 }
 
-@media(max-width:751px) {
+@media(max-width:767px) {
   .problem-search {
     width: 100%;
   }
