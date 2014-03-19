@@ -11,7 +11,7 @@
         <label class="sr-only" for="uid"><?php echo(__('discuss.list.user_id')); ?></label>
         <input placeholder="<?php echo(__('discuss.list.user_id')); ?>" name="uid" id="uid" class="form-control"/>
     </div>
-    <input type="submit" value="<?php echo(__('discuss.list.filter')); ?>" class="btn">
+    <input type="submit" value="<?php echo(__('discuss.list.filter')); ?>" class="btn btn-default">
     <a href="<?php e::url('/discuss/new');?>" class="btn btn-info pull-right"><?php echo(__('discuss.list.new_topic')); ?></a>
 </form>
 <?php else:?>

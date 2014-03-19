@@ -28,7 +28,7 @@
         <?php endforeach;?>
         </select>
     </div>
-    <input type="submit" value="<?php echo(__('solution.status.filter')); ?>" class="btn">
+    <input type="submit" value="<?php echo(__('solution.status.filter')); ?>" class="btn btn-default">
 </form>
 <?php endif;?>
 <table class="table table-striped">
