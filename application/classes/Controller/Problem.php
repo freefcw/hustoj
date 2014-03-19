@@ -12,38 +12,29 @@ class Controller_Problem extends Controller_Base
     {
         $default_page = 1;
 
+        // get user last volume
         $current_user = $this->get_current_user();
-        if ($current_user) $default_page = $current_user->volume;
+        if ( $current_user )
+            $default_page = $current_user->get_last_volume();
 
         $page = $this->request->param('id', $default_page);
-
-        $filter = array(
-            'defunct' => Model_Base::DEFUNCT_NO
-        );
-        $orderby = array(
-            Model_Problem::$primary_key => Model_Base::ORDER_ASC
-        );
-
-        $total = Model_Problem::count($filter);
-        $page_count = ceil(intval($total) / OJ::per_page);
-
-        // error page fallback code
-        if ($page < 1) $page = 1;
-        if ($page > $page_count) $page = $page_count;
-
         // save current volume
-        if ($current_user) {
+        if ( $current_user ) {
             $current_user->volume = $page;
             $current_user->save();
         }
 
-        //TODO: add check permission of contest
-        $this->template_data['problemlist'] = Model_Problem::find($filter, $page, OJ::per_page, $orderby);
+        $total_volumes = Model_Problem::number_of_volume();
+
+        $page = e::convert_into_scope($page, $total_volumes);
+
+        $this->template_data['problemlist'] = Model_Problem::problems_for_volume($page);
 
         $title = __('problem.list.problem_set_:id', array(':id' => $page));
-        $this->template_data['page'] = $page;
-        $this->template_data['pages'] = $page_count;
         $this->template_data['title'] = $title;
+
+        $this->template_data['page'] = $page;
+        $this->template_data['pages'] = $total_volumes;
     }
 
     public function action_show()
@@ -56,6 +47,7 @@ class Controller_Problem extends Controller_Base
 
         if ( $problem AND $problem->can_user_access($current_user) )
         {
+            //TODO: is defucnt problem can access?
             $this->template_data['title'] = $problem['title'];
             $this->template_data['problem'] = $problem;
         } else {

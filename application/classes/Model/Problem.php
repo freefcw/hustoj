@@ -77,14 +77,67 @@ class Model_Problem extends Model_Base
         return $ret->as_array();
     }
 
+    /**
+     * proxy to rejudge problem
+     *
+     * @return object
+     */
     public function rejudge()
     {
         return Model_Solution::rejudge_problem($this->problem_id);
     }
 
+    /**
+     * status fro problem summary
+     *
+     * @return array
+     */
     public function summary()
     {
         return Model_Solution::summary_for_problem($this->problem_id);
+    }
+
+    /**
+     * get number of volumes
+     *
+     * @return float
+     */
+    public static function number_of_volume()
+    {
+        $filter = self::default_filter();
+
+        $number_of_problems = Model_Problem::count($filter);
+        $total_page = ceil( intval($number_of_problems) / OJ::per_page );
+
+        return $total_page;
+    }
+
+    /**
+     * problem list for volume
+     *
+     * @param int $volume page for volume
+     *
+     * @return Model_Problem[]
+     */
+    public static function problems_for_volume($volume)
+    {
+        $orderby = array(
+            Model_Problem::$primary_key => Model_Base::ORDER_ASC
+        );
+        $filter = self::default_filter();
+        return Model_Problem::find($filter, $volume, OJ::per_page, $orderby);
+    }
+
+    /**
+     * default filter, with default
+     *
+     * @return array
+     */
+    public static function default_filter()
+    {
+        return $filter = array(
+            'defunct' => Model_Base::DEFUNCT_NO
+        );
     }
 
     /**
@@ -99,11 +152,23 @@ class Model_Problem extends Model_Base
         return false;
     }
 
+    /**
+     * is problem special judge
+     * @return bool
+     */
     public function is_special_judge()
     {
         return $this->spj == '1';
     }
 
+    /**
+     * best solutions for problem
+     *
+     * @param int $page
+     * @param int $limit
+     *
+     * @return Model_Solution[]
+     */
     public function best_solution($page=0, $limit=50)
     {
         return Model_Solution::solution_by_rank($this->problem_id, $page, $limit);

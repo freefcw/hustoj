@@ -69,12 +69,22 @@ class Model_User extends Model_Base
     public static function authenticate($username, $password)
     {
         $user = self::find_by_id($username);
+
         if ($user and $user->check_password($password, true))
         {
             return $user;
         }
 
         return false;
+    }
+
+    /**
+     *
+     * @return mixed
+     */
+    public function get_last_volume()
+    {
+        return $this->volume;
     }
 
     public function add_permission($permission)

@@ -39,6 +39,16 @@ class e
         echo URL::site($uri);
     }
 
+    public static function convert_into_scope($num, $max, $min = 0)
+    {
+        if ( $num < 0 )
+            return $min;
+        if ( $num > $max )
+            return $max;
+
+        return $num;
+    }
+
     public static function gen_pager_url($base_url, $page)
     {
         $params = Request::$current->query();
