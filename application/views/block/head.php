@@ -2,6 +2,7 @@
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <link rel="shortcut icon" href="<?php e::url('favicon.ico');?>"/>
+<link rel="stylesheet" href="<?php e::url('css/bootstrap-glyphicons.css')?>">
 <link rel="stylesheet" href="<?php e::url('css/themes/'.Theme::get_theme().'.css');?>">
 <link rel="stylesheet" href="<?php e::url('css/style.css');?>">
 <link rel="stylesheet" href="<?php e::url('css/ui-lightness/jquery-ui-1.10.3.custom.min.css');?>">
