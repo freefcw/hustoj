@@ -94,6 +94,7 @@ return array(
     'solution.status.memory' => '内存',
     'solution.status.code_length' => '长度',
     'solution.status.submit_time' => '时间',
+    'solution.no_source_code' => '没有源代码',
 
     'solution.source.solution_detail' => '评测详情',
     'solution.source.problem_id' => '题号',

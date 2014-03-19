@@ -94,6 +94,7 @@ return array(
     'solution.status.memory' => 'Memory',
     'solution.status.code_length' => 'Length',
     'solution.status.submit_time' => 'Submit Time',
+    'solution.no_source_code' => 'Solution have no source code',
 
     'solution.source.solution_detail' => 'Solution Details',
     'solution.source.problem_id' => 'Problem',

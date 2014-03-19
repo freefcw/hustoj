@@ -93,7 +93,7 @@ class Controller_Problem extends Controller_Base
             $source_code = $this->get_raw_post('source');
             $lang = $this->get_post('language');
 
-            $solution = Model_Solution::create($current_user, $problem, $source_code, $lang);
+            $solution = Model_Solution::create($current_user, $problem, $lang, $source_code);
 
             if ( $cid )
             {
@@ -102,11 +102,6 @@ class Controller_Problem extends Controller_Base
                 $solution->num = $cpid;
             }
             $solution->save();
-
-            $code = new Model_Code;
-            $code->source = $source_code;
-            $code->solution_id = $solution->solution_id;
-            $code->save();
 
             // set user favorite language
             $current_user->language = $lang;

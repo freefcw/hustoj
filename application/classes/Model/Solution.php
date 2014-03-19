@@ -76,6 +76,9 @@ class Model_Solution extends Model_Base
     public $judgetime;
     public $pass_rate;
 
+    /* @var Model_Code */
+    protected $code = null;
+
 
     /**
      * @param string $id
@@ -134,24 +137,35 @@ class Model_Solution extends Model_Base
     /**
      * @param Model_User $user
      * @param Model_Problem $problem
-     * @param string $source_code
      * @param int $language
+     * @param string $source_code
      *
      * @return Model_Solution
      */
-    public static function create($user, $problem, $source_code, $language)
+    public static function create($user, $problem, $language, $source_code)
     {
         $solution = new Model_Solution();
         $solution->user_id = $user->user_id;
         $solution->problem_id = $problem->problem_id;
         $solution->language = $language;
-        $solution->code_length = strlen($source_code);
         $solution->ip = Request::$client_ip;
+
+        $solution->set_source_code($source_code);
 
         $problem->have_new_solution();
         $user->take_new_submit();
 
         return $solution;
+    }
+
+    public function set_source_code($source_code)
+    {
+        $this->code_length = strlen($source_code);
+
+        $code = new Model_Code;
+        $code->source = $source_code;
+
+        $this->code = $code;
     }
 
     public function display_result()
@@ -315,4 +329,18 @@ class Model_Solution extends Model_Base
 
     public function validate()
     {}
+
+    public function save()
+    {
+        parent::save();
+
+        // save source code
+        if ( $this->code )
+        {
+            $this->code->solution_id = $this->solution_id;
+            $this->code->save();
+        } else {
+            throw new Kohana_Exception(__('model.solution.no_source_code'));
+        }
+    }
 }
