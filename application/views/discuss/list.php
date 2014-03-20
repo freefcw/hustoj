@@ -1,6 +1,11 @@
 <?php if ( ! isset($cid) ):?>
 <ul class="breadcrumb">
-<li><a href="<?php e::url('/discuss/');?>"><?php echo(__('discuss.list.discuss')); ?></a> <span class="divider">/</span></li>
+<li>
+    <a href="<?php e::url('/discuss/');?>"><?php echo(__('discuss.list.discuss')); ?></a>
+    <?php if (Request::current()->query('pid')):?>
+    <span class="divider">/</span> <a href="<?php e::url('/problem/show/'. Request::current()->query('pid'));?>"><?php echo Request::current()->query('pid');?></a>
+    <?php endif;?>
+</li>
 </ul>
 <form class="form-inline well" role="form" action="<?php e::url('/discuss');?>" method="GET">
     <div class="form-group">
