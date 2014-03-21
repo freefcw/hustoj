@@ -22,7 +22,7 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
         {
             $problem = Model_Problem::find_by_id($pid);
             if ( ! $problem )
-                throw new Exception_Base('Problem Not Found');
+                throw new Exception_Base(__('common.problem_not_found'));
         } else {
             $problem = new Model_Problem;
         }
@@ -66,7 +66,7 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
             $problem->save();
 
         } else {
-            $ret->message = 'Not Found';
+            $ret->message = __('common.problem_not_found');
         }
 
         $this->response->body($ret->tojson());
