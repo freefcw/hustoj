@@ -1,6 +1,13 @@
 <table class="table table-striped">
     <thead>
-        <tr><th>User ID</th><th>Nick</th><th>Solved</th><th>Submit</th><th>Ratio</th><th>OP</th></tr>
+    <tr>
+        <th><?php echo(__('admin.user.list.user_id')); ?></th>
+        <th><?php echo(__('admin.user.list.nick')); ?></th>
+        <th><?php echo(__('admin.user.list.solved')); ?></th>
+        <th><?php echo(__('admin.user.list.submit')); ?></th>
+        <th><?php echo(__('admin.user.list.ratio')); ?></th>
+        <th><?php echo(__('admin.user.list.op')); ?></th>
+    </tr>
     </thead>
     <tbody>
     <?php foreach($user_list as $u):?>
@@ -15,7 +22,7 @@
             <?php echo sprintf( "%.02lf%%", $u['solved']/$u['submit'] * 100); ?>
             <?php endif; ?>
             </td>
-            <td><a class="edit-link" href="<?php e::url("/admin/user/edit/{$u['user_id']}");?>">[Edit]</a></td>
+            <td><a class="edit-link" href="<?php e::url("/admin/user/edit/{$u['user_id']}");?>"><?php echo(__('admin.user.list.edit')); ?></a></td>
         </tr>
     <?php endforeach; ?>
     </tbody>
