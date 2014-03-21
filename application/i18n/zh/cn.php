@@ -340,6 +340,24 @@ return array(
     'admin.news.edit.save_changes' => '保存修改',
     'admin.news.edit.cancel' => '取消',
 
+    'admin.settings.sidebar.all_options' => '所有设置',
+    'admin.settings.sidebar.defaults' => '默认设置',
+    'admin.settings.sidebar.new_option' => '创建设置',
+
+    'admin.settings.index.name' => '名称',
+    'admin.settings.index.value' => '值',
+    'admin.settings.index.description' => '描述',
+
+    'admin.settings.edit.name' => '名称',
+    'admin.settings.edit.unique' => '唯一的设置名',
+    'admin.settings.edit.description' => '描述',
+    'admin.settings.edit.description_with_format' => '设置项的描述和格式',
+    'admin.settings.edit.value' => '值',
+    'admin.settings.edit.save_changes' => '保存修改',
+    'admin.settings.edit.cancel' => '取消',
+
+    'admin.settings.default.notice' => '这些设置在 base.php 中定义，你可以点击名称将其加入到数据库中。数据库中的设置拥有更高优先级。',
+
     'common.error' => '糟糕！出错了。',
     'common.user_disabled_title' => '用户被禁用',
     'common.user_disabled' => '您的用户已被禁用，请联系管理员',

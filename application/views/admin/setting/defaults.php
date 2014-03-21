@@ -1,9 +1,12 @@
-<div class="alert-info">
-    <p>These config option is at base.php, you can click the name to add database, the config in the database have high prior than php file.</p>
+<div class="alert alert-info">
+    <p><?php echo(__('admin.settings.default.notice')); ?></p>
 </div>
 <table class="table table-responsive">
     <thead>
-    <tr><th style="width: 200px">Name</th><th>Value</th></tr>
+    <tr>
+        <th style="width: 200px"><?php echo(__('admin.settings.index.name')); ?></th>
+        <th><?php echo(__('admin.settings.index.value')); ?></th>
+    </tr>
     </thead>
     <tbody>
     <?php foreach(Model_Option::defaults() as $key => $value):?>

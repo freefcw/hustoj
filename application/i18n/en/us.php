@@ -341,6 +341,24 @@ return array(
     'admin.news.edit.save_changes' => 'Save Changes',
     'admin.news.edit.cancel' => 'Cancel',
 
+    'admin.settings.sidebar.all_options' => 'All Options',
+    'admin.settings.sidebar.defaults' => 'Defaults Options',
+    'admin.settings.sidebar.new_option' => 'New Option',
+
+    'admin.settings.index.name' => 'Name',
+    'admin.settings.index.value' => 'Value',
+    'admin.settings.index.description' => 'Description',
+
+    'admin.settings.edit.name' => 'Name',
+    'admin.settings.edit.unique' => 'Unique name',
+    'admin.settings.edit.description' => 'Description',
+    'admin.settings.edit.description_with_format' => 'Description, with format',
+    'admin.settings.edit.value' => 'Value',
+    'admin.settings.edit.save_changes' => 'Save Changes',
+    'admin.settings.edit.cancel' => 'Cancel',
+
+    'admin.settings.default.notice' => 'These options are in base.php. You can click the name to add into the database. The options in the database have high priority than php file.',
+
     'common.error' => 'Oops! Error.',
     'common.user_disabled_title' => 'User Disabled',
     'common.user_disabled' => 'Your account has been disabled. Please contact administrator.',
