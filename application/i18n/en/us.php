@@ -239,11 +239,11 @@ return array(
 
     'admin.problem.list.problem_id' => 'ID',
     'admin.problem.list.title' => 'Title',
-    'admin.problem.list.created' => 'Date Created',
+    'admin.problem.list.created' => 'Time Created',
     'admin.problem.list.defunct' => 'Defunct',
     'admin.problem.list.op' => 'OP',
     'admin.problem.list.edit' => 'Edit',
-    'admin.problem.list.sure_to_change_defunct?' => "Are you sure to change this problem's defucnt type?",
+    'admin.problem.list.sure_to_change_defunct?' => "Are you sure to change this problem's defunct type?",
 
     'admin.problem.edit.basic' => 'Basic Information',
     'admin.problem.edit.detail' => 'Detail',
@@ -325,6 +325,21 @@ return array(
     'admin.contest.member.user_list' => 'User List',
     'admin.contest.member.one_user_per_line' => 'One username per line',
     'admin.contest.member.add' => 'Add',
+
+    'admin.news.sidebar.new' => 'New',
+
+    'admin.news.index.id' => 'ID',
+    'admin.news.index.title' => 'Title',
+    'admin.news.index.created' => 'Time Created',
+    'admin.news.index.op' => 'OP',
+    'admin.news.index.edit' => 'Edit',
+
+    'admin.news.edit.title' => 'Title',
+    'admin.news.edit.top' => 'Top',
+    'admin.news.edit.defunct' => 'Defunct',
+    'admin.news.edit.description' => 'Content',
+    'admin.news.edit.save_changes' => 'Save Changes',
+    'admin.news.edit.cancel' => 'Cancel',
 
     'common.error' => 'Oops! Error.',
     'common.user_disabled_title' => 'User Disabled',

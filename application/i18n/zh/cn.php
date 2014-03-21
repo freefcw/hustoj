@@ -325,6 +325,21 @@ return array(
     'admin.contest.member.one_user_per_line' => '每行为一个用户名',
     'admin.contest.member.add' => '添加',
 
+    'admin.news.sidebar.new' => '添加新闻',
+
+    'admin.news.index.id' => '编号',
+    'admin.news.index.title' => '标题',
+    'admin.news.index.created' => '创建时间',
+    'admin.news.index.op' => '操作',
+    'admin.news.index.edit' => '修改',
+
+    'admin.news.edit.title' => '标题',
+    'admin.news.edit.top' => '置顶',
+    'admin.news.edit.defunct' => '禁用',
+    'admin.news.edit.description' => '内容',
+    'admin.news.edit.save_changes' => '保存修改',
+    'admin.news.edit.cancel' => '取消',
+
     'common.error' => '糟糕！出错了。',
     'common.user_disabled_title' => '用户被禁用',
     'common.user_disabled' => '您的用户已被禁用，请联系管理员',
