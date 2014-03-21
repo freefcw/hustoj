@@ -27,7 +27,7 @@
     </li>
 </ul>
 <pre class="prettyprint linenums solution-code col-sm-10">
-<?php echo(htmlentities($solution->code()));?>
+<?php echo(htmlentities($solution->source()));?>
 </pre>
 <?php if ($cinfo): ?>
     <pre class="col-sm-12 linenums"><?php echo($cinfo->error); ?></pre>

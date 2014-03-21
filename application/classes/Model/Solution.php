@@ -202,10 +202,19 @@ class Model_Solution extends Model_Base
         return false;
     }
 
-    public function code()
+    /**
+     * the source code of solution
+     *
+     * @return string|null
+     */
+    public function source()
     {
         $code = Model_Code::find_by_id($this->solution_id);
-        return $code->source;
+        if ( $code )
+        {
+            return $code->source;
+        }
+        return null;
     }
 
     /**
@@ -339,8 +348,6 @@ class Model_Solution extends Model_Base
         {
             $this->code->solution_id = $this->solution_id;
             $this->code->save();
-        } else {
-            throw new Kohana_Exception(__('model.solution.no_source_code'));
         }
     }
 }
