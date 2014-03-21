@@ -1,9 +1,9 @@
 <?php /* @var Model_Contest $contest */ ?>
 <form class="form-horizontal" method="POST" action="<?php e::url("/admin/contest/edit/{$contest->contest_id}"); ?>">
     <fieldset>
-        <legend>Basic Information</legend>
+        <legend><?php echo(__('admin.contest.edit.basic')); ?></legend>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="title">Title</label>
+            <label class="control-label col-sm-2" for="title"><?php echo(__('admin.contest.edit.title')); ?></label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" name="title" id="title"
                        value="<?php echo $contest->title;?>">
@@ -12,18 +12,18 @@
                     <input type="checkbox" name='private' id="private" <?php if (
                         array_key_exists('private', $contest) and $contest->private == true
                     ): ?>checked="checked"<?php endif;?> value="1">
-                    Private Contest
+                    <?php echo(__('admin.contest.edit.private')); ?>
                 </label>
                 <p></p>
             </div>
             <div class="col-sm-5 col-sm-offset-2">
-                <label class="control-label col-sm-4" for="start_time">Start Time</label>
+                <label class="control-label col-sm-4" for="start_time"><?php echo(__('admin.contest.edit.start')); ?></label>
                 <div class="col-sm-8">
                     <input class="form-control" id="start_time" name="start_time" value="<?php echo($contest->start_time);?>">
                 </div>
             </div>
             <div class="col-sm-5">
-                <label class="control-label col-sm-4" for="end_time">End Time</label>
+                <label class="control-label col-sm-4" for="end_time"><?php echo(__('admin.contest.edit.end')); ?></label>
                 <div class="col-sm-8">
                     <input class="form-control" id="end_time" name="end_time" value="<?php echo($contest->end_time);?>">
                 </div>
@@ -40,19 +40,19 @@
             <?php echo HTML::script('js/jquery-ui-timepicker-addon.js'); ?>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="description">Description</label>
+            <label class="control-label col-sm-2" for="description"><?php echo(__('admin.contest.edit.description')); ?></label>
             <div class="col-sm-10">
                 <textarea cols="50" rows="7" id="description" class="form-control" name="description"><?php echo $contest->description;?></textarea>
             </div>
         </div>
-        <legend>Problem List</legend>
+        <legend><?php echo(__('admin.contest.edit.problems')); ?></legend>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="problem-new">Add Probelm</label>
+            <label class="control-label col-sm-2" for="problem-new"><?php echo(__('admin.contest.edit.add_problem')); ?></label>
             <div class="col-sm-6">
                 <input class="form-control" id="problem-new" name="problem-new">
             </div>
             <div class="col-sm-2">
-                <input class="btn btn-primary" type="button" value="Add" id="add-problem"/>
+                <input class="btn btn-primary" type="button" value="<?php echo(__('admin.contest.edit.add')); ?>" id="add-problem"/>
                 <input type="hidden" id="problem-id"/>
                 <input class="form-control" id="problem-list" name="problemlist" type="hidden">
                 <p></p>
@@ -137,7 +137,7 @@
                 <ul id="edit-problem-list">
                     <?php foreach ($contest->problem() as $pr): ?>
                     <li class="ui-state-default" data-value="<?php echo $pr->problem_id;?>"><span
-                            class="ui-icon ui-icon-arrowthick-2-n-s"></span><?php echo $pr->title();?><a>[x]</a></li>
+                            class="ui-icon ui-icon-arrowthick-2-n-s"></span><?php echo $pr->title();?><a>x</a></li>
                     <?php endforeach;?>
                 </ul>
                 <script>
@@ -160,8 +160,8 @@
 
     <div class="form-group">
         <div class="col-sm-10 col-sm-offset-2">
-            <button class="btn btn-primary" type="submit">Save changes</button>
-            <button class="btn" onclick="history.back()" type="reset">Cancel</button>
+            <button class="btn btn-primary" type="submit"><?php echo(__('admin.contest.edit.save_changes')); ?></button>
+            <button class="btn" onclick="history.back()" type="reset"><?php echo(__('admin.contest.edit.cancel')); ?></button>
         </div>
     </div>
 </form>

@@ -22,7 +22,7 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
         {
             $problem = Model_Problem::find_by_id($pid);
             if ( ! $problem )
-                throw new Exception_Base('Problem Not Found');
+                throw new Exception_Base(__('common.problem_not_found'));
         } else {
             $problem = new Model_Problem;
         }
@@ -38,7 +38,10 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
                 $problem->spj = 1;
             $problem->save();
         }
-        $this->template_data['title'] = 'Edit '. $problem['problem_id']. ' -- '. $problem['title'];
+        $this->template_data['title'] = 
+            __('admin.problem.edit.edit_:id_:name',
+                array(':id' => $problem['problem_id'],
+                      ':name' => $problem['title']));
         $this->template_data['problem'] = $problem;
     }
 
@@ -63,7 +66,7 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
             $problem->save();
 
         } else {
-            $ret->message = 'Not Found';
+            $ret->message = __('common.problem_not_found');
         }
 
         $this->response->body($ret->tojson());
@@ -99,7 +102,7 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
         $this->view = 'admin/problem/edit';
         $problem = new Model_Problem;
         $this->template_data['problem'] = $problem;
-        $this->template_data['title'] = 'New Problem';
+        $this->template_data['title'] = __('admin.problem.edit.new_problem');
     }
 
     public function action_list()
@@ -114,6 +117,6 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
 
         $this->template_data['pages'] = ceil(intval(Model_Problem::count($filter)) / OJ::per_page);
         $this->template_data['problem_list'] = $problem_list;
-        $this->template_data['title'] = 'Problem List';
+        $this->template_data['title'] = __('admin.problem.list.problem_list');
     }
 }

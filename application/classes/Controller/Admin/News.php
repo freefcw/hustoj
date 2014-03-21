@@ -17,7 +17,7 @@ class Controller_Admin_News extends Controller_Admin_Base {
         );
         $news_list = Model_News::find(array(), $page, $limit, $orderby);
 
-        $this->template_data['title'] = 'News Page '.$page;
+        $this->template_data['title'] = __('admin.news.index.news_list');
         $this->template_data['news_list'] = $news_list;
     }
 
@@ -26,7 +26,7 @@ class Controller_Admin_News extends Controller_Admin_Base {
         $this->view = 'admin/news/edit';
         $news = new Model_News;
 
-        $this->template_data['title'] = 'add News';
+        $this->template_data['title'] = __('admin.news.edit.new_news');
         $this->template_data['news'] = $news;
     }
 
@@ -66,11 +66,13 @@ class Controller_Admin_News extends Controller_Admin_Base {
             {
                 $this->redirect('/admin/news');
             } else {
-                $this->flash_error('Save Failed');
+                $this->flash_error(__('common.error'));
             }
         }
 
-        $this->template_data['title'] = 'Edit '.$news->title;
+        $this->template_data['title'] = 
+            __('admin.news.edit.edit_news_:name',
+                array(':name' => $news->title));
         $this->template_data['news'] = $news;
     }
 }

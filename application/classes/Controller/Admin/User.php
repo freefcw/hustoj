@@ -16,7 +16,7 @@ class Controller_Admin_User extends Controller_Admin_Base{
 
         $this->template_data['total'] = Model_User::count();
         $this->template_data['user_list'] = $user_list;
-        $this->template_data['title']  = 'User List '. $page;
+        $this->template_data['title']  = __('admin.user.list.user_list');
     }
 
     public function action_edit()
@@ -25,7 +25,7 @@ class Controller_Admin_User extends Controller_Admin_Base{
 
         $user = Model_User::find_by_id($user_id);
         if ( !$user )
-            throw new Exception_Base('User Not Found');
+            throw new Exception_Base(__('common.user_not_found'));
 
         if ( $this->request->is_post() )
         {
@@ -43,7 +43,9 @@ class Controller_Admin_User extends Controller_Admin_Base{
         }
 
         $this->template_data['user'] = $user;
-        $this->template_data['title'] = 'Edit User '. $user_id;
+        $this->template_data['title'] =
+            __('admin.user.edit.edit_:user',
+                array(':user' => $user_id));
     }
 
     public function action_del()

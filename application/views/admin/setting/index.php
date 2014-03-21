@@ -1,6 +1,9 @@
 <table class="table table-responsive">
     <thead>
-    <tr><th style="width: 200px">Name</th><th>Description</th></tr>
+    <tr>
+        <th style="width: 200px"><?php echo(__('admin.settings.index.name')); ?></th>
+        <th><?php echo(__('admin.settings.index.description')); ?></th>
+    </tr>
     </thead>
     <tbody>
     <?php foreach(Model_Option::all_options() as $option):?>

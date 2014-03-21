@@ -1,15 +1,15 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th>User Id</th>
-        <th>Del</th>
+        <th><?php echo(__('admin.contest.member.username')); ?></th>
+        <th><?php echo(__('admin.contest.member.op')); ?></th>
     </tr>
     </thead>
     <tbody>
     <?php foreach ($users as $user_id): ?>
     <tr>
         <td><?php echo $user_id;?></td>
-        <td><a href="#" class="x" data="<?php echo $user_id;?>">[X]</a></td>
+        <td><a href="#" class="x" data="<?php echo $user_id;?>"><?php echo(__('admin.contest.member.del')); ?></a></td>
     </tr>
         <?php endforeach; ?>
     </tbody>
@@ -37,18 +37,17 @@
 </script>
 <form action="<?php e::url("/admin/contest/member/{$contest['contest_id']}");?>" method="post" class="form-horizontal">
     <fieldset>
-        <legend>Add Member</legend>
+        <legend><?php echo(__('admin.contest.member.add_member')); ?></legend>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="content">User List</label>
+            <label class="control-label col-sm-2" for="content"><?php echo(__('admin.contest.member.user_list')); ?></label>
             <div class="col-sm-10">
-                <textarea rows="10" cols="10" class="form-control" id="content" name="content"></textarea>
-                <p class="help-block">each line is a user id.</p>
+                <textarea rows="10" cols="10" class="form-control" id="content" name="content" placeholder="<?php echo(__('admin.contest.member.one_user_per_line')); ?>"></textarea>
             </div>
     </div>
     </fieldset>
     <div class="form-group">
         <div class="col-sm-10 col-sm-offset-2">
-            <button class="btn btn-primary" type="submit">Save!</button>
+        <button class="btn btn-primary" type="submit"><?php echo(__('admin.contest.member.add')); ?></button>
         </div>
     </div>
 </form>
