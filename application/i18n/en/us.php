@@ -245,7 +245,7 @@ return array(
     'admin.problem.list.defunct' => 'Defunct',
     'admin.problem.list.op' => 'OP',
     'admin.problem.list.edit' => 'Edit',
-    'admin.problem.list.sure_to_change_defunct?' => "Are you sure to change this problem's defunct type?",
+    'admin.problem.list.sure_to_change_defunct?' => "Are you sure to change the defunct type?",
 
     'admin.problem.edit.new_problem' => 'New Problem',
     'admin.problem.edit.edit_:id_:name' => 'Edit :id :name',

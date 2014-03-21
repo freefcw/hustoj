@@ -20,6 +20,9 @@
         menubar: false,
         toolbar: "undo redo | styleselect fontselect | bold italic | bullist numlist | link image | code",
         statusbar: false,
+<?php if (I18n::$lang != 'en-us'): ?>
+        language: "<?php echo(I18n::$lang); ?>",
+<?php endif; ?>
     });
 </script>
 <?php endif;?>
