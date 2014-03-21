@@ -38,6 +38,8 @@ class Model_CInfo extends Model_Save
         $result = self::find($filter);
         if ($result)
             return $result[0];
+
+        return null;
     }
 
     protected function initial_data()

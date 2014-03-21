@@ -159,6 +159,7 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
      *
      * @param array $condition
      *
+     * @throws Kohana_Exception
      * @return int 返回执行后结果
      */
     public static function delete($condition = array())
@@ -173,6 +174,7 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
             }
             return $query->execute();
         }
+        throw new Kohana_Exception('Condition can not be empty array');
     }
 
     /**
@@ -183,7 +185,7 @@ abstract class Model_Base extends Model_Database implements ArrayAccess
     public function is_defunct()
     {
         if ( in_array('defunct', static::$cols))
-            return $this->defunct == self::DEFUNCT_YES;
+            return $this['defunct'] == self::DEFUNCT_YES;
         return false;
     }
 

@@ -92,6 +92,8 @@ class Model_User extends Model_Base
     /**
      * get last volume, user visited
      *
+     * @param int $default
+     *
      * @return mixed
      */
     public function get_last_volume( $default = 1)
@@ -309,7 +311,7 @@ class Model_User extends Model_Base
     }
 
     /**
-     * is user resolved probelm
+     * is user resolved problem
      *
      * @param $problem_id
      *

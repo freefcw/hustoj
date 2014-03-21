@@ -21,6 +21,8 @@ abstract class Model_Save extends Model_Base
         $result = self::find($filter);
         if ($result)
             return $result[0];
+
+        return null;
     }
 
     /**

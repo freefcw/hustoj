@@ -108,7 +108,7 @@ class Controller_Base extends Controller
     }
 
     /**
-     * flter data such as '', 0
+     * filter data such as '', 0
      *
      * @param       $data array
      * @param array $filters
