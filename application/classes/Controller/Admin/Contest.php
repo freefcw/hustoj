@@ -22,7 +22,7 @@ class Controller_Admin_Contest extends Controller_Admin_Base
 
         $this->template_data['total'] = Model_Contest::count();
         $this->template_data['contest_list'] = $contest_list;
-        $this->template_data['title'] = 'Contest List';
+        $this->template_data['title'] = __('admin.contest.list.contest_list');
     }
 
     public function action_edit()
@@ -46,7 +46,7 @@ class Controller_Admin_Contest extends Controller_Admin_Base
             $contest->arrange_problem($orderlist);
         }
 
-        $this->template_data['title'] = 'Edit Contest ' . $contest['contest_id'];
+        $this->template_data['title'] = __('admin.contest.edit.edit_contest') . $contest['contest_id'];
         $this->template_data['contest'] = $contest;
 
     }
@@ -56,7 +56,7 @@ class Controller_Admin_Contest extends Controller_Admin_Base
         $this->view = 'admin/contest/edit';
         $contest = new Model_Contest;
         $this->template_data['contest'] = $contest;
-        $this->template_data['title'] = 'New Contest';
+        $this->template_data['title'] = __('admin.contest.edit.new_contest');
 
     }
 
@@ -77,7 +77,9 @@ class Controller_Admin_Contest extends Controller_Admin_Base
         $contest = Model_Contest::find_by_id($cid);
         $this->template_data['users'] = $contest->members();
         $this->template_data['contest'] = $contest;
-        $this->template_data['title'] = 'Member of Contest ' . $contest->contest_id;
+        $this->template_data['title'] =
+            __('admin.contest.member.member_of_contest_:name',
+                array(':name' => $contest->contest_id));
     }
 
     public function action_removeuser()

@@ -227,6 +227,7 @@ return array(
     'mail.view.time' => '时间：',
 
     'admin.index.sidebar.home' => '首页',
+    'admin.index.index.dashboard' => '总览',
     'admin.index.index.rejudge' => '重测',
     'admin.index.index.choose_type' => '类型',
     'admin.index.index.problem' => '题目',
@@ -236,6 +237,7 @@ return array(
 
     'admin.problem.sidebar.new' => '创建题目',
 
+    'admin.problem.list.problem_list' => '题目列表',
     'admin.problem.list.problem_id' => '题号',
     'admin.problem.list.title' => '标题',
     'admin.problem.list.created' => '创建时间',
@@ -244,6 +246,8 @@ return array(
     'admin.problem.list.edit' => '修改',
     'admin.problem.list.sure_to_change_defunct?' => '您确定要修改题目的禁用状态吗？',
 
+    'admin.problem.edit.new_problem' => '创建题目',
+    'admin.problem.edit.edit_:id_:name' => '修改题目 :id：:name',
     'admin.problem.edit.basic' => '基础信息',
     'admin.problem.edit.detail' => '具体信息',
     'admin.problem.edit.title' => '标题',
@@ -264,6 +268,7 @@ return array(
 
     'admin.user.sidebar.new' => '创建用户',
 
+    'admin.user.list.user_list' => '用户列表',
     'admin.user.list.user_id' => '用户名',
     'admin.user.list.nick' => '签名',
     'admin.user.list.solved' => '解决',
@@ -272,6 +277,7 @@ return array(
     'admin.user.list.op' => '操作',
     'admin.user.list.edit' => '修改',
 
+    'admin.user.edit.edit_:user' => '修改 :user',
     'admin.user.edit.basic' => '基础信息',
     'admin.user.edit.contact' => '联系信息',
     'admin.user.edit.other' => '其他信息',
@@ -298,6 +304,7 @@ return array(
 
     'admin.contest.sidebar.new' => '创建比赛',
 
+    'admin.contest.list.contest_list' => '比赛列表',
     'admin.contest.list.id' => '编号',
     'admin.contest.list.title' => '名称',
     'admin.contest.list.status' => '状态',
@@ -305,6 +312,8 @@ return array(
     'admin.contest.list.op' => '操作',
     'admin.contest.list.edit' => '修改',
 
+    'admin.contest.edit.edit_contest' => '修改比赛 ',
+    'admin.contest.edit.new_contest' => '创建比赛 ',
     'admin.contest.edit.basic' => '基础信息',
     'admin.contest.edit.problems' => '题目列表',
     'admin.contest.edit.title' => '名称',
@@ -317,6 +326,7 @@ return array(
     'admin.contest.edit.save_changes' => '保存修改',
     'admin.contest.edit.cancel' => '取消',
 
+    'admin.contest.member.member_of_contest_:name' => '比赛 :name 的成员',
     'admin.contest.member.username' => '用户名',
     'admin.contest.member.op' => '操作',
     'admin.contest.member.del' => '删除',
@@ -327,12 +337,15 @@ return array(
 
     'admin.news.sidebar.new' => '添加新闻',
 
+    'admin.news.index.news_list' => '新闻列表',
     'admin.news.index.id' => '编号',
     'admin.news.index.title' => '标题',
     'admin.news.index.created' => '创建时间',
     'admin.news.index.op' => '操作',
     'admin.news.index.edit' => '修改',
 
+    'admin.news.edit.edit_news_:name' => '修改:name',
+    'admin.news.edit.new_news' => '添加新闻',
     'admin.news.edit.title' => '标题',
     'admin.news.edit.top' => '置顶',
     'admin.news.edit.defunct' => '禁用',
@@ -344,10 +357,14 @@ return array(
     'admin.settings.sidebar.defaults' => '默认设置',
     'admin.settings.sidebar.new_option' => '创建设置',
 
+    'admin.settings.index.general' => '通用设置',
+    'admin.settings.index.defaults' => '默认设置',
     'admin.settings.index.name' => '名称',
     'admin.settings.index.value' => '值',
     'admin.settings.index.description' => '描述',
 
+    'admin.settings.edit.modify_option' => '修改设置',
+    'admin.settings.edit.new_option' => '创建设置',
     'admin.settings.edit.name' => '名称',
     'admin.settings.edit.unique' => '唯一的设置名',
     'admin.settings.edit.description' => '描述',

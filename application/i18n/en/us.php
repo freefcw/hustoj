@@ -228,6 +228,7 @@ return array(
     'mail.view.time' => 'Time: ',
 
     'admin.index.sidebar.home' => 'Home',
+    'admin.index.index.dashboard' => 'Dashboard',
     'admin.index.index.rejudge' => 'Rejudge',
     'admin.index.index.choose_type' => 'Type',
     'admin.index.index.problem' => 'Problem',
@@ -237,6 +238,7 @@ return array(
 
     'admin.problem.sidebar.new' => 'New',
 
+    'admin.problem.list.problem_list' => 'Problem List',
     'admin.problem.list.problem_id' => 'ID',
     'admin.problem.list.title' => 'Title',
     'admin.problem.list.created' => 'Time Created',
@@ -245,6 +247,8 @@ return array(
     'admin.problem.list.edit' => 'Edit',
     'admin.problem.list.sure_to_change_defunct?' => "Are you sure to change this problem's defunct type?",
 
+    'admin.problem.edit.new_problem' => 'New Problem',
+    'admin.problem.edit.edit_:id_:name' => 'Edit :id :name',
     'admin.problem.edit.basic' => 'Basic Information',
     'admin.problem.edit.detail' => 'Detail',
     'admin.problem.edit.title' => 'Title',
@@ -265,6 +269,7 @@ return array(
 
     'admin.user.sidebar.new' => 'New',
 
+    'admin.user.list.user_list' => 'User List',
     'admin.user.list.user_id' => 'User ID',
     'admin.user.list.nick' => 'Nick',
     'admin.user.list.solved' => 'Solved',
@@ -273,6 +278,7 @@ return array(
     'admin.user.list.op' => 'OP',
     'admin.user.list.edit' => 'Edit',
 
+    'admin.user.edit.edit_:user' => 'Edit :user',
     'admin.user.edit.basic' => 'Basic Information',
     'admin.user.edit.contact' => 'Contact Information',
     'admin.user.edit.other' => 'Other Information',
@@ -299,6 +305,7 @@ return array(
 
     'admin.contest.sidebar.new' => 'New',
 
+    'admin.contest.list.contest_list' => 'Contest List',
     'admin.contest.list.id' => 'ID',
     'admin.contest.list.title' => 'Title',
     'admin.contest.list.status' => 'Status',
@@ -306,6 +313,8 @@ return array(
     'admin.contest.list.op' => 'OP',
     'admin.contest.list.edit' => 'Edit',
 
+    'admin.contest.edit.edit_contest' => 'Edit Contest ',
+    'admin.contest.edit.new_contest' => 'New Contest ',
     'admin.contest.edit.basic' => 'Basic Information',
     'admin.contest.edit.problems' => 'Problem List',
     'admin.contest.edit.title' => 'Title',
@@ -318,6 +327,7 @@ return array(
     'admin.contest.edit.save_changes' => 'Save Changes',
     'admin.contest.edit.cancel' => 'Cancel',
 
+    'admin.contest.member.member_of_contest_:name' => 'Member of Contest :name',
     'admin.contest.member.username' => 'Username',
     'admin.contest.member.op' => 'OP',
     'admin.contest.member.del' => 'Delete',
@@ -328,12 +338,15 @@ return array(
 
     'admin.news.sidebar.new' => 'New',
 
+    'admin.news.index.news_list' => 'News List',
     'admin.news.index.id' => 'ID',
     'admin.news.index.title' => 'Title',
     'admin.news.index.created' => 'Time Created',
     'admin.news.index.op' => 'OP',
     'admin.news.index.edit' => 'Edit',
 
+    'admin.news.edit.edit_news_:name' => 'Edit :name',
+    'admin.news.edit.new_news' => 'New News',
     'admin.news.edit.title' => 'Title',
     'admin.news.edit.top' => 'Top',
     'admin.news.edit.defunct' => 'Defunct',
@@ -345,10 +358,14 @@ return array(
     'admin.settings.sidebar.defaults' => 'Defaults Options',
     'admin.settings.sidebar.new_option' => 'New Option',
 
+    'admin.settings.index.general' => 'All Options',
+    'admin.settings.index.defaults' => 'Default Options',
     'admin.settings.index.name' => 'Name',
     'admin.settings.index.value' => 'Value',
     'admin.settings.index.description' => 'Description',
 
+    'admin.settings.edit.modify_option' => 'Modify Option',
+    'admin.settings.edit.new_option' => 'New Option',
     'admin.settings.edit.name' => 'Name',
     'admin.settings.edit.unique' => 'Unique name',
     'admin.settings.edit.description' => 'Description',

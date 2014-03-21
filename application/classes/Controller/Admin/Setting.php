@@ -4,7 +4,7 @@ class Controller_Admin_Setting extends Controller_Admin_Base{
 
     public function action_index()
     {
-        $this->template_data['title'] = 'General Setting';
+        $this->template_data['title'] = __('admin.settings.index.general');
     }
 
     public function action_edit()
@@ -15,7 +15,7 @@ class Controller_Admin_Setting extends Controller_Admin_Base{
             $option = Model_Option::find_by_id($id);
             if ( ! $option )
                 throw new Exception_Base('option not found');
-            $this->template_data['title'] = 'Modify Option';
+            $this->template_data['title'] = __('admin.settings.edit.modify_option');
         } else {
             $option = new Model_Option;
             $value = Model_Option::get_option($id);
@@ -24,7 +24,7 @@ class Controller_Admin_Setting extends Controller_Admin_Base{
                 $option->name = $id;
                 $option->value = $value;
             }
-            $this->template_data['title'] = 'Add Option';
+            $this->template_data['title'] = __('admin.settings.edit.new_option');
         }
 
         if ($this->request->is_post())
@@ -40,7 +40,7 @@ class Controller_Admin_Setting extends Controller_Admin_Base{
 
     public function action_defaults()
     {
-        $this->template_data['title'] = 'Defaults Setting';
+        $this->template_data['title'] = __('admin.settings.index.defaults');
     }
 
     public function action_system(){}

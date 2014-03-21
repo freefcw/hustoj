@@ -5,7 +5,7 @@ class Controller_Admin_Index extends Controller_Admin_Base
 
     public function action_index()
     {
-        $this->template_data['title'] = 'Admin Control Dashboard';
+        $this->template_data['title'] = __('admin.index.index.dashboard');
     }
 
     public function action_rejudge()
