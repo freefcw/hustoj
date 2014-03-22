@@ -27,8 +27,8 @@ class Controller_Admin_Index extends Controller_Admin_Base
                 if ( $solution )
                 {
                     $solution->rejudge();
-                    $this->flash_info(__('common.rejudge_:solution',
-                        array(':solution' => $problem->solution_id)));
+                    $this->flash_info(__('common.rejudge_:runid',
+                        array(':runid' => $solution->solution_id)));
                 }
             }
         }
