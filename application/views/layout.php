@@ -27,8 +27,8 @@
     else
         echo View::factory('block/top_frontend');
 ?>
+        <?php echo View::factory('block/user_control'); ?>
         </div><!--/.nav-collapse -->
-
     </div>
 </div>
 <div class="container">
