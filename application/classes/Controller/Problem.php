@@ -130,14 +130,19 @@ class Controller_Problem extends Controller_Base
         // init
         $problem_id = $this->request->param('id');
         $problem = Model_Problem::find_by_id($problem_id);
+        $page = $this->get_query('page', 1);
+        $per_page = OJ::per_page;
 
         $current_user = $this->get_current_user();
 
         if ( ! $problem OR ! $problem->can_user_access($current_user) )
             throw new Exception_Base(__('common.problem_not_found'));
 
+        $this->template_data['problem_id'] = $problem_id;
+        $this->template_data['start_rank'] = $per_page * ($page - 1);
         $this->template_data['summary'] = $problem->summary();
-        $this->template_data['solutions'] = $problem->best_solution();
+        $this->template_data['total'] = ceil($this->template_data['summary']['submit_user'] / $per_page);
+        $this->template_data['solutions'] = $problem->best_solution($page-1, $per_page);
 
         $this->template_data['title']
             = __('problem.summary.summary_of_:id', array(':id' => $problem_id));

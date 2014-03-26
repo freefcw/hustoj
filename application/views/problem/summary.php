@@ -25,7 +25,7 @@
 		</tr>
     </thead>
 	<tbody>
-		<?php $rank = 0;?>
+		<?php $rank = $start_rank;?>
 		<?php foreach($solutions as $item): ?>
 		<?php $rank = $rank + 1; ?>
 		<tr>
@@ -36,7 +36,7 @@
                         'result' => Model_Solution::STATUS_AC,
                         'pid' => $item['problem_id'],
                     );?>
-                <a href="<?php e::url('/status'. URL::query($params));?>"><?php print $item['solution_id'];?>(<?php print $item['att'];?>)</a>
+                <a href="<?php e::url('/status'. URL::query($params, false));?>"><?php print $item['solution_id'];?>(<?php print $item['att'];?>)</a>
                 <?php else:?>
                 <?php if ($current_user AND $current_user->can_view_code($item)):?>
                 <a href="<?php e::url('/solution/source/'. $item['solution_id']);?>"><?php echo $item['solution_id'];?></a>
@@ -54,5 +54,6 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+<?php echo(View::factory('common/pager', array('base_url' => '/problem/summary/' . $problem_id, 'total' => $total)));?>
 </div>
 </div>
