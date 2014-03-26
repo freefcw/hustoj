@@ -40,7 +40,7 @@ class Controller_Solution extends Controller_Base
         $language = $this->get_query('language', null);
         $result = $this->get_query('result', null);
 
-        $per_page = 20;
+        $per_page = OJ::per_page;
 
         $filter = array(
             'problem_id' => $pid,
@@ -55,7 +55,7 @@ class Controller_Solution extends Controller_Base
         $orderby = array(
             Model_Solution::$primary_key => Model_Base::ORDER_DESC
         );
-        $status = Model_Solution::find($filter, $page, OJ::per_page, $orderby);
+        $status = Model_Solution::find($filter, $page, $per_page, $orderby);
         $total = Model_Solution::count($filter);
 
         // view
