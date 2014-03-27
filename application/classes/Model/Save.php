@@ -7,24 +7,6 @@
 
 abstract class Model_Save extends Model_Base
 {
-
-    /**
-     * @param string $id
-     *
-     * @return Model_Code
-     */
-    public static function find_by_id($id)
-    {
-        $filter = array(
-            'solution_id' => $id,
-        );
-        $result = self::find($filter);
-        if ($result)
-            return $result[0];
-
-        return null;
-    }
-
     /**
      * 保存当前实例到数据库
      *

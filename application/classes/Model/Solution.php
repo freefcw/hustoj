@@ -209,12 +209,7 @@ class Model_Solution extends Model_Base
      */
     public function source()
     {
-        $code = Model_Code::find_by_id($this->solution_id);
-        if ( $code )
-        {
-            return $code->source;
-        }
-        return null;
+        return Model_Code::for_solution($this);
     }
 
     /**
