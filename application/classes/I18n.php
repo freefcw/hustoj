@@ -2,8 +2,6 @@
 
 class I18n extends Kohana_I18n {
 
-    /* @var array $languages */
-    static $languages = NULL;
     /**
      * @param string $text text to translate
      * @param string $lang
@@ -59,7 +57,7 @@ class I18n extends Kohana_I18n {
      *
      * @return string language got from Accepted-Language or NULL
      */
-    private static function get_browser_lang($lang_supported)
+    private static function get_browser_preferred_language($lang_supported)
     {
         $best_lang = NULL;
         $max_quality = 0;
@@ -90,11 +88,12 @@ class I18n extends Kohana_I18n {
 
     public static function get_language()
     {
-        if ( is_null(self::$languages) )
+        static $languages;
+        if ( is_null($languages) )
         {
-            self::$languages = Kohana::$config->load('multilang')->get('languages', array());
+            $languages = Kohana::$config->load('multilang')->get('languages', array());
         }
-        return self::$languages;
+        return $languages;
     }
 
     /**
@@ -112,7 +111,7 @@ class I18n extends Kohana_I18n {
 
         // if user language is not set
         if ( is_null($lang_current) )
-            $lang_current = self::get_browser_lang($lang_supported);
+            $lang_current = self::get_browser_preferred_language($lang_supported);
 
         // if get browser language failed
         if ( is_null($lang_current) )
