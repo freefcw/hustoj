@@ -35,6 +35,8 @@ class Controller_User extends Controller_Base
         if ( ! $user )
             $this->go_home();
 
+        $user->update_user_solution_stats();
+
         $this->template_data['title']
             = __('user.profile.about_:name', array(':name' => $uid));
         $this->template_data['user'] = $user;
