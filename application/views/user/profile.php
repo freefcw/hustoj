@@ -17,9 +17,9 @@
         </div>
         <div class="col-sm-5 user-stats">
             <ul class="nav nav-pills">
-                <li class="accept" value="<?php echo($user['solved']); ?>" id="<?php echo(__('user.profile.accept')); ?>"><?php echo($user['solved']); ?></li>
+                <li class="accept" value="<?php echo $user->number_of_solution_accept(); ?>" id="<?php echo(__('user.profile.accept')); ?>"><?php echo $user->number_of_solution_accept(); ?></li>
                 <li class="failed" id="<?php echo(__('user.profile.failed')); ?>"
-                    value="<?php echo $user['submit'] - $user['solved']; ?>"><?php echo $user['submit'] - $user['solved']; ?></li>
+                    value="<?php echo $user->number_of_solution_failed(); ?>"><?php echo $user->number_of_solution_failed(); ?></li>
                 <li class="submit" value="<?php echo $user['submit']; ?>" id="<?php echo(__('user.profile.submit')); ?>"><?php echo $user['submit']; ?></li>
             </ul>
             <script type="text/javascript">
@@ -35,7 +35,7 @@
     </div>
     <div class="problem-info">
         <div class="panel panel-success solved_problems">
-            <div class="panel-heading"><?php echo(__('user.profile.problem_solved')); ?></div>
+            <div class="panel-heading"><?php echo(__('user.profile.problem_solved')); ?> (<?php echo count($user->problems_resolved());?>)</div>
             <div class="panel-body">
                 <?php foreach ( $user->problems_resolved() as $pid ): ?>
                     <a class="btn btn-success" href="<?php e::url("/problem/show/{$pid}");?>"
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="panel panel-warning tried_problems">
-            <div class="panel-heading"><?php echo(__('user.profile.problem_tried')); ?></div>
+            <div class="panel-heading"><?php echo(__('user.profile.problem_tried')); ?> (<?php echo count($user->problems_tried());?>)</div>
             <div class="panel-body">
                 <?php foreach ( $user->problems_tried() as $pid ): ?>
                     <a class="btn btn-warning" href="<?php e::url("/problem/show/{$pid}");?>"

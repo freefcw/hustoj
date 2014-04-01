@@ -168,6 +168,49 @@ class Model_Solution extends Model_Base
         $this->code = $code;
     }
 
+    public static function number_of_problem_accept_for_user($user_id)
+    {
+        $query = DB::select(DB::expr('count(distinct(problem_id)) as total'))->from(self::$table)
+            ->where('user_id', '=', $user_id)
+            ->where('result', '=', self::STATUS_AC);
+
+        $result = $query->execute()->current();
+
+        return $result['total'];
+    }
+    public static function number_of_solution_accept_for_user($user_id)
+    {
+        $query = DB::select(DB::expr('count(solution_id) as total'))->from(self::$table)
+            ->where('user_id', '=', $user_id)
+            ->where('result', '=', self::STATUS_AC);
+
+        $result = $query->execute()->current();
+
+        return $result['total'];
+    }
+
+    public static function number_of_solution_total_for_user($user_id)
+    {
+        $query = DB::select(DB::expr('count(solution_id) as total'))->from(self::$table)
+            ->where('user_id', '=', $user_id);
+
+        $result = $query->execute()->current();
+
+        return $result['total'];
+    }
+
+    public static function number_of_solution_failed_for_user($user_id)
+    {
+        $query = DB::select(DB::expr('count(solution_id) as total'))->from(self::$table)
+            ->where('user_id', '=', $user_id)
+            ->where('result', '!=', self::STATUS_AC);
+
+        $result = $query->execute()->current();
+
+        return $result['total'];
+    }
+
+
     public function display_result()
     {
         return __(e::jresult($this->result));

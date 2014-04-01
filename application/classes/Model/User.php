@@ -103,6 +103,25 @@ class Model_User extends Model_Base
         return $default;
     }
 
+    public function number_of_solution_accept()
+    {
+        return Model_Solution::number_of_solution_accept_for_user($this->user_id);
+    }
+
+    public function number_of_solution_failed()
+    {
+        return Model_Solution::number_of_solution_failed_for_user($this->user_id);
+    }
+
+    public function number_of_solutions()
+    {
+        return Model_Solution::number_of_solution_total_for_user($this->user_id);
+    }
+
+    public function number_of_problem_accept()
+    {
+        return Model_Solution::number_of_problem_accept_for_user($this->user_id);
+    }
     public function add_permission($permission)
     {
         $privilege = new Model_Privilege;
