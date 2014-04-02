@@ -95,12 +95,19 @@ class Controller_Mail extends Controller_Base
     {
         $mail_id = $this->request->param('id');
         $mail = Model_Mail::find_by_id($mail_id);
+
         if ( !$mail )
             throw new Exception_Base(__('common.mail_not_found'));
 
         // 检查权限
         if ( $mail->is_owner($this->current_user) OR $this->current_user->is_admin() )
         {
+
+            if ( $mail->is_receiver($this->current_user) )
+            {
+                $mail->mark_as_read();
+            }
+
             $this->template_data['title'] = $mail->title;
             $this->template_data['mail'] = $mail;
         } else {

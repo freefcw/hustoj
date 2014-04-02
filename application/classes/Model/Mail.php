@@ -33,6 +33,9 @@ class Model_Mail extends Model_Base
     public $in_date;
     public $defunct;
 
+    const MAIL_NEW  = 1;
+    const MAIL_READ = 0;
+
     /**
      * @param     $username
      * @param int $page
@@ -96,6 +99,46 @@ class Model_Mail extends Model_Base
     }
 
     /**
+     * mark mail as read
+     *
+     */
+    public function mark_as_read()
+    {
+        if ( $this->is_unread() )
+        {
+            $this->new_mail = self::MAIL_READ;
+            $this->save();
+        }
+    }
+
+    /**
+     * is mail unread
+     *
+     * @return bool
+     */
+    public function is_unread()
+    {
+        return (int)$this->new_mail == self::MAIL_NEW;
+    }
+
+    /**
+     * judge user is the receiver
+     *
+     * @param Model_User|string $user
+     *
+     * @return bool
+     */
+    public function is_receiver($user)
+    {
+        if ( $user instanceof Model_User )
+        {
+            return $this->to_user == $user->user_id;
+        }
+        return $this->to_user == $user;
+    }
+
+
+    /**
      *  is the user is the sender or the receiver
      *
      * @param Model_User $user
@@ -110,7 +153,7 @@ class Model_Mail extends Model_Base
 
     protected function initial_data()
     {
-        $this->new_mail = 1;
+        $this->new_mail = self::MAIL_NEW;
         $this->in_date = e::format_time();
         $this->reply = 0;
         $this->defunct = self::DEFUNCT_NO;
