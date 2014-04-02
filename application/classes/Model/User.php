@@ -49,6 +49,7 @@ class Model_User extends Model_Base
     protected $resolved_problem_list = null;
     protected $trying_problem_list = null;
 
+    protected $_number_of_new_mail = null;
 
     /**
      * proxy to find_by_id
@@ -128,6 +129,20 @@ class Model_User extends Model_Base
         $this->submit = $this->number_of_solutions();
         $this->solved = $this->number_of_problem_accept();
         $this->save();
+    }
+
+    public function have_new_mail()
+    {
+        return $this->number_of_new_mail() > 0;
+    }
+
+    public function number_of_new_mail()
+    {
+        if ( is_null($this->_number_of_new_mail) )
+        {
+            $this->_number_of_new_mail = Model_Mail::number_of_unread_mail_for_user($this->user_id);
+        }
+        return $this->_number_of_new_mail;
     }
 
     public function add_permission($permission)

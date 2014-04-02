@@ -137,6 +137,24 @@ class Model_Mail extends Model_Base
         return $this->to_user == $user;
     }
 
+    /**
+     *
+     * the number of unread mail for user
+     *
+     * @param $user_id
+     *
+     * @return int
+     */
+    public static function number_of_unread_mail_for_user($user_id)
+    {
+        $query = DB::select(DB::expr('count(*) as number'))->from(self::$table)
+            ->where('to_user', '=', $user_id)
+            ->where('new_mail', '=', self::MAIL_NEW);
+
+        $result = $query->execute()->current();
+
+        return $result['number'];
+    }
 
     /**
      *  is the user is the sender or the receiver
