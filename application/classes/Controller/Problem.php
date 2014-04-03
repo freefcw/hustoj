@@ -20,16 +20,11 @@ class Controller_Problem extends Controller_Base
 
         $page = $this->request->param('id', $default_page);
         // save current volume
-        if ( $current_user ) {
-            $current_user->volume = $page;
-            $current_user->save();
-        } else {
-            Session::instance()->set('volume', $page);
-        }
+        Session::instance()->set('volume', $page);
 
         $total_volumes = Model_Problem::number_of_volume();
 
-        $page = e::convert_into_scope($page, $total_volumes);
+        $page = e::adjust_scope($page, $total_volumes);
 
         $this->template_data['problemlist'] = Model_Problem::problems_for_volume($page);
 
