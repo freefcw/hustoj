@@ -10,6 +10,7 @@ class Controller_Admin_Setting extends Controller_Admin_Base{
     public function action_edit()
     {
         $id = $this->request->param('id', null);
+
         if ( is_numeric($id) )
         {
             $option = Model_Option::find_by_id($id);
@@ -18,12 +19,6 @@ class Controller_Admin_Setting extends Controller_Admin_Base{
             $this->template_data['title'] = __('admin.settings.edit.modify_option');
         } else {
             $option = new Model_Option;
-            $value = Model_Option::get_option($id);
-            if ( $value )
-            {
-                $option->name = $id;
-                $option->value = $value;
-            }
             $this->template_data['title'] = __('admin.settings.edit.new_option');
         }
 

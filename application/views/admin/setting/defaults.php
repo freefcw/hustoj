@@ -11,7 +11,7 @@
     <tbody>
     <?php foreach(Model_Option::defaults() as $key => $value):?>
         <tr class="config-default">
-            <td><a href="<?php e::url("/admin/setting/edit/{$key}");?>" title="Click to add database"><?php echo($key);?></a></td>
+            <td><?php echo($key);?></td>
             <td><?php echo($value);?></td>
         </tr>
     <?php endforeach;?>
