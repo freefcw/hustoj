@@ -41,26 +41,26 @@ class Controller_Admin_News extends Controller_Admin_Base {
             $news = new Model_News;
         }
 
-
         if ( $this->request->is_post() )
         {
             $post = $this->cleaned_post();
+            $news->update($post);
+
+            $news->defunct = Model_News::DEFUNCT_NO;
+            $news->importance = Model_News::TYPE_NORMAL;
+            $news->content = $this->get_raw_post('content');
+
             if ( isset($post['defunct']) )
             {
-                $post['defunct'] = 'Y';
-            } else {
-                $post['defunct'] = 'N';
+                $news->defunct = Model_News::DEFUNCT_YES;
             }
             if ( isset($post['top']) )
             {
-                $news->importance = Model_News::NEWS_TYPE_TOP;
-            } else {
-                $news->importance = Model_News::NEWS_TYPE_NORMAL;
+                $news->importance = Model_News::TYPE_TOP;
             }
-            $news->user_id = $this->current_user->user_id;
 
-            $news->update($post);
-            $news->content = $this->get_raw_post('content');
+            if ( is_null($news->user_id) )
+                $news->user_id = $this->current_user->user_id;
 
             if ( $news->save() )
             {

@@ -20,8 +20,8 @@ class Model_News extends Model_Base {
         'defunct',
     );
 
-    const NEWS_TYPE_TOP    = 1;
-    const NEWS_TYPE_NORMAL = 0;
+    const TYPE_TOP    = 1; // 1 is top news
+    const TYPE_NORMAL = 0; // 0 is normal
 
     public $news_id;
     public $user_id;
@@ -33,15 +33,15 @@ class Model_News extends Model_Base {
 
     public static function number_of_public_news()
     {
-        $fileter = array(
+        $filter = array(
             'defunct' => Model_News::DEFUNCT_NO
         );
-        return self::count($fileter);
+        return self::count($filter);
     }
 
     public function is_top_news()
     {
-        return self::NEWS_TYPE_TOP == $this->importance;
+        return self::TYPE_TOP == $this->importance;
     }
 
     public function is_public()
@@ -56,11 +56,11 @@ class Model_News extends Model_Base {
         $orderby = array(
             'news_id' => self::ORDER_DESC,
         );
-        $fileter = array(
-            'importance' => 0,
+        $filter = array(
+            'importance' => self::TYPE_NORMAL,
             'defunct' => Model_News::DEFUNCT_NO
         );
-        $news_list = Model_News::find($fileter, $page, $limit, $orderby);
+        $news_list = Model_News::find($filter, $page, $limit, $orderby);
         return $news_list;
     }
 
@@ -69,19 +69,20 @@ class Model_News extends Model_Base {
         $orderby = array(
             'news_id' => self::ORDER_DESC,
         );
-        $fileter = array(
-            'importance' => 1,
+        $filter = array(
+            'importance' => self::TYPE_TOP,
             'defunct' => Model_News::DEFUNCT_NO
         );
-        $news_list = Model_News::find($fileter, 1, 10, $orderby);
+        $news_list = Model_News::find($filter, 1, 10, $orderby);
         return $news_list;
     }
 
     protected function initial_data()
     {
+        $this->user_id = null;
         $this->defunct = self::DEFUNCT_NO;
         $this->time = e::format_time();
-        $this->importance = 0;
+        $this->importance = self::TYPE_NORMAL;
     }
 
     public function validate()
