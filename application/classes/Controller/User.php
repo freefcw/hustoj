@@ -49,7 +49,7 @@ class Controller_User extends Controller_Base
         $uid = $this->request->param('id');
         $user = Model_User::find_by_id($uid);
         if ( ! $user )
-            throw new Exception_Base(__('common.user_not_found'));
+            throw new Exception_Page(__('common.user_not_found'));
 
         $user->disable();
 

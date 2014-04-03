@@ -25,7 +25,7 @@ class Controller_Admin_User extends Controller_Admin_Base{
 
         $user = Model_User::find_by_id($user_id);
         if ( !$user )
-            throw new Exception_Base(__('common.user_not_found'));
+            throw new Exception_Page(__('common.user_not_found'));
 
         if ( $this->request->is_post() )
         {

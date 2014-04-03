@@ -114,7 +114,7 @@ class Controller_Contest extends Controller_Base
                 $problem = $contest->problem(intval($pid));
             } else {
                 $error = __('common.contest_not_open');
-                throw new Exception_Base($error);
+                throw new Exception_Page($error);
             }
         $this->template_data['contest'] = $contest;
         $this->template_data['title']   = "{$contest['title']}";
@@ -125,7 +125,7 @@ class Controller_Contest extends Controller_Base
 
     /**
      * @param Model_Contest $contest
-     * @throws Exception_Base
+     * @throws Exception_Page
      */
     protected function check_permission($contest)
     {
@@ -140,6 +140,6 @@ class Controller_Contest extends Controller_Base
         else {
             $message = __('common.contest_login_first');
         }
-        throw new Exception_Base($message);
+        throw new Exception_Page($message);
     }
 }

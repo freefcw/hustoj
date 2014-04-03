@@ -49,7 +49,7 @@ class Controller_Index extends Controller_Base
             $this->template_data['title'] = $news->title;
             $this->template_data['news'] = $news;
         } else {
-            throw new Exception_Base(__('common.news_not_found'));
+            throw new Exception_Page(__('common.news_not_found'));
         }
     }
 

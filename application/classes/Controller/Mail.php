@@ -86,7 +86,7 @@ class Controller_Mail extends Controller_Base
                 $this->redirect('/mail/outbox');
             } else {
                 $message = __('common.:user_not_found', array(':user' => $user_id));
-                throw new Exception_Base($message);
+                throw new Exception_Page($message);
             }
         }
     }
@@ -97,7 +97,7 @@ class Controller_Mail extends Controller_Base
         $mail = Model_Mail::find_by_id($mail_id);
 
         if ( !$mail )
-            throw new Exception_Base(__('common.mail_not_found'));
+            throw new Exception_Page(__('common.mail_not_found'));
 
         // 检查权限
         if ( $mail->is_owner($this->current_user) OR $this->current_user->is_admin() )

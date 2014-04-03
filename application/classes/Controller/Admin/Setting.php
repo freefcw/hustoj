@@ -15,7 +15,7 @@ class Controller_Admin_Setting extends Controller_Admin_Base{
         {
             $option = Model_Option::find_by_id($id);
             if ( ! $option )
-                throw new Exception_Base('common.option_not_found');
+                throw new Exception_Page('common.option_not_found');
             $this->template_data['title'] = __('admin.settings.edit.modify_option');
         } else {
             $option = new Model_Option;

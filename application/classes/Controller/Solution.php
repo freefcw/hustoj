@@ -24,7 +24,7 @@ class Controller_Solution extends Controller_Base
             $this->template_data['cinfo'] = $cinfo;
             $this->template_data['rinfo'] = $rinfo;
         } else {
-            throw new Exception_Base(__('common.solution_detail_not_found'));
+            throw new Exception_Page(__('common.solution_detail_not_found'));
         }
     }
 

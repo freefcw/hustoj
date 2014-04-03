@@ -22,7 +22,7 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
         {
             $problem = Model_Problem::find_by_id($pid);
             if ( ! $problem )
-                throw new Exception_Base(__('common.problem_not_found'));
+                throw new Exception_Page(__('common.problem_not_found'));
         } else {
             $problem = new Model_Problem;
         }

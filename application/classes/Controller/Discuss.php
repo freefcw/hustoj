@@ -23,14 +23,14 @@ class Controller_Discuss extends Controller_Base
 
         $topic = Model_Topic::find_by_id($topic_id);
         if ( ! $topic)
-            throw new Exception_Base(__('common.discuss_not_found'));
+            throw new Exception_Page(__('common.discuss_not_found'));
 
         $cu = $this->get_current_user();
         if ( $this->request->is_post() ) {
 
             if ( $cu->submit < 1 )
             {
-                throw new Exception_Base(__('common.submit_before_topic'));
+                throw new Exception_Page(__('common.submit_before_topic'));
             }
 
             $reply = new Model_Reply;
@@ -60,7 +60,7 @@ class Controller_Discuss extends Controller_Base
             $topic->destroy();
             $this->redirect('/discuss');
         } else {
-            throw new Exception_Base(__('common.discuss_not_found'));
+            throw new Exception_Page(__('common.discuss_not_found'));
         }
     }
 
@@ -133,7 +133,7 @@ class Controller_Discuss extends Controller_Base
 
         if ( $cu->submit < 1 )
         {
-            throw new Exception_Base(__('common.submit_before_topic'));
+            throw new Exception_Page(__('common.submit_before_topic'));
         }
 
         if ( $this->request->is_post() ) {

@@ -252,7 +252,7 @@ class Controller_Base extends Controller
             // Execute the action itself
             try {
                 $this->{$action}();
-            } catch (Exception_Base $e) {
+            } catch (Exception_Page $e) {
                 $this->error_page($e);
             }
         }
