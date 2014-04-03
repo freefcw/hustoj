@@ -14,7 +14,7 @@ class Exception_Base extends Exception
 
     public function __construct($message = "", $page = 'error')
     {
-        $this->template = 'common/'. $page;
+        $this->template = 'block/'. $page;
 
         parent::__construct($message);
     }

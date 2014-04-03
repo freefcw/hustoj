@@ -28,4 +28,4 @@ foreach($contest_list as $contest):?>
 </tbody>
 </table>
 
-<?php echo(View::factory('common/pager', array('base_url' => '/admin/contest', 'total' => $total)));?>
+<?php echo(View::factory('block/pager', array('base_url' => '/admin/contest', 'total' => $total)));?>

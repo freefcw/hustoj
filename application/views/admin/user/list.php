@@ -27,4 +27,4 @@
     <?php endforeach; ?>
     </tbody>
 </table>
-<?php echo(View::factory('common/pager', array('base_url' => '/admin/user', 'total' => $total)));?>
+<?php echo(View::factory('block/pager', array('base_url' => '/admin/user', 'total' => $total)));?>

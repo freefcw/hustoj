@@ -6,7 +6,7 @@
     <meta name="description" content="<?php echo(e::get_website_desc()); ?>"/>
     <meta name="robots" content="index,follow"/>
     <title><?php echo($title); ?></title>
-    <?php echo View::factory('block/head');?>
+    <?php echo View::factory('block/meta');?>
 </head>
 <body>
 <div class="navbar navbar-inverse" role="navigation">
@@ -23,9 +23,9 @@
         <div class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
 <?php
     if ( OJ::is_backend())
-        echo View::factory('block/top_backend');
+        echo View::factory('block/backend_nav');
     else
-        echo View::factory('block/top_frontend');
+        echo View::factory('block/frontend_nav');
 ?>
         <?php echo View::factory('block/user_control'); ?>
         </div><!--/.nav-collapse -->
@@ -39,12 +39,12 @@
         </div>
         <div class="col-md-11">
             <h3><?php echo $title;?></h3>
-            <?php echo View::factory('common/message');?>
+            <?php echo View::factory('block/message');?>
             <?php echo($body); ?>
         </div>
     </div>
 <?php else:?>
-    <?php echo View::factory('common/message');?>
+    <?php echo View::factory('block/message');?>
     <?php echo($body); ?>
 <?php endif;?>
 </div>
