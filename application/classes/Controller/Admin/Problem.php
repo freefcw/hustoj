@@ -33,9 +33,9 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
             $post = $this->cleaned_post();
             $problem->update($post);
 
-            $problem->spj = 0;
+            $problem->spj = Model_Problem::JUDGE_NORMAL;
             if (array_key_exists('spj', $post))
-                $problem->spj = 1;
+                $problem->spj = Model_Problem::JUDGE_SPECIAL;
             $problem->save();
         }
         $this->template_data['title'] = 
@@ -62,8 +62,8 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
             } else {
                 $problem->defunct = Model_Base::DEFUNCT_NO;
             }
-            $ret->result = $problem->defunct;
             $problem->save();
+            $ret->result = $problem->defunct;
 
         } else {
             $ret->message = __('common.problem_not_found');

@@ -31,6 +31,9 @@ class Model_Problem extends Model_Base
 
     static $table = 'problem';
 
+    const JUDGE_SPECIAL = 1;
+    const JUDGE_NORMAL  = 0;
+
     public $problem_id;
     public $title;
     public $description;
@@ -38,7 +41,7 @@ class Model_Problem extends Model_Base
     public $output;
     public $sample_input;
     public $sample_output;
-    public $spj;
+    public $spj = 0;
     public $hint;
     public $source = '';
     public $in_date;
