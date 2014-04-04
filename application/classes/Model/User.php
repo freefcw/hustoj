@@ -328,7 +328,12 @@ class Model_User extends Model_Base
     }
 
     public function validate()
-    {}
+    {
+	    if ( ! in_array($this->locale, I18n::supported_lang()) )
+	    {
+		    $this->locale = I18n::default_language();
+	    }
+    }
 
     public function take_new_submit()
     {
@@ -348,6 +353,7 @@ class Model_User extends Model_Base
         $this->volume      = 1;
         $this->language    = 1;
         $this->accesstime  = $now;
+	    $this->locale      = I18n::default_language();
         $this->ip          = Request::$client_ip;
         $this->defunct     = self::DEFUNCT_NO;
     }
@@ -371,11 +377,12 @@ class Model_User extends Model_Base
         return in_array($problem_id, $trying_problems);
     }
 
-    /**
-     * the problem id list for user resoled
-     *
-     * @return array
-     */
+	/**
+	 * the problem id list for user resoled
+	 *
+	 * @throws Kohana_Exception
+	 * @return array
+	 */
     public function problems_resolved()
     {
         if ( ! $this->resolved_problem_list )
@@ -420,13 +427,14 @@ class Model_User extends Model_Base
         return false;
     }
 
-    /**
-     * 保存当前实例到数据库
-     *
-     * @param $new_user
-     *
-     * @return int
-     */
+	/**
+	 * 保存当前实例到数据库
+	 *
+	 * @param bool $new_user
+	 *
+	 * @throws Kohana_Exception
+	 * @return int
+	 */
     public function save($new_user=false)
     {
         // prepare data
@@ -445,8 +453,7 @@ class Model_User extends Model_Base
             $ret   = $query->execute();
 
             return $ret;
-        } else
-        {
+        } else {
             // else save new record
             $keys   = array_keys($data);
             $values = array_values($data);

@@ -40,13 +40,14 @@ class Model_Option extends Model_Base
         return self::$config_defaults;
     }
 
-    /**
-     * @param      $name
-     *
-     * @param null $default
-     *
-     * @return mixed
-     */
+	/**
+	 * @param      $name
+	 *
+	 * @param null $default
+	 *
+	 * @throws Kohana_Exception
+	 * @return mixed
+	 */
     public static function get_option($name, $default=null)
     {
         $options = self::all_options();
@@ -67,11 +68,12 @@ class Model_Option extends Model_Base
     }
 
 
-    /**
-     * 获取所有的选项
-     *
-     * @return Model_Option[]
-     */
+	/**
+	 * 获取所有的选项
+	 *
+	 * @throws Kohana_Exception
+	 * @return Model_Option[]
+	 */
     public static function all_options()
     {
         if ( is_null(self::$local_cache))
