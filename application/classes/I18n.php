@@ -21,13 +21,26 @@ class I18n extends Kohana_I18n {
             (isset($alternative[$text]) ? $alternative[$text] : $text);
     }
 
-    /**
-     * Get user lang from current user
-     *
-     * @param array $lang_supported language supported
-     *
-     * @return string language got from session or NULL
-     */
+	/**
+	 * get site default language
+	 *
+	 * @return string
+	 * @throws Kohana_Exception
+	 */
+	public static function default_language()
+	{
+		$lang_settings = self::get_language();
+		return $lang_settings['default'];
+	}
+
+	/**
+	 * Get user lang from current user
+	 *
+	 * @param array $lang_supported language supported
+	 *
+	 * @throws Kohana_Exception
+	 * @return string language got from session or NULL
+	 */
     private static function get_user_lang($lang_supported) {
         $user = Auth::instance()->get_user();
         if ( ! $user ) return NULL;
@@ -35,11 +48,13 @@ class I18n extends Kohana_I18n {
         return in_array($lang_current, $lang_supported) ? $lang_current : NULL;
     }
 
-    /**
-     * Set user lang to current user
-     *
-     * @param string $lang_current language to set
-     */
+	/**
+	 * Set user lang to current user
+	 *
+	 * @param string $lang_current language to set
+	 *
+	 * @throws Kohana_Exception
+	 */
     private static function set_user_lang($lang_current)
     {
         $user = Auth::instance()->get_user();
@@ -76,11 +91,12 @@ class I18n extends Kohana_I18n {
         return $best_lang;
     }
 
-    /**
-     * Get supported language
-     *
-     * @return array supported language
-     */
+	/**
+	 * Get supported language
+	 *
+	 * @throws Kohana_Exception
+	 * @return array supported language
+	 */
     public static function supported_lang() {
         $lang_settings = self::get_language();
         return $lang_settings['supported'];
