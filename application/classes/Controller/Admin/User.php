@@ -34,9 +34,12 @@ class Controller_Admin_User extends Controller_Admin_Base{
             $password = $safe_data['password'];
             if ($password AND $safe_data['repassword'] == $password )
             {
-                unset($safe_data['password']);
-                $safe_data['password'] = Auth::instance()->hash($password);
+                $user->update_password($password);
             }
+            // strip password
+            unset($safe_data['password']);
+            unset($safe_data['repassword']);
+
             $user->set_permission($this->get_post('permission'));
             $user->update($safe_data);
             $user->save();
