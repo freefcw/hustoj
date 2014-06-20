@@ -216,8 +216,14 @@ class Controller_User extends Controller_Base
     }
 
     private function is_local_request() {
-        $request_remote_addr = $_SERVER["REMOTE_ADDR"];
-        returun strpos($request_remote_addr, '127.0.0.1') !== FALSE ||
-                strpos($request_remote_addr, 'localhost') !== FALSE;
+        if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'] != '') {
+            $request_remote_addr = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $request_remote_addr = $_SERVER['REMOTE_ADDR'];
+        }
+        returun $request_remote_addr == '127.0.0.1' ||
+                $request_remote_addr == '::1' ||
+                $request_remote_addr == '0:0:0:0:0:0:0:1' ||
+                $request_remote_addr == 'localhost';
     }
 }
