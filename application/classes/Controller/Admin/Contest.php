@@ -39,8 +39,11 @@ class Controller_Admin_Contest extends Controller_Admin_Base
         {
             $safe_data = $this->cleaned_post();
             $contest->update($safe_data);
-            if ( ! in_array('private', $safe_data) )
+            if ( ! array_key_exists('private', $safe_data) )
                 $contest->private = 0;
+	        else {
+		        $contest->private = 1;
+	        }
             $contest->save();
             $orderlist = $safe_data['problemlist'];
             $contest->arrange_problem($orderlist);
