@@ -126,10 +126,16 @@ class Model_Contest extends Model_Base
             $lang[$index]['total'] = 0;
         }
 
+	    $number_of_problem = $this->number_of_problems();
         foreach($solutions as $item)
         {
-            $data[$item->num][$item->result]++;
-            $lang[$item->num][$item->language]++;
+	        // add check for contest problem will delete after contest
+	        // TODO: change the relation of item->num and problem
+	        if ( $item->num < $number_of_problem and $item->result >= 4 and $item->result <= 11 )
+	        {
+		        $data[$item->num][$item->result]++;
+		        $lang[$item->num][$item->language]++;
+	        }
         }
 
         foreach( OJ::$result as $key => $display)
