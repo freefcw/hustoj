@@ -28,11 +28,11 @@ if (isset($cid)) {
     <dd><?php echo($problem['output']);?></dd>
     <dt><?php echo(__('problem.show.sample_input')); ?></dt>
     <dd>
-        <pre><?php echo($problem['sample_input']);?></pre>
+        <pre><?php echo(htmlspecialchars($problem['sample_input']));?></pre>
     </dd>
     <dt><?php echo(__('problem.show.sample_output')); ?></dt>
     <dd>
-        <pre><?php echo($problem['sample_output']);?></pre>
+        <pre><?php echo(htmlspecialchars($problem['sample_output']));?></pre>
     </dd>
     <dt><?php echo(__('problem.show.hint')); ?></dt>
     <dd><?php echo($problem['hint']); ?></dd>
