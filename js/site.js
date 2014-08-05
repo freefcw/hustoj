@@ -61,7 +61,7 @@ $(document).ready(function () {
 });
 
 $(function(){
-    $('#problem-desc img').each(function(){
+    $('.detail img').each(function(){
         var elem = $(this);
         var origin_src = elem.attr('src');
 
@@ -69,6 +69,10 @@ $(function(){
         {
             var new_src = base_url + origin_src.substring(1);
             elem.attr('src', new_src);
+        }
+        if ( origin_src[0] != '/' )
+        {
+            elem.attr('src', base_url + origin_src);
         }
     });
 });
