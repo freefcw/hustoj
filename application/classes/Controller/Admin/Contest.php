@@ -18,7 +18,7 @@ class Controller_Admin_Contest extends Controller_Admin_Base
         // initial
         $page_id = $this->get_query('page', 1);
 
-        $contest_list = Model_Contest::find(array(), $page_id);
+        $contest_list = Model_Contest::find(array(), $page_id, 50, array('contest_id' => Model_Contest::ORDER_DESC));
 
         $this->template_data['total'] = Model_Contest::count();
         $this->template_data['contest_list'] = $contest_list;
