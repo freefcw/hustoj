@@ -78,6 +78,20 @@ class Model_Privilege extends Model_Save
         $this->defunct = self::DEFUNCT_NO;
     }
 
-    public function validate()
+    /**
+     * 删除当前数据，只针对实例
+     *
+     * @return int
+     */
+    public function destroy()
+    {
+        $query = DB::delete(static::$table)
+            ->where('user_id', '=', $this->user_id)
+            ->and_where('rightstr', '=', $this->rightstr);
+        
+        return $query->execute();
+    }
+
+        public function validate()
     {}
 }
