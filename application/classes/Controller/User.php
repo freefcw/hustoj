@@ -143,34 +143,51 @@ class Controller_User extends Controller_Base
         if ( $this->get_current_user() ) {
             $this->go_home();
         }
-        if ( $this->request->is_post() and $this->check_captcha() ) {
-            $username = $this->get_post('username');
-            $password = $this->get_post('pwd');
+        $ss = Session::instance();
 
-            if ( Auth::instance()->login($username, $password, true) ) {
-                // go back url
-                $session = Session::instance();
-                $url = $session->get_once('return_url');
-                if ( ! $url )
+        if ( $this->request->is_post() ) {
+
+            $login_times = $ss->get('login_times', 0);
+            $ss->set('login_times', $login_times + 1);
+            if ( $login_times > 1 )
+            {
+                if ( $this->check_captcha() )
                 {
-                    $this->go_home();
-                } else {
-                    $this->redirect($url);
+                    $this->do_login();
                 }
+            } else {
+                $this->do_login();
             }
 
             $this->flash_error(__('common.login_error'));
+            $this->redirect('user/login');
         }
-
         $this->template_data['title'] = __('user.login.user_login');
         $this->template_data['username'] = $this->get_post('username');
+    }
+
+    protected function do_login()
+    {
+        $username = $this->get_post('username');
+        $password = $this->get_post('pwd');
+
+        if ( Auth::instance()->login($username, $password, true) ) {
+            // go back url
+            $ss = Session::instance();
+            $url = $ss->get_once('return_url');
+            if ( ! $url )
+            {
+                $this->go_home();
+            } else {
+                $this->redirect($url);
+            }
+        }
     }
 
 
     protected function check_captcha()
     {
         $captcha_mode = Model_Option::get_option('captcha_mode', false);
-
         if ( $captcha_mode == false ) return true;
 
         if ( $captcha_mode == 'recaptcha' )

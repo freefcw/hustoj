@@ -12,7 +12,7 @@
             <input type="password" name="pwd" class="form-control" id="password" placeholder="<?php echo(__('user.login.password'));?>"/>
         </div>
     </div>
-    <?php if ( $mode = OJ::is_captcha_enabled() ):?>
+    <?php if ( $mode = OJ::is_captcha_enabled() and Session::instance()->get('login_times') > 0 ):?>
     <div class="form-group">
         <label class="col-sm-4 control-label" ><?php echo(__('user.login.captcha'));?></label>
         <div class="col-sm-8">
