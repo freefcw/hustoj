@@ -70,11 +70,82 @@
             <textarea cols="50" rows="2" id="source" class="form-control" name="source"><?php echo $problem->source;?></textarea>
         </div>
     </div>
+    <?php if ( $problem->problem_id ):?>
+    <legend><?php echo(__('admin.problem.edit.data')); ?></legend>
+    <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+            <div id="queue"></div>
+            <input id="file_upload" name="file_upload" type="file" multiple="true">
+            <script type="text/javascript">
+                <?php $timestamp = time();?>
+                $(function() {
+                    $('#file_upload').uploadify({
+                        'formData'     : {
+                            'timestamp' : '<?php echo $timestamp;?>',
+                            'token'     : '<?php echo md5('hustoj' . $timestamp);?>'
+                        },
+                        'swf'      : '<?php e::url("uploadify/uploadify.swf");?>',
+                        'uploader' : '<?php e::url("admin/problem/upload/{$problem->problem_id}");?>',
+                        'onUploadSuccess' :  function(file, data, response) {
+                            if ( file.name.substr(-3) == '.in' )
+                            {
+                                add_data_item(file.name, 'in-data');
+                            } else {
+                                add_data_item(file.name, 'out-data');
+                            }
+                        }
+                    });
+                    $('.make-sure').click(function(){
+                        return confirm('ARE U SURE???')
+                    })
+                });
+
+                function add_data_item(filename, id)
+                {
+                    if ( $('#'+ id + ':contains("' + filename +'")').length == 0 ) {
+                        var ahtml = '<li><a target="_blank" href="<?php e::url("/admin/problem/showdata/{$problem->problem_id}/");?>/' + filename + '">' + filename
+                            + '</a> | <a href="<?php e::url("/admin/problem/deldata/{$problem->problem_id}/");?>/' + filename + '" class="make-sure"><?php echo(__('admin.problem.edit.delete')); ?></a></li>';
+                        $('#' + id).append($(ahtml));
+                    }
+                    $('.make-sure').click(function(){
+                        return confirm('ARE U SURE ???')
+                    })
+                };
+            </script>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2"><?php echo(__('admin.problem.edit.input_data')); ?></label>
+        <div class="col-sm-10">
+            <ul class="list-unstyled" id="in-data">
+            <?php foreach($problem->in_data_files() as $f):?>
+                <li>
+                <a target="_blank" href="<?php e::url("/admin/problem/showdata/{$problem->problem_id}/{$f}");?>"><?php echo $f;?></a> | <a href="<?php e::url("/admin/problem/deldata/{$problem->problem_id}/{$f}");?>" class="make-sure">删除</a>
+                </li>
+            <?php endforeach;?>
+            </ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2"><?php echo(__('admin.problem.edit.output_data')); ?></label>
+        <div class="col-sm-10">
+            <ul class="list-unstyled" id="out-data">
+                <?php foreach($problem->out_data_files() as $f):?>
+                    <li>
+                        <a target="_blank" href="<?php e::url("/admin/problem/showdata/{$problem->problem_id}/{$f}");?>"><?php echo $f;?></a>
+                        | <a href="<?php e::url("/admin/problem/deldata/{$problem->problem_id}/{$f}");?>" class="make-sure"><?php echo(__('admin.problem.edit.delete')); ?></a>
+                    </li>
+                <?php endforeach;?>
+            </ul>
+        </div>
+    </div>
+    <?php endif;?>
     <div class="form-group">
         <div class="col-sm-10 col-sm-offset-2">
             <button class="btn btn-primary" type="submit"><?php echo(__('admin.problem.edit.save')); ?></button>
             <button class="btn btn-default" onclick="history.back()" type="reset"><?php echo(__('admin.problem.edit.cancel')); ?></button>
         </div>
     </div>
+
 </fieldset>
 </form>

@@ -11,6 +11,8 @@
 <?php if ( OJ::is_backend() ):?>
 <script type="text/javascript" src="<?php e::url('js/jquery-ui-1.10.3.custom.js');?>"></script>
 <script type="text/javascript" src="<?php e::url('js/tinymce/tinymce.min.js');?>"></script>
+<script type="text/javascript" src="<?php e::url('uploadify/jquery.uploadify.min.js');?>"></script>
+<link rel="stylesheet" href="<?php e::url('uploadify/uploadify.css');?>">
 <?php endif;?>
 <?php if ( ! OJ::is_backend() ):?>
 <script type="text/javascript"> var base_url = '<?php echo Kohana::$base_url;?>';</script>

@@ -105,6 +105,68 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
         $this->template_data['title'] = __('admin.problem.edit.new_problem');
     }
 
+    public function action_upload()
+    {
+        $problem = Model_Problem::find_by_id($this->request->param('id'));
+
+        $ret = 'upload failed, filetype is .in or .out ?';
+        if ( $problem and $this->request->is_post() )
+        {
+            $data_path = $problem->data_dir();
+            if ( isset($_FILES['Filedata']) )
+            {
+                $file = $_FILES['Filedata'];
+                if ( Upload::not_empty($file) and Upload::type($file, array('in', 'out')))
+                {
+                    if ( $f = Upload::save($file, $file['name'], $data_path) )
+                    {
+                        $ret = 'OK';
+                    }
+                }
+            } else {
+                return $this->redirect('admin');
+            }
+        }
+        $this->response->body($ret);
+    }
+
+    public function action_showdata()
+    {
+        $problem = Model_Problem::find_by_id($this->request->param('id'));
+        $filename = $this->request->param('filename');
+        $ext = $this->request->param('ext');
+        if ( $problem )
+        {
+            $data_path = $problem->data_dir();
+            $path = $data_path. '/'. $filename. '.'. $ext;
+            if( file_exists($path) and is_file($path) )
+            {
+                $content = file_get_contents($path);
+                $this->response->headers('Content-Type', 'text/plain');
+                $this->response->body($content);
+            } else {
+                return $this->redirect('admin');
+            }
+
+        }
+    }
+
+    public function action_deldata()
+    {
+        $problem = Model_Problem::find_by_id($this->request->param('id'));
+        $filename = $this->request->param('filename');
+        $ext = $this->request->param('ext');
+        if ( $problem )
+        {
+            $data_path = $problem->data_dir();
+            $path = $data_path. '/'. $filename. '.'. $ext;
+            if( file_exists($path) and is_file($path) )
+            {
+                unlink($path);
+            }
+        }
+        return $this->redirect($this->request->referrer());
+    }
     public function action_list()
     {
         $page = $this->request->param('id', 1);

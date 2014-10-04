@@ -183,6 +183,47 @@ class Model_Problem extends Model_Base
         $this->save();
     }
 
+    public function data_dir()
+    {
+        $data_dir =  Model_Option::get_option('data_dir');
+        return $data_dir. '/'. $this->problem_id;
+    }
+    public function in_data_files()
+    {
+        $files = array();
+        if ($handle = opendir( $this->data_dir() ))
+        {
+            while (false !== ($entry = readdir($handle)))
+            {
+                if ( substr($entry, -3) == '.in' )
+                {
+                    array_push($files, $entry);
+                }
+            }
+            closedir($handle);
+        }
+
+        return $files;
+    }
+
+    public function out_data_files()
+    {
+        $files = array();
+        if ($handle = opendir( $this->data_dir() ))
+        {
+            while (false !== ($entry = readdir($handle)))
+            {
+                if ( substr($entry, -4) == '.out' )
+                {
+                    array_push($files, $entry);
+                }
+            }
+            closedir($handle);
+        }
+
+        return $files;
+    }
+
     protected function initial_data()
     {
         $this->in_date = e::format_time();

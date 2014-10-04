@@ -125,6 +125,25 @@ Cookie::$domain = $config->get('domain');
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
+Route::set('show_problem_data', 'admin/problem/showdata/<id>/<filename>.<ext>', array(
+    'filename' => '\w+',
+    'ext' => '\w+',
+))->defaults(array(
+                    'directory'  => 'admin',
+                    'controller' => 'problem',
+                    'action'     => 'showdata'
+                )
+     );
+
+Route::set('del_problem_data', 'admin/problem/deldata/<id>/<filename>.<ext>', array(
+    'filename' => '\w+',
+    'ext' => '\w+',
+))->defaults(array(
+                    'directory'  => 'admin',
+                    'controller' => 'problem',
+                    'action'     => 'deldata'
+                )
+     );
 
 Route::set('admin', 'admin(/<controller>(/<action>(/<id>)))')
     ->defaults(array(
