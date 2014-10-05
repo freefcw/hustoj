@@ -118,6 +118,10 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
                 $file = $_FILES['Filedata'];
                 if ( Upload::not_empty($file) and Upload::type($file, array('in', 'out')))
                 {
+                    if ( !file_exists($data_path) )
+                    {
+                        mkdir($data_path, 0777, true);
+                    }
                     if ( $f = Upload::save($file, $file['name'], $data_path) )
                     {
                         $ret = 'OK';
@@ -142,13 +146,12 @@ class Controller_Admin_Problem extends Controller_Admin_Base {
             if( file_exists($path) and is_file($path) )
             {
                 $content = file_get_contents($path);
-                $this->response->headers('Content-Type', 'text/plain');
-                $this->response->body($content);
             } else {
-                return $this->redirect('admin');
+                $content = 'File no found';
             }
-
         }
+        $this->response->headers('Content-Type', 'text/plain');
+        $this->response->body($content);
     }
 
     public function action_deldata()

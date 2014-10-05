@@ -191,7 +191,8 @@ class Model_Problem extends Model_Base
     public function in_data_files()
     {
         $files = array();
-        if ($handle = opendir( $this->data_dir() ))
+
+        if ( file_exists($this->data_dir()) and $handle = opendir( $this->data_dir() ))
         {
             while (false !== ($entry = readdir($handle)))
             {
@@ -209,7 +210,7 @@ class Model_Problem extends Model_Base
     public function out_data_files()
     {
         $files = array();
-        if ($handle = opendir( $this->data_dir() ))
+        if ( file_exists($this->data_dir()) and $handle = opendir( $this->data_dir() ))
         {
             while (false !== ($entry = readdir($handle)))
             {
