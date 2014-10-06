@@ -28,7 +28,7 @@ class Model_Privilege extends Model_Save
         $filter = array(
             'user_id' => $user_id,
         );
-        $result = self::find($filter);
+        $result = self::find($filter, 0, 0);
         return $result;
     }
 
@@ -66,7 +66,7 @@ class Model_Privilege extends Model_Save
             'defunct'  => self::DEFUNCT_NO,
         );
         $result = array();
-        foreach(Model_Privilege::find($filter) as $item)
+        foreach(Model_Privilege::find($filter, 0, 0) as $item)
         {
             array_push($result, $item->user_id);
         }
