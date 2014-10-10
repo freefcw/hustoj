@@ -9,7 +9,7 @@ if ( Request::current()->query('goto') == '1' )
 {
     Cookie::set('hustoj', 1);
 }
-if ( Cookie::get('hustoj', 0) == '1' ):?>
+if ( Request::current()->query('goto') == '1' || Cookie::get('hustoj', 0) == '1' ):?>
     <div class="row index">
         <div class="news">
             <?php /* @var Model_News[] $news_list */foreach($news_list as $news):?>
@@ -30,7 +30,7 @@ if ( Cookie::get('hustoj', 0) == '1' ):?>
     <div id="front-guide">
         <ul>
             <li class="alert alert-success"><a href="/?goto=1">华中科技大学ACM竞赛系统</a> </li>
-            <li class="alert alert-success"><a href="/qiming">启明学院课程系统</a></li>
+            <li class="alert alert-success"><a href="/qiming">计算机课程实践培训平台</a></li>
             <li class="alert alert-success"><a href="/vjudge">Virtual Judge系统</a></li>
         </ul>
     </div>
