@@ -31,7 +31,7 @@ if ( Request::current()->query('goto') == '1' || Cookie::get('hustoj', 0) == '1'
         <ul>
             <li class="alert alert-success"><a href="/?goto=1">华中科技大学ACM竞赛系统</a> </li>
             <li class="alert alert-success"><a href="/qiming">计算机课程实践培训平台</a></li>
-            <li class="alert alert-success"><a href="/vjudge">Virtual Judge系统</a></li>
+            <li class="alert alert-success"><a href="http://vjudge.net">Virtual Judge系统</a></li>
         </ul>
     </div>
 <?php echo(View::factory('block/pager', array('base_url' => '', 'total' => $total)));?>
