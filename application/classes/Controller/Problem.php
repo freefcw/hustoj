@@ -88,6 +88,16 @@ class Controller_Problem extends Controller_Base
                 }
             }
 
+            $last_submission = $current_user->get_last_submission();
+            if ($last_submission) {
+                $d_start = strtotime($last_submission);
+                $d_end = time();
+                $limitation = OJ::get_submit_time();
+                if ($d_end - $d_start < $limitation) {
+                    throw new Exception_Page(__('common.too_quick_:sec', array(':sec' => $limitation)));
+                }
+            }
+
             $source_code = $this->get_raw_post('source');
             $lang = $this->get_post('language');
 

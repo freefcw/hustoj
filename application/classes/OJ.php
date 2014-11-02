@@ -127,4 +127,14 @@ class OJ
     {
         return Kohana::$config->load('base')->get('captcha_mode', false);
     }
+
+    /**
+     * get submit limitation
+     *
+     * @return string
+     */
+    public static function get_submit_time()
+    {
+        return Kohana::$config->load('base')->get('submit_time', 0);
+    }
 }

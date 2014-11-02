@@ -401,6 +401,7 @@ return array(
     'common.submit_before_topic'                            => '在发帖前，请先至少提交一个题库问题',
     'common.rejudge_:problem'                               => '正在重测题目 :problem',
     'common.rejudge_:runid'                                 => '正在重测解 :runid',
+    'common.too_quick_:sec'                                 => '提交过快。请 :sec 秒后重试。',
 
     ':field must contain only letters'                      => ':field只应包含字母',
     ':field must contain only numbers, letters and dashes'  => ':field只应包含数字，字母和横杠',
