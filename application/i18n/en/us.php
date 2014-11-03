@@ -402,6 +402,7 @@ return array(
     'common.submit_before_topic'                   => 'Submit code for one problem before taking part in discuss',
     'common.rejudge_:problem'                      => 'Rejudging problem :problem',
     'common.rejudge_:runid'                        => 'Rejudging solution :runid',
+    'common.too_quick_:sec'                        => 'Please submit again after :sec seconds',
 
     'username'                                     => 'Username',
     'nick'                                         => 'Nick',

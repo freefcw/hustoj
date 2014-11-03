@@ -91,6 +91,27 @@ class Model_User extends Model_Base
     }
 
     /**
+     * get time of last user submission
+     *
+     * @return mixed
+     */
+    public function get_last_submission()
+    {
+        $filter = array(
+            'user_id' => $this->user_id
+        );
+        $order_by = array(
+            'solution_id' => Model_Base::ORDER_DESC
+        );
+        $last =  Model_Solution::find($filter, 1, 1, $order_by);
+        if ($last and $last[0]) {
+            return $last[0]->in_date;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * get last volume, user visited
      *
      * @param int $default
