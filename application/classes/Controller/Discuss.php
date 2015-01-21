@@ -128,6 +128,7 @@ class Controller_Discuss extends Controller_Base
 
     public function action_new()
     {
+        $this->check_login(e::home());
         /* @var Model_User $cu */
         $cu = $this->get_current_user();
 
