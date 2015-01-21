@@ -14,7 +14,7 @@ This version is rewrite the web for http://acm.hust.edu.cn, which have a open so
 
 ## Installation
 
-To be coninuted.
+Please see the [Wiki](../../wiki/Install-Guide)
 
 ## License
 
