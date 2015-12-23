@@ -200,10 +200,13 @@ class Controller_User extends Controller_Base
             $response = Arr::get($_POST, 'recaptcha_response_field');
 
             $resp = recaptcha_check_answer($private_key, $_SERVER["REMOTE_ADDR"], $challenge, $response);
-
             if ( $resp->is_valid ) {
                 return true;
             }
+            if (is_local_request()) {
+                return true;
+            }
+
             $this->flash_error($resp->error);
             return false;
         }
@@ -227,5 +230,17 @@ class Controller_User extends Controller_Base
         Auth::instance()->logout();
 
         $this->go_home();
+    }
+
+    private function is_local_request() {
+        if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'] != '') {
+            $request_remote_addr = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $request_remote_addr = $_SERVER['REMOTE_ADDR'];
+        }
+        returun $request_remote_addr == '127.0.0.1' ||
+                $request_remote_addr == '::1' ||
+                $request_remote_addr == '0:0:0:0:0:0:0:1' ||
+                $request_remote_addr == 'localhost';
     }
 }
