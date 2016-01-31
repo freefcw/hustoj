@@ -238,7 +238,7 @@ class Controller_User extends Controller_Base
         } else {
             $request_remote_addr = $_SERVER['REMOTE_ADDR'];
         }
-        returun $request_remote_addr == '127.0.0.1' ||
+        return $request_remote_addr == '127.0.0.1' ||
                 $request_remote_addr == '::1' ||
                 $request_remote_addr == '0:0:0:0:0:0:0:1' ||
                 $request_remote_addr == 'localhost';
