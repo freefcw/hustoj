@@ -6,7 +6,7 @@
  * Time: 12:46 AM
  *
  */
-
+require_once APPPATH. 'vendor/Filter.php';
 /**
  * static helper for html
  */
@@ -196,6 +196,16 @@ class e
     public static function format_time($format = 'Y-m-d H:i:s')
     {
         return date($format);
+    }
+
+    public static function xss($value)
+    {
+        static $filter = null;
+        if(null === $filter) {
+            $filter = new Filter();
+        }
+
+        return $filter->xss($value);
     }
 
     /**

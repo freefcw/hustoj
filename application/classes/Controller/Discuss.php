@@ -82,8 +82,8 @@ class Controller_Discuss extends Controller_Base
         $page = $this->get_query('page', 1);
 
         $filter = array(
-            'pid' => $this->get_query('pid'),
-            'author_id' => $this->get_query('uid'),
+            'pid' => (int)$this->get_query('pid'),
+            'author_id' => (string)$this->get_query('uid'),
         );
 
         $filter = Model_Base::clean_data($filter);
@@ -142,8 +142,8 @@ class Controller_Discuss extends Controller_Base
             $topic = new Model_Topic;
             $topic->title = $this->get_post('title');
             $topic->author_id = $cu->user_id;
-            $topic->cid = intval($this->get_post('cid'));
-            $topic->pid = intval($this->get_post('pid'));
+            $topic->cid = (int)$this->get_post('cid');
+            $topic->pid = (int)$this->get_post('pid');
             $topic->save();
 
             $reply = new Model_Reply;
