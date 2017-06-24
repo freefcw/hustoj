@@ -7,7 +7,7 @@ return array
 (
     'default' => array
     (
-        'type'       => 'MySQL',
+        'type'       => 'MySQLi',
         'connection' => array(
             'hostname'   => '127.0.0.1',
             'database'   => 'judge',

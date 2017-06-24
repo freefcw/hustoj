@@ -3,7 +3,7 @@
 <li>
     <a href="<?php e::url('/discuss/');?>"><?php echo(__('discuss.list.discuss')); ?></a>
     <?php if (Request::current()->query('pid')):?>
-    <span class="divider">/</span> <a href="<?php e::url('/problem/show/'. Request::current()->query('pid'));?>"><?php echo Request::current()->query('pid');?></a>
+    <span class="divider">/</span> <a href="<?php e::url('/problem/show/'. e::xss(Request::current()->query('pid')));?>"><?php echo e::xss(Request::current()->query('pid'));?></a>
     <?php endif;?>
 </li>
 </ul>

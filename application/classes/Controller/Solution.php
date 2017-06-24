@@ -34,11 +34,11 @@ class Controller_Solution extends Controller_Base
         $page = $this->get_query('page', 1);
         if ($page < 1) $page = 1;
 
-        $pid = $this->get_query('pid', null);
-        $uid = $this->get_query('uid', null);
-        $cid = $this->get_query('cid', null);
-        $language = $this->get_query('language', null);
-        $result = $this->get_query('result', null);
+        $pid = (int)$this->get_query('pid', null);
+        $uid = (int)$this->get_query('uid', null);
+        $cid = (int)$this->get_query('cid', null);
+        $language = (int)$this->get_query('language', null);
+        $result = (int)$this->get_query('result', null);
 
         $per_page = OJ::per_page;
 
