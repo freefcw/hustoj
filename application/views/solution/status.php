@@ -1,5 +1,5 @@
 <?php if ( Request::$current->query('cid') ):?>
-    <?php echo(View::factory('contest/header', array('title' => $title, 'cid' => Request::$current->query('cid'), 'contest' => $contest)));?>
+    <?php echo(View::factory('contest/header', array('title' => $title, 'cid' => e::xss(Request::$current->query('cid')), 'contest' => $contest)));?>
 <?php else:?>
 <form action="<?php e::url('/status');?>" method="GET" class="form-inline status-filter" role="form">
     <div class="form-group">
