@@ -1,6 +1,10 @@
 # HUST ONLINE JUDGE SYSTEM
 
-HUSTOJ is an ACM-ICPC Open Source Online Judge System for [HUST ACM Team](http://acm.hust.edu.cn).
+
+**For some reason, the website `http://acm.hust.edu.cn` is migrated to http://www.hustoj.org, the future version is https://github.com/freefcw/hustoj-neo**
+
+
+HUSTOJ is an ACM-ICPC Open Source Online Judge System for HUST ACM Team.
 
 Users can register on this Online Judge, read problem descriptions, and submit their programs to server, which will then compile and run the program and judge whther the output is correct.
 
