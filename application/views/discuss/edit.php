@@ -9,7 +9,7 @@
             <input class="form-control" type="text" name="pid" id="pid"/>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group needit">
         <label class="control-label col-sm-5" for="title"><?php echo(__('discuss.edit.title')); ?></label>
         <div class="col-sm-7">
             <input class="form-control" type="text" name="title" id="title"/>

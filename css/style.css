@@ -1,3 +1,19 @@
+/* font page*/
+#front-guide ul li{
+    list-style: none;
+    display: inline-block;
+    width: 30%;
+
+    text-align: center;
+    font-size: 24px;
+
+}
+#front-guide ul li a{
+    display: block;
+    height: 200px;
+    padding-top: 80px;
+    text-decoration: none;
+}
 /* navigation  */
 .edit-userinfo {
     width: 100%;

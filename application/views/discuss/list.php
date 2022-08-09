@@ -51,7 +51,7 @@
         <td>
             <?php if ($t->pid):?><a href="<?php e::url("problem/show/{$t->pid}");?>" style="color: #000000"> <?php echo($t->pid);?> </a><?php endif;?></td>
         <td>
-            <a href="<?php e::url("t/{$t->tid}");?>"><strong><?php echo($t->title);?></strong></a>
+            <a href="<?php e::url("t/{$t->tid}");?>"><strong><?php if ( $t->title ) echo($t->title); else echo('null')?></strong></a>
         </td>
         <td><a href="<?php echo(Route::url('profile', array('uid' => $t->author_id)));?>"><?php echo($t->author_id);?></a></td>
     </tr>
